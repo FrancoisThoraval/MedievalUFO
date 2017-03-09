@@ -37,8 +37,8 @@ public:
   void setPrice(int);
   void setEnergyCost(int);
   /** Methode **/
-  virtual attack();
-  virtual move();
+  virtual void    attack();
+  virtual void move();
 
 };
 
@@ -49,7 +49,7 @@ private:
   /*Vide*/
 public:
   Fantassin ();
-  ~Fantassin ();arguments
+  ~Fantassin ();
 
 };
 
@@ -58,6 +58,7 @@ public:
 class Archer : public Unit {
 private:
   int _changeArrowTime;
+  int _typeOfArrow;
 public:
   Archer ();
   ~Archer ();
