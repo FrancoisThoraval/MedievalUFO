@@ -37,7 +37,7 @@ public:
   void setPrice(int);
   void setEnergyCost(int);
   /** Methode **/
-  virtual void    attack();
+  virtual void attack()const =0;
   virtual void move();
 
 };
@@ -50,7 +50,7 @@ private:
 public:
   Fantassin ();
   ~Fantassin ();
-
+  void attack();
 };
 
 /** l'archer est une unité qui peut tirer a distance et changer de type de fleches pour faire plus mal **/
@@ -67,6 +67,7 @@ public:
   int getTypeOfArrow()const;
   int getChangeOfTime()const;
   void setChangeOnTime(int);
+  void attack();
 };
 
 /** le cavalier est une unité qui peut se deplacer sur plusieur cases **/
@@ -77,6 +78,7 @@ private:
 public:
   Cavalier ();
   ~Cavalier ();
+  void attack();
 
 };
 
@@ -90,6 +92,7 @@ public:
   ~Catapulte ();
   int getReloadTime()const;
   void setReloadTime(int);
+  void attack();
 };
 
 // definir la class Unité cheater du milieu

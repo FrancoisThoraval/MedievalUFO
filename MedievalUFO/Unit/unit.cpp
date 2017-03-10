@@ -83,6 +83,11 @@ Fantassin::~Fantassin(){
 
 }
 
+
+void Fantassin::attack(Unit& a){
+  a.setHealthPoints(a.getHealthPoints()-(this->getStrengh()));
+}
+
 /*************************/
 
 /*** Methode Archer ***/
@@ -123,6 +128,9 @@ void Archer::setChangeOnTime(int Arrowtime){
   this->_changeArrowTime = Arrowtime;
 }
 
+void Archer::attack(Unit& a){
+  a.setHealthPoints(a.getHealthPoints()-(this->getStrengh()));
+}
 /************************************************/
 
 /*** Methode Cavalier ***/
@@ -138,6 +146,10 @@ Cavalier::Cavalier(){
 
 Cavalier::~Cavalier(){
 
+}
+
+void Cavalier::attack(Unit& a){
+  a.setHealthPoints(a.getHealthPoints()-(this->getStrengh()));
 }
 
 /****************************************************************/
@@ -160,4 +172,7 @@ Catapulte::~Catapulte(){
 
 }
 
+void Catapulte::attack(Unit& a){
+  a.setHealthPoints(a.getHealthPoints()-(this->getStrengh()));
+}
 /*******************************/
