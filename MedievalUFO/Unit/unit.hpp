@@ -64,6 +64,9 @@ public:
   ~Archer ();
   void setOnFire();
   void setOnDefault();
+  int getTypeOfArrow()const;
+  int getChangeOfTime()const;
+  void setChangeOnTime(int);
 };
 
 /** le cavalier est une unité qui peut se deplacer sur plusieur cases **/
@@ -85,6 +88,8 @@ private:
 public:
   Catapulte ();
   ~Catapulte ();
+  int getReloadTime()const;
+  void setReloadTime(int);
 };
 
 // definir la class Unité cheater du milieu

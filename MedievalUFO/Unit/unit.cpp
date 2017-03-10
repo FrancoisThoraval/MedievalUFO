@@ -72,7 +72,7 @@ void Unit::setEnergyCost(int Energy) {
 
 Fantassin::Fantassin(){
   _strengh = /** REMPLIR **/     // le nombre d'attaque du fantassin
-  _name = "fantassin";
+  _name = "Fantassin";
   _attackRange = 1;
   _healthPoints = /** REMPLIR **/ // les HP du fantassin
   _price = /** REMPLIR **/ // Le prix du fantassin
@@ -86,3 +86,78 @@ Fantassin::~Fantassin(){
 /*************************/
 
 /*** Methode Archer ***/
+
+Archer::Archer(){
+  _changeArrowTime = 1;
+  _typeOfArrow = 1;
+
+  _strengh = /** REMPLIR **/     // le nombre d'attaque du fantassin
+  _name = "Archer";
+  _attackRange = 1;
+  _healthPoints = /** REMPLIR **/ // les HP du fantassin
+  _price = /** REMPLIR **/ // Le prix du fantassin
+  _energyCost = /** REMPLIR **/ // le cout en energie du fantassin
+}
+
+Archer::~Archer(){
+
+}
+
+void Archer::setOnFire(){
+  _typeOfArrow = 2;
+}
+
+void Archer::setOnDefault(){
+  _typeOfArrow = 1;
+}
+
+int Archer::getTypeOfArrow(){
+  return(this->_typeOfArrow);
+}
+
+int Archer::getChangeOfTime()const{
+  return(this->_changeArrowTime);
+}
+
+void Archer::setChangeOnTime(int Arrowtime){
+  this->_changeArrowTime = Arrowtime;
+}
+
+/************************************************/
+
+/*** Methode Cavalier ***/
+
+Cavalier::Cavalier(){
+  _strengh = /** REMPLIR **/     // le nombre d'attaque du fantassin
+  _name = "Cavalier";
+  _attackRange = 1;
+  _healthPoints = /** REMPLIR **/ // les HP du fantassin
+  _price = /** REMPLIR **/ // Le prix du fantassin
+  _energyCost = /** REMPLIR **/ // le cout en energie du fantassin
+}
+
+Cavalier::~Cavalier(){
+
+}
+
+/****************************************************************/
+
+/*** Methode Catapulte ***/
+
+Catapulte::Catapulte(){
+  _reloadTime = /* REMPLIR */
+
+  _strengh = /** REMPLIR **/     // le nombre d'attaque du fantassin
+  _name = "Catapulte";
+  _attackRange = 1;
+  _healthPoints = /** REMPLIR **/ // les HP du fantassin
+  _price = /** REMPLIR **/ // Le prix du fantassin
+  _energyCost = /** REMPLIR **/ // le cout en energie du fantassin
+
+}
+
+Catapulte::~Catapulte(){
+
+}
+
+/*******************************/
