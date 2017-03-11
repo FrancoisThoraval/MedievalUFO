@@ -20,7 +20,7 @@ public:
   Map (int, int);
   ~Map ();
   friend class Element;
-  Element getElement(Position);
+  Element getElement(Position)const;
   void setElement(Position,Element);
   void drawWorld();
   void createTile(int,int);

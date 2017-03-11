@@ -1,7 +1,7 @@
 #ifndef scenery_hpp
 #define scenery_hpp
 
-#include "element.hpp"
+#include "../Element/element.hpp"
 #include <string>
 
 class Scenery;
