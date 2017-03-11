@@ -17,9 +17,14 @@ Map::~Map(){
 
 }
 
+<<<<<<< HEAD
+Element Map::getElement(Position pos){
+//  return(this->);   // POSITION
+=======
 Element Map::getElement(Position pos)const{
   Element test; //A enlever c'etait juste pour compiler
   return(/*this->*/ test);   // POSITION
+>>>>>>> 6a1aaf458564ca985e411b81e6bc1c45c351d50c
 }
 
 void Map::setElement(Position pos,Element elt){

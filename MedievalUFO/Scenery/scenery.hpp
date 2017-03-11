@@ -1,7 +1,8 @@
 #ifndef scenery_hpp
 #define scenery_hpp
 
-#include "../Element/element.hpp"
+#include "element.hpp"
+#include <string>
 
 class Scenery;
 class Tree;

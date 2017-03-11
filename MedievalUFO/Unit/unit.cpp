@@ -66,6 +66,10 @@ void Unit::setEnergyCost(int Energy) {
   this->_energyCost = Energy;
 }
 
+void Unit::move(){
+  
+}
+
 /****************************************/
 
 /*** Methode Fantassin ***/
