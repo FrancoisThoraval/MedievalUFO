@@ -8,19 +8,6 @@
 class Element;
 class Position;
 
-/****** Classe d'element, classe mère des unites et des décors, *********/
-
-class Element {
-private:
-  Position _pos;
-public:
-  Element ();
-  virtual ~Element ();
-  Position getElementOnPos();
-  void setElementPosition(Position,Element);
-
-};
-
 /** classe pour gerer la position et le deplacement des unités **/
 
 class Position {
@@ -36,6 +23,23 @@ public:
   /** Setter **/
   void setX(int);
   void setY(int);
+};
+
+/****** Classe d'element, classe mère des unites et des décors, *********/
+
+class Element {
+protected:
+  Position _pos;
+public:
+  Element ();
+  virtual ~Element ();
+  Position getElementOnPos();
+  void setElementPosition(Position,Element);
+
+  Element &operator=(const Element &e){
+      this->_pos = e._pos;
+      return (*this);
+  }
 };
 
 #endif
