@@ -34,7 +34,7 @@ void Map::createTile(int x, int y){
 void Map::drawWorld(){
     for(int i = 0; i< this->_sizeX; i++){
         for(int j = 0; j< this->_sizeY; j++){
-            createTile(x,y);
+            createTile(i,j);
         }
     }
 }
