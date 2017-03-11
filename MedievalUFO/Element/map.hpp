@@ -3,6 +3,7 @@
 
 #include "element.hpp"
 #include <QGraphicsView>
+#include <QGraphicsItem>
 #include <QGraphicsScene>
 #include "../Scenery/scenery.hpp"
 
@@ -15,7 +16,8 @@ private:
   Element **_world2;
   int _sizeX;
   int _sizeY;
-
+  QGraphicsScene *_scene;
+  QGraphicsView *_view;
 public:
   Map (int, int);
   ~Map ();
