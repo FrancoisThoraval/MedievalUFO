@@ -13,7 +13,7 @@ class Catapulte;
 
 class Unit : public Element {
 private:
-  string _name;
+  std::string _name;
   int _strengh;
   int _attackRange;
   int _healthPoints;
@@ -22,7 +22,7 @@ private:
 public:
   Unit ();
   virtual ~Unit ();
-  string getName()const;
+  std::string getName()const;
   /** Getter **/
   int getStrengh()const;
   int getAttackRange()const;
@@ -30,7 +30,7 @@ public:
   int getPrice()const;
   int getEnergyCost()const;
   /** Setter **/
-  void setName(string);
+  void setName(std::string);
   void setStrengh(int);
   void setAttackRange(int);
   void setHealthPoints(int);
@@ -50,7 +50,7 @@ private:
 public:
   Fantassin ();
   ~Fantassin ();
-  void attack();
+  void attack(Unit&);
 };
 
 /** l'archer est une unité qui peut tirer a distance et changer de type de fleches pour faire plus mal **/
@@ -67,7 +67,7 @@ public:
   int getTypeOfArrow()const;
   int getChangeOfTime()const;
   void setChangeOnTime(int);
-  void attack();
+  void attack(Unit&);
 };
 
 /** le cavalier est une unité qui peut se deplacer sur plusieur cases **/
@@ -78,7 +78,7 @@ private:
 public:
   Cavalier ();
   ~Cavalier ();
-  void attack();
+  void attack(Unit&);
 
 };
 
@@ -92,7 +92,7 @@ public:
   ~Catapulte ();
   int getReloadTime()const;
   void setReloadTime(int);
-  void attack();
+  void attack(Unit&);
 };
 
 // definir la class Unité cheater du milieu

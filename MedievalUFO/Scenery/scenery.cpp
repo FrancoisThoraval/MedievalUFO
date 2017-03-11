@@ -10,11 +10,11 @@ Scenery::~Scenery(){
 
 }
 
-void Scenery::setName(string name){
+void Scenery::setName(std::string name){
   this->_name = name;
 }
 
-string Scenery::getName(){
+std::string Scenery::getName(){
   return(this->_name);
 }
 
@@ -24,7 +24,7 @@ string Scenery::getName(){
 /*** Methode Tree ***/
 
 Tree::Tree(){
-    _name = "Tree";
+    this->setName("Tree");
 }
 
 Tree::~Tree(){
@@ -36,7 +36,7 @@ Tree::~Tree(){
 /*** Methode Water ***/
 
 Water::Water(){
-  _name = "Water";
+  this->setName("Water");
 }
 
 Water::~Water(){
@@ -48,7 +48,7 @@ Water::~Water(){
 /*** Methode Hill ***/
 
 Hill::Hill(){
-  _name = "Hill";
+  this->setName("Hill");
 }
 
 Hill::~Hill(){

@@ -17,7 +17,7 @@ Unit::~Unit(){
 }
 
 //Getter
-string Unit::getName()const{
+std::string Unit::getName()const{
   return(this->_name);
 }
 
@@ -29,7 +29,7 @@ int Unit::getAttackRange()const{
   return(this->_attackRange);
 }
 
-int Unit::getHealthPoints(){
+int Unit::getHealthPoints()const{
   return(this->_healthPoints);
 }
 
@@ -42,7 +42,7 @@ int Unit::getEnergyCost()const{
 }
 
 //Setter
-void Unit::setName(string name){
+void Unit::setName(std::string name){
   this->_name = name;
 }
 
@@ -64,6 +64,10 @@ void Unit::setPrice(int price){
 
 void Unit::setEnergyCost(int Energy) {
   this->_energyCost = Energy;
+}
+
+void Unit::move(){
+  
 }
 
 /****************************************/

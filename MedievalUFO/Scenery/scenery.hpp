@@ -1,7 +1,8 @@
 #ifndef scenery_hpp
 #define scenery_hpp
 
-#include "../Element/element.hpp"
+#include "element.hpp"
+#include <string>
 
 class Scenery;
 class Tree;
@@ -12,12 +13,12 @@ class Hill;
 
 class Scenery : public Element {
 private:
-  string _name;
+  std::string _name;
 public:
   Scenery ();
   ~Scenery ();
-  string getName();
-  void setName(string);
+  std::string getName();
+  void setName(std::string);
 };
 
 

@@ -12,7 +12,7 @@ public:
   Map ();
   ~Map ();
   friend class Element;
-  Element getElement(Position)const;
+  Element getElement(Position);
   void setElement(Position,Element);
 };
 

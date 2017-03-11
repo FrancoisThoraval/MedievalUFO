@@ -10,7 +10,7 @@ Element::~Element(){
 
 }
 
-Position Element::getElementOnPos(){
+Position Element::getElementOnPos()const{
   return(this->_pos);
 }
 

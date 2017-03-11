@@ -10,8 +10,8 @@ Map::~Map(){
 
 }
 
-Element Map::getElement(Position pos)const{
-  return(this->);   // POSITION
+Element Map::getElement(Position pos){
+//  return(this->);   // POSITION
 }
 
 void Map::setElement(Position pos,Element elt){
