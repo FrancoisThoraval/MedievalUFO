@@ -16,6 +16,8 @@ private:
 public:
   Scenery ();
   ~Scenery ();
+  string getName();
+  void setName(string);
 };
 
 

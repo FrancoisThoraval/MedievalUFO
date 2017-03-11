@@ -71,12 +71,12 @@ void Unit::setEnergyCost(int Energy) {
 /*** Methode Fantassin ***/
 
 Fantassin::Fantassin(){
-  _strengh = /** REMPLIR **/     // le nombre d'attaque du fantassin
-  _name = "Fantassin";
-  _attackRange = 1;
-  _healthPoints = /** REMPLIR **/ // les HP du fantassin
-  _price = /** REMPLIR **/ // Le prix du fantassin
-  _energyCost = /** REMPLIR **/ // le cout en energie du fantassin
+  //_strengh = /** REMPLIR **/     // le nombre d'attaque du fantassin
+//  _name = "Fantassin";
+//  // = 1;
+//  _healthPoints = /** REMPLIR **/ // les HP du fantassin
+//  _price = /** REMPLIR **/ // Le prix du fantassin
+//  _energyCost = /** REMPLIR **/ // le cout en energie du fantassin
 }
 
 Fantassin::~Fantassin(){
@@ -93,15 +93,15 @@ void Fantassin::attack(Unit& a){
 /*** Methode Archer ***/
 
 Archer::Archer(){
-  _changeArrowTime = 1;
-  _typeOfArrow = 1;
+  //_changeArrowTime = 1;
+//  _typeOfArrow = 1;
 
-  _strengh = /** REMPLIR **/     // le nombre d'attaque du fantassin
-  _name = "Archer";
-  _attackRange = 1;
-  _healthPoints = /** REMPLIR **/ // les HP du fantassin
-  _price = /** REMPLIR **/ // Le prix du fantassin
-  _energyCost = /** REMPLIR **/ // le cout en energie du fantassin
+//  _strengh = /** REMPLIR **/     // le nombre d'attaque du fantassin
+//  _name = "Archer";
+//  _attackRange = 1;
+//  _healthPoints = /** REMPLIR **/ // les HP du fantassin
+//  _price = /** REMPLIR **/ // Le prix du fantassin
+//  _energyCost = /** REMPLIR **/ // le cout en energie du fantassin
 }
 
 Archer::~Archer(){
@@ -116,7 +116,7 @@ void Archer::setOnDefault(){
   _typeOfArrow = 1;
 }
 
-int Archer::getTypeOfArrow(){
+int Archer::getTypeOfArrow()const{
   return(this->_typeOfArrow);
 }
 
@@ -136,12 +136,12 @@ void Archer::attack(Unit& a){
 /*** Methode Cavalier ***/
 
 Cavalier::Cavalier(){
-  _strengh = /** REMPLIR **/     // le nombre d'attaque du fantassin
-  _name = "Cavalier";
-  _attackRange = 1;
-  _healthPoints = /** REMPLIR **/ // les HP du fantassin
-  _price = /** REMPLIR **/ // Le prix du fantassin
-  _energyCost = /** REMPLIR **/ // le cout en energie du fantassin
+//  _strengh = /** REMPLIR **/     // le nombre d'attaque du fantassin
+//  _name = "Cavalier";
+//  _attackRange = 1;
+//  _healthPoints = /** REMPLIR **/ // les HP du fantassin
+//  _price = /** REMPLIR **/ // Le prix du fantassin
+//  _energyCost = /** REMPLIR **/ // le cout en energie du fantassin
 }
 
 Cavalier::~Cavalier(){
@@ -157,14 +157,14 @@ void Cavalier::attack(Unit& a){
 /*** Methode Catapulte ***/
 
 Catapulte::Catapulte(){
-  _reloadTime = /* REMPLIR */
+  //_reloadTime = /* REMPLIR */
 
-  _strengh = /** REMPLIR **/     // le nombre d'attaque du fantassin
-  _name = "Catapulte";
-  _attackRange = 1;
-  _healthPoints = /** REMPLIR **/ // les HP du fantassin
-  _price = /** REMPLIR **/ // Le prix du fantassin
-  _energyCost = /** REMPLIR **/ // le cout en energie du fantassin
+//  _strengh = /** REMPLIR **/     // le nombre d'attaque du fantassin
+//  _name = "Catapulte";
+//  _attackRange = 1;
+//  _healthPoints = /** REMPLIR **/ // les HP du fantassin
+//  _price = /** REMPLIR **/ // Le prix du fantassin
+//  _energyCost = /** REMPLIR **/ // le cout en energie du fantassin
 
 }
 

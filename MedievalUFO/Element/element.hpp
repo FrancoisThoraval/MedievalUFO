@@ -16,7 +16,8 @@ private:
 public:
   Element ();
   virtual ~Element ();
-  Element getElementOnPos();
+  Position getElementOnPos();
+  void setElementPosition(Position,Element);
 
 };
 
