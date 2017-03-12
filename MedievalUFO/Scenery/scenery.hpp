@@ -12,7 +12,7 @@ class Hill;
 /** Class principal du decors **/
 
 class Scenery : public Element {
-private:
+protected:
   std::string _name;
 public:
   Scenery ();

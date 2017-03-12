@@ -6,7 +6,7 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    Map m(15,15);
+    Map m(32,32);
 
     m.drawWorld();
 
