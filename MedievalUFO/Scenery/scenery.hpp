@@ -17,7 +17,7 @@ protected:
 public:
   Scenery ();
   ~Scenery ();
-  std::string getName();
+  virtual std::string getName();
   void setName(std::string);
 };
 
