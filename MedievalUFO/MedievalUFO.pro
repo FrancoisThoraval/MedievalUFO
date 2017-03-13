@@ -11,3 +11,4 @@ SOURCES += \
     Element/map.cpp \
     Scenery/scenery.cpp \
     main.cpp
+QT += widgets
