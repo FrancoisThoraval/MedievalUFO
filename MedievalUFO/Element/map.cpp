@@ -26,9 +26,13 @@ Map::~Map(){
 }
 
 Element Map::getElement(Position pos)const{
-  Element test; //A enlever c'etait juste pour compiler
-  return(/*this->*/ test);   // POSITION
+    //
 }
+
+std::string Map::getNameOfElement(Position pos)const{
+    return((this->_world2[pos.getX()][pos.getY()])->getName());
+}
+
 
 void Map::setElement(Position pos,Element elt){
 
@@ -42,15 +46,21 @@ void Map::createTile(int x, int y){
     QGraphicsRectItem *rect = new QGraphicsRectItem(0,0,TILESIZEX,TILESIZEY);
     rect->setPos(x*TILESIZEX,y*TILESIZEY);
     QBrush brush;
-    if(this->_world2[x][y]->getName() == "Tree"){
+    Position P;
+    P.setX(x);
+    P.setY(y);
+    if(this->getNameOfElement(P) == "Tree"){
         brush.setColor(Qt::green);
         brush.setStyle(Qt::SolidPattern);
-    }else if(this->_world2[x][y]->getName() == "Water"){
+       // std::cout<<"c'est un : "<<this->getNameOfElement(P)<<std::endl;
+    }else if(this->getNameOfElement(P) == "Water"){
         brush.setColor(Qt::blue);
         brush.setStyle(Qt::SolidPattern);
-    }else if(this->_world2[x][y]->getName() == "Hill"){
+       //std::cout<<"c'est un : "<<this->getNameOfElement(P)<<std::endl;
+    }else if(this->getNameOfElement(P) == "Hill"){
         brush.setColor(Qt::yellow);
         brush.setStyle(Qt::SolidPattern);
+      // std:: cout<<"c'est un : "<<this->getNameOfElement(P)<<std::endl;
     }
     rect->setBrush(brush);
     this->_scene->addItem(rect);

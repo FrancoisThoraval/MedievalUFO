@@ -6,6 +6,7 @@
 #include <QGraphicsItem>
 #include <QGraphicsScene>
 #include "../Scenery/scenery.hpp"
+#include <iostream>
 
 const int TILESIZEX = 20;
 const int TILESIZEY = 20;
@@ -23,6 +24,7 @@ public:
   ~Map ();
   friend class Element;
   Element getElement(Position)const;
+  std::string getNameOfElement(Position)const;
   void setElement(Position,Element);
   void drawWorld();
   void createTile(int,int);
