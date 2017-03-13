@@ -12,8 +12,8 @@ const int TILESIZEY = 20;
 
 class Map {
 private:
-  Element ***_world1;
-  Scenery ***_world2;
+  Element **_world1;
+  Element **_world2;
   int _sizeX;
   int _sizeY;
   QGraphicsScene *_scene;

@@ -17,6 +17,11 @@ Position Element::getElementOnPos()const{
 void Element::setElementPosition(Position pos,Element elt){
 
 }
+
+std::string Element::getName(){
+
+}
+
 /************************************************/
 
 /*** Methode Position ***/

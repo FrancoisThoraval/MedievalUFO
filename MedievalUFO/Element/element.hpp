@@ -23,6 +23,7 @@ public:
   /** Setter **/
   void setX(int);
   void setY(int);
+
 };
 
 
@@ -35,9 +36,10 @@ protected:
 public:
   Element ();
   virtual ~Element ();
+
   Position getElementOnPos()const;
   void setElementPosition(Position,Element);
-
+ virtual std::string getName()const=0;
   Element &operator=(const Element &e){
     this->_pos = e._pos;
     return (*this);
