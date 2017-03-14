@@ -3,12 +3,35 @@
 
 //#include <iostream>
 #include <string>
+#include <QGraphicsView>
+#include <QGraphicsItem>
+#include <QGraphicsScene>
+#include <QtGui>
 
 
 class Element;
 class Position;
 
 /** classe pour gerer la position et le deplacement des unités **/
+
+
+
+class CustomItem : public QGraphicsRectItem{
+
+protected:
+       void mousePressEvent(QGraphicsSceneMouseEvent *event){
+            qDebug()<<"BITE";
+       }
+};
+
+class CstmView : public QGraphicsView
+{
+protected:
+        void mousePressEvent(QMouseEvent *event){
+            qDebug()<<"LOL";
+            QGraphicsView::mousePressEvent(event);
+        }
+};
 
 class Position {
 private:

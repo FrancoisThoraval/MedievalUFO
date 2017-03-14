@@ -70,6 +70,10 @@ void Unit::move(){
   
 }
 
+void Unit::attack(){
+
+}
+
 /****************************************/
 
 /*** Methode Fantassin ***/

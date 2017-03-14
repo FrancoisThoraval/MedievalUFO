@@ -6,14 +6,15 @@
 Map::Map(int sizeX, int sizeY){
     this->_sizeX = sizeX;
     this->_sizeY = sizeY;
-    _world1 = new Element** [_sizeX];
-    _world2 = new Scenery** [_sizeX];
-    for(int i =0; i <_sizeY;i++){
-        _world1[i]= new Element*[_sizeY];
-        _world2[i]= new Scenery*[_sizeY];
+    _world1 = new Unit* [_sizeX];
+    _world2 = new Scenery* [_sizeX];
+    for(int i =0; i <_sizeX;i++){
+        _world1[i]= new Unit[_sizeY];
+        _world2[i]= new Scenery[_sizeY];
     }
-    _scene = new QGraphicsScene();
-    _view = new QGraphicsView(_scene);
+    _scene.setSceneRect(0,0,_sizeX,_sizeY);
+
+    //_view.setScene(&_scene);
 }
 
 Map::~Map(){
@@ -25,12 +26,12 @@ Map::~Map(){
     delete _world2;
 }
 
-Element Map::getElement(Position pos)const{
-    //
+Scenery Map::getElement(Position pos)const{
+    return(this->_world2[pos.getX()][pos.getY()]);
 }
 
 std::string Map::getNameOfElement(Position pos)const{
-    return((this->_world2[pos.getX()][pos.getY()])->getName());
+    return(this->getElement(pos).getName());
 }
 
 
@@ -43,8 +44,8 @@ void Map::setElement(Position pos,Element elt){
 //  Même chose pour world1.
 //  Lorsqu'on affiche la map, si world1[x,y] = "vide", alors on affiche world2, sinon on affiche world1.
 void Map::createTile(int x, int y){
-    QGraphicsRectItem *rect = new QGraphicsRectItem(0,0,TILESIZEX,TILESIZEY);
-    rect->setPos(x*TILESIZEX,y*TILESIZEY);
+    CustomItem rect;
+    rect.setRect(x*TILESIZEX,y*TILESIZEY,TILESIZEX,TILESIZEY);
     QBrush brush;
     Position P;
     P.setX(x);
@@ -62,23 +63,31 @@ void Map::createTile(int x, int y){
         brush.setStyle(Qt::SolidPattern);
       // std:: cout<<"c'est un : "<<this->getNameOfElement(P)<<std::endl;
     }
-    rect->setBrush(brush);
-    this->_scene->addItem(rect);
-    this->_view->show();
+    rect.setBrush(brush);
+    this->_scene.addItem(&rect);
+
 }
 
 void Map::drawWorld(){
     for(int i = 0; i< this->_sizeX; i++){
         for(int j = 0; j< this->_sizeY; j++){
-            if(j < 5)
-                _world2[i][j] = new Tree;
-            if(j>= 5)
-                _world2[i][j] = new Water;
-            if(i>= _sizeX-3)
-                _world2[i][j] = new Hill;
+            if(j < 5){
+                    Scenery *t = new Tree;
+                    _world2[i][j] = *t;
+            }
+            if(j>= 5){
+                Scenery *w = new Water;
+                _world2[i][j] = *w;
+             }
+            if(i>= _sizeX-3){
+                Scenery *h = new Hill;
+                _world2[i][j] = *h;
+             }
             createTile(i,j);
         }
     }
+    this->_view.setScene(&_scene);
+    this->_view.show();
 }
 
 /****************************************/

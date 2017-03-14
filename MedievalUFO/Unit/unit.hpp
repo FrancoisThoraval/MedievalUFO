@@ -37,7 +37,7 @@ public:
   void setPrice(int);
   void setEnergyCost(int);
   /** Methode **/
-  virtual void attack()const =0;
+  virtual void attack();
   virtual void move();
 
 };
