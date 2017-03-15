@@ -1,5 +1,5 @@
-#ifndef carte_hpp
-#define carte_hpp
+#ifndef map_hpp
+#define map_hpp
 
 #include "element.hpp"
 
@@ -9,19 +9,14 @@
 const int TILESIZEX = 20;
 const int TILESIZEY = 20;
 
-
-
-
-
-
 class Map {
 protected:
   Unit **_world1;
   Scenery **_world2;
   int _sizeX;
   int _sizeY;
-  QGraphicsScene _scene;
-  CstmView _view;
+  sf::Texture texture;
+  sf::Sprite sprite;
 public:
   Map (int, int);
   ~Map ();
@@ -29,8 +24,8 @@ public:
   Scenery getElement(Position)const;
   std::string getNameOfElement(Position)const;
   void setElement(Position,Element);
-  void drawWorld();
-  void createTile(int,int);
+  void drawWorld(sf::RenderWindow &);
+  void createTile(int,int,sf::RenderWindow &);
 
 };
 
