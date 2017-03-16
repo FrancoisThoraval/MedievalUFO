@@ -18,31 +18,29 @@ class RobotPR;
 class Unit : public Element {
 private:
   std::string _name;
-  int _strengh;
-  int _attackRange;
   int _healthPoints;
   int _price;
-  int _energyCost;
+  Weapon *_primaryWeapon;
+  Weapon *_secondaryWeapon;
+  int Movement;
 public:
   Unit ();
   virtual ~Unit ();
   std::string getName()const;
   /** Getter **/
-  int getStrengh()const;
-  int getAttackRange()const;
   int getHealthPoints()const;
   int getPrice()const;
   int getEnergyCost()const;
   /** Setter **/
   void setName(std::string);
-  void setStrengh(int);
-  void setAttackRange(int);
+
   void setHealthPoints(int);
   void setPrice(int);
   void setEnergyCost(int);
   /** Methode **/
   virtual void attack();
   virtual void move();
+  friend class Weapon;
 
 };
 
@@ -134,10 +132,12 @@ public:
 
 class Zedd : public Unit{
 private:
-  int _activeExpendNade;
+  bool _activeExpendNade;
   int _invocation;
   int _puttiesCalling;
   int _apocalypseHole;
+  Weapon* _thirdWeapon;
+  Weapon* _fourthWeapon;
 
 public:
   Zedd ();
@@ -151,6 +151,8 @@ public:
   void setInvocation(int);
   void setPuttiesCalling(int);
   void setApocalypseHole(int);
+
+  void ThrowNade()
 };
 
 
@@ -165,5 +167,12 @@ public:
   void setArmor(int);
 };
 
+class TurtleTank : public RobotPR {
+private:
 
+public:
+  TortleTank ();
+  virtual ~TortleTank ();
+
+};
 #endif

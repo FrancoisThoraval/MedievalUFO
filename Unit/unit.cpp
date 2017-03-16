@@ -8,7 +8,7 @@ Unit::Unit(){
   _attackRange =0;
   _healthPoints=0;
   _price=0;
-  _energyCost=0;
+
 }
 
 //Destructeur
@@ -21,13 +21,7 @@ std::string Unit::getName()const{
   return(this->_name);
 }
 
-int Unit::getStrengh()const{
-  return(this->_strengh);
-}
 
-int Unit::getAttackRange()const{
-  return(this->_attackRange);
-}
 
 int Unit::getHealthPoints()const{
   return(this->_healthPoints);
@@ -46,13 +40,7 @@ void Unit::setName(std::string name){
   this->_name = name;
 }
 
-void Unit::setStrengh(int strengh){
-  this->_strengh=strengh;
-}
 
-void Unit::setAttackRange(int attRange){
-  this->_attackRange= attRange;
-}
 
 void Unit::setHealthPoints(int Hp){
   this->_healthPoints = Hp;
@@ -79,12 +67,11 @@ void Unit::attack(){
 /*** Methode Fantassin ***/
 
 Putties::Putties(){
-  //_strengh = /** REMPLIR **/     // le nombre d'attaque du fantassin
-//  _name = "Fantassin";
-//  // = 1;
-//  _healthPoints = /** REMPLIR **/ // les HP du fantassin
-//  _price = /** REMPLIR **/ // Le prix du fantassin
-//  _energyCost = /** REMPLIR **/ // le cout en energie du fantassin
+  _strengh = 5;    // le nombre d'attaque du Putties
+  _name = "Putties";
+  _healthPoints = 50; // les HP du Putties
+  _price = 5;  // Le prix du Putties
+  _attackRange = 1;
 }
 
 Putties::~Putties(){
@@ -189,8 +176,26 @@ void Catapulte::attack(Unit& a){
 /*** CLASS POWERRANGER ***/
 
 
-PowerRanger::PowerRanger(){
-  _capacity = false;
+PowerRanger::PowerRanger(std::string color){
+  _capacityRobot = false;
+  _capacityWeapon = false;
+  if(color == "red"){
+    _primaryWeapon = new Weapon("Fist",60,1,30);
+    _secondaryWeapon = new Weapon("Gun",20,10,30);
+    _name = color;
+    _healthPoints = 300; // les HP du Putties
+  } else if (color == "green"){
+            _primaryWeapon = new Weapon("Fist",20,1,30);
+            _secondaryWeapon = new Weapon("Flute",0,0,50);
+            _name = color;
+            _healthPoints = 50; // les HP du Putties
+          } else {
+                  _primaryWeapon = new Weapon("Fist",40,1,30);
+                  _secondaryWeapon = new Weapon("Gun",15,10,30);
+                  _name = color;
+                  _healthPoints = 200; // les HP du Putties
+          }
+
 }
 
 PowerRanger::~PowerRanger(){
@@ -221,6 +226,14 @@ bool PowerRanger::getCapacityWeapon()const{
   return(this->_capacityWeapon);
 }
 
+void PowerRanger::attack(Unit& u,int W){
+  if(W == 1){
+      u.setHealthPoints(u.getHealthPoints()-this->_primaryWeapon.getStrengh());
+  }else {
+      u.setHealthPoints(u.getHealthPoints()-this->_secondaryWeapon.getStrengh());
+  }
+
+}
 /******************************************************/
 
 
@@ -249,7 +262,15 @@ std::string AYAYAY_Assistant::getAdvice()const{
 /*** CLASS ZERG ***/
 
 Zedd::Zedd(){
-
+  _activeExpendNade = false;
+  _invocation = 0;
+  _puttiesCalling = 0;
+  _apocalypseHole = 10;
+  _name = "Zedd";
+  _primaryWeapon = new Weapon("Grenade",0,-1,100);
+  _secondaryWeapon = new Weapon("Invocation",0,-1,50);
+  _thirdWeapon = new Weapon("PuttiesCalling",0,-1,50);
+  _fourthWeapon = new Weapon("ApocalypseHole",1200,0,100);
 }
 
 Zedd::~Zedd(){
@@ -296,7 +317,10 @@ void Zedd::setApocalypseHole(int hole){
 /*** Robot PR ***/
 
 RobotPR::RobotPR(){
-
+  _armor = 1000;
+  _healthPoints = 1000;
+  _primaryWeapon = new Weapon("Fist",300,1,60);
+  _secondaryWeapon = new Weapon("Sword",600,3,100);
 }
 
 Robot::~RobotPR(){
@@ -311,7 +335,23 @@ void RobotPR::setArmor(int armor){
   this->_armor = armor;
 }
 
-
+void RobotPR::attack(Unit& u){
+  u.setHealthPoints(u.getHealthPoints()-this->weapon.getStrengh());
+}
 
 
 /*************************************************/
+
+
+/*** TurtleTank ***/
+
+TurtleTank::TurtleTank(){
+    _healthPoints = 10000;
+    _armor = 10000;
+    _name = "TurtleTank";
+    _primaryWeapon = new Weapon("Fatality",10000,30,100);
+}
+
+TurtleTank::~TurtleTank(){
+
+}
