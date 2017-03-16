@@ -15,9 +15,14 @@ public:
   virtual ~Weapon ();
   int getStrengh()const;
   int getAttackRange()const;
+  int getCost()const;
+  std::string getName()const;
 
   void setStrengh(int);
   void setAttackRange(int);
+  void setCost(int);
+  void setName(std::string);
+
 };
 
 

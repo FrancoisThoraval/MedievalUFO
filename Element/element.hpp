@@ -39,7 +39,7 @@ public:
   Element ();
   virtual ~Element ();
 
-  Position getElementOnPos()const;
+  Element getElementOnPos()const;
   void setElementPosition(Position,Element);
  //virtual std::string getName()const=0;
   Element &operator=(const Element &e){
