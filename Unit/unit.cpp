@@ -67,7 +67,7 @@ void Unit::setEnergyCost(int Energy) {
 }
 
 void Unit::move(){
-  
+
 }
 
 void Unit::attack(){
@@ -78,7 +78,7 @@ void Unit::attack(){
 
 /*** Methode Fantassin ***/
 
-Fantassin::Fantassin(){
+Putties::Putties(){
   //_strengh = /** REMPLIR **/     // le nombre d'attaque du fantassin
 //  _name = "Fantassin";
 //  // = 1;
@@ -87,19 +87,19 @@ Fantassin::Fantassin(){
 //  _energyCost = /** REMPLIR **/ // le cout en energie du fantassin
 }
 
-Fantassin::~Fantassin(){
+Putties::~Putties(){
 
 }
 
 
-void Fantassin::attack(Unit& a){
+void Putties::attack(Unit& a){
   a.setHealthPoints(a.getHealthPoints()-(this->getStrengh()));
 }
 
 /*************************/
 
 /*** Methode Archer ***/
-
+/*
 Archer::Archer(){
   //_changeArrowTime = 1;
 //  _typeOfArrow = 1;
@@ -110,8 +110,8 @@ Archer::Archer(){
 //  _healthPoints = /** REMPLIR **/ // les HP du fantassin
 //  _price = /** REMPLIR **/ // Le prix du fantassin
 //  _energyCost = /** REMPLIR **/ // le cout en energie du fantassin
-}
-
+//}
+/*
 Archer::~Archer(){
 
 }
@@ -143,7 +143,7 @@ void Archer::attack(Unit& a){
 
 /*** Methode Cavalier ***/
 
-Cavalier::Cavalier(){
+//Cavalier::Cavalier(){
 //  _strengh = /** REMPLIR **/     // le nombre d'attaque du fantassin
 //  _name = "Cavalier";
 //  _attackRange = 1;
@@ -152,10 +152,10 @@ Cavalier::Cavalier(){
 //  _energyCost = /** REMPLIR **/ // le cout en energie du fantassin
 }
 
-Cavalier::~Cavalier(){
+//Cavalier::~Cavalier(){
 
 }
-
+/*
 void Cavalier::attack(Unit& a){
   a.setHealthPoints(a.getHealthPoints()-(this->getStrengh()));
 }
@@ -163,7 +163,7 @@ void Cavalier::attack(Unit& a){
 /****************************************************************/
 
 /*** Methode Catapulte ***/
-
+/*
 Catapulte::Catapulte(){
   //_reloadTime = /* REMPLIR */
 
@@ -174,8 +174,8 @@ Catapulte::Catapulte(){
 //  _price = /** REMPLIR **/ // Le prix du fantassin
 //  _energyCost = /** REMPLIR **/ // le cout en energie du fantassin
 
-}
-
+//}
+/*
 Catapulte::~Catapulte(){
 
 }
@@ -184,3 +184,134 @@ void Catapulte::attack(Unit& a){
   a.setHealthPoints(a.getHealthPoints()-(this->getStrengh()));
 }
 /*******************************/
+
+
+/*** CLASS POWERRANGER ***/
+
+
+PowerRanger::PowerRanger(){
+  _capacity = false;
+}
+
+PowerRanger::~PowerRanger(){
+
+}
+
+void PowerRanger::setColor(std::string color){
+  this->_color = color;
+}
+
+std::string PowerRanger::getColor()const{
+  return(this->_color);
+}
+
+void PowerRanger::setCapacityRobot(bool cap){
+  this->_capacityRobot = cap;
+}
+
+void PowerRanger::setCapacityWeapon(bool cap){
+  this->_capacityWeapon = cap;
+}
+
+bool PowerRanger::getCapacityRobot()const{
+  return(this->_capacityRobot);
+}
+
+bool PowerRanger::getCapacityWeapon()const{
+  return(this->_capacityWeapon);
+}
+
+/******************************************************/
+
+
+/*** CLASS AYAYAY ASSISTANT ***/
+
+
+AYAYAY_Assistant::AYAYAY_Assistant(){
+
+}
+
+AYAYAY_Assistant::~AYAYAY_Assistant(){
+
+}
+
+void AYAYAY_Assistant::setAdvice(std::string advice){
+  this->_advice = advice;
+}
+
+std::string AYAYAY_Assistant::getAdvice()const{
+  return(this->_advice);
+}
+
+/******************************************************/
+
+
+/*** CLASS ZERG ***/
+
+Zedd::Zedd(){
+
+}
+
+Zedd::~Zedd(){
+
+}
+
+int Zedd::getActiveExpendNade()const{
+  return(this->_activeExpendNade);
+}
+
+int Zedd::getInvocation()const{
+  return(this->_invocation);
+}
+
+int Zedd::getPuttiesCalling()const{
+  return(this->_puttiesCalling);
+}
+
+int Zedd::getApocalypseHole()const{
+  return(this->_apocalypseHole);
+}
+
+void Zedd::setActiceExpendNade(int nade){
+  this->_activeExpendNade = nade;
+}
+
+void Zedd::setInvocation(int invoc){
+  this->_invocation;
+}
+
+void Zedd::setPuttiesCalling(int putties){
+  this->_puttiesCalling = putties;
+}
+
+void Zedd::setApocalypseHole(int hole){
+  this->_apocalypseHole = hole;
+}
+
+
+
+/****************************************************/
+
+
+/*** Robot PR ***/
+
+RobotPR::RobotPR(){
+
+}
+
+Robot::~RobotPR(){
+
+}
+
+int RobotPR::getArmor(){
+  return( this->_armor);
+}
+
+void RobotPR::setArmor(int armor){
+  this->_armor = armor;
+}
+
+
+
+
+/*************************************************/

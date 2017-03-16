@@ -3,7 +3,7 @@
 
 // #include <SFML/Window.hpp>
 #include <SFML/Graphics/Color.hpp>
-#include <SFML/Graphics.hpp>
+#include <Graphics.hpp>
 #include <string>
 #include "splashScreen.hpp"
 #include "menu.hpp"

@@ -6,10 +6,14 @@
 
 /***** Classe des unités, class mères de tous les types d'unites ********/
 class Unit;
-class Fantassin;
-class Archer;
-class Cavalier;
-class Catapulte;
+class Putties;
+class PowerRanger;
+class AYAYAY_Assistant;
+class Zedd;
+class RobotPR;
+//class Archer;
+//class Cavalier;
+//class Catapulte;
 
 class Unit : public Element {
 private:
@@ -44,17 +48,17 @@ public:
 
 /** le fantassin est une unité de base qui n'as rien de special ... il est nul **/
 
-class Fantassin : public Unit {
+class Putties : public Unit {
 private:
-  /*Vide*/
+
 public:
-  Fantassin ();
-  ~Fantassin ();
+  Putties ();
+  ~Putties ();
   void attack(Unit&);
 };
 
 /** l'archer est une unité qui peut tirer a distance et changer de type de fleches pour faire plus mal **/
-
+/*
 class Archer : public Unit {
 private:
   int _changeArrowTime;
@@ -71,10 +75,10 @@ public:
 };
 
 /** le cavalier est une unité qui peut se deplacer sur plusieur cases **/
-
+/*
 class Cavalier : public Unit {
 private:
-  /* Vide */
+
 public:
   Cavalier ();
   ~Cavalier ();
@@ -83,7 +87,7 @@ public:
 };
 
 /** la catapulte est une unité qui peut faire de gros dommages a moyennes distances en zone **/
-
+/*
 class Catapulte : public Unit {
 private:
   int _reloadTime;
@@ -96,5 +100,70 @@ public:
 };
 
 // definir la class Unité cheater du milieu
+*/
+
+class PowerRanger : public Unit {
+private:
+  std::string _color;
+  bool _capacityRobot;
+  bool _capacityWeapon;
+
+public:
+  PowerRanger ();
+  ~PowerRanger();
+  void setColor(string);
+  string getColor()const;
+  void setCapacityRobot(bool);
+  void setCapacityWeapon(bool);
+  bool getCapacityRobot()const;
+  bool getCapacityWeapon()const;
+};
+
+class AYAYAY_Assistant : public Unit{
+private:
+  std::string _advice;
+
+public:
+ AYAYAY_Assistant ();
+ AYAYAY_Assistant ();
+ void setAdvice(std::string);
+ std::string getAdvice()const;
+
+};
+
+
+class Zedd : public Unit{
+private:
+  int _activeExpendNade;
+  int _invocation;
+  int _puttiesCalling;
+  int _apocalypseHole;
+
+public:
+  Zedd ();
+  virtual ~Zedd ();
+  int getActiveExpendNade()const;
+  int getInvocation()const;
+  int getPuttiesCalling()const;
+  int getApocalypseHole()const;
+
+  void setActiceExpendNade(int);
+  void setInvocation(int);
+  void setPuttiesCalling(int);
+  void setApocalypseHole(int);
+};
+
+
+class RobotPR : public Unit {
+private:
+  int _armor;
+
+public:
+  RobotPR ();
+  virtual ~RobotPR ();
+  int getArmor()const;
+  void setArmor(int);
+};
+
 
 #endif
