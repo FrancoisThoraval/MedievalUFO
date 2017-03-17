@@ -38,8 +38,8 @@ protected:
 public:
   Element ();
   virtual ~Element ();
-
-  Element getElementOnPos()const;
+  Position getPos()const;
+  Element getElementOnPos(Position)const;
   void setElementPosition(Position,Element);
  //virtual std::string getName()const=0;
   Element &operator=(const Element &e){

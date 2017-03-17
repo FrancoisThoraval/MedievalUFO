@@ -4,8 +4,6 @@
 //Constructeur
 Unit::Unit(){
   _name = "";
-  _strengh=0;
-  _attackRange =0;
   _healthPoints=0;
   _price=0;
   _movement = 0;
@@ -31,9 +29,7 @@ int Unit::getPrice()const{
   return(this->_price);
 }
 
-int Unit::getEnergyCost()const{
-  return(this->_energyCost);
-}
+
 
 //Setter
 void Unit::setName(std::string name){
@@ -50,9 +46,7 @@ void Unit::setPrice(int price){
   this->_price = price;
 }
 
-void Unit::setEnergyCost(int Energy) {
-  this->_energyCost = Energy;
-}
+
 
 void Unit::move(){
 
@@ -62,27 +56,59 @@ void Unit::attack(){
 
 }
 
+int Unit::getMovement()const {
+  return(this->_movement);
+}
+
+void Unit::setMovement(int mvmt){
+  this->_movement = mvmt;
+}
+
+Weapon* Unit::getPrimaryW()const{
+  return(this->_primaryWeapon);
+}
+
+void Unit::setPrimaryW(Weapon *wp){
+  if(wp = NULL){
+    Weapon *Nwp = new Weapon("Default",5,1,20);
+    this->_primaryWeapon = Nwp;
+  } else {
+    this->_secondaryWeapon = wp;
+  }
+}
+
+
+Weapon* Unit::getSecondary()const{
+  return(this->_secondaryWeapon);
+}
+
+void Unit::setSecondaryW(Weapon *wp){
+  if(wp = NULL){
+    Weapon *Nwp = new Weapon("Default",0,0,0);
+    this->_primaryWeapon = Nwp;
+  } else {
+    this->_secondaryWeapon = wp;
+  }
+}
 /****************************************/
 
 /*** Methode Fantassin ***/
 
 Putties::Putties(){
-  _strengh = 5;    // le nombre d'attaque du Putties
-  _name = "Putties";
-  _healthPoints = 50; // les HP du Putties
-  _price = 5;  // Le prix du Putties
-  _attackRange = 1;
-  _movement = 2;
+
+  this->setName("Putties");
+  this->setHealthPoints(50); // les HP du Putties
+  this->setPrice(5);  // Le prix du Putties
+  this->setMovement(2);
+  _primaryWeapon = new Weapon("fist",5,1,20);
 }
 
 
-Putties::Putties(int strengh,int hp,int range,int mvmt,Weapon *wp){
-  this->_name = "Putties";
-  this->_strengh = strengh;
-  this->_healthPoints = hp;
-  this->_attackRange = range;
-  this->_movement = mvmt;
-  this->_primaryWeapon = wp;
+Putties::Putties(int hp,int mvmt,Weapon *wp){
+  this->setName("Putties");
+  this->setHealthPoints(hp);
+  this->setMovement(mvmt);
+  this->setPrimaryW(wp);
 }
 
 Putties::~Putties(){
@@ -90,8 +116,13 @@ Putties::~Putties(){
 }
 
 
-void Putties::attack(Unit& a){
-  a.setHealthPoints(a.getHealthPoints()-(this->getStrengh()));
+void Putties::attack(Unit& a,int W){
+  if(W == 1){
+      a.setHealthPoints(a.getHealthPoints()-this->getPrimaryW()->getStrengh());
+  }else {
+      a.setHealthPoints(a.getHealthPoints()-this->getSecondaryW()->getStrengh());
+  }
+
 }
 
 /*************************/
@@ -104,22 +135,22 @@ void Putties::attack(Unit& a){
 PowerRanger::PowerRanger(std::string color){
   _capacityRobot = false;
   _capacityWeapon = false;
-  _movement = 4;
+  this->setMovement(4);
   if(color == "red"){
     _primaryWeapon = new Weapon("Fist",60,1,30);
     _secondaryWeapon = new Weapon("Gun",20,10,30);
-    _name = color;
-    _healthPoints = 300; // les HP du Putties
+    this->setName(color);
+    this->setHealthPoints(300); // les HP du Putties
   } else if (color == "green"){
             _primaryWeapon = new Weapon("Fist",20,1,30);
             _secondaryWeapon = new Weapon("Flute",0,0,50);
-            _name = color;
-            _healthPoints = 50; // les HP du Putties
+            this->setName(color);
+            this->setHealthPoints(50); // les HP du Putties
           } else {
                   _primaryWeapon = new Weapon("Fist",40,1,30);
                   _secondaryWeapon = new Weapon("Gun",15,10,30);
-                  _name = color;
-                  _healthPoints = 200; // les HP du Putties
+                  this->setName(color);
+                  this->setHealthPoints(200); // les HP du Putties
           }
 
 }
@@ -192,7 +223,7 @@ Zedd::Zedd(){
   _invocation = 0;
   _puttiesCalling = 0;
   _apocalypseHole = 10;
-  _name = "Zedd";
+  this->setName("Zedd");
   _primaryWeapon = new Weapon("Grenade",0,-1,100);
   _secondaryWeapon = new Weapon("Invocation",0,-1,50);
   _thirdWeapon = new Weapon("PuttiesCalling",0,-1,50);
@@ -248,8 +279,8 @@ void Zedd::ThrowExtendNade(Position pos){
   }
 }
 /**** PAS SUR DE CELLE CI *****/
-void Invocation(Position pos){
-  if(_invocation == 0){
+void Zedd::Invocation(Position pos){
+  if(this->getInvocation() == 0){
     if(this->getElementOnPos(pos)!= NULL){
         int strengh;
         int hp;
@@ -275,7 +306,7 @@ void Invocation(Position pos){
                           mvmt = 4;
                           wp = new Weapon("Lancer de tronc",210,4,60);
                         }
-          Unit *u = new Putties(strengh,hp,range,mvmt,wp);
+          Unit *u = new Putties(hp,mvmt,wp);
           this->setElementPosition(pos,u);                                        // WARNING WARNING WARNING
         } else {
           std::cout<<"Il y a deja quelque chose sur cette case"<<std::endl;
@@ -299,11 +330,11 @@ void PuttiesCalling(Position pos){
 /*** Robot PR ***/
 
 RobotPR::RobotPR(){
-  _armor = 1000;
-  _healthPoints = 1000;
+  this->setArmor(1000);
+  this->setHealthPoints(1000);
   _primaryWeapon = new Weapon("Fist",300,1,60);
   _secondaryWeapon = new Weapon("Sword",600,3,100);
-  _movement = 5;
+  this->setMovement(5);
 }
 
 Robot::~RobotPR(){
@@ -320,9 +351,9 @@ void RobotPR::setArmor(int armor){
 
 void RobotPR::attack(Unit& u,int W){
   if(W ==  1){
-    u.setHealthPoints(u.getHealthPoints()-this->_primaryWeapon.getStrengh());
+    u.setHealthPoints(u.getHealthPoints()-this->getPrimaryW()->getStrengh());
   } else if (W == 2){
-        u.setHealthPoints(u.getHealthPoints()-this->_secondaryWeapon.getStrengh());
+        u.setHealthPoints(u.getHealthPoints()-this->getSecondary()->getStrengh());
   }
 }
 
@@ -333,11 +364,11 @@ void RobotPR::attack(Unit& u,int W){
 /*** TurtleTank ***/
 
 TurtleTank::TurtleTank(){
-    _healthPoints = 10000;
-    _armor = 10000;
-    _name = "TurtleTank";
+    setHealthPoints(10000);
+    setArmor(10000);
+    setName("TurtleTank");
     _primaryWeapon = new Weapon("Fatality",10000,30,100);
-    _movement = 5;
+    setMovement(5);
 }
 
 TurtleTank::~TurtleTank(){
@@ -345,7 +376,7 @@ TurtleTank::~TurtleTank(){
 }
 
 void TurtleTank::attack(Unit& u){
-  u.setHealthPoints(u.getHealthPoints()-this->_primaryWeapon.getStrengh());
+  u.setHealthPoints(u.getHealthPoints()-this->getPrimaryW()->getStrengh());
 }
 /*** Methode Archer ***/
 /*

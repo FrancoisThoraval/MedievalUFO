@@ -1,6 +1,5 @@
 #ifndef game_hpp
 #define game_hpp
-
 // #include <SFML/Window.hpp>
 #include <SFML/Graphics/Color.hpp>
 #include <Graphics.hpp>

@@ -2,6 +2,7 @@
 #define unit_hpp
 
 #include "../Element/element.hpp"
+#include "weapon.hpp"
 #include <string>
 
 /***** Classe des unités, class mères de tous les types d'unites ********/
@@ -30,13 +31,16 @@ public:
   /** Getter **/
   int getHealthPoints()const;
   int getPrice()const;
-  int getEnergyCost()const;
+  int getMovement()const;
+  Weapon* getPrimaryW()const;
+  Weapon* getSecondaryW()const;
   /** Setter **/
   void setName(std::string);
-
   void setHealthPoints(int);
   void setPrice(int);
-  void setEnergyCost(int);
+  void setMovement(int);
+  void setPrimaryW(Weapon*);
+  void setSecondaryW(Weapon*);
   /** Methode **/
   virtual void attack();
   virtual void move();
@@ -52,7 +56,8 @@ private:
 public:
   Putties ();
   ~Putties ();
-  void attack(Unit&);
+  Putties(int,int,Weapon*);
+  void attack(Unit&,int);
 };
 /*
 // definir la class Unité cheater du milieu
@@ -67,8 +72,8 @@ private:
 public:
   PowerRanger ();
   ~PowerRanger();
-  void setColor(string);
-  string getColor()const;
+  void setColor(std::string);
+  std::string getColor()const;
   void setCapacityRobot(bool);
   void setCapacityWeapon(bool);
   bool getCapacityRobot()const;
@@ -81,7 +86,7 @@ private:
 
 public:
  AYAYAY_Assistant ();
- AYAYAY_Assistant ();
+ ~AYAYAY_Assistant ();
  void setAdvice(std::string);
  std::string getAdvice()const;
 
@@ -133,8 +138,8 @@ class TurtleTank : public RobotPR {
 private:
 
 public:
-  TortleTank ();
-  virtual ~TortleTank ();
+  TurtleTank ();
+  virtual ~TurtleTank ();
   void attack(Unit& u);
 
 };
