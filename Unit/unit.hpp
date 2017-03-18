@@ -118,7 +118,7 @@ public:
   void setApocalypseHole(int);
 
   void ThrowExtendNade(Position);
-  void Invocation(Position);
+  void Invocation(Position,Map&);
   //void PuttiesCalling(Position);
   //void ApocalypseHole();
 };

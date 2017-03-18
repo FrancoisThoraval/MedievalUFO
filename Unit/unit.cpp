@@ -279,7 +279,7 @@ void Zedd::ThrowExtendNade(Position pos){
   }
 }
 /**** PAS SUR DE CELLE CI *****/
-void Zedd::Invocation(Position pos){
+void Zedd::Invocation(Position pos,Map& m){
   if(this->getInvocation() == 0){
     if(this->getElementOnPos(pos)!= NULL){
         int strengh;
