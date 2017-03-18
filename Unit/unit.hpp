@@ -2,6 +2,7 @@
 #define unit_hpp
 
 #include "../Element/element.hpp"
+#include "weapon.hpp"
 #include <string>
 
 /***** Classe des unités, class mères de tous les types d'unites ********/
@@ -18,31 +19,32 @@ class RobotPR;
 class Unit : public Element {
 private:
   std::string _name;
-  int _strengh;
-  int _attackRange;
   int _healthPoints;
   int _price;
-  int _energyCost;
+  Weapon *_primaryWeapon;
+  Weapon *_secondaryWeapon;
+  int _movement;
 public:
   Unit ();
   virtual ~Unit ();
   std::string getName()const;
   /** Getter **/
-  int getStrengh()const;
-  int getAttackRange()const;
   int getHealthPoints()const;
   int getPrice()const;
-  int getEnergyCost()const;
+  int getMovement()const;
+  Weapon* getPrimaryW()const;
+  Weapon* getSecondaryW()const;
   /** Setter **/
   void setName(std::string);
-  void setStrengh(int);
-  void setAttackRange(int);
   void setHealthPoints(int);
   void setPrice(int);
-  void setEnergyCost(int);
+  void setMovement(int);
+  void setPrimaryW(Weapon*);
+  void setSecondaryW(Weapon*);
   /** Methode **/
   virtual void attack();
   virtual void move();
+  friend class Weapon;
 
 };
 
@@ -54,51 +56,10 @@ private:
 public:
   Putties ();
   ~Putties ();
-  void attack(Unit&);
+  Putties(int,int,Weapon*);
+  void attack(Unit&,int);
 };
-
-/** l'archer est une unité qui peut tirer a distance et changer de type de fleches pour faire plus mal **/
 /*
-class Archer : public Unit {
-private:
-  int _changeArrowTime;
-  int _typeOfArrow;
-public:
-  Archer ();
-  ~Archer ();
-  void setOnFire();
-  void setOnDefault();
-  int getTypeOfArrow()const;
-  int getChangeOfTime()const;
-  void setChangeOnTime(int);
-  void attack(Unit&);
-};
-
-/** le cavalier est une unité qui peut se deplacer sur plusieur cases **/
-/*
-class Cavalier : public Unit {
-private:
-
-public:
-  Cavalier ();
-  ~Cavalier ();
-  void attack(Unit&);
-
-};
-
-/** la catapulte est une unité qui peut faire de gros dommages a moyennes distances en zone **/
-/*
-class Catapulte : public Unit {
-private:
-  int _reloadTime;
-public:
-  Catapulte ();
-  ~Catapulte ();
-  int getReloadTime()const;
-  void setReloadTime(int);
-  void attack(Unit&);
-};
-
 // definir la class Unité cheater du milieu
 */
 
@@ -111,8 +72,8 @@ private:
 public:
   PowerRanger ();
   ~PowerRanger();
-  void setColor(string);
-  string getColor()const;
+  void setColor(std::string);
+  std::string getColor()const;
   void setCapacityRobot(bool);
   void setCapacityWeapon(bool);
   bool getCapacityRobot()const;
@@ -125,7 +86,7 @@ private:
 
 public:
  AYAYAY_Assistant ();
- AYAYAY_Assistant ();
+ ~AYAYAY_Assistant ();
  void setAdvice(std::string);
  std::string getAdvice()const;
 
@@ -134,10 +95,12 @@ public:
 
 class Zedd : public Unit{
 private:
-  int _activeExpendNade;
+  bool _activeExpendNade;
   int _invocation;
   int _puttiesCalling;
   int _apocalypseHole;
+  Weapon* _thirdWeapon;
+  Weapon* _fourthWeapon;
 
 public:
   Zedd ();
@@ -151,6 +114,11 @@ public:
   void setInvocation(int);
   void setPuttiesCalling(int);
   void setApocalypseHole(int);
+
+  void ThrowExtendNade(Position);
+  void Invocation(Position);
+  //void PuttiesCalling(Position);
+  //void ApocalypseHole();
 };
 
 
@@ -163,7 +131,59 @@ public:
   virtual ~RobotPR ();
   int getArmor()const;
   void setArmor(int);
+  void attack(Unit&, int );
 };
 
+class TurtleTank : public RobotPR {
+private:
 
+public:
+  TurtleTank ();
+  virtual ~TurtleTank ();
+  void attack(Unit& u);
+
+};
+
+/** l'archer est une unité qui peut tirer a distance et changer de type de fleches pour faire plus mal **/
+/*
+class Archer : public Unit {
+private:
+int _changeArrowTime;
+int _typeOfArrow;
+public:
+Archer ();
+~Archer ();
+void setOnFire();
+void setOnDefault();
+int getTypeOfArrow()const;
+int getChangeOfTime()const;
+void setChangeOnTime(int);
+void attack(Unit&);
+};
+
+/** le cavalier est une unité qui peut se deplacer sur plusieur cases **/
+/*
+class Cavalier : public Unit {
+private:
+
+public:
+Cavalier ();
+~Cavalier ();
+void attack(Unit&);
+
+};
+
+/** la catapulte est une unité qui peut faire de gros dommages a moyennes distances en zone **/
+/*
+class Catapulte : public Unit {
+private:
+int _reloadTime;
+public:
+Catapulte ();
+~Catapulte ();
+int getReloadTime()const;
+void setReloadTime(int);
+void attack(Unit&);
+};
+*/
 #endif

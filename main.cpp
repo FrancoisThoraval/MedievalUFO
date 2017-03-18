@@ -1,5 +1,5 @@
-#include "Game/game.hpp"
 
+#include "Game/game.hpp"
 int main()
 {
      Game g(800,600);

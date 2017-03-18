@@ -1,4 +1,5 @@
 #include "game.hpp"
+
 #include <iostream>
 Game::Game(int x, int y){
      _gameState = 0; //Initialization

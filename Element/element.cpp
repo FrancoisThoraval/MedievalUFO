@@ -10,8 +10,12 @@ Element::~Element(){
 
 }
 
-Position Element::getElementOnPos()const{
+Position Element::getPosition()const{
   return(this->_pos);
+}
+
+Element Element::getElementOnPos(Position pos)const{
+  return(pos);
 }
 
 void Element::setElementPosition(Position pos,Element elt){
