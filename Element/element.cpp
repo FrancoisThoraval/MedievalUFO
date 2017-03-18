@@ -14,13 +14,14 @@ Position Element::getPosition()const{
   return(this->_pos);
 }
 
-Element Element::getElementOnPos(Position pos)const{
-  return(pos);
+Element Element::getElementOnPos(Position pos){
+  return(*this);
 }
 
-void Element::setElementPosition(Position pos,Element elt){
+void Element::setElementPosition(Position pos){
 
 }
+
 
 //std::string Element::getName(){
 
@@ -32,6 +33,11 @@ void Element::setElementPosition(Position pos,Element elt){
 
 Position::Position(){
 
+}
+
+Position::Position(int x,int y){
+     setX(x);
+     setY(y);
 }
 
 Position::~Position(){

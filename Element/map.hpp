@@ -5,18 +5,16 @@
 
 #include "../Scenery/scenery.hpp"
 #include <iostream>
-#include "../Unit/unit.hpp"
-const int TILESIZEX = 20;
-const int TILESIZEY = 20;
+// #include "../Unit/unit.hpp"
+const int TILESIZEX = 32;
+const int TILESIZEY = 32;
 
 class Map {
 protected:
-  Unit **_world1;
+  // Unit **_world1;
   Scenery **_world2;
   int _sizeX;
   int _sizeY;
-  sf::Texture texture;
-  sf::Sprite sprite;
 public:
   Map (int, int);
   ~Map ();
@@ -25,7 +23,7 @@ public:
   std::string getNameOfElement(Position)const;
   void setElement(Position,Element);
   void drawWorld(sf::RenderWindow &);
-  void createTile(int,int,sf::RenderWindow &);
+  void createTile(int,int,sf::RenderWindow &,sf::Texture);
 
 };
 

@@ -6,6 +6,7 @@
 #include <string>
 #include "splashScreen.hpp"
 #include "menu.hpp"
+#include "../Element/map.hpp"
 
 // _gameState  ->   0    =    Initialization
 // _gameState  ->   1    =    Splash
@@ -25,6 +26,7 @@ private:
      int _xWindow;
      int _yWindow;
      bool _isFullScreen;
+     // bool _isPlaying;
 public:
      Game(int x, int y);
      ~Game();

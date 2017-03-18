@@ -17,6 +17,7 @@ private:
   int _y;
 public:
   Position ();
+  Position (int,int);
   virtual ~Position ();
   /** Getter **/
   int getX()const;
@@ -34,17 +35,18 @@ public:
 class Element {
 protected:
   Position _pos;
-
 public:
   Element ();
   virtual ~Element ();
-  Position getPos()const;
-  Element getElementOnPos(Position)const;
-  void setElementPosition(Position,Element);
+  Position getPosition()const;
+  Element getElementOnPos(Position);
+  void setElementPosition(Position);
  //virtual std::string getName()const=0;
   Element &operator=(const Element &e){
     this->_pos = e._pos;
     return (*this);
   }
+
+
 };
 #endif

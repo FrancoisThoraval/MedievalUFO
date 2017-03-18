@@ -35,6 +35,8 @@ bool Game::isExiting(){
 
 void Game::gameLoop(){
      sf::Event currentEvent;
+     sf::Texture t;
+     t.loadFromFile("./Textures/water.png");
      while (_window.pollEvent(currentEvent)) {
           if (currentEvent.type == sf::Event::KeyReleased) {
                if (currentEvent.key.code == sf::Keyboard::F) {
@@ -60,6 +62,9 @@ void Game::gameLoop(){
                }
                case 4 : {
                     _window.clear(sf::Color(0,0,0));
+                    Map m(800,600);
+                    m.drawWorld(_window);
+
                     _window.display();
                     if (currentEvent.type == sf::Event::Closed) {
                          _gameState = 5; //End
@@ -69,6 +74,9 @@ void Game::gameLoop(){
                         if(currentEvent.key.code == sf::Keyboard::Escape){
                          showMenu();
                          }
+                    }
+                    for (int i = 0; i < 999999999; i++) {
+                         /* code */
                     }
                break;
                }
