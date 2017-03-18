@@ -35,7 +35,7 @@ void Map::setElementW2(Position pos,Scenery u){
     this->_world2[pos.getX()][pos.getY()]=u;
   }
 
-Scenery Map::getElement(Position pos)const{
+Scenery Map::getElementW2(Position pos)const{
     return(this->_world2[pos.getX()][pos.getY()]);
 }
 

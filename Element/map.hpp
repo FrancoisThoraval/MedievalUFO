@@ -1,7 +1,7 @@
 #ifndef map_hpp
 #define map_hpp
 
-#include "element.hpp"
+// #include "element.hpp"
 
 #include "../Scenery/scenery.hpp"
 #include <iostream>
@@ -11,7 +11,7 @@ const int TILESIZEY = 32;
 
 class Map {
 protected:
-  // Unit **_world1;
+  Unit **_world1;
   Scenery **_world2;
   int _sizeX;
   int _sizeY;

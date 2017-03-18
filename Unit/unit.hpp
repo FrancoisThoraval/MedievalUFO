@@ -2,7 +2,7 @@
 #define unit_hpp
 
 #include "../Element/element.hpp"
-#include "../Element/map.hpp"
+// #include "../Element/map.hpp"
 #include "weapon.hpp"
 #include <string>
 
@@ -119,7 +119,7 @@ public:
   void setApocalypseHole(int);
 
   void ThrowExtendNade(Position);
-  void Invocation(Position,Map&);
+  void Invocation(Position);
   //void PuttiesCalling(Position);
   //void ApocalypseHole();
 };
