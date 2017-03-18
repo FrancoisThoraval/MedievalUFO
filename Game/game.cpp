@@ -4,6 +4,7 @@ Game::Game(int x, int y){
      _gameState = 0; //Initialization
      _xWindow = x;
      _yWindow = y;
+     _isFullScreen = false;
 }
 
 Game::~Game(){
@@ -14,7 +15,7 @@ void Game::start(){
      if (_gameState != 0)
           return;
 
-     _window.create(sf::VideoMode(_xWindow,_yWindow,32),"Medieval UFO");
+     _window.create(sf::VideoMode(_xWindow,_yWindow,32),"Medieval UFO",sf::Style::Default);
      _gameState = 2;
 
      while (!isExiting()) {
@@ -34,6 +35,19 @@ bool Game::isExiting(){
 void Game::gameLoop(){
      sf::Event currentEvent;
      while (_window.pollEvent(currentEvent)) {
+          if (currentEvent.type == sf::Event::KeyReleased) {
+               if (currentEvent.key.code == sf::Keyboard::F) {
+                    std::cout << "Hai premuto F" << '\n';
+                    if (_isFullScreen) {
+                         _window.create(sf::VideoMode(_xWindow,_yWindow,32),"Medieval UFO",sf::Style::Default);
+                         _isFullScreen = false;
+                    }else{
+                         _window.create(sf::VideoMode(_xWindow,_yWindow,32),"Medieval UFO",sf::Style::Fullscreen);
+                         _isFullScreen = true;
+                    }
+
+               }
+          }
           switch (_gameState) {
                case 2 : {
                     showSpashScreen();
@@ -83,8 +97,8 @@ void Game::showMenu(){
                break;
      }
      if (_gameState == 4) {
-          std::cout << "Vamos a jugar ! " << '\n';
+          std::cout << "Si parte ! " << '\n';
      }else if(_gameState == 5){
-          std::cout << "Adios amigo !" << '\n';
+          std::cout << "Adio amico !" << '\n';
      }
 }

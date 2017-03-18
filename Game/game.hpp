@@ -3,7 +3,7 @@
 
 // #include <SFML/Window.hpp>
 #include <SFML/Graphics/Color.hpp>
-#include <Graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include <string>
 #include "splashScreen.hpp"
 #include "menu.hpp"
@@ -25,6 +25,7 @@ private:
      sf::RenderWindow _window;
      int _xWindow;
      int _yWindow;
+     bool _isFullScreen;
 public:
      Game(int x, int y);
      ~Game();
