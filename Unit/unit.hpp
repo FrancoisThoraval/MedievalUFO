@@ -118,7 +118,7 @@ public:
   void setApocalypseHole(int);
 
   void ThrowExtendNade(Position);
-  void Invocation(Position,Map& m);
+  void Invocation(Position);
   //void PuttiesCalling(Position);
   //void ApocalypseHole();
 };
@@ -146,8 +146,8 @@ public:
 
 };
 
-/** l'archer est une unité qui peut tirer a distance et changer de type de fleches pour faire plus mal **/
-/*
+/* l'archer est une unité qui peut tirer a distance et changer de type de fleches pour faire plus mal
+
 class Archer : public Unit {
 private:
 int _changeArrowTime;
@@ -163,8 +163,8 @@ void setChangeOnTime(int);
 void attack(Unit&);
 };
 
-/** le cavalier est une unité qui peut se deplacer sur plusieur cases **/
-/*
+ le cavalier est une unité qui peut se deplacer sur plusieur cases
+
 class Cavalier : public Unit {
 private:
 
@@ -175,8 +175,8 @@ void attack(Unit&);
 
 };
 
-/** la catapulte est une unité qui peut faire de gros dommages a moyennes distances en zone **/
-/*
+ la catapulte est une unité qui peut faire de gros dommages a moyennes distances en zone
+
 class Catapulte : public Unit {
 private:
 int _reloadTime;
