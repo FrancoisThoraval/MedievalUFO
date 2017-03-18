@@ -3,6 +3,7 @@
 
 //#include <iostream>
 #include <string>
+#include "map.hpp"
 #include <SFML/Graphics.hpp>
 
 
@@ -41,6 +42,8 @@ public:
   Position getPosition()const;
   Element getElementOnPos(Position);
   void setElementPosition(Position);
+  friend class Map;
+
  //virtual std::string getName()const=0;
   Element &operator=(const Element &e){
     this->_pos = e._pos;

@@ -23,12 +23,24 @@ Map::~Map(){
     delete _world2;
 }
 
+Unit Map::getElementW1(Position pos)const{
+  return(this->_world1[pos.getX()][pos.getY()]);
+}
+
+void Map::setElementW1(Position pos,Unit u){
+  this->_world1[pos.getX()][pos.getY()]=u;
+}
+
+void Map::setElementW2(Position pos,Scenery u){
+    this->_world2[pos.getX()][pos.getY()]=u;
+  }
+
 Scenery Map::getElement(Position pos)const{
     return(this->_world2[pos.getX()][pos.getY()]);
 }
 
 std::string Map::getNameOfElement(Position pos)const{
-    return(this->getElement(pos).getName());
+    return(this->getElementW2(pos).getName());
 }
 
 

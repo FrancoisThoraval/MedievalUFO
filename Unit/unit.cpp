@@ -185,9 +185,9 @@ bool PowerRanger::getCapacityWeapon()const{
 
 void PowerRanger::attack(Unit& u,int W){
   if(W == 1){
-      u.setHealthPoints(u.getHealthPoints()-this->_primaryWeapon.getStrengh());
+      u.setHealthPoints(u.getHealthPoints()-this->_primaryWeapon->getStrengh());
   }else {
-      u.setHealthPoints(u.getHealthPoints()-this->_secondaryWeapon.getStrengh());
+      u.setHealthPoints(u.getHealthPoints()-this->_secondaryWeapon->getStrengh());
   }
 
 }
@@ -279,7 +279,7 @@ void Zedd::ThrowExtendNade(Position pos){
   }
 }
 /**** PAS SUR DE CELLE CI *****/
-void Zedd::Invocation(Position pos){
+void Zedd::Invocation(Position pos,Map& m){
   if(this->getInvocation() == 0){
     if(this->getElementOnPos(pos)!= NULL){
         int strengh;
@@ -337,11 +337,11 @@ RobotPR::RobotPR(){
   this->setMovement(5);
 }
 
-Robot::~RobotPR(){
+RobotPR::~RobotPR(){
 
 }
 
-int RobotPR::getArmor(){
+int RobotPR::getArmor()const{
   return( this->_armor);
 }
 

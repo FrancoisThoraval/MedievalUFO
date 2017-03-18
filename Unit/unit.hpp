@@ -2,6 +2,7 @@
 #define unit_hpp
 
 #include "../Element/element.hpp"
+#include "../Element/map.hpp"
 #include "weapon.hpp"
 #include <string>
 
@@ -21,9 +22,10 @@ private:
   std::string _name;
   int _healthPoints;
   int _price;
+  int _movement;
+protected:
   Weapon *_primaryWeapon;
   Weapon *_secondaryWeapon;
-  int _movement;
 public:
   Unit ();
   virtual ~Unit ();
@@ -116,7 +118,7 @@ public:
   void setApocalypseHole(int);
 
   void ThrowExtendNade(Position);
-  void Invocation(Position);
+  void Invocation(Position,Map& m);
   //void PuttiesCalling(Position);
   //void ApocalypseHole();
 };
