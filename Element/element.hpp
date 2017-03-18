@@ -3,6 +3,7 @@
 
 //#include <iostream>
 #include <string>
+#include "map.hpp"
 #include <SFML/Graphics.hpp>
 
 
@@ -38,6 +39,7 @@ protected:
 public:
   Element ();
   virtual ~Element ();
+  friend class Map;
   Position getPos()const;
   Element getElementOnPos(Position)const;
   void setElementPosition(Position,Element);

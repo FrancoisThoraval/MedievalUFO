@@ -21,7 +21,10 @@ public:
   Map (int, int);
   ~Map ();
   friend class Element;
-  Scenery getElement(Position)const;
+  Scenery getElementW2(Position)const;
+  Unit getElementW1(Position)const;
+  void setElementW1(Position,Unit);
+  void setElementW2(Position,Scenery);
   std::string getNameOfElement(Position)const;
   void setElement(Position,Element);
   void drawWorld(sf::RenderWindow &);
