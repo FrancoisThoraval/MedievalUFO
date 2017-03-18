@@ -281,25 +281,25 @@ void Zedd::ThrowExtendNade(Position pos){
 /**** PAS SUR DE CELLE CI *****/
 void Zedd::Invocation(Position pos,Map& m){
   if(this->getInvocation() == 0){
-    if(this->getElementOnPos(pos)!= NULL){
+    if(m.getElementW1(pos)!= NULL){
         int strengh;
         int hp;
         int range;
         int mvmt;
         Weapon *wp;
-        if((this->getElementOnPos(pos)).getName()=="Water"){
+        if((m.getElementW2(pos).getName()=="Water"){
           strengh = 60;
           hp = 250;
           range = 1;
           mvmt = 1;
           wp = new Weapon("Canon a eau",150,1,50);
-        } else if ((this->getElementOnPos(pos)).getName()=="Hill"){
+        } else if (m.getElementW2(pos).getName()=="Hill"){
                   strengh = 70;
                   hp = 300;
                   range = 3;
                   mvmt = 3;
                   wp = new Weapon("Lancer de terre",120,3,50);
-                } else if((this->getElementOnPos(pos)).getName()=="Tree"){
+                } else if(m.getElementW2(pos).getName()=="Tree"){
                           strengh = 50;
                           hp = 150;
                           range = 1;

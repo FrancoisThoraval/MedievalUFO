@@ -13,6 +13,7 @@ class PowerRanger;
 class AYAYAY_Assistant;
 class Zedd;
 class RobotPR;
+class TurtleTank;
 //class Archer;
 //class Cavalier;
 //class Catapulte;
