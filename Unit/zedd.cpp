@@ -64,7 +64,7 @@ void Zedd::ThrowExtendNade(Position pos,Map *m){
 /**** PAS SUR DE CELLE CI *****/
 void Zedd::Invocation(Position pos, Map *m){
   if(this->getInvocation() == 0){
-    if(m->getElementW1(pos)!= NULL){
+    if(m->getNameOfElement(pos)!= ""){
         int strengh;
         int hp;
         int range;

@@ -6,20 +6,20 @@
 Map::Map(int sizeX, int sizeY){
     this->_sizeX = sizeX;
     this->_sizeY = sizeY;
-    // _world1 = new Unit* [_sizeX];
+    _world1 = new Unit* [_sizeX];
     _world2 = new Scenery* [_sizeX];
     for(int i =0; i <_sizeX;++i){
-     //    _world1[i]= new Unit[_sizeY];
+        _world1[i]= new Unit[_sizeY];
         _world2[i]= new Scenery[_sizeY];
     }
 }
 
 Map::~Map(){
     for(int i =0; i <_sizeY;++i){
-     //    delete _world1[i];
+        delete _world1[i];
         delete _world2[i];
     }
-    // delete _world1;
+    delete _world1;
     delete _world2;
 }
 
@@ -27,11 +27,11 @@ Unit Map::getElementW1(Position pos)const{
   return(this->_world1[pos.getX()][pos.getY()]);
 }
 
-void Map::setElementW1(Position pos,Unit u){
+void Map::setElementW1(Position pos,Unit &u){
   this->_world1[pos.getX()][pos.getY()]=u;
 }
 
-void Map::setElementW2(Position pos,Scenery u){
+void Map::setElementW2(Position pos,Scenery &u){
     this->_world2[pos.getX()][pos.getY()]=u;
   }
 
