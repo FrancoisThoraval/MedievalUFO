@@ -1,6 +1,10 @@
 #include "weapon.hpp"
 
 
+Weapon::Weapon(){
+     
+}
+
 Weapon::Weapon(std::string name, int strengh,int range,int cost){
   this->_strengh = strengh;
   this->_attackRange = range;

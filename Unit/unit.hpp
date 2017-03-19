@@ -2,18 +2,18 @@
 #define unit_hpp
 
 #include "../Element/element.hpp"
-// #include "../Element/map.hpp"
+#include "../Element/map.hpp"
 #include "weapon.hpp"
 #include <string>
 
 /***** Classe des unités, class mères de tous les types d'unites ********/
-class Unit;
+// class Unit;
 class Putties;
 class PowerRanger;
 class AYAYAY_Assistant;
-class Zedd;
 class RobotPR;
 class TurtleTank;
+class Map;
 //class Archer;
 //class Cavalier;
 //class Catapulte;
@@ -62,9 +62,6 @@ public:
   Putties(int,int,Weapon*);
   void attack(Unit&,int);
 };
-/*
-// definir la class Unité cheater du milieu
-*/
 
 class PowerRanger : public Unit {
 private:
@@ -74,6 +71,7 @@ private:
 
 public:
   PowerRanger ();
+  PowerRanger (std::string);
   ~PowerRanger();
   void setColor(std::string);
   std::string getColor()const;
@@ -81,6 +79,8 @@ public:
   void setCapacityWeapon(bool);
   bool getCapacityRobot()const;
   bool getCapacityWeapon()const;
+
+  void attack(Unit &, int);
 };
 
 class AYAYAY_Assistant : public Unit{
@@ -94,7 +94,6 @@ public:
  std::string getAdvice()const;
 
 };
-
 
 class Zedd : public Unit{
 private:
@@ -119,11 +118,10 @@ public:
   void setApocalypseHole(int);
 
   void ThrowExtendNade(Position);
-  void Invocation(Position);
+  void Invocation(Position,Map &);
   //void PuttiesCalling(Position);
   //void ApocalypseHole();
 };
-
 
 class RobotPR : public Unit {
 private:

@@ -3,8 +3,8 @@ LIBS	=	-lsfml-graphics -lsfml-window -lsfml-system
 all: main
 	rm *.o
 
-./main: game menu splashScreen element map scenery unit main.cpp
-	g++ -Wall -o programme menu.o game.o splashScreen.o element.o map.o scenery.o main.cpp $(LIBS)
+./main: game menu splashScreen element map scenery unit zedd main.cpp
+	g++ -Wall -o programme zedd.o menu.o game.o splashScreen.o element.o map.o scenery.o main.cpp $(LIBS)
 
 element: ./Element/element.cpp
 	g++ -Wall -c -o element.o ./Element/element.cpp $(LIBS)
@@ -26,3 +26,6 @@ splashScreen: ./Game/splashScreen.cpp
 
 menu: ./Game/menu.cpp
 	g++ -Wall -c -o menu.o ./Game/menu.cpp $(LIBS)
+
+zedd: ./Unit/zedd.cpp
+	g++ -Wall -c -o zedd.o ./Unit/zedd.cpp  $(LIBS)

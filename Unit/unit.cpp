@@ -69,7 +69,7 @@ Weapon* Unit::getPrimaryW()const{
 }
 
 void Unit::setPrimaryW(Weapon *wp){
-  if(wp = NULL){
+  if(wp == NULL){
     Weapon *Nwp = new Weapon("Default",5,1,20);
     this->_primaryWeapon = Nwp;
   } else {
@@ -78,12 +78,12 @@ void Unit::setPrimaryW(Weapon *wp){
 }
 
 
-Weapon* Unit::getSecondary()const{
+Weapon* Unit::getSecondaryW()const{
   return(this->_secondaryWeapon);
 }
 
 void Unit::setSecondaryW(Weapon *wp){
-  if(wp = NULL){
+  if(wp == NULL){
     Weapon *Nwp = new Weapon("Default",0,0,0);
     this->_primaryWeapon = Nwp;
   } else {
@@ -127,10 +127,113 @@ void Putties::attack(Unit& a,int W){
 
 /*************************/
 
+/*** CLASS ZERG ***/
+
+Zedd::Zedd(){
+  _activeExpendNade = false;
+  _invocation = 0;
+  _puttiesCalling = 0;
+  _apocalypseHole = 10;
+  this->setName("Zedd");
+  _primaryWeapon = new Weapon("Grenade",0,-1,100);
+  _secondaryWeapon = new Weapon("Invocation",0,-1,50);
+  _thirdWeapon = new Weapon("PuttiesCalling",0,-1,50);
+  _fourthWeapon = new Weapon("ApocalypseHole",1200,0,100);
+}
+
+Zedd::~Zedd(){
+
+}
+
+int Zedd::getActiveExpendNade()const{
+  return(this->_activeExpendNade);
+}
+
+int Zedd::getInvocation()const{
+  return(this->_invocation);
+}
+
+int Zedd::getPuttiesCalling()const{
+  return(this->_puttiesCalling);
+}
+
+int Zedd::getApocalypseHole()const{
+  return(this->_apocalypseHole);
+}
+
+void Zedd::setActiceExpendNade(int nade){
+  this->_activeExpendNade = nade;
+}
+
+void Zedd::setInvocation(int invoc){
+  this->_invocation;
+}
+
+void Zedd::setPuttiesCalling(int putties){
+  this->_puttiesCalling = putties;
+}
+
+void Zedd::setApocalypseHole(int hole){
+  this->_apocalypseHole = hole;
+}
+
+void Zedd::ThrowExtendNade(Position pos){
+  if(this->getActiveExpendNade()==true){
+    if((this->getElementOnPos(pos)).getName()=="Putties") {
+      (this->getElementOnPos(pos)).setHealthPoints(1500);
+      (this->getElementOnPos(pos)).setStrengh(200);
+    } else {
+      std::cout <<"Mauvais personnage a boost"<<std::endl;
+    }
+  } else {
+      std::cout<<"Tu ne peux pas encore utiliser cette capacité"<<std::endl;
+  }
+}
+/**** PAS SUR DE CELLE CI *****/
+void Zedd::Invocation(Position pos, Map &m){
+  if(this->getInvocation() == 0){
+    if(m.getElementW1(pos)!= NULL){
+        int strengh;
+        int hp;
+        int range;
+        int mvmt;
+        Weapon *wp;
+        if((m.getElementW2(pos).getName()=="Water"){
+          strengh = 60;
+          hp = 250;
+          range = 1;
+          mvmt = 1;
+          wp = new Weapon("Canon a eau",150,1,50);
+        } else if (m.getElementW2(pos).getName()=="Hill"){
+                  strengh = 70;
+                  hp = 300;
+                  range = 3;
+                  mvmt = 3;
+                  wp = new Weapon("Lancer de terre",120,3,50);
+                } else if(m.getElementW2(pos).getName()=="Tree"){
+                          strengh = 50;
+                          hp = 150;
+                          range = 1;
+                          mvmt = 4;
+                          wp = new Weapon("Lancer de tronc",210,4,60);
+                        }
+          Unit *u = new Putties(hp,mvmt,wp);
+          this->setElementPosition(pos,u);                                        // WARNING WARNING WARNING
+        } else {
+          std::cout<<"Il y a deja quelque chose sur cette case"<<std::endl;
+        }
+  } else {
+    std::cout<<"Tu ne peux pas encore utiliser cette capacite"<<std::endl;
+  }
+}
 
 
 /*** CLASS POWERRANGER ***/
 
+
+PowerRanger::PowerRanger(){
+
+}
 
 PowerRanger::PowerRanger(std::string color){
   _capacityRobot = false;
@@ -216,105 +319,7 @@ std::string AYAYAY_Assistant::getAdvice()const{
 /******************************************************/
 
 
-/*** CLASS ZERG ***/
 
-Zedd::Zedd(){
-  _activeExpendNade = false;
-  _invocation = 0;
-  _puttiesCalling = 0;
-  _apocalypseHole = 10;
-  this->setName("Zedd");
-  _primaryWeapon = new Weapon("Grenade",0,-1,100);
-  _secondaryWeapon = new Weapon("Invocation",0,-1,50);
-  _thirdWeapon = new Weapon("PuttiesCalling",0,-1,50);
-  _fourthWeapon = new Weapon("ApocalypseHole",1200,0,100);
-}
-
-Zedd::~Zedd(){
-
-}
-
-int Zedd::getActiveExpendNade()const{
-  return(this->_activeExpendNade);
-}
-
-int Zedd::getInvocation()const{
-  return(this->_invocation);
-}
-
-int Zedd::getPuttiesCalling()const{
-  return(this->_puttiesCalling);
-}
-
-int Zedd::getApocalypseHole()const{
-  return(this->_apocalypseHole);
-}
-
-void Zedd::setActiceExpendNade(int nade){
-  this->_activeExpendNade = nade;
-}
-
-void Zedd::setInvocation(int invoc){
-  this->_invocation;
-}
-
-void Zedd::setPuttiesCalling(int putties){
-  this->_puttiesCalling = putties;
-}
-
-void Zedd::setApocalypseHole(int hole){
-  this->_apocalypseHole = hole;
-}
-
-void Zedd::ThrowExtendNade(Position pos){
-  if(this->getActiveExpendNade()==true){
-    if((this->getElementOnPos(pos)).getName()=="Putties") {
-      (this->getElementOnPos(pos)).setHealthPoints(1500);
-      (this->getElementOnPos(pos)).setStrengh(200);
-    } else {
-      std::cout <<"Mauvais personnage a boost"<<std::endl;
-    }
-  } else {
-      std::cout<<"Tu ne peux pas encore utiliser cette capacité"<<std::endl;
-  }
-}
-/**** PAS SUR DE CELLE CI *****/
-void Zedd::Invocation(Position pos){
-  if(this->getInvocation() == 0){
-    if(m.getElementW1(pos)!= NULL){
-        int strengh;
-        int hp;
-        int range;
-        int mvmt;
-        Weapon *wp;
-        if((m.getElementW2(pos).getName()=="Water"){
-          strengh = 60;
-          hp = 250;
-          range = 1;
-          mvmt = 1;
-          wp = new Weapon("Canon a eau",150,1,50);
-        } else if (m.getElementW2(pos).getName()=="Hill"){
-                  strengh = 70;
-                  hp = 300;
-                  range = 3;
-                  mvmt = 3;
-                  wp = new Weapon("Lancer de terre",120,3,50);
-                } else if(m.getElementW2(pos).getName()=="Tree"){
-                          strengh = 50;
-                          hp = 150;
-                          range = 1;
-                          mvmt = 4;
-                          wp = new Weapon("Lancer de tronc",210,4,60);
-                        }
-          Unit *u = new Putties(hp,mvmt,wp);
-          this->setElementPosition(pos,u);                                        // WARNING WARNING WARNING
-        } else {
-          std::cout<<"Il y a deja quelque chose sur cette case"<<std::endl;
-        }
-  } else {
-    std::cout<<"Tu ne peux pas encore utiliser cette capacite"<<std::endl;
-  }
-}
 
 /*
 void PuttiesCalling(Position pos){
@@ -327,7 +332,7 @@ void PuttiesCalling(Position pos){
 /****************************************************/
 
 
-/*** Robot PR ***/
+// Robot PR
 
 RobotPR::RobotPR(){
   this->setArmor(1000);
@@ -353,7 +358,7 @@ void RobotPR::attack(Unit& u,int W){
   if(W ==  1){
     u.setHealthPoints(u.getHealthPoints()-this->getPrimaryW()->getStrengh());
   } else if (W == 2){
-        u.setHealthPoints(u.getHealthPoints()-this->getSecondary()->getStrengh());
+        u.setHealthPoints(u.getHealthPoints()-this->getSecondaryW()->getStrengh());
   }
 }
 
@@ -379,8 +384,8 @@ void TurtleTank::attack(Unit& u){
   u.setHealthPoints(u.getHealthPoints()-this->getPrimaryW()->getStrengh());
 }
 /*** Methode Archer ***/
-/*
-Archer::Archer(){
+
+// Archer::Archer(){
 //_changeArrowTime = 1;
 //  _typeOfArrow = 1;
 
@@ -391,34 +396,34 @@ Archer::Archer(){
 //  _price = /** REMPLIR **/ // Le prix du fantassin
 //  _energyCost = /** REMPLIR **/ // le cout en energie du fantassin
 //}
-/*
-Archer::~Archer(){
 
-}
-
-void Archer::setOnFire(){
-_typeOfArrow = 2;
-}
-
-void Archer::setOnDefault(){
-_typeOfArrow = 1;
-}
-
-int Archer::getTypeOfArrow()const{
-return(this->_typeOfArrow);
-}
-
-int Archer::getChangeOfTime()const{
-return(this->_changeArrowTime);
-}
-
-void Archer::setChangeOnTime(int Arrowtime){
-this->_changeArrowTime = Arrowtime;
-}
-
-void Archer::attack(Unit& a){
-a.setHealthPoints(a.getHealthPoints()-(this->getStrengh()));
-}
+// Archer::~Archer(){
+//
+// }
+//
+// void Archer::setOnFire(){
+// _typeOfArrow = 2;
+// }
+//
+// void Archer::setOnDefault(){
+// _typeOfArrow = 1;
+// }
+//
+// int Archer::getTypeOfArrow()const{
+// return(this->_typeOfArrow);
+// }
+//
+// int Archer::getChangeOfTime()const{
+// return(this->_changeArrowTime);
+// }
+//
+// void Archer::setChangeOnTime(int Arrowtime){
+// this->_changeArrowTime = Arrowtime;
+// }
+//
+// void Archer::attack(Unit& a){
+// a.setHealthPoints(a.getHealthPoints()-(this->getStrengh()));
+// }
 /************************************************/
 
 /*** Methode Cavalier ***/
@@ -435,16 +440,16 @@ a.setHealthPoints(a.getHealthPoints()-(this->getStrengh()));
 //Cavalier::~Cavalier(){
 
 //}
-/*
-void Cavalier::attack(Unit& a){
-a.setHealthPoints(a.getHealthPoints()-(this->getStrengh()));
-}
+//
+// void Cavalier::attack(Unit& a){
+// a.setHealthPoints(a.getHealthPoints()-(this->getStrengh()));
+// }
 
 /****************************************************************/
 
 /*** Methode Catapulte ***/
-/*
-Catapulte::Catapulte(){
+
+// Catapulte::Catapulte(){
 //_reloadTime = /* REMPLIR */
 
 //  _strengh = /** REMPLIR **/     // le nombre d'attaque du fantassin
@@ -455,12 +460,12 @@ Catapulte::Catapulte(){
 //  _energyCost = /** REMPLIR **/ // le cout en energie du fantassin
 
 //}
-/*
-Catapulte::~Catapulte(){
 
-}
-
-void Catapulte::attack(Unit& a){
-a.setHealthPoints(a.getHealthPoints()-(this->getStrengh()));
-}
+// Catapulte::~Catapulte(){
+//
+// }
+//
+// void Catapulte::attack(Unit& a){
+// a.setHealthPoints(a.getHealthPoints()-(this->getStrengh()));
+// }
 /*******************************/

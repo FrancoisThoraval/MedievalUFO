@@ -12,6 +12,7 @@ private:
   std::string _name;
 public:
   Weapon ();
+  Weapon(std::string,int,int,int);
   virtual ~Weapon ();
   int getStrengh()const;
   int getAttackRange()const;

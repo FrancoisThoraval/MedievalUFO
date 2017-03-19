@@ -9,6 +9,8 @@
 const int TILESIZEX = 32;
 const int TILESIZEY = 32;
 
+class Unit;
+
 class Map {
 protected:
   Unit **_world1;
