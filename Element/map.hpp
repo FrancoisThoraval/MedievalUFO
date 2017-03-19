@@ -23,10 +23,10 @@ public:
   friend class Element;
   Scenery getElementW2(Position)const;
   Unit getElementW1(Position)const;
-  void setElementW1(Position,Unit);
-  void setElementW2(Position,Scenery);
+  void setElementW1(Position,Unit*);
+  void setElementW2(Position,Scenery*);
   std::string getNameOfElement(Position)const;
-  void setElement(Position,Element);
+  void setElement(Position,Element*);
   void drawWorld(sf::RenderWindow &);
   void createTile(int,int,sf::RenderWindow &,sf::Texture);
 

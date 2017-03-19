@@ -30,7 +30,7 @@ public:
   void setPuttiesCalling(int);
   void setApocalypseHole(int);
 
-  void ThrowExtendNade(Position);
+  void ThrowExtendNade(Position,Map*);
   void Invocation(Position,Map*);
   //void PuttiesCalling(Position);
   //void ApocalypseHole();

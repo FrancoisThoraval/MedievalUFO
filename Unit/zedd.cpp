@@ -37,7 +37,7 @@ void Zedd::setActiceExpendNade(int nade){
 }
 
 void Zedd::setInvocation(int invoc){
-  this->_invocation;
+  this->_invocation = invoc;
 }
 
 void Zedd::setPuttiesCalling(int putties){
@@ -48,11 +48,12 @@ void Zedd::setApocalypseHole(int hole){
   this->_apocalypseHole = hole;
 }
 
-void Zedd::ThrowExtendNade(Position pos){
+void Zedd::ThrowExtendNade(Position pos,Map *m){
   if(this->getActiveExpendNade()==true){
-    if((this->getElementOnPos(pos)).getName()=="Putties") {
-      (this->getElementOnPos(pos)).setHealthPoints(1500);
-      (this->getElementOnPos(pos)).setStrengh(200);
+    if((m->getNameOfElement(pos))=="Putties") {
+      (m->getElementW1(pos)).setHealthPoints(1500);
+      Weapon *wp = new Weapon("Big attack",200,1,60);
+      (m->getElementW1(pos)).setPrimaryW(wp);
     } else {
       std::cout <<"Mauvais personnage a boost"<<std::endl;
     }
@@ -63,25 +64,25 @@ void Zedd::ThrowExtendNade(Position pos){
 /**** PAS SUR DE CELLE CI *****/
 void Zedd::Invocation(Position pos, Map *m){
   if(this->getInvocation() == 0){
-    if(m.getElementW1(pos)!= NULL){
+    if(m->getElementW1(pos)!= NULL){
         int strengh;
         int hp;
         int range;
         int mvmt;
         Weapon *wp;
-        if((m.getElementW2(pos).getName()=="Water"){
+        if(m->getElementW2(pos).getName()=="Water"){
           strengh = 60;
           hp = 250;
           range = 1;
           mvmt = 1;
           wp = new Weapon("Canon a eau",150,1,50);
-        } else if (m.getElementW2(pos).getName()=="Hill"){
+        } else if (m->getElementW2(pos).getName()=="Hill"){
                   strengh = 70;
                   hp = 300;
                   range = 3;
                   mvmt = 3;
                   wp = new Weapon("Lancer de terre",120,3,50);
-                } else if(m.getElementW2(pos).getName()=="Tree"){
+                } else if(m->getElementW2(pos).getName()=="Tree"){
                           strengh = 50;
                           hp = 150;
                           range = 1;
@@ -89,7 +90,7 @@ void Zedd::Invocation(Position pos, Map *m){
                           wp = new Weapon("Lancer de tronc",210,4,60);
                         }
           Unit *u = new Putties(hp,mvmt,wp);
-          this->setElementPosition(pos,u);                                        // WARNING WARNING WARNING
+          m->setElementW1(pos,*u);                                        // WARNING WARNING WARNING
         } else {
           std::cout<<"Il y a deja quelque chose sur cette case"<<std::endl;
         }

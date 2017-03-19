@@ -44,7 +44,7 @@ std::string Map::getNameOfElement(Position pos)const{
 }
 
 
-void Map::setElement(Position pos,Element elt){
+void Map::setElement(Position pos,Element* elt){
 
 }
 
