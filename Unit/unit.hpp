@@ -2,7 +2,6 @@
 #define unit_hpp
 
 #include "../Element/element.hpp"
-#include "../Element/map.hpp"
 #include "weapon.hpp"
 #include <string>
 
@@ -94,7 +93,7 @@ public:
  std::string getAdvice()const;
 
 };
-
+/*
 class Zedd : public Unit{
 private:
   bool _activeExpendNade;
@@ -122,7 +121,7 @@ public:
   //void PuttiesCalling(Position);
   //void ApocalypseHole();
 };
-
+*/
 class RobotPR : public Unit {
 private:
   int _armor;

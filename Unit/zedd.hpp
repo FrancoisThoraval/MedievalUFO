@@ -1,14 +1,14 @@
 #ifndef zedd_hpp
 #define zedd_hpp
-// #include "unit.hpp"
-// #include "../Element/map.hpp"
+#include "unit.hpp"
+#include "../Element/map.hpp"
 
 // Element -> Unit  -> Map
 //                  -> Zedd   -> Map
 //                            -> Unit
 class Zedd;
 
-class Zedd /*: public Unit*/{
+class Zedd : public Unit{
 private:
   bool _activeExpendNade;
   int _invocation;
@@ -31,7 +31,7 @@ public:
   void setApocalypseHole(int);
 
   void ThrowExtendNade(Position);
-  void Invocation(Position,*Map);
+  void Invocation(Position,Map*);
   //void PuttiesCalling(Position);
   //void ApocalypseHole();
 };
