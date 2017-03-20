@@ -58,7 +58,7 @@ private:
 public:
   Putties ();
   ~Putties ();
-  Putties(int,int,Weapon*);
+  Putties(int,int,int,Weapon*); //hp,mvmt,price,arme
   void attack(Unit&,int);
 };
 

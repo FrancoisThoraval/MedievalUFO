@@ -2,6 +2,9 @@
 #define zedd_hpp
 #include "unit.hpp"
 #include "../Element/map.hpp"
+#include <iostream>
+
+
 
 // Element -> Unit  -> Map
 //                  -> Zedd   -> Map
@@ -32,8 +35,8 @@ public:
 
   void ThrowExtendNade(Position,Map*);
   void Invocation(Position,Map*);
-  //void PuttiesCalling(Position);
-  //void ApocalypseHole();
+  void PuttiesCalling(Position,Map*);
+  void ApocalypseHole(Map*);
 };
 
 #endif

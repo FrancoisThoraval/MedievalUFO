@@ -104,11 +104,12 @@ Putties::Putties(){
 }
 
 
-Putties::Putties(int hp,int mvmt,Weapon *wp){
+Putties::Putties(int hp,int mvmt,int price,Weapon *wp){
   this->setName("Putties");
   this->setHealthPoints(hp);
   this->setMovement(mvmt);
   this->setPrimaryW(wp);
+  this->setPrice(price);
 }
 
 Putties::~Putties(){

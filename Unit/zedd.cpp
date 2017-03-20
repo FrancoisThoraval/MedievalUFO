@@ -92,3 +92,61 @@ void Zedd::Invocation(Position pos, Map *m){
     std::cout<<"Tu ne peux pas encore utiliser cette capacite"<<std::endl;
   }
 }
+
+
+void Zedd::PuttiesCalling ( Position pos, Map* m){
+  Position p1 = pos;
+  p1.setY(pos.getY()+1);
+  Position p2 = pos;
+  p2.setY(pos.getY()-1);
+  Position p3 = pos;
+  p3.setX(pos.getX()+1);
+  Position p4 = pos;
+  p4.setX(pos.getX()-1);
+  if((m->isOnMap(pos))&&(m->isOnMap(p1))&&(m->isOnMap(p2))&&(m->isOnMap(p3))&&(m->isOnMap(p4))){
+    if((m->getElementW1(pos).getName()=="")&&(m->getElementW1(p1).getName()=="")&&(m->getElementW1(p2).getName()=="")&& (m->getElementW1(p3).getName()=="")&&(m->getElementW1(p4).getName()=="")){
+      Weapon *wp = new Weapon("Default",5,1,20);
+      Unit *n1 = new Putties(50,2,5,wp);
+      m->setElementW1(pos,*n1);
+      m->setElementW1(p1,*n1);
+      m->setElementW1(p2,*n1);
+      m->setElementW1(p3,*n1);
+      m->setElementW1(p4,*n1);
+    } else {
+      std::cout<<"Il y'a deja quelque chose sur une des cases"<<std::endl;
+    }
+  } else {
+    std::cout<<"Une des coordonnées est hors map"<<std::endl;
+  }
+}
+
+
+void Zedd::ApocalypseHole(Map *m){
+  static int count = 0;
+  if(this->_apocalypseHole == 0){
+    if(count == 0){
+      Scenery *lava = new Lava;
+      m->setElementW2(this->_pos,*lava);
+    } else {
+      Position p0 =pos;
+      Position p1 = pos;
+      p1.setY(pos.getY()+1);
+      Position p2 = pos;
+      p2.setY(pos.getY()-1);
+      Position p3 = pos;
+      p3.setX(pos.getX()+1);
+      Position p4 = pos;
+      p4.setX(pos.getX()-1);
+      Position currentPos;
+      for(int i =0;i<m->getSizeX();i++){
+        for(int j = 0;j< m->getSizeY();j++){
+          currentPos.setX(i);
+          currentPos.setY(j);
+          if(m->getElementW2(currentPos).getName()=="Lava"){
+
+          }
+        }
+      }
+    }
+  }
+}
