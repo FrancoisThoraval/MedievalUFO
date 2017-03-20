@@ -127,23 +127,57 @@ void Zedd::ApocalypseHole(Map *m){
     if(count == 0){
       Scenery *lava = new Lava;
       m->setElementW2(this->_pos,*lava);
+      m->getElementW2(this->_pos).setTransformation(2);
     } else {
-      Position p0 =pos;
       Position p1 = pos;
-      p1.setY(pos.getY()+1);
       Position p2 = pos;
-      p2.setY(pos.getY()-1);
       Position p3 = pos;
-      p3.setX(pos.getX()+1);
       Position p4 = pos;
-      p4.setX(pos.getX()-1);
       Position currentPos;
+      Scenery *lava = new Lava;
       for(int i =0;i<m->getSizeX();i++){
         for(int j = 0;j< m->getSizeY();j++){
           currentPos.setX(i);
           currentPos.setY(j);
-          if(m->getElementW2(currentPos).getName()=="Lava"){
+          p1.setX(currentPos.getX());
+          p1.setY(currentPos.getY()+1);
 
+          p2.setX(currentPos.getX());
+          p2.setY(currentPos.getY()-1);
+
+          p3.setX(currentPos.getX()+1);
+          p3.setY(currentPos.getY());
+
+          p4.setX(currentPos.getX()-1);
+          p4.setY(currentPos.getY());
+          if((m->getElementW2(currentPos).getName()=="Lava")){
+            if(m->getElementW2(currentPos).getTransformation()==2) {
+                if((m->isOnMap(p1))) {
+                  m->setElementW2(p1,*lava);
+                  m->getElementW2(p1).setTransformation(1);
+                }
+                if((m->isOnMap(p2)&&(m->getElementW2(p2).getTransformation()==0))) {
+                  m->setElementW2(p2,*lava);
+                  m->getElementW2(p2).setTransformation(1);
+                }
+                if((m->isOnMap(p3)&&(m->getElementW2(p3).getTransformation()==0))) {
+                  m->setElementW2(p3,*lava);
+                  m->getElementW2(p3).setTransformation(1);
+                }
+                if((m->isOnMap(p4)&&(m->getElementW2(p4).getTransformation()==0))) {
+                  m->setElementW2(p4,*lava);
+                  m->getElementW2(p4).setTransformation(1);
+                }
+            }
+          }
+        }
+      }
+      for(int i =0;i<m->getSizeX();i++){
+        for(int j = 0;j< m->getSizeY();j++){
+          if(m->getElementW2().getName()=="Lava"){
+            if(m->getElementW2().getTransformation()==1){
+              m->getElementW2().setTransformation(2);
+            }
           }
         }
       }

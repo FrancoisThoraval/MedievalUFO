@@ -49,4 +49,14 @@ public:
 
 };
 
+class Lava : public Scenery {
+private:
+  int _waitToTransform;
+public:
+  Lava ();
+  ~Lava ();
+  int getTransformation()const;
+  void setTransformation(int);
+};
+
 #endif

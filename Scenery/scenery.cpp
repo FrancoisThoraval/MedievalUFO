@@ -56,3 +56,23 @@ Hill::~Hill(){
 }
 
 /********************************************/
+
+/*** Methode Lava ***/
+
+Lava::Lava(){
+  this->setName("Lava");
+  this->setTransformation(0);
+}
+
+Lava::~Lava(){
+
+}
+
+int Lava::getTransformation()const{
+  return(this->_waitToTransform);
+}
+
+void Lava::setTransformation(int tr){
+  this->_waitToTransform = tr;
+}
+/********************/
