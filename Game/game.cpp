@@ -33,6 +33,8 @@ bool Game::isExiting(){
           return false;
 }
 
+
+
 void Game::gameLoop(){
      sf::Event currentEvent;
      sf::Texture t;
@@ -61,23 +63,31 @@ void Game::gameLoop(){
                     break;
                }
                case 4 : {
-                    _window.clear(sf::Color(0,0,0));
                     Map m(800,600);
+                    // for (int i = 0; i < 50; i++) {
+                    _window.clear(sf::Color(0,0,0));
                     m.drawWorld(_window);
+                    while (_gameState == 4) {
+                         while (_window.pollEvent(currentEvent)) {
+                              /* code */
 
-                    _window.display();
-                    if (currentEvent.type == sf::Event::Closed) {
-                         _gameState = 5; //End
-                    }
-                    if(currentEvent.type == sf::Event::KeyPressed)
-                    {
-                        if(currentEvent.key.code == sf::Keyboard::Escape){
-                         showMenu();
+                              _window.display();
+                              if (currentEvent.type == sf::Event::Closed) {
+                                   _gameState = 5; //End
+                              }
+                              if(currentEvent.type == sf::Event::KeyPressed)
+                              {
+                                   std::cout << "/* message */" << '\n';
+                                   if(currentEvent.key.code == sf::Keyboard::Escape){
+                                        showMenu();
+                                   }
+                              }
                          }
                     }
-                    for (int i = 0; i < 999999999; i++) {
-                         /* code */
-                    }
+
+                    // for (int i = 0; i < 999999999; i++) {
+                    //      /* code */
+                    // }
                break;
                }
                case 5 : {

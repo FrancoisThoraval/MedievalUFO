@@ -15,12 +15,8 @@ Map::Map(int sizeX, int sizeY){
 }
 
 Map::~Map(){
-    for(int i =0; i <_sizeY;++i){
-        delete _world1[i];
-        delete _world2[i];
-    }
-    delete _world1;
-    delete _world2;
+     delete[] _world1;
+     delete[] _world2;
 }
 
 Unit Map::getElementW1(Position pos)const{
