@@ -55,7 +55,7 @@ public:
   // friend class Map;
 
  //virtual std::string getName()const=0;
-  Element &operator=(const Element &e){
+  Element &operator=( Element &e){
     this->_pos = e._pos;
     return (*this);
   }

@@ -48,10 +48,6 @@ void Unit::setPrice(int price){
 
 
 
-void Unit::move(){
-
-}
-
 void Unit::attack(){
 
 }
@@ -93,19 +89,26 @@ void Unit::setSecondaryW(Weapon *wp){
 
 void Unit::move(Position posInit,Position posFinal,Map* m){
   int max;
+  int min;
   int max2;
+  int min2;
   if(posInit.getX()>posFinal.getX()){
     max = posInit.getX();
+    min = posFinal.getX();
   } else {
     max = posFinal.getX();
+    min = posInit.getX();
   }
   if(posInit.getY()>posFinal.getY()){
     max2 = posInit.getY();
+    min2 = posFinal.getY();
   } else {
     max2 = posFinal.getY();
+    min2 = posInit.getY();
   }
-  if((max+max2)<=this->_movement){
-    
+  if((max-min)+(max2-min2)<=this->_movement){
+    delete map->getElementW1(posInit);
+    m->setElementW1(posFinal,*this)
   } else {
     std::cout<<"Pas assez de point de deplacement"<<std::endl;
   }
