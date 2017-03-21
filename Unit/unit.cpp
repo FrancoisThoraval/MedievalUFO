@@ -90,6 +90,28 @@ void Unit::setSecondaryW(Weapon *wp){
     this->_secondaryWeapon = wp;
   }
 }
+
+void Unit::move(Position posInit,Position posFinal,Map* m){
+  int max;
+  int max2;
+  if(posInit.getX()>posFinal.getX()){
+    max = posInit.getX();
+  } else {
+    max = posFinal.getX();
+  }
+  if(posInit.getY()>posFinal.getY()){
+    max2 = posInit.getY();
+  } else {
+    max2 = posFinal.getY();
+  }
+  if((max+max2)<=this->_movement){
+    
+  } else {
+    std::cout<<"Pas assez de point de deplacement"<<std::endl;
+  }
+
+}
+
 /****************************************/
 
 /*** Methode Fantassin ***/
@@ -142,6 +164,9 @@ PowerRanger::PowerRanger(){
 PowerRanger::PowerRanger(std::string color){
   _capacityRobot = false;
   _capacityWeapon = false;
+  _robot = new Weapon("RobotTransformation",0,0,100);
+  _cheatedWeapon = new Weapon("MergeWeapon",400,10,100);
+
   this->setMovement(4);
   if(color == "red"){
     _primaryWeapon = new Weapon("Fist",60,1,30);
