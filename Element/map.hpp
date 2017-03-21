@@ -6,6 +6,7 @@
 #include "../Scenery/scenery.hpp"
 #include <iostream>
 #include "../Unit/unit.hpp"
+#include "../Game/menu.hpp"
 const int TILESIZEX = 32;
 const int TILESIZEY = 32;
 
@@ -28,8 +29,15 @@ public:
   std::string getNameOfElement(Position)const;
   void setElement(Position,Element*);
   void drawWorld(sf::RenderWindow &);
-  void createTile(int,int,sf::RenderWindow &,sf::Texture);
+  void createTile(int,int,sf::RenderWindow &,sf::Texture &);
+  bool isOnMap(Position pos);
 
+  void handleClick(sf::RenderWindow &);
+
+  int getSizeX();
+  int getSizeY();
+  void setSizeX(int);
+  void setSizeY(int);
 };
 
 #endif

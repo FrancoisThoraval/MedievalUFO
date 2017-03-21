@@ -35,7 +35,7 @@ void Menu::handleClick(sf::RenderWindow &window){
      bool test = true;
      while (test) {
           while (window.pollEvent(menuEvent)) {
-               if (menuEvent.type == sf::Event::EventType::MouseButtonPressed) {
+               if (menuEvent.type == sf::Event::MouseButtonPressed) {
                     if (_menuChoice == 0) {
                          _menuChoice = checkZone(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y, _btnPlay);
                          test = false;

@@ -69,9 +69,7 @@ void Zedd::Invocation(Position pos, Map *m){
         int mvmt;
         Weapon *wp;
         if(m->getElementW2(pos).getName()=="Water"){
-          strengh = 60;
           hp = 250;
-          range = 1;
           mvmt = 1;
           wp = new Weapon("Canon a eau",150,1,50);
         } else if (m->getElementW2(pos).getName()=="Hill"){
