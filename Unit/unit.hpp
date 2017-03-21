@@ -3,6 +3,7 @@
 
 #include "../Element/element.hpp"
 #include "../Element/map.hpp"
+#include "../Player/player.hpp"
 #include "weapon.hpp"
 #include <string>
 
@@ -61,7 +62,7 @@ public:
   Putties ();
   ~Putties ();
   Putties(int,int,int,Weapon*); //hp,mvmt,price,arme
-  void attack(Unit&,int);
+  void attack(Unit&,int,Player&);
 };
 
 class PowerRanger : public Unit {
@@ -83,7 +84,17 @@ public:
   bool getCapacityRobot()const;
   bool getCapacityWeapon()const;
 
-  void attack(Unit &, int);
+  void TornadoDino(Map*,Position);
+  void attack(Unit &, int,Player&);
+};
+
+
+class Dino : public Unit {
+private:
+
+public:
+  Dino ();
+  ~Dino ();
 };
 
 class AYAYAY_Assistant : public Unit{
@@ -135,7 +146,7 @@ public:
   virtual ~RobotPR ();
   int getArmor()const;
   void setArmor(int);
-  void attack(Unit&, int );
+  void attack(Unit&, int,Player& );
 };
 
 class TurtleTank : public RobotPR {
@@ -144,7 +155,7 @@ private:
 public:
   TurtleTank ();
   virtual ~TurtleTank ();
-  void attack(Unit& u);
+  void attack(Unit& u,Player&);
 
 };
 

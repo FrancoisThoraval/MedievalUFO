@@ -48,12 +48,13 @@ void Zedd::setApocalypseHole(int hole){
   this->_apocalypseHole = hole;
 }
 
-void Zedd::ThrowExtendNade(Position pos,Map *m){
+void Zedd::ThrowExtendNade(Position pos,Map *m,Player &p){
   if(this->getActiveExpendNade()==true){
     if((m->getNameOfElement(pos))=="Putties") {
       (m->getElementW1(pos)).setHealthPoints(1500);
       Weapon *wp = new Weapon("Big attack",200,1,60);
       (m->getElementW1(pos)).setPrimaryW(wp);
+      p.setEnergy(p.getEnergy()-(this->_primaryWeapon)->getCost());
     } else {
       std::cout <<"Mauvais personnage a boost"<<std::endl;
     }
@@ -61,8 +62,24 @@ void Zedd::ThrowExtendNade(Position pos,Map *m){
       std::cout<<"Tu ne peux pas encore utiliser cette capacité"<<std::endl;
   }
 }
+
+void EnableGrenade(Map m){
+  Position currentPos;
+  for(int i = 0;i<m.getSizeX();i++){
+    for(int j=0;j<m.getSizeY();j++){
+      currentPos.setX(i);
+      currentPos.setY(j);
+      if(m.getNameOfElement(currentPos)=="Putties"){
+        if(m.getElementW1().getHealthPoints()<= 40){
+          this->_activeExpendNade = true;
+        }
+      }
+    }
+  }
+}
+
 /**** PAS SUR DE CELLE CI *****/
-void Zedd::Invocation(Position pos, Map *m){
+void Zedd::Invocation(Position pos, Map *m,Player& p){
   if(this->getInvocation() == 0){
     if(m->getNameOfElement(pos)!= ""){
         int hp;
@@ -82,7 +99,9 @@ void Zedd::Invocation(Position pos, Map *m){
                           wp = new Weapon("Lancer de tronc",210,4,60);
                         }
           Unit *u = new Putties(hp,mvmt,60,wp);
-          m->setElementW1(pos,*u);                                        // WARNING WARNING WARNING
+          m->setElementW1(pos,*u);
+          p.setEnergy(p.getEnergy()-(this->_secondaryWeapon)->getCost());
+          this->_invocation= 5;                                  // WARNING WARNING WARNING
         } else {
           std::cout<<"Il y a deja quelque chose sur cette case"<<std::endl;
         }
@@ -92,39 +111,47 @@ void Zedd::Invocation(Position pos, Map *m){
 }
 
 
-void Zedd::PuttiesCalling ( Position pos, Map* m){
-  Position p1 = pos;
-  p1.setY(pos.getY()+1);
-  Position p2 = pos;
-  p2.setY(pos.getY()-1);
-  Position p3 = pos;
-  p3.setX(pos.getX()+1);
-  Position p4 = pos;
-  p4.setX(pos.getX()-1);
-  if((m->isOnMap(pos))&&(m->isOnMap(p1))&&(m->isOnMap(p2))&&(m->isOnMap(p3))&&(m->isOnMap(p4))){
-    if((m->getElementW1(pos).getName()=="")&&(m->getElementW1(p1).getName()=="")&&(m->getElementW1(p2).getName()=="")&& (m->getElementW1(p3).getName()=="")&&(m->getElementW1(p4).getName()=="")){
-      Weapon *wp = new Weapon("Default",5,1,20);
-      Unit *n1 = new Putties(50,2,5,wp);
-      m->setElementW1(pos,*n1);
-      m->setElementW1(p1,*n1);
-      m->setElementW1(p2,*n1);
-      m->setElementW1(p3,*n1);
-      m->setElementW1(p4,*n1);
+void Zedd::PuttiesCalling ( Position pos, Map* m,Player& p){
+  if(this->_puttiesCalling==0){
+    Position p1 = pos;
+    p1.setY(pos.getY()+1);
+    Position p2 = pos;
+    p2.setY(pos.getY()-1);
+    Position p3 = pos;
+    p3.setX(pos.getX()+1);
+    Position p4 = pos;
+    p4.setX(pos.getX()-1);
+    if((m->isOnMap(pos))&&(m->isOnMap(p1))&&(m->isOnMap(p2))&&(m->isOnMap(p3))&&(m->isOnMap(p4))){
+      if((m->getElementW1(pos).getName()=="")&&(m->getElementW1(p1).getName()=="")&&(m->getElementW1(p2).getName()=="")&& (m->getElementW1(p3).getName()=="")&&(m->getElementW1(p4).getName()=="")){
+        Weapon *wp = new Weapon("Default",5,1,20);
+        Unit *n1 = new Putties(50,2,5,wp);
+        m->setElementW1(pos,*n1);
+        m->setElementW1(p1,*n1);
+        m->setElementW1(p2,*n1);
+        m->setElementW1(p3,*n1);
+        m->setElementW1(p4,*n1);
+        p.setEnergy(p.getEnergy()-(this->_thirdWeapon)->getCost());
+        this->_puttiesCalling = 4;
+      } else {
+        std::cout<<"Il y'a deja quelque chose sur une des cases"<<std::endl;
+      }
     } else {
-      std::cout<<"Il y'a deja quelque chose sur une des cases"<<std::endl;
+      std::cout<<"Une des coordonnées est hors map"<<std::endl;
     }
   } else {
-    std::cout<<"Une des coordonnées est hors map"<<std::endl;
+  std::cout<<"Sort pas disponible"<<std::endl;
   }
 }
 
 
-void Zedd::ApocalypseHole(Map *m){
+void Zedd::ApocalypseHole(Map *m,Player& p){
 
   static int count = 0;
   if(this->_apocalypseHole == 0){
     if(count == 0){
       m->getElementW2(this->_pos).setName("Lava2");
+      p.setEnergy(p.getEnergy()-(this->_fourthWeapon)->getCost());
+      count++;
     } else {
       Position p1 ;
       Position p2 ;

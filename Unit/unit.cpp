@@ -155,11 +155,13 @@ Putties::~Putties(){
 }
 
 
-void Putties::attack(Unit& a,int W){
+void Putties::attack(Unit& a,int W,Player& p){
   if(W == 1){
       a.setHealthPoints(a.getHealthPoints()-this->getPrimaryW()->getStrengh());
+      p.setEnergy(p.getEnergy()-(this->_primaryWeapon)->getCost());
   }else {
       a.setHealthPoints(a.getHealthPoints()-this->getSecondaryW()->getStrengh());
+      p.setEnergy(p.getEnergy()-(this->_secondaryWeapon)->getCost());
   }
 
 }
@@ -191,7 +193,7 @@ PowerRanger::PowerRanger(std::string color){
     this->setHealthPoints(300); // les HP du Putties
   } else if (color == "green"){
             _primaryWeapon = new Weapon("Fist",20,1,30);
-            _secondaryWeapon = new Weapon("Flute",0,0,50);
+            _secondaryWeapon = new Weapon("Flute",0,-1,50);
             this->setName(color);
             this->setHealthPoints(50); // les HP du Putties
           } else {
@@ -231,15 +233,42 @@ bool PowerRanger::getCapacityWeapon()const{
   return(this->_capacityWeapon);
 }
 
-void PowerRanger::attack(Unit& u,int W){
+void PowerRanger::attack(Unit& u,int W,Player& p){
   if(W == 1){
       u.setHealthPoints(u.getHealthPoints()-this->_primaryWeapon->getStrengh());
+      p.setEnergy(p.getEnergy()-(this->_primaryWeapon)->getCost());
   }else {
       u.setHealthPoints(u.getHealthPoints()-this->_secondaryWeapon->getStrengh());
+      p.setEnergy(p.getEnergy()-(this->_secondaryWeapon)->getCost());
   }
 
 }
+
+void PowerRanger::TornadoDino(Map* m,Position pos){
+  if((m->getNameOfElement(pos)=="Tree")||(m->getNameOfElement(pos)=="Hill")||(m->getNameOfElement(pos)=="Water")||(m->getNameOfElement(pos)=="Lava2")||(m->getNameOfElement(pos)=="Lava1")){
+    Unit *d = new Dino;
+    m->setElementW1(pos,*d);
+  }
+}
 /******************************************************/
+
+
+/*** class Dino ***/
+
+Dino::Dino(){
+    this->setName("TornadoDino");
+    this->setHealthPoints(150);
+    this->setMovement(3);
+    _primaryWeapon = new Weapon("Tornado",0,0,50);
+}
+
+Dino::~Dino(){
+
+}
+
+
+
+/********************************************************/
 
 
 /*** CLASS AYAYAY ASSISTANT ***/
@@ -299,11 +328,13 @@ void RobotPR::setArmor(int armor){
   this->_armor = armor;
 }
 
-void RobotPR::attack(Unit& u,int W){
+void RobotPR::attack(Unit& u,int W,Player& p){
   if(W ==  1){
     u.setHealthPoints(u.getHealthPoints()-this->getPrimaryW()->getStrengh());
+    p.setEnergy(p.getEnergy()-(this->_primaryWeapon)->getCost());
   } else if (W == 2){
         u.setHealthPoints(u.getHealthPoints()-this->getSecondaryW()->getStrengh());
+        p.setEnergy(p.getEnergy()-(this->_secondaryWeapon)->getCost());
   }
 }
 
@@ -325,8 +356,9 @@ TurtleTank::~TurtleTank(){
 
 }
 
-void TurtleTank::attack(Unit& u){
+void TurtleTank::attack(Unit& u,Player& p){
   u.setHealthPoints(u.getHealthPoints()-this->getPrimaryW()->getStrengh());
+  p.setEnergy(p.getEnergy()-(this->_primaryWeapon)->getCost());
 }
 /*** Methode Archer ***/
 

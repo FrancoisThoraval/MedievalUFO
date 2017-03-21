@@ -2,7 +2,7 @@
 
 
 Weapon::Weapon(){
-     
+
 }
 
 Weapon::Weapon(std::string name, int strengh,int range,int cost){

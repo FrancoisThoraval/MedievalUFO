@@ -2,6 +2,7 @@
 #define zedd_hpp
 #include "unit.hpp"
 #include "../Element/map.hpp"
+#include "../Player/player.hpp"
 #include <iostream>
 
 
@@ -33,10 +34,11 @@ public:
   void setPuttiesCalling(int);
   void setApocalypseHole(int);
 
-  void ThrowExtendNade(Position,Map*);
-  void Invocation(Position,Map*);
-  void PuttiesCalling(Position,Map*);
-  void ApocalypseHole(Map*);
+  void ThrowExtendNade(Position,Map*,Player&);
+  void EnableGrenade(Map);
+  void Invocation(Position,Map*,Player&);
+  void PuttiesCalling(Position,Map*,Player&);
+  void ApocalypseHole(Map*,Player&);
 };
 
 #endif
