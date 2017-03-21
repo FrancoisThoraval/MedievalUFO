@@ -147,20 +147,20 @@ void Map::setSizeY(int y){this->_sizeY = y;}
 void Map::setSizeX(int x){this->_sizeX = x;}
 
 void Map::handleClick(sf::RenderWindow &window){
-     sf::Event menuEvent;
-     bool test = true;
-     while (test) {
-          while (window.pollEvent(menuEvent)) {
-               if (menuEvent.type == sf::Event::EventType::MouseButtonPressed) {
-                    if (_menuChoice == 0) {
-                         _menuChoice = checkZone(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y, _btnPlay);
-                         test = false;
-                    }
-                    if (_menuChoice == 0) {
-                         _menuChoice = checkZone(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y, _btnExit);
-                         test = false;
-                    }
-               }
-          }
-     }
+     // sf::Event menuEvent;
+     // bool test = true;
+     // while (test) {
+     //      while (window.pollEvent(menuEvent)) {
+     //           if (menuEvent.type == sf::Event::MouseButtonPressed) {
+     //                if (_menuChoice == 0) {
+     //                     _menuChoice = checkZone(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y, _btnPlay);
+     //                     test = false;
+     //                }
+     //                if (_menuChoice == 0) {
+     //                     _menuChoice = checkZone(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y, _btnExit);
+     //                     test = false;
+     //                }
+     //           }
+     //      }
+     // }
 }
