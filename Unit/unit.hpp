@@ -29,7 +29,8 @@ protected:
   Weapon *_secondaryWeapon;
 public:
   Unit ();
-  virtual ~Unit ();
+  ~Unit ();
+  Unit(Unit&);
   std::string getName()const;
   /** Getter **/
   int getHealthPoints()const;

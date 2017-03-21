@@ -120,13 +120,11 @@ void Zedd::PuttiesCalling ( Position pos, Map* m){
 
 
 void Zedd::ApocalypseHole(Map *m){
-  /*
+
   static int count = 0;
   if(this->_apocalypseHole == 0){
     if(count == 0){
-      Scenery *lava = new Lava;
-      m->setElementW2(this->_pos,*lava);
-      m->getElementW2(this->_pos).setTransformation(2);
+      m->getElementW2(this->_pos).setName("Lava2");
     } else {
       Position p1 ;
       Position p2 ;
@@ -154,25 +152,25 @@ void Zedd::ApocalypseHole(Map *m){
           p4 = currentPos;
           p4.setX(currentPos.getX()-1);
           p4.setY(currentPos.getY());
-          if((m->getElementW2(currentPos).getName()=="Lava")){
-            if(m->getElementW2(currentPos).getTransformation()==2) {
+          if((m->getElementW2(currentPos).getName()=="Lava2")){
+
                 if((m->isOnMap(p1))) {
                   m->setElementW2(p1,*lava);
-                  m->getElementW2(p1).setTransformation(1);
+                  m->getElementW2(p1).setName("Lava1");
                 }
-                if((m->isOnMap(p2)&&(m->getElementW2(p2).getTransformation()==0))) {
+                if(m->isOnMap(p2)) {
                   m->setElementW2(p2,*lava);
-                  m->getElementW2(p2).setTransformation(1);
+                  m->getElementW2(p2).setName("Lava1");
                 }
-                if((m->isOnMap(p3)&&(m->getElementW2(p3).getTransformation()==0))) {
+                if(m->isOnMap(p3)) {
                   m->setElementW2(p3,*lava);
-                  m->getElementW2(p3).setTransformation(1);
+                  m->getElementW2(p3).setName("Lava1");
                 }
-                if((m->isOnMap(p4)&&(m->getElementW2(p4).getTransformation()==0))) {
+                if(m->isOnMap(p4)) {
                   m->setElementW2(p4,*lava);
-                  m->getElementW2(p4).setTransformation(1);
+                  m->getElementW2(p4).setName("Lava1");
                 }
-            }
+
           }
         }
       }
@@ -180,14 +178,12 @@ void Zedd::ApocalypseHole(Map *m){
         for(int j = 0;j< m->getSizeY();j++){
           currentPos.setX(i);
           currentPos.setY(j);
-          if(m->getElementW2(currentPos).getName()=="Lava"){
-            if(m->getElementW2(currentPos).getTransformation()==1){
-                m->getElementW2(currentPos).setTransformation(2);
-            }
+          if(m->getElementW2(currentPos).getName()=="Lava1"){
+                m->getElementW2(currentPos).setName("Lava2");
           }
         }
       }
     }
   }
-  */
+
 }

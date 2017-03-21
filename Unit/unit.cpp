@@ -14,6 +14,17 @@ Unit::~Unit(){
 
 }
 
+Unit::Unit(Unit& u){
+
+  this->_name = u._name;
+  this->_healthPoints = u._healthPoints;
+  this->_price = u._price;
+  this->_movement = u._movement;
+  this->_primaryWeapon = u._primaryWeapon;
+  this->_secondaryWeapon = u._secondaryWeapon;
+
+}
+
 //Getter
 std::string Unit::getName()const{
   return(this->_name);
