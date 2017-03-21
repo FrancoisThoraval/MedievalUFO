@@ -45,7 +45,7 @@ public:
   void setSecondaryW(Weapon*);
   /** Methode **/
   virtual void attack();
-  virtual void move();
+  void move(Position,Position,Map*);
   friend class Weapon;
 
 };
@@ -58,7 +58,7 @@ private:
 public:
   Putties ();
   ~Putties ();
-  Putties(int,int,Weapon*);
+  Putties(int,int,int,Weapon*); //hp,mvmt,price,arme
   void attack(Unit&,int);
 };
 
@@ -67,6 +67,8 @@ private:
   std::string _color;
   bool _capacityRobot;
   bool _capacityWeapon;
+  Weapon *_robot;
+  Weapon *_cheatedWeapon;
 
 public:
   PowerRanger ();

@@ -32,7 +32,11 @@ public:
   /** Setter **/
   void setX(int);
   void setY(int);
-
+  Position& operator=(Position& pos){
+    this->_x = pos.getX();
+    this->_y = pos.getY();
+    return(*this);
+  }
 };
 
 
