@@ -81,7 +81,7 @@ void Zedd::Invocation(Position pos, Map *m){
                           mvmt = 4;
                           wp = new Weapon("Lancer de tronc",210,4,60);
                         }
-          Unit *u = new Putties(hp,mvmt,wp);
+          Unit *u = new Putties(hp,mvmt,60,wp);
           m->setElementW1(pos,*u);                                        // WARNING WARNING WARNING
         } else {
           std::cout<<"Il y a deja quelque chose sur cette case"<<std::endl;
@@ -120,6 +120,7 @@ void Zedd::PuttiesCalling ( Position pos, Map* m){
 
 
 void Zedd::ApocalypseHole(Map *m){
+  /*
   static int count = 0;
   if(this->_apocalypseHole == 0){
     if(count == 0){
@@ -127,25 +128,30 @@ void Zedd::ApocalypseHole(Map *m){
       m->setElementW2(this->_pos,*lava);
       m->getElementW2(this->_pos).setTransformation(2);
     } else {
-      Position p1 = pos;
-      Position p2 = pos;
-      Position p3 = pos;
-      Position p4 = pos;
+      Position p1 ;
+      Position p2 ;
+      Position p3 ;
+      Position p4 ;
       Position currentPos;
       Scenery *lava = new Lava;
       for(int i =0;i<m->getSizeX();i++){
         for(int j = 0;j< m->getSizeY();j++){
           currentPos.setX(i);
           currentPos.setY(j);
+
+          p1 = currentPos;
           p1.setX(currentPos.getX());
           p1.setY(currentPos.getY()+1);
 
+          p2 = currentPos;
           p2.setX(currentPos.getX());
           p2.setY(currentPos.getY()-1);
 
+          p3 = currentPos;
           p3.setX(currentPos.getX()+1);
           p3.setY(currentPos.getY());
 
+          p4 = currentPos;
           p4.setX(currentPos.getX()-1);
           p4.setY(currentPos.getY());
           if((m->getElementW2(currentPos).getName()=="Lava")){
@@ -172,13 +178,16 @@ void Zedd::ApocalypseHole(Map *m){
       }
       for(int i =0;i<m->getSizeX();i++){
         for(int j = 0;j< m->getSizeY();j++){
-          if(m->getElementW2().getName()=="Lava"){
-            if(m->getElementW2().getTransformation()==1){
-              m->getElementW2().setTransformation(2);
+          currentPos.setX(i);
+          currentPos.setY(j);
+          if(m->getElementW2(currentPos).getName()=="Lava"){
+            if(m->getElementW2(currentPos).getTransformation()==1){
+                m->getElementW2(currentPos).setTransformation(2);
             }
           }
         }
       }
     }
   }
+  */
 }

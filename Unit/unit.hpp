@@ -2,6 +2,7 @@
 #define unit_hpp
 
 #include "../Element/element.hpp"
+#include "../Element/map.hpp"
 #include "weapon.hpp"
 #include <string>
 

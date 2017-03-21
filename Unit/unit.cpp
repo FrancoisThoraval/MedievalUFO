@@ -87,6 +87,8 @@ void Unit::setSecondaryW(Weapon *wp){
   }
 }
 
+
+
 void Unit::move(Position posInit,Position posFinal,Map* m){
   int max;
   int min;
@@ -107,8 +109,8 @@ void Unit::move(Position posInit,Position posFinal,Map* m){
     min2 = posInit.getY();
   }
   if((max-min)+(max2-min2)<=this->_movement){
-    delete map->getElementW1(posInit);
-    m->setElementW1(posFinal,*this)
+    //delete m->getElementW1(posInit);
+    m->setElementW1(posFinal,*this);
   } else {
     std::cout<<"Pas assez de point de deplacement"<<std::endl;
   }
