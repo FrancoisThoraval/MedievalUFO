@@ -24,7 +24,7 @@ void Menu::show(sf::RenderWindow &window){
 
 int Menu::checkZone(int x, int y, Button b){
      if(b.rect.contains(x,y)) {
-          std::cout << "choice: " <<getMenuChoice() << '\n';
+          // std::cout << "choice: " <<getMenuChoice() << '\n';
           return b.action;
      }
      return 0;

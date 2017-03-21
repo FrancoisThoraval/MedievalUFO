@@ -2,7 +2,7 @@
 #define map_hpp
 
 // #include "element.hpp"
-
+#include <SFML/Graphics.hpp>
 #include "../Scenery/scenery.hpp"
 #include <iostream>
 #include "../Unit/unit.hpp"
@@ -18,6 +18,8 @@ protected:
   Scenery **_world2;
   int _sizeX;
   int _sizeY;
+  Button *_mapTile;
+  int _tileClicked;
 public:
   Map (int, int);
   ~Map ();
@@ -32,6 +34,7 @@ public:
   void createTile(int,int,sf::RenderWindow &,sf::Texture &);
   bool isOnMap(Position pos);
 
+  void setMapClickable();
   void handleClick(sf::RenderWindow &);
 
   int getSizeX();
