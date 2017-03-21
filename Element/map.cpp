@@ -11,10 +11,13 @@ Map::Map(int sizeX, int sizeY){
     this->_sizeY = sizeY;
     _world1 = new Unit* [_sizeX];
     _world2 = new Scenery* [_sizeX];
+    _mapTile = new Button [_sizeX];
     for(int i =0; i <_sizeX;++i){
         _world1[i]= new Unit[_sizeY];
         _world2[i]= new Scenery[_sizeY];
     }
+    _tileClicked = -1;
+    setMapClickable();
 }
 
 Map::~Map(){
@@ -146,21 +149,36 @@ int Map::getSizeX(){return this->_sizeX;}
 void Map::setSizeY(int y){this->_sizeY = y;}
 void Map::setSizeX(int x){this->_sizeX = x;}
 
+void Map::setMapClickable() {
+     for (int i = 0; i < _sizeX; i++) {
+          for (int j = 0; j < _sizeY; j++) {
+               _mapTile[i].rect.top = i*32;
+               _mapTile[i].rect.left = j*32;
+               _mapTile[i].rect.height = 32;
+               _mapTile[i].rect.width = 32;
+               _mapTile[i].action = i;
+          }
+     }
+     std::cout << "map is now clickable !" << '\n';
+}
+
 void Map::handleClick(sf::RenderWindow &window){
-     // sf::Event menuEvent;
-     // bool test = true;
-     // while (test) {
-     //      while (window.pollEvent(menuEvent)) {
-     //           if (menuEvent.type == sf::Event::MouseButtonPressed) {
-     //                if (_menuChoice == 0) {
-     //                     _menuChoice = checkZone(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y, _btnPlay);
-     //                     test = false;
-     //                }
-     //                if (_menuChoice == 0) {
-     //                     _menuChoice = checkZone(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y, _btnExit);
-     //                     test = false;
-     //                }
-     //           }
-     //      }
-     // }
+     sf::Event mapEvent;
+     bool test = true;
+     while(test){
+          while (window.pollEvent(mapEvent)) {
+               if (mapEvent.type == sf::Event::MouseButtonPressed) {
+                    int i = 0;
+                    while ((i < _sizeX) || (_tileClicked == -1)) {
+                         Menu m;
+                         std::cout << "actions: "<< _mapTile[i].action << '\n';
+                         _tileClicked = m.checkZone(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y, _mapTile[i]);
+                         std::cout << "_tileClicked: " << _tileClicked << '\n';
+                    }
+                    test = false;
+                    std::cout << "You clicked on the "<< _tileClicked << "th tile"<< '\n';
+                    std::cout << "x: " << sf::Mouse::getPosition(window).x<< " y: " << sf::Mouse::getPosition(window).y << '\n';
+               }
+          }
+     }
 }

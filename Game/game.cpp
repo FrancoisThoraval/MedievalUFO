@@ -77,11 +77,12 @@ void Game::gameLoop(){
                               }
                               if(currentEvent.type == sf::Event::KeyPressed)
                               {
-                                   std::cout << "/* message */" << '\n';
+                                   std::cout << "Opening menu" << '\n';
                                    if(currentEvent.key.code == sf::Keyboard::Escape){
                                         showMenu();
                                    }
                               }
+                              m.handleClick(_window);
                          }
                     }
 
