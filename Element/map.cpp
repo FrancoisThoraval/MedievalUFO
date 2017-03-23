@@ -11,13 +11,13 @@ Map::Map(int sizeX, int sizeY){
     this->_sizeY = sizeY;
     _world1 = new Unit* [_sizeX];
     _world2 = new Scenery* [_sizeX];
-    _mapTile = new Button* [(_sizeX/32)];
+    _mapTile = new sf::Sprite* [(_sizeX/32)];
     for(int i =0; i <_sizeX;++i){
         _world1[i]= new Unit[_sizeY];
         _world2[i]= new Scenery[_sizeY];
     }
     for (int i = 0; i < _sizeX/32; i++) {
-         _mapTile[i] = new Button[_sizeY/32];
+         _mapTile[i] = new sf::Sprite[_sizeY/32];
     }
     _tileClicked = 0;
     setMapClickable();
@@ -90,6 +90,7 @@ void Map::createTile(int x, int y, sf::RenderWindow &window,sf::Texture &t){
           // rectangle.setFillColor(sf::Color::Green);
           s.setPosition(x*32,y*32);
           window.draw(s);
+          _mapTile[x][y] = s;
      }else if(this->getNameOfElement(P) == "Water"){
           sf::Sprite s;
           s.setTexture(t);
@@ -97,6 +98,7 @@ void Map::createTile(int x, int y, sf::RenderWindow &window,sf::Texture &t){
           // rectangle.setFillColor(sf::Color::Blue);
           s.setPosition(x*32,y*32);
           window.draw(s);
+          _mapTile[x][y] = s;
 
      }else if(this->getNameOfElement(P) == "Hill"){
           sf::Sprite s;
@@ -105,6 +107,7 @@ void Map::createTile(int x, int y, sf::RenderWindow &window,sf::Texture &t){
           // rectangle.setFillColor(sf::Color::Red);
           s.setPosition(x*32,y*32);
           window.draw(s);
+          _mapTile[x][y] = s;
      }
 
 }
@@ -148,27 +151,27 @@ void Map::setSizeY(int y){this->_sizeY = y;}
 void Map::setSizeX(int x){this->_sizeX = x;}
 
 void Map::setMapClickable() {
-     // _mapTile[0].rect.top = 0;
-     // _mapTile[0].rect.left = 0;
-     // _mapTile[0].rect.height = 32;
-     // _mapTile[0].rect.width = 32;
-     // _mapTile[0].action = 0;
-     std::cout << "_tileClicked: "<<_tileClicked << '\n';
-     for (int i = 0; i < (_sizeX/32)*(_sizeY/32); i++) {
-          for (int j = 0; j < _sizeY/32; j+=32) {
-               _mapTile[i][j].rect.left = i*32;
-               _mapTile[i][j].rect.top = j;
-               _mapTile[i][j].rect.height = 32;
-               _mapTile[i][j].rect.width = 32;
-               _mapTile[i][j].action = i+1;
-          }
-          // std::cout << "i: " << i <<"_mapTile.rect.top: "<< _mapTile[i].rect.top << '\n';
-          // std::cout << "i: " << i <<"_mapTile.rect.left: "<< _mapTile[i].rect.left << '\n';
-          // std::cout << "i: " << i <<"_mapTile.rect.height: "<< _mapTile[i].rect.height << '\n';
-          // std::cout << "i: " << i <<"_mapTile.rect.width: "<< _mapTile[i].rect.width << '\n';
-     }
-
-     std::cout << "map is now clickable !" << '\n';
+//      // _mapTile[0].rect.top = 0;
+//      // _mapTile[0].rect.left = 0;
+//      // _mapTile[0].rect.height = 32;
+//      // _mapTile[0].rect.width = 32;
+//      // _mapTile[0].action = 0;
+//      std::cout << "_tileClicked: "<<_tileClicked << '\n';
+//      for (int i = 0; i < _sizeX/32; i++) {
+//           for (int j = 0; j < _sizeY/32; j++) {
+//                _mapTile[i][j].rect.left = i*32;
+//                _mapTile[i][j].rect.top = j*32;
+//                _mapTile[i][j].rect.height = 32;
+//                _mapTile[i][j].rect.width = 32;
+//                _mapTile[i][j].action = i+1;
+//           }
+//           // std::cout << "i: " << i <<"_mapTile.rect.top: "<< _mapTile[i].rect.top << '\n';
+//           // std::cout << "i: " << i <<"_mapTile.rect.left: "<< _mapTile[i].rect.left << '\n';
+//           // std::cout << "i: " << i <<"_mapTile.rect.height: "<< _mapTile[i].rect.height << '\n';
+//           // std::cout << "i: " << i <<"_mapTile.rect.width: "<< _mapTile[i].rect.width << '\n';
+//      }
+//
+//      std::cout << "map is now clickable !" << '\n';
 }
 
 void Map::handleClick(sf::RenderWindow &window){
@@ -180,14 +183,20 @@ void Map::handleClick(sf::RenderWindow &window){
      while (window.pollEvent(mapEvent)) {
           if (mapEvent.type == sf::Event::MouseButtonPressed) {
                Menu m;
-               while (i < (_sizeX/32) && (_tileClicked == 0)) {
-                    while ((j<(_sizeY/32))&&(_tileClicked ==0)) {
-                         _tileClicked = m.checkZone(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y, _mapTile[i][j]);
-                         i++;
+               while ((i < (_sizeX/32)) && (_tileClicked == 0)) {
+                    while ((j < (_sizeY/32)) &&(_tileClicked ==0)) {
+                         // sf::Sprite s;
+
+                         if (_mapTile[i][j].getGlobalBounds().contains(sf::Mouse::getPosition(window).x/32,sf::Mouse::getPosition(window).y/32)) {
+                              Position pos(sf::Mouse::getPosition(window).x/32,sf::Mouse::getPosition(window).y/32);
+                              std::cout << "x: " << sf::Mouse::getPosition(window).x<< " y: " << sf::Mouse::getPosition(window).y << '\n';
+                              std::cout << "Name: " << getNameOfElement(pos) <<'\n';
+                         }
+                         // _tileClicked = m.checkZone(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y, _mapTile[i][j]);
+                         j++;
                     }
+                    i++;
                }
-               std::cout << "You clicked on the "<< _tileClicked << "th tile"<< '\n';
-               std::cout << "x: " << sf::Mouse::getPosition(window).x<< " y: " << sf::Mouse::getPosition(window).y << '\n';
           }
      }
 }
