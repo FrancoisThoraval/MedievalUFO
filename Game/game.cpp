@@ -82,8 +82,8 @@ void Game::gameLoop(){
                                         showMenu();
                                    }
                               }
-                              m.handleClick(_window);
                          }
+                         m.handleClick(_window);
                     }
 
                     // for (int i = 0; i < 999999999; i++) {

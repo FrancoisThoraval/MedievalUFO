@@ -23,11 +23,13 @@ void Menu::show(sf::RenderWindow &window){
 }
 
 int Menu::checkZone(int x, int y, Button b){
+     std::cout << "testing: x="<< b.rect.left << " y= " <<b.rect.top << '\n';
      if(b.rect.contains(x,y)) {
           // std::cout << "choice: " <<getMenuChoice() << '\n';
+          std::cout << "b is between: x="<< x<< " y= "<< y << '\n';
           return b.action;
      }
-     return 0;
+     return -1;
 }
 
 void Menu::handleClick(sf::RenderWindow &window){
