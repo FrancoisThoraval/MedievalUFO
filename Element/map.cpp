@@ -11,12 +11,15 @@ Map::Map(int sizeX, int sizeY){
     this->_sizeY = sizeY;
     _world1 = new Unit* [_sizeX];
     _world2 = new Scenery* [_sizeX];
-    _mapTile = new Button [_sizeX];
+    _mapTile = new Button* [(_sizeX/32)];
     for(int i =0; i <_sizeX;++i){
         _world1[i]= new Unit[_sizeY];
         _world2[i]= new Scenery[_sizeY];
     }
-    _tileClicked = -1;
+    for (int i = 0; i < _sizeX/32; i++) {
+         _mapTile[i] = new Button[_sizeY/32];
+    }
+    _tileClicked = 0;
     setMapClickable();
 }
 
@@ -62,7 +65,6 @@ void Map::createTile(int x, int y, sf::RenderWindow &window,sf::Texture &t){
      Position P;
      P.setX(x);
      P.setY(y);
-     std::cout << "Siam\' qui per creare un pezzo di mappa" << '\n';
      if (this->getNameOfElement(P) == "zedd") {
 
      }
@@ -89,7 +91,6 @@ void Map::createTile(int x, int y, sf::RenderWindow &window,sf::Texture &t){
           s.setPosition(x*32,y*32);
           window.draw(s);
      }else if(this->getNameOfElement(P) == "Water"){
-          std::cout << "Questo è dell'acqua" << '\n';
           sf::Sprite s;
           s.setTexture(t);
           s.setTextureRect(sf::IntRect(886, 91, 32, 32));
@@ -109,14 +110,11 @@ void Map::createTile(int x, int y, sf::RenderWindow &window,sf::Texture &t){
 }
 
 void Map::drawWorld(sf::RenderWindow &window){
-     std::cout << "Iniziamo a creare la mappa" << '\n';
+     std::cout << "Loading map..." << '\n';
      sf::Texture texture;
      texture.loadFromFile("./Textures/LPC_Terrain/terrain.png");
      for(int i = 0; i< this->_sizeX/32; i++){
           for(int j = 0; j< this->_sizeY/32; j++){
-
-               // rectangle.setFillColor(sf::Color::Yellow);
-               std::cout << "i: " << i << "| j :" << j << '\n';
                if(j < 5){
                     Scenery *t = new Tree;
                     _world2[i][j] = *t;
@@ -155,13 +153,14 @@ void Map::setMapClickable() {
      // _mapTile[0].rect.height = 32;
      // _mapTile[0].rect.width = 32;
      // _mapTile[0].action = 0;
-     for (int i = 0; i < _sizeX/32; i++) {
-          _mapTile[i].rect.top = i*32;
-          for (int j = 0; j < _sizeY/32; j++) {
-               _mapTile[i].rect.left = j*32;
-               _mapTile[i].rect.height = 32;
-               _mapTile[i].rect.width = 32;
-               _mapTile[i].action = i;
+     std::cout << "_tileClicked: "<<_tileClicked << '\n';
+     for (int i = 0; i < (_sizeX/32)*(_sizeY/32); i++) {
+          for (int j = 0; j < _sizeY/32; j+=32) {
+               _mapTile[i][j].rect.left = i*32;
+               _mapTile[i][j].rect.top = j;
+               _mapTile[i][j].rect.height = 32;
+               _mapTile[i][j].rect.width = 32;
+               _mapTile[i][j].action = i+1;
           }
           // std::cout << "i: " << i <<"_mapTile.rect.top: "<< _mapTile[i].rect.top << '\n';
           // std::cout << "i: " << i <<"_mapTile.rect.left: "<< _mapTile[i].rect.left << '\n';
@@ -174,25 +173,21 @@ void Map::setMapClickable() {
 
 void Map::handleClick(sf::RenderWindow &window){
      sf::Event mapEvent;
-     bool test = true;
      int i = 0;
-     _tileClicked = -1;
+     int j =0;
+     _tileClicked = 0;
      // std::cout << "_tileClicked" <<_tileClicked<< '\n';
-     // while(test){
-          while (window.pollEvent(mapEvent)) {
-               if (mapEvent.type == sf::Event::MouseButtonPressed) {
-                    while ((i < _sizeX/32) && (_tileClicked == -1)) {
-                         Menu m;
-                         std::cout << "i: " << i<< '\n';
-                         // std::cout << "actions: "<< _mapTile[i].action << '\n';
-                         _tileClicked = m.checkZone(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y, _mapTile[i]);
-                         test = false;
+     while (window.pollEvent(mapEvent)) {
+          if (mapEvent.type == sf::Event::MouseButtonPressed) {
+               Menu m;
+               while (i < (_sizeX/32) && (_tileClicked == 0)) {
+                    while ((j<(_sizeY/32))&&(_tileClicked ==0)) {
+                         _tileClicked = m.checkZone(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y, _mapTile[i][j]);
                          i++;
-                         // std::cout << "_tileClicked: " << _tileClicked << '\n';
                     }
-                    std::cout << "You clicked on the "<< _tileClicked << "th tile"<< '\n';
-                    std::cout << "x: " << sf::Mouse::getPosition(window).x<< " y: " << sf::Mouse::getPosition(window).y << '\n';
                }
+               std::cout << "You clicked on the "<< _tileClicked << "th tile"<< '\n';
+               std::cout << "x: " << sf::Mouse::getPosition(window).x<< " y: " << sf::Mouse::getPosition(window).y << '\n';
           }
-     // }
+     }
 }

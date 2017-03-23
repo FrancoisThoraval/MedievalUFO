@@ -29,7 +29,7 @@ int Menu::checkZone(int x, int y, Button b){
           std::cout << "b is between: x="<< x<< " y= "<< y << '\n';
           return b.action;
      }
-     return -1;
+     return 0;
 }
 
 void Menu::handleClick(sf::RenderWindow &window){

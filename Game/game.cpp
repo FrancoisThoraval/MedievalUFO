@@ -40,19 +40,8 @@ void Game::gameLoop(){
      sf::Texture t;
      t.loadFromFile("./Textures/water.png");
      while (_window.pollEvent(currentEvent)) {
-          if (currentEvent.type == sf::Event::KeyReleased) {
-               if (currentEvent.key.code == sf::Keyboard::F) {
-                    std::cout << "Hai premuto F" << '\n';
-                    if (_isFullScreen) {
-                         _window.create(sf::VideoMode(_xWindow,_yWindow,32),"Medieval UFO",sf::Style::Default);
-                         _isFullScreen = false;
-                    }else{
-                         _window.create(sf::VideoMode(_xWindow,_yWindow,32),"Medieval UFO",sf::Style::Fullscreen);
-                         _isFullScreen = true;
-                    }
+          std::cout << "isFullscreen: "<< _isFullScreen << '\n';
 
-               }
-          }
           switch (_gameState) {
                case 2 : {
                     showSpashScreen();
@@ -64,7 +53,6 @@ void Game::gameLoop(){
                }
                case 4 : {
                     Map m(800,600);
-                    // for (int i = 0; i < 50; i++) {
                     _window.clear(sf::Color(0,0,0));
                     m.drawWorld(_window);
                     while (_gameState == 4) {
@@ -81,14 +69,27 @@ void Game::gameLoop(){
                                    if(currentEvent.key.code == sf::Keyboard::Escape){
                                         showMenu();
                                    }
+
+                                   if (currentEvent.key.code == sf::Keyboard::F) {
+                                        std::cout << "Hai premuto F" << '\n';
+                                        if (_isFullScreen) {
+                                             _window.create(sf::VideoMode(_xWindow,_yWindow,32),"Medieval UFO",sf::Style::Default);
+                                             _isFullScreen = false;
+                                             m.drawWorld(_window);
+                                             _window.display();
+                                        }else{
+                                             _window.create(sf::VideoMode(_xWindow,_yWindow,32),"Medieval UFO",sf::Style::Fullscreen);
+                                             _isFullScreen = true;
+                                             m.drawWorld(_window);
+                                             _window.display();
+                                        }
+
+                                   }
+
                               }
                          }
                          m.handleClick(_window);
                     }
-
-                    // for (int i = 0; i < 999999999; i++) {
-                    //      /* code */
-                    // }
                break;
                }
                case 5 : {

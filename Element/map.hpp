@@ -18,7 +18,7 @@ protected:
   Scenery **_world2;
   int _sizeX;
   int _sizeY;
-  Button *_mapTile;
+  Button **_mapTile;
   int _tileClicked;
 public:
   Map (int, int);
