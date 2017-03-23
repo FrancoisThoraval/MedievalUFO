@@ -156,9 +156,9 @@ void Map::setMapClickable() {
      // _mapTile[0].rect.width = 32;
      // _mapTile[0].action = 0;
      for (int i = 0; i < _sizeX/32; i++) {
-          _mapTile[i].rect.left = i*32;
+          _mapTile[i].rect.top = i*32;
           for (int j = 0; j < _sizeY/32; j++) {
-               _mapTile[i].rect.top = j*32;
+               _mapTile[i].rect.left = j*32;
                _mapTile[i].rect.height = 32;
                _mapTile[i].rect.width = 32;
                _mapTile[i].action = i;

@@ -107,7 +107,7 @@ void Unit::move(Position posInit,Position posFinal,Map* m){
   int min2;
   if(posInit.getX()>posFinal.getX()){
     max = posInit.getX();
-    min = posFinal.getX();0
+    min = posFinal.getX();
   } else {
     max = posFinal.getX();
     min = posInit.getX();
