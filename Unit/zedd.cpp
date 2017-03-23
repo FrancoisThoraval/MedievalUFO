@@ -48,7 +48,7 @@ void Zedd::setApocalypseHole(int hole){
   this->_apocalypseHole = hole;
 }
 
-void Zedd::ThrowExtendNade(Position pos,Map *m,Player &p){
+void Zedd::ThrowExtendNade(Position pos,Map *m,Player& p){
   if(this->getActiveExpendNade()==true){
     if((m->getNameOfElement(pos))=="Putties") {
       (m->getElementW1(pos)).setHealthPoints(1500);
@@ -63,14 +63,14 @@ void Zedd::ThrowExtendNade(Position pos,Map *m,Player &p){
   }
 }
 
-void EnableGrenade(Map m){
+void Zedd::EnableGrenade(Map m){
   Position currentPos;
   for(int i = 0;i<m.getSizeX();i++){
     for(int j=0;j<m.getSizeY();j++){
       currentPos.setX(i);
       currentPos.setY(j);
       if(m.getNameOfElement(currentPos)=="Putties"){
-        if(m.getElementW1().getHealthPoints()<= 40){
+        if((m.getElementW1(currentPos)).getHealthPoints()<= 40){
           this->_activeExpendNade = true;
         }
       }
