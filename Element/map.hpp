@@ -34,7 +34,6 @@ public:
   void createTile(int,int,sf::RenderWindow &,sf::Texture &);
   bool isOnMap(Position pos);
 
-  void setMapClickable();
   void handleClick(sf::RenderWindow &);
 
   int getSizeX();

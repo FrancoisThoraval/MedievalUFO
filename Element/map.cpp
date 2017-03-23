@@ -20,7 +20,6 @@ Map::Map(int sizeX, int sizeY){
          _mapTile[i] = new sf::Sprite[_sizeY/32];
     }
     _tileClicked = 0;
-    setMapClickable();
 }
 
 Map::~Map(){
@@ -149,30 +148,6 @@ int Map::getSizeY(){return this->_sizeY;}
 int Map::getSizeX(){return this->_sizeX;}
 void Map::setSizeY(int y){this->_sizeY = y;}
 void Map::setSizeX(int x){this->_sizeX = x;}
-
-void Map::setMapClickable() {
-//      // _mapTile[0].rect.top = 0;
-//      // _mapTile[0].rect.left = 0;
-//      // _mapTile[0].rect.height = 32;
-//      // _mapTile[0].rect.width = 32;
-//      // _mapTile[0].action = 0;
-//      std::cout << "_tileClicked: "<<_tileClicked << '\n';
-//      for (int i = 0; i < _sizeX/32; i++) {
-//           for (int j = 0; j < _sizeY/32; j++) {
-//                _mapTile[i][j].rect.left = i*32;
-//                _mapTile[i][j].rect.top = j*32;
-//                _mapTile[i][j].rect.height = 32;
-//                _mapTile[i][j].rect.width = 32;
-//                _mapTile[i][j].action = i+1;
-//           }
-//           // std::cout << "i: " << i <<"_mapTile.rect.top: "<< _mapTile[i].rect.top << '\n';
-//           // std::cout << "i: " << i <<"_mapTile.rect.left: "<< _mapTile[i].rect.left << '\n';
-//           // std::cout << "i: " << i <<"_mapTile.rect.height: "<< _mapTile[i].rect.height << '\n';
-//           // std::cout << "i: " << i <<"_mapTile.rect.width: "<< _mapTile[i].rect.width << '\n';
-//      }
-//
-//      std::cout << "map is now clickable !" << '\n';
-}
 
 void Map::handleClick(sf::RenderWindow &window){
      sf::Event mapEvent;

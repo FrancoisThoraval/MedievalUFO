@@ -37,8 +37,6 @@ bool Game::isExiting(){
 
 void Game::gameLoop(){
      sf::Event currentEvent;
-     sf::Texture t;
-     t.loadFromFile("./Textures/water.png");
      while (_window.pollEvent(currentEvent)) {
           std::cout << "isFullscreen: "<< _isFullScreen << '\n';
 
@@ -71,7 +69,7 @@ void Game::gameLoop(){
                                    }
 
                                    if (currentEvent.key.code == sf::Keyboard::F) {
-                                        std::cout << "Hai premuto F" << '\n';
+                                        std::cout << "Toggling fullscreen" << '\n';
                                         if (_isFullScreen) {
                                              _window.create(sf::VideoMode(_xWindow,_yWindow,32),"Medieval UFO",sf::Style::Default);
                                              _isFullScreen = false;
@@ -110,7 +108,6 @@ void Game::showMenu(){
      Menu m;
      m.show(_window);
      m.handleClick(_window);
-     std::cout << "here in the game.cpp: choice: "<< m.getMenuChoice() << '\n';
      switch (m.getMenuChoice()) {
           case 1: _gameState = 4;
                break;
@@ -118,8 +115,8 @@ void Game::showMenu(){
                break;
      }
      if (_gameState == 4) {
-          std::cout << "Si parte ! " << '\n';
+          std::cout << "Starting game..." << '\n';
      }else if(_gameState == 5){
-          std::cout << "Adio amico !" << '\n';
+          std::cout << "Closing game" << '\n';
      }
 }
