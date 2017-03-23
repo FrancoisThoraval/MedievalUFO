@@ -150,13 +150,22 @@ void Map::setSizeY(int y){this->_sizeY = y;}
 void Map::setSizeX(int x){this->_sizeX = x;}
 
 void Map::setMapClickable() {
+     _mapTile[0].rect.top = 0;
+     _mapTile[0].rect.left = 0;
+     _mapTile[0].rect.height = 32;
+     _mapTile[0].rect.width = 32;
+     _mapTile[0].action = 0;
      for (int i = 0; i < _sizeX; i++) {
           for (int j = 0; j < _sizeY; j++) {
-               _mapTile[i].rect.top = i*32;
-               _mapTile[i].rect.left = j*32;
+               _mapTile[i].rect.top = i+32;
+               _mapTile[i].rect.left = j+32;
                _mapTile[i].rect.height = 32;
                _mapTile[i].rect.width = 32;
                _mapTile[i].action = i;
+               // std::cout << "i: " << i <<"_mapTile.rect.top: "<< _mapTile[i].rect.top << '\n';
+               // std::cout << "i: " << i <<"_mapTile.rect.left: "<< _mapTile[i].rect.left << '\n';
+               // std::cout << "i: " << i <<"_mapTile.rect.height: "<< _mapTile[i].rect.height << '\n';
+               // std::cout << "i: " << i <<"_mapTile.rect.width: "<< _mapTile[i].rect.width << '\n';
           }
      }
      std::cout << "map is now clickable !" << '\n';
@@ -169,13 +178,15 @@ void Map::handleClick(sf::RenderWindow &window){
           while (window.pollEvent(mapEvent)) {
                if (mapEvent.type == sf::Event::MouseButtonPressed) {
                     int i = 0;
-                    while ((i < _sizeX) || (_tileClicked == -1)) {
+                    while ((i < _sizeX) && (_tileClicked == -1)) {
                          Menu m;
-                         std::cout << "actions: "<< _mapTile[i].action << '\n';
+
+                         // std::cout << "actions: "<< _mapTile[i].action << '\n';
                          _tileClicked = m.checkZone(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y, _mapTile[i]);
-                         std::cout << "_tileClicked: " << _tileClicked << '\n';
+                         test = false;
+                         i++;
+                         // std::cout << "_tileClicked: " << _tileClicked << '\n';
                     }
-                    test = false;
                     std::cout << "You clicked on the "<< _tileClicked << "th tile"<< '\n';
                     std::cout << "x: " << sf::Mouse::getPosition(window).x<< " y: " << sf::Mouse::getPosition(window).y << '\n';
                }
