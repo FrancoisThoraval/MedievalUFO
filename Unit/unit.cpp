@@ -107,7 +107,7 @@ void Unit::move(Position posInit,Position posFinal,Map* m){
   int min2;
   if(posInit.getX()>posFinal.getX()){
     max = posInit.getX();
-    min = posFinal.getX();
+    min = posFinal.getX();0
   } else {
     max = posFinal.getX();
     min = posInit.getX();
@@ -118,10 +118,12 @@ void Unit::move(Position posInit,Position posFinal,Map* m){
   } else {
     max2 = posFinal.getY();
     min2 = posInit.getY();
+
   }
   if((max-min)+(max2-min2)<=this->_movement){
-    //delete m->getElementW1(posInit);
+    Unit *u = new Unit();
     m->setElementW1(posFinal,*this);
+    m->setElementW1(posInit,*u);
   } else {
     std::cout<<"Pas assez de point de deplacement"<<std::endl;
   }
