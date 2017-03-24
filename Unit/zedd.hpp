@@ -23,7 +23,7 @@ private:
 
 public:
   Zedd ();
-  virtual ~Zedd ();
+  ~Zedd ();
   int getActiveExpendNade()const;
   int getInvocation()const;
   int getPuttiesCalling()const;

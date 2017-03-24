@@ -20,6 +20,8 @@ protected:
   int _sizeY;
   sf::Sprite **_mapTile;
   int _tileClicked;
+  Unit _tab[6];
+  int _compttab;
 public:
   Map (int, int);
   ~Map ();
@@ -38,8 +40,12 @@ public:
 
   int getSizeX();
   int getSizeY();
+  int getCompt()const;
+  Unit getTab(int)const;
   void setSizeX(int);
   void setSizeY(int);
+  void setCompt(int);
+  void setTab(int,Unit);
 };
 
 #endif

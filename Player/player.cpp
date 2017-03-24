@@ -1,8 +1,9 @@
 #include "player.hpp"
 
-Player::Player(){
+Player::Player(std::string name){
     this->_energy = 100;
     this->_lost = false;
+    this->_name = name;
 }
 
 Player::~Player(){
@@ -33,6 +34,20 @@ void Player::setName(std::string name){
   this->_name = name;
 }
 
-void Player::EndOfTurn(){
+void Player::EndOfTurn(Map *m){
   this->_energy = 100;
+  ResetMovement(m);
+}
+
+void Player::ResetMovement(Map *m){
+  Position currentPos;
+  for(int i=0;i<m->getSizeX();i++){
+    for(int j=0;j<m->getSizeY();j++){
+      currentPos.setX(i);
+      currentPos.setY(j);
+      if(m->getNameOfElement(currentPos)!=""){
+        (m->getElementW1(currentPos)).setMovement((m->getElementW1(currentPos)).getDefault());
+      }
+    }
+  }
 }

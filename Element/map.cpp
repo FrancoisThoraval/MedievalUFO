@@ -9,6 +9,7 @@
 Map::Map(int sizeX, int sizeY){
     this->_sizeX = sizeX;
     this->_sizeY = sizeY;
+    this->compttab = 0;
     _world1 = new Unit* [_sizeX];
     _world2 = new Scenery* [_sizeX];
     _mapTile = new sf::Sprite* [(_sizeX/32)];
@@ -50,6 +51,22 @@ std::string Map::getNameOfElement(Position pos)const{
           return (this->getElementW1(pos).getName());
 }
 
+int Map::getCompt()const{
+  return(this->_compttab);
+}
+
+void Map::setCompt(int c){
+  this->_compttab = c;
+}
+
+void Map::setTab(int pos, Unit u){
+  this->_tab[pos] = u;
+  this->_compttab++;
+}
+
+Unit Map::getTab(int pos)const{
+  return(this->_tab[pos]);
+}
 
 void Map::setElement(Position pos,Element* elt){
 

@@ -20,7 +20,7 @@ public:
   void setLost(bool);
   void setName(std::string);
 
-  void EndOfTurn();
+  void EndOfTurn(Map *m);
 };
 
 #endif

@@ -39,6 +39,7 @@ public:
   int getMovement()const;
   Weapon* getPrimaryW()const;
   Weapon* getSecondaryW()const;
+  int getDefault()const;
   /** Setter **/
   void setName(std::string);
   void setHealthPoints(int);
@@ -62,7 +63,7 @@ public:
   Putties ();
   ~Putties ();
   Putties(int,int,int,Weapon*); //hp,mvmt,price,arme
-  void attack(Unit&,int,Player&);
+  void attack(Unit&,int,Player&,Position);
 };
 
 class PowerRanger : public Unit {
@@ -85,7 +86,9 @@ public:
   bool getCapacityWeapon()const;
 
   void TornadoDino(Map*,Position);
-  void attack(Unit &, int,Player&);
+  void attack(Unit &, int,Player&,Map *m,Position);
+  void BeTogether(Map,Position,bool*,bool*);
+  void Transformation(Map*);
 };
 
 
@@ -146,7 +149,7 @@ public:
   virtual ~RobotPR ();
   int getArmor()const;
   void setArmor(int);
-  void attack(Unit&, int,Player& );
+  void attack(Unit&, int,Player&, Position );
 };
 
 class TurtleTank : public RobotPR {
@@ -155,7 +158,7 @@ private:
 public:
   TurtleTank ();
   virtual ~TurtleTank ();
-  void attack(Unit& u,Player&);
+  void attack(Unit& u,Player&,Position);
 
 };
 
