@@ -33,7 +33,7 @@ void Player::setLost(bool butt){
 void Player::setName(std::string name){
   this->_name = name;
 }
-
+/*
 void Player::EndOfTurn(Map *m){
   this->_energy = 100;
   ResetMovement(m);
@@ -51,3 +51,4 @@ void Player::ResetMovement(Map *m){
     }
   }
 }
+*/

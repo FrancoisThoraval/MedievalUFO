@@ -9,7 +9,8 @@
 Map::Map(int sizeX, int sizeY){
     this->_sizeX = sizeX;
     this->_sizeY = sizeY;
-    this->compttab = 0;
+    this->_compttab = 0;
+    _tab = new Unit[6];
     _world1 = new Unit* [_sizeX];
     _world2 = new Scenery* [_sizeX];
     _mapTile = new sf::Sprite* [(_sizeX/32)];
@@ -58,12 +59,12 @@ int Map::getCompt()const{
 void Map::setCompt(int c){
   this->_compttab = c;
 }
-
-void Map::setTab(int pos, Unit u){
-  this->_tab[pos] = u;
-  this->_compttab++;
+/*
+void Map::setInTab(Unit& u){
+  this->_tab[getCompt()] = u;
+  setCompt((this->getCompt())+1);
 }
-
+*/
 Unit Map::getTab(int pos)const{
   return(this->_tab[pos]);
 }

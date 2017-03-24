@@ -46,7 +46,7 @@ Unit::Unit(Unit& u){
   this->_movement = u._movement;
   this->_primaryWeapon = u._primaryWeapon;
   this->_secondaryWeapon = u._secondaryWeapon;
-  this->_defaultMovement = u->_defaultMovement;
+  this->_defaultMovement = u._defaultMovement;
 
 }
 
@@ -152,7 +152,7 @@ Putties::Putties(){
   this->setPrice(5);  // Le prix du Putties
   this->setMovement(2);
   _primaryWeapon = new Weapon("fist",5,1,20);
-  _defaultMovement = _movement;
+  _defaultMovement = this->getMovement();
 }
 
 
@@ -162,7 +162,7 @@ Putties::Putties(int hp,int mvmt,int price,Weapon *wp){
   this->setMovement(mvmt);
   this->setPrimaryW(wp);
   this->setPrice(price);
-  this->_defaultMovement = this->_movement;
+  this->_defaultMovement = this->getMovement();
 }
 
 Putties::~Putties(){
@@ -174,7 +174,7 @@ void Putties::attack(Unit& a,int W,Player& p,Position posFinal){
 Position posInit = this->_pos;
 int distance = Distance(posInit,posFinal);
   if(W == 1){
-    if(p.getEnergy()>((this->_primaryWeapon).getCost())){
+    if(p.getEnergy()>((this->_primaryWeapon)->getCost())){
       if(distance <= (this->_primaryWeapon)->getAttackRange()) {
         a.setHealthPoints(a.getHealthPoints()-this->getPrimaryW()->getStrengh());
         p.setEnergy(p.getEnergy()-(this->_primaryWeapon)->getCost());
@@ -185,7 +185,7 @@ int distance = Distance(posInit,posFinal);
       std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
     }
   }else {
-    if(p.getEnergy()>((this->_secondaryWeapon).getCost())){
+    if(p.getEnergy()>((this->_secondaryWeapon)->getCost())){
       if(distance <= (this->_secondaryWeapon)->getAttackRange()){
         a.setHealthPoints(a.getHealthPoints()-this->getSecondaryW()->getStrengh());
         p.setEnergy(p.getEnergy()-(this->_secondaryWeapon)->getCost());
@@ -283,7 +283,7 @@ void PowerRanger::attack(Unit& u,int W,Player& p,Map *m,Position posFinal){
         std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
       }
   }else if(W == 2) {
-          if(p.getEnergy()>((this->_secondaryWeapon).getCost())){
+          if(p.getEnergy()>((this->_secondaryWeapon)->getCost())){
             if(distance <= (this->_primaryWeapon)->getAttackRange()){
               u.setHealthPoints(u.getHealthPoints()-this->_secondaryWeapon->getStrengh());
               p.setEnergy(p.getEnergy()-(this->_secondaryWeapon)->getCost());
@@ -294,18 +294,18 @@ void PowerRanger::attack(Unit& u,int W,Player& p,Map *m,Position posFinal){
             std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
           }
     } else if (W == 3){
-              if(p.getEnergy()>((this->_thirdWeapon).getCost())){
+              if(p.getEnergy()>((this->_robot)->getCost())){
                 this->Transformation(m);
               } else {
                 std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
               }
             } else {
-                if(p.getEnergy()>((this->_fourthWeapon).getCost())){
+                if(p.getEnergy()>((this->_cheatedWeapon)->getCost())){
                   this->CheaterWeaponOn(*m);
                   if(this->getCapacityWeapon()==true){
-                    if(distance <= (this->_fourthWeapon)->getAttackRange()){
-                      u.setHealthPoints(u.getHealthPoints()-this->_fourthWeapon->getStrengh());
-                      p.setEnergy(p.getEnergy()-(this->_fourthWeapon)->getCost());
+                    if(distance <= (this->_cheatedWeapon)->getAttackRange()){
+                      u.setHealthPoints(u.getHealthPoints()-this->_cheatedWeapon->getStrengh());
+                      p.setEnergy(p.getEnergy()-(this->_cheatedWeapon)->getCost());
                     } else {
                       std::cout<<"Tu n'as pas la portée necessaire"<<std::endl;
                     }
@@ -329,7 +329,7 @@ void PowerRanger::TornadoDino(Map* m,Position pos){
 void PowerRanger::BeTogether(Map m,Position pos,bool* hor, bool* ver){
   int i = 0;
   int k = 0;
-  Positon currentPos;
+  Position currentPos;
   currentPos.setY(pos.getY());
   for(int j =0;j<m.getSizeX();j++){
     currentPos.setX(j);
@@ -338,9 +338,9 @@ void PowerRanger::BeTogether(Map m,Position pos,bool* hor, bool* ver){
     }
   }
   currentPos.setX(pos.getX());
-  for(int j =0;j<m->getSizeY();j++){
+  for(int j =0;j<m.getSizeY();j++){
     currentPos.setY(j);
-    if((m->getNameOfElement(currentPos)!="Putties")&&(m->getNameOfElement(currentPos)!="Zedd")&&(m->getNameOfElement(currentPos)!="green")){
+    if((m.getNameOfElement(currentPos)!="Putties")&&(m.getNameOfElement(currentPos)!="Zedd")&&(m.getNameOfElement(currentPos)!="green")){
       k++;
     }
   }
@@ -357,26 +357,32 @@ void PowerRanger::BeTogether(Map m,Position pos,bool* hor, bool* ver){
 
 void PowerRanger::Transformation(Map *m){
   Position pos = this->_pos;
+  Position currentPos;
   Unit *u = new Unit;
+
   Unit *r =  new RobotPR;
   bool hor;
   bool ver;
-  BeTogether(*map,pos,&hor,&ver);
+  BeTogether(*m,pos,&hor,&ver);
   if((hor == true)||(ver == true)){
       this->_capacityRobot = true;
       if(hor == true){
         currentPos.setY(pos.getY());
         for(int j=0;j<m->getSizeX();j++){
           currentPos.setX(j);
-          m->setTab(m->getCompt(),m->getElementW1(currentPos));
-          m->setElementW1(currentPos,*u);
+          if((m->getNameOfElement(currentPos)!="Putties")&&(m->getNameOfElement(currentPos)!="Zedd")&&(m->getNameOfElement(currentPos)!="green")){
+            //m->setInTab(m->getElementW1(currentPos));
+            m->setElementW1(currentPos,*u);
+          }
         }
       } else if ( ver == true){
         currentPos.setX(pos.getX());
         for(int j=0;j<m->getSizeY();j++){
           currentPos.setY(j);
-          m->setTab(m->getCompt(),m->getElementW1(currentPos));
-          m->setElementW1(currentPos,*u);
+          if((m->getNameOfElement(currentPos)!="Putties")&&(m->getNameOfElement(currentPos)!="Zedd")&&(m->getNameOfElement(currentPos)!="green")){
+            //m->setInTab(m->getElementW1(currentPos));
+            m->setElementW1(currentPos,*u);
+          }
         }
       }
       m->setElementW1(pos,*r);
@@ -386,7 +392,7 @@ void PowerRanger::Transformation(Map *m){
 void PowerRanger::CheaterWeaponOn(Map m){
   bool hor;
   bool ver;
-  Position pos = this->pos;
+  Position pos = this->_pos;
   BeTogether(m,pos,&hor,&ver);
   if((hor == true)||(ver == true)){
     this->_capacityWeapon = true;
@@ -406,7 +412,7 @@ Dino::Dino(){
     this->setHealthPoints(150);
     this->setMovement(3);
     _primaryWeapon = new Weapon("Tornado",0,0,50);
-    this->_defaultMovement = this->_movement;
+    this->_defaultMovement = this->getMovement();
 }
 
 Dino::~Dino(){
@@ -461,7 +467,7 @@ RobotPR::RobotPR(){
   _primaryWeapon = new Weapon("Fist",300,1,60);
   _secondaryWeapon = new Weapon("Sword",600,3,100);
   this->setMovement(5);
-  this->_defaultMovement = this->_movement;
+  this->_defaultMovement = this->getMovement();
 }
 
 RobotPR::~RobotPR(){
@@ -476,11 +482,11 @@ void RobotPR::setArmor(int armor){
   this->_armor = armor;
 }
 
-void RobotPR::attack(Unit& u,int W,Player& p,Positon posFinal){
+void RobotPR::attack(Unit& u,int W,Player& p,Position posFinal){
   Position posInit = this->_pos;
   int distance = Distance(posInit,posFinal);
   if(W ==  1){
-      if(p.getEnergy()>((this->_primaryWeapon).getCost())){
+      if(p.getEnergy()>((this->_primaryWeapon)->getCost())){
         if(distance <= (this->_primaryWeapon)->getAttackRange()){
           u.setHealthPoints(u.getHealthPoints()-this->getPrimaryW()->getStrengh());
           p.setEnergy(p.getEnergy()-(this->_primaryWeapon)->getCost());
@@ -491,8 +497,8 @@ void RobotPR::attack(Unit& u,int W,Player& p,Positon posFinal){
         std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
       }
   } else if (W == 2){
-              if(p.getEnergy()>((this->_secondaryWeapon).getCost())){
-                if(distance <= (this->_fourthWeapon)->getAttackRange()){
+              if(p.getEnergy()>((this->_secondaryWeapon)->getCost())){
+                if(distance <= (this->_secondaryWeapon)->getAttackRange()){
                   u.setHealthPoints(u.getHealthPoints()-this->getSecondaryW()->getStrengh());
                   p.setEnergy(p.getEnergy()-(this->_secondaryWeapon)->getCost());
                 } else {
@@ -516,17 +522,17 @@ TurtleTank::TurtleTank(){
     setName("TurtleTank");
     _primaryWeapon = new Weapon("Fatality",10000,30,100);
     setMovement(5);
-    this->_defaultMovement = this->_movement;
+    this->_defaultMovement = this->getMovement();
 }
 
 TurtleTank::~TurtleTank(){
 
 }
 
-void TurtleTank::attack(Unit& u,Player& p,Position){
+void TurtleTank::attack(Unit& u,Player& p,Position posFinal){
   Position posInit = this->_pos;
   int distance = Distance (posInit,posFinal);
-    if(p.getEnergy()>((this->_primaryWeapon).getCost())){
+    if(p.getEnergy()>((this->_primaryWeapon)->getCost())){
       if(distance <= (this->_primaryWeapon)->getAttackRange()){
         u.setHealthPoints(u.getHealthPoints()-this->getPrimaryW()->getStrengh());
         p.setEnergy(p.getEnergy()-(this->_primaryWeapon)->getCost());

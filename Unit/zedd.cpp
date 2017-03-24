@@ -51,7 +51,7 @@ void Zedd::setApocalypseHole(int hole){
 
 
 void Zedd::ThrowExtendNade(Position pos,Map *m,Player& p){
-    if(p.getEnergy()>((this->_primaryWeapon).getCost())){
+    if(p.getEnergy()>((this->_primaryWeapon)->getCost())){
       if(this->getActiveExpendNade()==true){
         if((m->getNameOfElement(pos))=="Putties") {
           (m->getElementW1(pos)).setHealthPoints(1500);
@@ -86,7 +86,7 @@ void Zedd::EnableGrenade(Map m){
 
 /**** PAS SUR DE CELLE CI *****/
 void Zedd::Invocation(Position pos, Map *m,Player& p){
-    if(p.getEnergy()>((this->_secondaryWeapon).getCost())){
+    if(p.getEnergy()>((this->_secondaryWeapon)->getCost())){
       if(this->getInvocation() == 0){
         if(m->getNameOfElement(pos)!= ""){
           int hp;
@@ -116,13 +116,13 @@ void Zedd::Invocation(Position pos, Map *m,Player& p){
         std::cout<<"Tu ne peux pas encore utiliser cette capacite"<<std::endl;
       }
     } else {
-      std::cout<<"Tu n'as pas l'energie necessaire"<<std::end;
+      std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
     }
 }
 
 
 void Zedd::PuttiesCalling ( Position pos, Map* m,Player& p){
-    if(p.getEnergy()>((this->_thirdWeapon).getCost())){
+    if(p.getEnergy()>((this->_thirdWeapon)->getCost())){
       if(this->_puttiesCalling==0){
         Position p1 = pos;
         p1.setY(pos.getY()+1);
@@ -162,7 +162,7 @@ void Zedd::ApocalypseHole(Map *m,Player& p){
 
   static int count = 0;
   if(this->_apocalypseHole == 0){
-      if(p.getEnergy()>((this->_fourthWeapon).getCost())){
+      if(p.getEnergy()>((this->_fourthWeapon)->getCost())){
         if(count == 0){
           m->getElementW2(this->_pos).setName("Lava2");
           p.setEnergy(p.getEnergy()-(this->_fourthWeapon)->getCost());
@@ -231,5 +231,3 @@ void Zedd::ApocalypseHole(Map *m,Player& p){
       }
     }
   }
-
-}

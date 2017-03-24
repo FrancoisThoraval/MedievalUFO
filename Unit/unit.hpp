@@ -2,8 +2,8 @@
 #define unit_hpp
 
 #include "../Element/element.hpp"
-#include "../Element/map.hpp"
 #include "../Player/player.hpp"
+#include "../Element/map.hpp"
 #include "weapon.hpp"
 #include <string>
 
@@ -26,6 +26,7 @@ private:
   int _price;
   int _movement;
 protected:
+  int _defaultMovement;
   Weapon *_primaryWeapon;
   Weapon *_secondaryWeapon;
 public:
@@ -51,6 +52,13 @@ public:
   virtual void attack();
   void move(Position,Position,Map*);
   friend class Weapon;
+  Unit& operator=(Unit& u){
+    this->_name = u._name;
+    this->_healthPoints = u._healthPoints;
+    this->_price = u._price;
+    this->_movement = u._movement;
+    return(*this);
+  }
 
 };
 
@@ -89,6 +97,7 @@ public:
   void attack(Unit &, int,Player&,Map *m,Position);
   void BeTogether(Map,Position,bool*,bool*);
   void Transformation(Map*);
+  void CheaterWeaponOn(Map);
 };
 
 
@@ -158,7 +167,7 @@ private:
 public:
   TurtleTank ();
   virtual ~TurtleTank ();
-  void attack(Unit& u,Player&,Position);
+  void attack(Unit&,Player&,Position);
 
 };
 

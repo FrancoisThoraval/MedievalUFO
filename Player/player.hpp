@@ -1,6 +1,8 @@
 #ifndef player_hpp
 #define player_hpp
 
+//#include "../Element/map.hpp"
+#include <iostream>
 #include <string>
 
 class Player {
@@ -9,7 +11,7 @@ private:
   bool  _lost;
   std::string _name;
 public:
-  Player ();
+  Player (std::string);
   ~Player ();
 
   int getEnergy()const;
@@ -20,7 +22,7 @@ public:
   void setLost(bool);
   void setName(std::string);
 
-  void EndOfTurn(Map *m);
+  //void EndOfTurn(Map*);
 };
 
 #endif
