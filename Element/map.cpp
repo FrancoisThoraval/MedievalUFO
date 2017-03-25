@@ -1,5 +1,4 @@
 #include "map.hpp"
-
 // A faire, appliquer les textures correctement
 // Verification
 
@@ -10,7 +9,7 @@ Map::Map(int sizeX, int sizeY){
     this->_sizeX = sizeX;
     this->_sizeY = sizeY;
     this->_compttab = 0;
-    _tab = new Unit[6];
+    _tabUnit = new Unit[6];
     _world1 = new Unit* [_sizeX];
     _world2 = new Scenery* [_sizeX];
     _mapTile = new sf::Sprite* [(_sizeX/32)];
@@ -22,11 +21,19 @@ Map::Map(int sizeX, int sizeY){
          _mapTile[i] = new sf::Sprite[_sizeY/32];
     }
     _tileClicked = 0;
+    _unitSelected.setX(-1);
+    _unitSelected.setY(-1);
 }
 
 Map::~Map(){
+     std::cerr << "deleting w1" << '\n';
      delete[] _world1;
+     std::cerr << "deleting w2" << '\n';
      delete[] _world2;
+     std::cerr << "deleting mapTile" << '\n';
+     delete[] _mapTile;
+     std::cerr << "deleting tabUnit" << '\n';
+     delete[] _tabUnit;
 }
 
 Unit Map::getElementW1(Position pos)const{
@@ -59,24 +66,20 @@ int Map::getCompt()const{
 void Map::setCompt(int c){
   this->_compttab = c;
 }
-/*
-void Map::setInTab(Unit& u){
-  this->_tab[getCompt()] = u;
+
+void Map::setInTab(Unit&& u){
+  this->_tabUnit[getCompt()] = u;
   setCompt((this->getCompt())+1);
 }
-*/
+
 Unit Map::getTab(int pos)const{
-  return(this->_tab[pos]);
+  return(this->_tabUnit[pos]);
 }
 
 void Map::setElement(Position pos,Element* elt){
 
 }
 
-
-//  Idée: On a une matrice world2 qui contient tout les éléments de la map
-//  Même chose pour world1.
-//  Lorsqu'on affiche la map, si world1[x,y] = "vide", alors on affiche world2, sinon on affiche world1.
 void Map::createTile(int x, int y, sf::RenderWindow &window,sf::Texture &t){
      sf::RectangleShape rectangle(sf::Vector2f(32, 32));
      Position P;
@@ -89,22 +92,49 @@ void Map::createTile(int x, int y, sf::RenderWindow &window,sf::Texture &t){
 
      }
      if (this->getNameOfElement(P) == "red") {
-
+          sf::Sprite s;
+          s.setTexture(t);
+          s.setTextureRect(sf::IntRect(145, 846, 32, 32));
+          s.setPosition(x*32,y*32);
+          window.draw(s);
+          _mapTile[x][y] = s;
      }
      if (this->getNameOfElement(P) == "blue") {
-
+          sf::Sprite s;
+          s.setTexture(t);
+          s.setTextureRect(sf::IntRect(203, 842, 32, 32));
+          s.setPosition(x*32,y*32);
+          window.draw(s);
+          _mapTile[x][y] = s;
      }
      if (this->getNameOfElement(P) == "green") {
-
+          sf::Sprite s;
+          s.setTexture(t);
+          s.setTextureRect(sf::IntRect(311, 844, 32, 32));
+          s.setPosition(x*32,y*32);
+          window.draw(s);
+          _mapTile[x][y] = s;
+     }
+     if (this->getNameOfElement(P) == "pink") {
+          sf::Sprite s;
+          s.setTexture(t);
+          s.setTextureRect(sf::IntRect(364, 844, 32, 32));
+          s.setPosition(x*32,y*32);
+          window.draw(s);
+          _mapTile[x][y] = s;
      }
      if (this->getNameOfElement(P) == "yellow") {
-
+          sf::Sprite s;
+          s.setTexture(t);
+          s.setTextureRect(sf::IntRect(259, 844, 32, 32));
+          s.setPosition(x*32,y*32);
+          window.draw(s);
+          _mapTile[x][y] = s;
      }
      if(this->getNameOfElement(P) == "Tree"){
           sf::Sprite s;
           s.setTexture(t);
           s.setTextureRect(sf::IntRect(207, 282, 32, 32));
-          // rectangle.setFillColor(sf::Color::Green);
           s.setPosition(x*32,y*32);
           window.draw(s);
           _mapTile[x][y] = s;
@@ -112,7 +142,6 @@ void Map::createTile(int x, int y, sf::RenderWindow &window,sf::Texture &t){
           sf::Sprite s;
           s.setTexture(t);
           s.setTextureRect(sf::IntRect(886, 91, 32, 32));
-          // rectangle.setFillColor(sf::Color::Blue);
           s.setPosition(x*32,y*32);
           window.draw(s);
           _mapTile[x][y] = s;
@@ -121,7 +150,6 @@ void Map::createTile(int x, int y, sf::RenderWindow &window,sf::Texture &t){
           sf::Sprite s;
           s.setTexture(t);
           s.setTextureRect(sf::IntRect(772, 625, 32, 32));
-          // rectangle.setFillColor(sf::Color::Red);
           s.setPosition(x*32,y*32);
           window.draw(s);
           _mapTile[x][y] = s;
@@ -172,26 +200,42 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &e){
      int i = 0;
      int j =0;
      _tileClicked = 0;
-     // std::cout << "_tileClicked" <<_tileClicked<< '\n';
-     // while (window.pollEvent(mapEvent)) {
-          if (mapEvent.type == sf::Event::MouseButtonPressed) {
-               Menu m;
-               while ((i < (_sizeX/32)) && (_tileClicked == 0)) {
-                    while ((j < (_sizeY/32)) &&(_tileClicked ==0)) {
-                         // sf::Sprite s;
+     if (mapEvent.type == sf::Event::MouseButtonPressed) {
+          Menu m;
+          Position pos;
+          while ((i < (_sizeX/32)) && (_tileClicked == 0)) {
+               while ((j < (_sizeY/32)) &&(_tileClicked ==0)) {
+                    if (_mapTile[i][j].getGlobalBounds().contains(sf::Mouse::getPosition(window).x/32,sf::Mouse::getPosition(window).y/32)) {
+                         pos.setX(sf::Mouse::getPosition(window).x/32);
+                         pos.setY(sf::Mouse::getPosition(window).y/32);
+                         std::cout << "x: " << sf::Mouse::getPosition(window).x<< " y: " << sf::Mouse::getPosition(window).y << '\n';
+                         std::cout << "You clicked on: " << getNameOfElement(pos) <<'\n';
 
-                         if (_mapTile[i][j].getGlobalBounds().contains(sf::Mouse::getPosition(window).x/32,sf::Mouse::getPosition(window).y/32)) {
-                              Position pos(sf::Mouse::getPosition(window).x/32,sf::Mouse::getPosition(window).y/32);
-                              std::cout << "x: " << sf::Mouse::getPosition(window).x<< " y: " << sf::Mouse::getPosition(window).y << '\n';
-                              std::cout << "Name: " << getNameOfElement(pos) <<'\n';
-                         }
-                         // _tileClicked = m.checkZone(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y, _mapTile[i][j]);
-                         j++;
                     }
-                    i++;
+                    j++;
                }
+               i++;
           }
-     // }
+          if (_unitSelected.getX() == -1) {
+               if((getNameOfElement(pos) == "blue")||(getNameOfElement(pos) == "pink")||(getNameOfElement(pos) == "green")||(getNameOfElement(pos) == "yellow")||(getNameOfElement(pos) == "red")) {
+                    _unitSelected = pos;
+                    std::cerr << "saving position of unit selected" << '\n';
+               }else{
+                    _unitSelected.setX(-1);
+                    _unitSelected.setY(-1);
+               }
+          }else{
+               //Actuellement ne déplace pas
+               getElementW1(_unitSelected).move(_unitSelected,pos,this);
+               std::cerr << "_unitSelected: " << '\n';
+               std::cout << _unitSelected << '\n';
+               std::cerr << "pos: " << '\n';
+               std::cout << pos << '\n';
+               drawWorld(window);
+               _unitSelected.setX(-1);
+               _unitSelected.setY(-1);
+          }
+     }
 }
 
 /* ====================  Game UI   ========================== */
@@ -226,4 +270,13 @@ void Ui::drawUi(sf::RenderWindow &window){
 
 void Ui::handleClick(sf::RenderWindow &window, sf::Event &event){
 
+}
+
+void Ui::displayInfoPlayer(sf::RenderWindow &window, Player &p){
+     // sf::Text info;
+     // std::stringstream ss;
+     // ss << p.getEnergy();
+     // info.setString( ss.str().c_str() );
+     // window.draw(info);
+     // window.display();
 }

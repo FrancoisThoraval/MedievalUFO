@@ -37,6 +37,11 @@ public:
     this->_y = pos.getY();
     return(*this);
   }
+  friend std::ostream &operator<<(std::ostream &os,const Position &pos){
+       os << "------- Position \n";
+       os << "X: " << pos.getX() << " Y: " << pos.getY() << '\n';
+       return os;
+ }
 };
 
 

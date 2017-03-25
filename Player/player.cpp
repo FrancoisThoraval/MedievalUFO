@@ -1,5 +1,10 @@
 #include "player.hpp"
 
+Player::Player(){
+    this->_energy = 100;
+    this->_lost = false;
+}
+
 Player::Player(std::string name){
     this->_energy = 100;
     this->_lost = false;

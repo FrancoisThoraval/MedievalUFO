@@ -4,9 +4,12 @@
 // #include "element.hpp"
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <sstream>
 #include "../Scenery/scenery.hpp"
 #include "../Game/menu.hpp"
 #include "../Unit/unit.hpp"
+
+#include "../Player/player.hpp"
 const int TILESIZEX = 32;
 const int TILESIZEY = 32;
 
@@ -20,8 +23,9 @@ protected:
   int _sizeY;
   sf::Sprite **_mapTile;
   int _tileClicked;
-  Unit *_tab;
+  Unit *_tabUnit;
   int _compttab;
+  Position _unitSelected;
 public:
   Map (int, int);
   ~Map ();
@@ -45,7 +49,7 @@ public:
   void setSizeX(int);
   void setSizeY(int);
   void setCompt(int);
-  //void setInTab(Unit&);
+  void setInTab(Unit&&);
 
 };
 
@@ -58,6 +62,7 @@ public:
      ~Ui ();
      void drawUi(sf::RenderWindow &);
      void handleClick(sf::RenderWindow &,sf::Event &);
+     void displayInfoPlayer(sf::RenderWindow &, Player &);
 };
 
 #endif

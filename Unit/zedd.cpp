@@ -110,13 +110,13 @@ void Zedd::Invocation(Position pos, Map *m,Player& p){
           p.setEnergy(p.getEnergy()-(this->_secondaryWeapon)->getCost());
           this->_invocation= 5;                                  // WARNING WARNING WARNING
         } else {
-          std::cout<<"Il y a deja quelque chose sur cette case"<<std::endl;
+          std::cout<<"There's already something on this tile !"<<std::endl;
         }
       } else {
-        std::cout<<"Tu ne peux pas encore utiliser cette capacite"<<std::endl;
+        std::cout<<"Be patient my friend !"<<std::endl;
       }
     } else {
-      std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
+      std::cout<<"You don't have enough energy !"<<std::endl;
     }
 }
 
@@ -144,16 +144,16 @@ void Zedd::PuttiesCalling ( Position pos, Map* m,Player& p){
             p.setEnergy(p.getEnergy()-(this->_thirdWeapon)->getCost());
             this->_puttiesCalling = 4;
           } else {
-            std::cout<<"Il y'a deja quelque chose sur une des cases"<<std::endl;
+            std::cout<<"There's already something on this tile !"<<std::endl;
           }
         } else {
-          std::cout<<"Une des coordonnées est hors map"<<std::endl;
+          std::cout<<"Out of bounds !"<<std::endl;
         }
       } else {
-        std::cout<<"Sort pas disponible"<<std::endl;
+        std::cout<<"Not available !"<<std::endl;
       }
     } else {
-      std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
+      std::cout<<"You don't have enough energy"<<std::endl;
     }
 }
 
@@ -169,7 +169,7 @@ void Zedd::ApocalypseHole(Map *m,Player& p){
           count++;
         }
       }else {
-        std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
+        std::cout<<"You don't have enough energy"<<std::endl;
       }
     } else {
       Position p1 ;

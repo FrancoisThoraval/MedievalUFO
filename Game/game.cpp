@@ -35,6 +35,12 @@ bool Game::isExiting(){
 
 
 
+
+// In event loop...
+
+
+
+
 void Game::gameLoop(){
      sf::Event currentEvent;
      while (_window.pollEvent(currentEvent)) {
@@ -50,13 +56,32 @@ void Game::gameLoop(){
                     break;
                }
                case 4 : {
+                    _window.clear();
+                    //Saisie des noms de joueurs
+                    std::string name;
+                    std::cout << "=====\nPlayer 1: ";
+                    std::cin>>name;
+                    p1.setName(name);
+                    std::cout << "=====\nPlayer 2: ";
+                    std::cin>>name;
+                    p2.setName(name);
+                    //Création des éléments du jeu
                     Map m(800,500);
                     Ui ui;
+                    PowerRanger pink("pink"), red("red"), blue("blue"), green("green"),yellow("yellow");
+                    Position posPink(9,13),posRed(7,13),posBlue(8,13),posGreen(10,13),posYellow(11,13);
+                    m.setElementW1(posRed,red);
+                    m.setElementW1(posGreen,green);
+                    m.setElementW1(posYellow,yellow);
+                    m.setElementW1(posBlue,blue);
+                    m.setElementW1(posPink,pink);
+
                     _window.clear(sf::Color(0,0,0));
                     ui.drawUi(_window);
                     m.drawWorld(_window);
                     while (_gameState == 4) {
                          _window.display();
+                         // ui.displayInfoPlayer(_window,p);
                          while (_window.pollEvent(currentEvent)) {
                               if (currentEvent.type == sf::Event::Closed) {
                                    _gameState = 5; //End
@@ -65,7 +90,7 @@ void Game::gameLoop(){
                               {
                                    std::cout << "Opening menu" << '\n';
                                    if(currentEvent.key.code == sf::Keyboard::Escape){
-                                        showMenu();
+                                        showMenu(); //Créer un menu spécial
                                    }
 
                                    if (currentEvent.key.code == sf::Keyboard::F) {
@@ -87,6 +112,11 @@ void Game::gameLoop(){
                               }
                          }
                          m.handleClick(_window,currentEvent);
+
+                         if ((p1.getLost()!=false) || (p2.getLost()!= false )) {
+                              std::cout << "one player lost, back to menu" << '\n';
+                              _gameState = 3; //Retour au menu
+                         }
                     }
                break;
                }

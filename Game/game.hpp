@@ -7,14 +7,13 @@
 #include "splashScreen.hpp"
 #include "menu.hpp"
 #include "../Element/map.hpp"
-
+#include "../Player/player.hpp"
 // _gameState  ->   0    =    Initialization
 // _gameState  ->   1    =    Splash
 // _gameState  ->   2    =    Pause
 // _gameState  ->   3    =    Menu
 // _gameState  ->   4    =    Playing
 // _gameState  ->   5    =    End
-
 class Game {
 private:
      bool isExiting();
@@ -27,6 +26,7 @@ private:
      int _yWindow;
      bool _isFullScreen;
      // bool _isPlaying;
+     Player p1,p2;
 public:
      Game(int x, int y);
      ~Game();

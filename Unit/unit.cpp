@@ -130,14 +130,14 @@ int Unit::getDefault()const{
 
 void Unit::move(Position posInit,Position posFinal,Map* m){
   int distance = Distance(posInit,posFinal);
-  if(distance<=this->_movement){
+  // if(distance<=this->_movement){
     Unit *u = new Unit();
     m->setElementW1(posFinal,*this);
     m->setElementW1(posInit,*u);
-    this->setMovement(this->getMovement()-(distance));
-  } else {
-    std::cout<<"Pas assez de point de deplacement"<<std::endl;
-  }
+    // this->setMovement(this->getMovement()-(distance));
+  // } else {
+    // std::cout<<"Pas assez de point de deplacement"<<std::endl;
+  // }
 
 }
 
@@ -371,7 +371,7 @@ void PowerRanger::Transformation(Map *m){
         for(int j=0;j<m->getSizeX();j++){
           currentPos.setX(j);
           if((m->getNameOfElement(currentPos)!="Putties")&&(m->getNameOfElement(currentPos)!="Zedd")&&(m->getNameOfElement(currentPos)!="green")){
-            //m->setInTab(m->getElementW1(currentPos));
+            m->setInTab(m->getElementW1(currentPos));
             m->setElementW1(currentPos,*u);
           }
         }
@@ -380,7 +380,7 @@ void PowerRanger::Transformation(Map *m){
         for(int j=0;j<m->getSizeY();j++){
           currentPos.setY(j);
           if((m->getNameOfElement(currentPos)!="Putties")&&(m->getNameOfElement(currentPos)!="Zedd")&&(m->getNameOfElement(currentPos)!="green")){
-            //m->setInTab(m->getElementW1(currentPos));
+            m->setInTab(m->getElementW1(currentPos));
             m->setElementW1(currentPos,*u);
           }
         }
