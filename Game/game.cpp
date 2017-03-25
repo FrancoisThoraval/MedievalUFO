@@ -16,7 +16,7 @@ void Game::start(){
      if (_gameState != 0)
           return;
 
-     _window.create(sf::VideoMode(_xWindow,_yWindow,32),"Medieval UFO",sf::Style::Default);
+     _window.create(sf::VideoMode(_xWindow,_yWindow,32),"Power Rangers - Ultimate Battle Simulator (Alpha)",sf::Style::Default);
      _gameState = 2;
 
      while (!isExiting()) {
@@ -50,14 +50,14 @@ void Game::gameLoop(){
                     break;
                }
                case 4 : {
-                    Map m(800,600);
+                    Map m(800,500);
+                    Ui ui;
                     _window.clear(sf::Color(0,0,0));
+                    ui.drawUi(_window);
                     m.drawWorld(_window);
                     while (_gameState == 4) {
+                         _window.display();
                          while (_window.pollEvent(currentEvent)) {
-                              /* code */
-
-                              _window.display();
                               if (currentEvent.type == sf::Event::Closed) {
                                    _gameState = 5; //End
                               }
@@ -86,7 +86,7 @@ void Game::gameLoop(){
 
                               }
                          }
-                         m.handleClick(_window);
+                         m.handleClick(_window,currentEvent);
                     }
                break;
                }

@@ -167,13 +167,13 @@ int Map::getSizeX(){return this->_sizeX;}
 void Map::setSizeY(int y){this->_sizeY = y;}
 void Map::setSizeX(int x){this->_sizeX = x;}
 
-void Map::handleClick(sf::RenderWindow &window){
-     sf::Event mapEvent;
+void Map::handleClick(sf::RenderWindow &window,sf::Event &e){
+     sf::Event mapEvent =e;
      int i = 0;
      int j =0;
      _tileClicked = 0;
      // std::cout << "_tileClicked" <<_tileClicked<< '\n';
-     while (window.pollEvent(mapEvent)) {
+     // while (window.pollEvent(mapEvent)) {
           if (mapEvent.type == sf::Event::MouseButtonPressed) {
                Menu m;
                while ((i < (_sizeX/32)) && (_tileClicked == 0)) {
@@ -191,5 +191,39 @@ void Map::handleClick(sf::RenderWindow &window){
                     i++;
                }
           }
+     // }
+}
+
+/* ====================  Game UI   ========================== */
+Ui::Ui(){
+
+}
+
+Ui::~Ui(){
+
+}
+
+void Ui::drawUi(sf::RenderWindow &window){
+     std::cout << "Loading Ui..." << '\n';
+     sf::Texture texture;
+     texture.loadFromFile("./Textures/LPC_Terrain/terrain.png");
+     sf::Sprite alpha,separationBar;
+
+     alpha.setTexture(texture);
+     alpha.setTextureRect(sf::IntRect(768, 926, 250, 100));
+     alpha.setPosition(800-250,600-100);
+
+     separationBar.setTexture(texture);
+     separationBar.setTextureRect(sf::IntRect(355,476,45,20));
+     for (double i = 0; i < window.getSize().x/45+1; i++) {
+          separationBar.setPosition(i*45,600-120);
+          window.draw(separationBar);
      }
+     window.draw(alpha);
+     // _mapTile[x][y] = s;
+
+}
+
+void Ui::handleClick(sf::RenderWindow &window, sf::Event &event){
+
 }

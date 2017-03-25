@@ -7,16 +7,16 @@ void Menu::show(sf::RenderWindow &window){
      image.loadFromFile("./test.png");
      sf::Sprite sprite(image);
 
-     _btnPlay.rect.top = 0;
-     _btnPlay.rect.height = 299;
-     _btnPlay.rect.left = 0;
-     _btnPlay.rect.width = 800;
+     _btnPlay.rect.top = 9;
+     _btnPlay.rect.height = 80;
+     _btnPlay.rect.left = 10;
+     _btnPlay.rect.width = 200;
      _btnPlay.action = 1;
 
-     _btnExit.rect.top = 300;
-     _btnExit.rect.height = 299;
-     _btnExit.rect.left = 0;
-     _btnExit.rect.width = 800;
+     _btnExit.rect.top = 10;
+     _btnExit.rect.height = 80;
+     _btnExit.rect.left = 579;
+     _btnExit.rect.width = 200;
      _btnExit.action = 2;
      window.draw(sprite);
      window.display();

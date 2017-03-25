@@ -9,7 +9,7 @@
 *.so
 *.dll
 *.dylib
-
+programme
 # Qt-es
 
 /.qmake.cache

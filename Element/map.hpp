@@ -36,7 +36,7 @@ public:
   void createTile(int,int,sf::RenderWindow &,sf::Texture &);
   bool isOnMap(Position pos);
 
-  void handleClick(sf::RenderWindow &);
+  void handleClick(sf::RenderWindow &, sf::Event &);
 
   int getSizeX();
   int getSizeY();
@@ -47,6 +47,17 @@ public:
   void setCompt(int);
   //void setInTab(Unit&);
 
+};
+
+
+class Ui {
+private:
+
+public:
+     Ui ();
+     ~Ui ();
+     void drawUi(sf::RenderWindow &);
+     void handleClick(sf::RenderWindow &,sf::Event &);
 };
 
 #endif
