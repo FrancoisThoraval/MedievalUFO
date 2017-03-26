@@ -130,14 +130,18 @@ int Unit::getDefault()const{
 
 void Unit::move(Position posInit,Position posFinal,Map* m){
   int distance = Distance(posInit,posFinal);
-  // if(distance<=this->_movement){
-    Unit *u = new Unit();
-    m->setElementW1(posFinal,*this);
-    m->setElementW1(posInit,*u);
-    // this->setMovement(this->getMovement()-(distance));
-  // } else {
-    // std::cout<<"Pas assez de point de deplacement"<<std::endl;
-  // }
+   if(distance<=this->_movement){
+     if(distance != 0){
+       Unit *u = new Unit();
+       m->setElementW1(posFinal,*this);
+       m->setElementW1(posInit,*u);
+       this->setMovement(this->getMovement()-(distance));
+     } else {
+       std::cout <<"Tu ne peux pas te deplacer sur ta case actuel"<<std::endl;
+     }
+   } else {
+     std::cout<<"Pas assez de point de deplacement"<<std::endl;
+   }
 
 }
 
