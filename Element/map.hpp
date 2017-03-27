@@ -2,15 +2,15 @@
 #define map_hpp
 
 // #include "element.hpp"
+#include "../Unit/unit.hpp"
+#include "../Scenery/scenery.hpp"
+#include "../Game/menu.hpp"
+#include "../Player/player.hpp"
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <sstream>
 #include <sys/time.h>
-#include "../Scenery/scenery.hpp"
-#include "../Game/menu.hpp"
-#include "../Unit/unit.hpp"
 
-#include "../Player/player.hpp"
 const int TILESIZEX = 32;
 const int TILESIZEY = 32;
 

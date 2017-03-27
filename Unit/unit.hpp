@@ -1,9 +1,10 @@
 #ifndef unit_hpp
 #define unit_hpp
 
+#include "../Element/map.hpp"
+// #include "./zedd.hpp"
 #include "../Element/element.hpp"
 #include "../Player/player.hpp"
-#include "../Element/map.hpp"
 #include "weapon.hpp"
 #include <string>
 
@@ -14,10 +15,7 @@ class PowerRanger;
 class AYAYAY_Assistant;
 class RobotPR;
 class TurtleTank;
-class Map;
-//class Archer;
-//class Cavalier;
-//class Catapulte;
+class Zedd;
 
 class Unit : public Element {
 private:
@@ -29,6 +27,8 @@ protected:
   int _defaultMovement;
   Weapon *_primaryWeapon;
   Weapon *_secondaryWeapon;
+  Weapon *_thirdWeapon;
+  Weapon *_fourthWeapon;
 public:
   Unit ();
   ~Unit ();
@@ -49,7 +49,7 @@ public:
   void setPrimaryW(Weapon*);
   void setSecondaryW(Weapon*);
   /** Methode **/
-  virtual void attack();
+  void attack(Unit&,int,Player&,Position,Map*);
   void move(Position,Position,Map*,int,Player&);
   friend class Weapon;
   Unit& operator=(Unit& u){
@@ -94,8 +94,8 @@ public:
   bool getCapacityWeapon()const;
 
   void TornadoDino(Map*,Position);
-  void attack(Unit &, int,Player&,Map *m,Position);
-  void BeTogether(Map,Position,bool*,bool*);
+  //void attack(Unit &, int,Player&,Map *m,Position);
+  void BeTogether(Map*,Position,bool*,bool*);
   void Transformation(Map*);
   void CheaterWeaponOn(Map);
 };
@@ -158,7 +158,7 @@ public:
   virtual ~RobotPR ();
   int getArmor()const;
   void setArmor(int);
-  void attack(Unit&, int,Player&, Position );
+  //void attack(Unit&, int,Player&, Position );
 };
 
 class TurtleTank : public RobotPR {
@@ -167,7 +167,7 @@ private:
 public:
   TurtleTank ();
   virtual ~TurtleTank ();
-  void attack(Unit&,int,Player&,Position);
+  //void attack(Unit&,int,Player&,Position);
 
 };
 
