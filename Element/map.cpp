@@ -200,6 +200,10 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &e){
      int i = 0;
      int j =0;
      _tileClicked = 0;
+     struct timeval debut,fin;                // variable temps
+     float tempspasse;
+     float tempsjeux = 0.2;
+     gettimeofday(&debut,NULL);
      if (mapEvent.type == sf::Event::MouseButtonPressed) {
           Menu m;
           Position pos;
@@ -220,6 +224,13 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &e){
                if((getNameOfElement(pos) == "blue")||(getNameOfElement(pos) == "pink")||(getNameOfElement(pos) == "green")||(getNameOfElement(pos) == "yellow")||(getNameOfElement(pos) == "red")) {
                     _unitSelected = pos;
                     std::cerr << "saving position of unit selected" << '\n';
+                    gettimeofday(&fin,NULL);
+                    while (tempspasse < tempsjeux){
+                      gettimeofday(&fin,NULL);
+                      tempspasse = (((fin.tv_sec - debut.tv_sec)*1000000L+fin.tv_usec) - debut.tv_usec);
+                      tempspasse = (tempspasse/1000)/1000;
+                    }
+
                }else{
                     _unitSelected.setX(-1);
                     _unitSelected.setY(-1);

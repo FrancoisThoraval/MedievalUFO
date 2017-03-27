@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <sstream>
+#include <sys/time.h>
 #include "../Scenery/scenery.hpp"
 #include "../Game/menu.hpp"
 #include "../Unit/unit.hpp"

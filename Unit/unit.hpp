@@ -50,7 +50,7 @@ public:
   void setSecondaryW(Weapon*);
   /** Methode **/
   virtual void attack();
-  void move(Position,Position,Map*);
+  void move(Position,Position,Map*,int);
   friend class Weapon;
   Unit& operator=(Unit& u){
     this->_name = u._name;
@@ -167,7 +167,7 @@ private:
 public:
   TurtleTank ();
   virtual ~TurtleTank ();
-  void attack(Unit&,Player&,Position);
+  void attack(Unit&,int,Player&,Position);
 
 };
 

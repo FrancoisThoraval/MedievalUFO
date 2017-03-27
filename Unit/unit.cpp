@@ -128,8 +128,11 @@ int Unit::getDefault()const{
 }
 
 
-void Unit::move(Position posInit,Position posFinal,Map* m){
+void Unit::move(Position posInit,Position posFinal,Map* m,int numattack){
   int distance = Distance(posInit,posFinal);
+  if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")){
+  //  this->attack(m->getElementW1(posFinal),numattack,p,posFinal);
+  } else {
    if(distance<=this->_movement){
      if(distance != 0){
        Unit *u = new Unit();
@@ -142,7 +145,7 @@ void Unit::move(Position posInit,Position posFinal,Map* m){
    } else {
      std::cout<<"Pas assez de point de deplacement"<<std::endl;
    }
-
+ }
 }
 
 /****************************************/
