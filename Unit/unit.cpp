@@ -128,10 +128,10 @@ int Unit::getDefault()const{
 }
 
 
-void Unit::move(Position posInit,Position posFinal,Map* m,int numattack){
+void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& p){
   int distance = Distance(posInit,posFinal);
   if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")){
-  //  this->attack(m->getElementW1(posFinal),numattack,p,posFinal);
+    //m->getElementW1(posInit).attack(m->getElementW1(posFinal),numattack,p,posFinal);
   } else {
    if(distance<=this->_movement){
      if(distance != 0){
@@ -536,7 +536,7 @@ TurtleTank::~TurtleTank(){
 
 }
 
-void TurtleTank::attack(Unit& u,Player& p,Position posFinal){
+void TurtleTank::attack(Unit& u,int W,Player& p,Position posFinal){
   Position posInit = this->_pos;
   int distance = Distance (posInit,posFinal);
     if(p.getEnergy()>((this->_primaryWeapon)->getCost())){

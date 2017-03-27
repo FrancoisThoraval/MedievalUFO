@@ -50,7 +50,7 @@ public:
   void setSecondaryW(Weapon*);
   /** Methode **/
   virtual void attack();
-  void move(Position,Position,Map*,int);
+  void move(Position,Position,Map*,int,Player&);
   friend class Weapon;
   Unit& operator=(Unit& u){
     this->_name = u._name;

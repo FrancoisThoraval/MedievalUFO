@@ -195,7 +195,7 @@ int Map::getSizeX(){return this->_sizeX;}
 void Map::setSizeY(int y){this->_sizeY = y;}
 void Map::setSizeX(int x){this->_sizeX = x;}
 
-void Map::handleClick(sf::RenderWindow &window,sf::Event &e){
+void Map::handleClick(sf::RenderWindow &window,sf::Event &e,Player &p){
      sf::Event mapEvent =e;
      int i = 0;
      int j =0;
@@ -237,7 +237,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &e){
                }
           }else{
                //Actuellement ne déplace pas
-               getElementW1(_unitSelected).move(_unitSelected,pos,this);
+               getElementW1(_unitSelected).move(_unitSelected,pos,this,5,p);
                std::cerr << "_unitSelected: " << '\n';
                std::cout << _unitSelected << '\n';
                std::cerr << "pos: " << '\n';
