@@ -17,6 +17,8 @@ class RobotPR;
 class TurtleTank;
 class Zedd;
 
+class Map;
+
 class Unit : public Element {
 private:
   std::string _name;

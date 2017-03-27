@@ -132,7 +132,7 @@ void Unit::attack(Unit& u,int W,Player& p,Position posFinal,Map *m){
             u.setHealthPoints(u.getHealthPoints()-this->_primaryWeapon->getStrengh());
             p.setEnergy(p.getEnergy()-(this->_primaryWeapon)->getCost());
           } else {
-            ThrowExtendNade(posFinal,m,p);
+            Zedd::ThrowExtendNade(posFinal,m,p);
           }
         } else {
           std::cout<<"Tu n'as pas la portée necessaire"<<std::endl;
