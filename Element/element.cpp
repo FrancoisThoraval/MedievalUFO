@@ -22,6 +22,10 @@ void Element::setElementPosition(Position pos){
 
 }
 
+void Element::setPosition(Position pos){
+  this->_pos.setX(pos.getX());
+  this->_pos.setY(pos.getY());
+}
 
 //std::string Element::getName(){
 

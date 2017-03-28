@@ -42,7 +42,10 @@ public:
   int getMovement()const;
   Weapon* getPrimaryW()const;
   Weapon* getSecondaryW()const;
+  Weapon* getThirdW()const;
+  Weapon* getFourthW()const;
   int getDefault()const;
+  void setDefault(int);
   /** Setter **/
   void setName(std::string);
   void setHealthPoints(int);
@@ -50,6 +53,8 @@ public:
   void setMovement(int);
   void setPrimaryW(Weapon*);
   void setSecondaryW(Weapon*);
+  void setThirdW(Weapon*);
+  void setFourthW(Weapon*);
   /** Methode **/
   void attack(Unit&,int,Player&,Position,Map*);
   void move(Position,Position,Map*,int,Player&);
@@ -66,6 +71,48 @@ public:
 
 
 };
+
+class Zedd : public Unit{
+private:
+  bool _activeExpendNade;
+  int _invocation;
+  int _puttiesCalling;
+  int _apocalypseHole;
+  Weapon* _thirdWeapon;
+  Weapon* _fourthWeapon;
+
+public:
+  Zedd ();
+  ~Zedd ();
+  int getActiveExpendNade()const;
+  int getInvocation()const;
+  int getPuttiesCalling()const;
+  int getApocalypseHole()const;
+
+  void setActiceExpendNade(int);
+  void setInvocation(int);
+  void setPuttiesCalling(int);
+  void setApocalypseHole(int);
+
+  void ThrowExtendNade(Position,Map*,Player&);
+  void EnableGrenade(Map);
+  void Invocation(Position,Map*,Player&);
+  void PuttiesCalling(Position,Map*,Player&);
+  void ApocalypseHole(Map*,Player&);
+  Zedd& operator=(const Unit& u){
+    this->setName(u.getName());
+    this->setHealthPoints(u.getHealthPoints());
+    this->setPrice(u.getPrice());
+    this->setMovement(u.getMovement());
+    this->setPrimaryW(u.getPrimaryW());
+    this->setSecondaryW(u.getSecondaryW());
+    this->setThirdW(u.getThirdW());
+    this->setFourthW(u.getFourthW());
+    this->setDefault(u.getDefault());
+    return(*this);
+  }
+};
+
 
 /** le fantassin est une unité de base qui n'as rien de special ... il est nul **/
 
@@ -104,6 +151,14 @@ public:
   void CheaterWeaponOn(Map);
   PowerRanger& operator=(const Unit& u){
     this->setName(u.getName());
+    this->setHealthPoints(u.getHealthPoints());
+    this->setPrice(u.getPrice());
+    this->setMovement(u.getMovement());
+    this->setPrimaryW(u.getPrimaryW());
+    this->setSecondaryW(u.getSecondaryW());
+    this->setThirdW(u.getThirdW());
+    this->setFourthW(u.getFourthW());
+    this->setDefault(u.getDefault());
     return(*this);
   }
 

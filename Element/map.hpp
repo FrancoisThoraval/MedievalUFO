@@ -33,7 +33,7 @@ public:
   ~Map ();
   friend class Element;
   Scenery getElementW2(Position)const;
-  Unit getElementW1(Position)const;
+  Unit& getElementW1(Position)const;
   void setElementW1(Position,Unit&);
   void setElementW2(Position,Scenery&);
   std::string getNameOfElement(Position)const;
@@ -51,7 +51,7 @@ public:
   void setSizeX(int);
   void setSizeY(int);
   void setCompt(int);
-  void setInTab(Unit&&);
+  void setInTab(Unit&);
 
 };
 

@@ -1,5 +1,6 @@
 #include "unit.hpp"
 
+
 int Distance(Position posInit,Position posFinal){
   int max;
   int min;
@@ -72,6 +73,9 @@ void Unit::setName(std::string name){
   this->_name = name;
 }
 
+void Unit::setDefault(int d){
+  this->_defaultMovement = d;
+}
 
 
 void Unit::setHealthPoints(int Hp){
@@ -104,9 +108,34 @@ void Unit::setPrimaryW(Weapon *wp){
   }
 }
 
+void Unit::setThirdW(Weapon* wp){
+  if(wp == NULL){
+    Weapon *Nwp = new Weapon("Default",5,1,20);
+    this->_primaryWeapon = Nwp;
+  } else {
+    this->_secondaryWeapon = wp;
+  }
+}
+
+void Unit::setFourthW(Weapon *wp){
+  if(wp == NULL){
+    Weapon *Nwp = new Weapon("Default",5,1,20);
+    this->_primaryWeapon = Nwp;
+  } else {
+    this->_secondaryWeapon = wp;
+  }
+}
 
 Weapon* Unit::getSecondaryW()const{
   return(this->_secondaryWeapon);
+}
+
+Weapon * Unit::getThirdW()const{
+  return(this->_thirdWeapon);
+}
+
+Weapon* Unit::getFourthW()const{
+  return(this->_fourthWeapon);
 }
 
 void Unit::setSecondaryW(Weapon *wp){
@@ -121,19 +150,26 @@ void Unit::setSecondaryW(Weapon *wp){
 int Unit::getDefault()const{
   return(this->_defaultMovement);
 }
-/*
+
 void Unit::attack(Unit& u,int W,Player& p,Position posFinal,Map *m){
   Position posInit = this->_pos;
   int distance = Distance(posInit,posFinal);
   if(W == 1){
+    std::cout<<"TEST1"<<std::endl;
       if(p.getEnergy()>((this->_primaryWeapon)->getCost())){
+        std::cout<<"TEST2"<<std::endl;
         if(distance <= (this->_primaryWeapon)->getAttackRange()){
+          std::cout<<"TEST3"<<std::endl;
           if(m->getNameOfElement(posInit) != "Zedd"){
+            std::cout<<"TEST4"<<std::endl;
             u.setHealthPoints(u.getHealthPoints()-this->_primaryWeapon->getStrengh());
+            std::cout<<"TEST5"<<std::endl;
             p.setEnergy(p.getEnergy()-(this->_primaryWeapon)->getCost());
           } else {
-
-            (Zedd)ThrowExtendNade(posFinal,m,p);
+            std::cout<<"TEST6"<<std::endl;
+            Zedd *z = new Zedd();
+            *z = m->getElementW1(posInit);
+            (*z).ThrowExtendNade(posFinal,m,p);
           }
         } else {
           std::cout<<"Tu n'as pas la portée necessaire"<<std::endl;
@@ -148,9 +184,9 @@ void Unit::attack(Unit& u,int W,Player& p,Position posFinal,Map *m){
                 u.setHealthPoints(u.getHealthPoints()-this->_secondaryWeapon->getStrengh());
                 p.setEnergy(p.getEnergy()-(this->_secondaryWeapon)->getCost());
               } else {
-              // Zedd * z = new Zedd();
-              //  *z = m->getElementW1(posInit);
-              //  (*z).Invocation(posFinal,m,p);
+               Zedd * z = new Zedd;
+                *z = m->getElementW1(posInit);
+                (*z).Invocation(posFinal,m,p);
               }
 
             } else {
@@ -167,7 +203,9 @@ void Unit::attack(Unit& u,int W,Player& p,Position posFinal,Map *m){
                     (*pr).Transformation(m);
 
                   } else {
-                    m->getElementW1(posInit).PuttiesCalling(posFinal,m,p);
+                    Zedd *z = new Zedd();
+                    (*z) = m->getElementW1(posInit);
+                    (*z).PuttiesCalling(posFinal,m,p);
                   }
               } else {
                 std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
@@ -189,26 +227,33 @@ void Unit::attack(Unit& u,int W,Player& p,Position posFinal,Map *m){
                         std::cout<<"Tu n'as pas la capacité disponible"<<std::endl;
                       }
                     } else {
-                      PuttiesCalling(posFinal,m,p);
+                      Zedd *z = new Zedd();
+                      (*z) = m->getElementW1(posInit);
+                      (*z).PuttiesCalling(posFinal,m,p);
                     }
                 } else {
                   std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
                 }
             }
 }
-*/
+
 void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& p){
   int distance = Distance(posInit,posFinal);
 
   if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")){
     //(m->getElementW1(posInit)).attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
+
   } else {
    if(distance<=this->_movement){
      if(distance != 0){
        Unit *u = new Unit();
        m->setElementW1(posFinal,*this);
        m->setElementW1(posInit,*u);
-       this->setMovement(this->getMovement()-(distance));
+       m->getElementW1(posFinal).setMovement(m->getElementW1(posFinal).getMovement()-(distance));
+       this->setPosition(posFinal);
+       //std::cout<<"Distance : "<<distance<<std::endl;
+       std::cout<<"HP : :"<<m->getElementW1(posFinal).getHealthPoints()<<std::endl;
+       std::cout<<"Movement :"<<this->getMovement()<<std::endl;
      } else {
        std::cout <<"Tu ne peux pas te deplacer sur ta case actuel"<<std::endl;
      }
@@ -521,15 +566,247 @@ std::string AYAYAY_Assistant::getAdvice()const{
 
 /******************************************************/
 
+/**** CLASS ZEDD ***/
 
 
-
-/*
-void PuttiesCalling(Position pos){
-  if()
-    if((this->getElementOnPos(pos)!= NULL)&&)
+Zedd::Zedd(){
+  _activeExpendNade = false;
+  _invocation = 0;
+  _puttiesCalling = 0;
+  _apocalypseHole = 10;
+  this->setName("Zedd");
+  _primaryWeapon = new Weapon("Grenade",0,-1,100);
+  _secondaryWeapon = new Weapon("Invocation",0,-1,50);
+  _thirdWeapon = new Weapon("PuttiesCalling",0,-1,50);
+  _fourthWeapon = new Weapon("ApocalypseHole",1200,0,100);
 }
-*/
+
+Zedd::~Zedd(){
+
+}
+
+int Zedd::getActiveExpendNade()const{
+  return(this->_activeExpendNade);
+}
+
+int Zedd::getInvocation()const{
+  return(this->_invocation);
+}
+
+int Zedd::getPuttiesCalling()const{
+  return(this->_puttiesCalling);
+}
+
+int Zedd::getApocalypseHole()const{
+  return(this->_apocalypseHole);
+}
+
+void Zedd::setActiceExpendNade(int nade){
+  this->_activeExpendNade = nade;
+}
+
+void Zedd::setInvocation(int invoc){
+  this->_invocation = invoc;
+}
+
+void Zedd::setPuttiesCalling(int putties){
+  this->_puttiesCalling = putties;
+}
+
+void Zedd::setApocalypseHole(int hole){
+  this->_apocalypseHole = hole;
+}
+
+void Zedd::EnableGrenade(Map m){
+  Position currentPos;
+  for(int i = 0;i<m.getSizeX();i++){
+    for(int j=0;j<m.getSizeY();j++){
+      currentPos.setX(i);
+      currentPos.setY(j);
+      if(m.getNameOfElement(currentPos)=="Putties"){
+        if((m.getElementW1(currentPos)).getHealthPoints()<= 40){
+          this->_activeExpendNade = true;
+        }
+      }
+    }
+  }
+}
+
+
+void Zedd::ThrowExtendNade(Position pos,Map *m,Player& p){
+    this->EnableGrenade(*m);
+    if(p.getEnergy()>((this->_primaryWeapon)->getCost())){
+      if(this->getActiveExpendNade()==true){
+        if((m->getNameOfElement(pos))=="Putties") {
+          (m->getElementW1(pos)).setHealthPoints(1500);
+          Weapon *wp = new Weapon("Big attack",200,1,60);
+          (m->getElementW1(pos)).setPrimaryW(wp);
+          p.setEnergy(p.getEnergy()-(this->_primaryWeapon)->getCost());
+        } else {
+          std::cout <<"Mauvais personnage a boost"<<std::endl;
+        }
+      } else {
+        std::cout<<"Tu ne peux pas encore utiliser cette capacité"<<std::endl;
+      }
+    } else {
+      std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
+    }
+}
+
+
+/**** PAS SUR DE CELLE CI *****/
+void Zedd::Invocation(Position pos, Map *m,Player& p){
+    if(p.getEnergy()>((this->_secondaryWeapon)->getCost())){
+      if(this->getInvocation() == 0){
+        if(m->getNameOfElement(pos)!= ""){
+          int hp;
+          int mvmt;
+          Weapon *wp;
+          if(m->getElementW2(pos).getName()=="Water"){
+            hp = 250;
+            mvmt = 1;
+            wp = new Weapon("Canon a eau",150,1,50);
+          } else if (m->getElementW2(pos).getName()=="Hill"){
+            hp = 300;
+            mvmt = 3;
+            wp = new Weapon("Lancer de terre",120,3,50);
+          } else if(m->getElementW2(pos).getName()=="Tree"){
+            hp = 150;
+            mvmt = 4;
+            wp = new Weapon("Lancer de tronc",210,4,60);
+          }
+          Unit *u = new Putties(hp,mvmt,60,wp);
+          m->setElementW1(pos,*u);
+          p.setEnergy(p.getEnergy()-(this->_secondaryWeapon)->getCost());
+          this->_invocation= 5;                                  // WARNING WARNING WARNING
+        } else {
+          std::cout<<"There's already something on this tile !"<<std::endl;
+        }
+      } else {
+        std::cout<<"Be patient my friend !"<<std::endl;
+      }
+    } else {
+      std::cout<<"You don't have enough energy !"<<std::endl;
+    }
+}
+
+
+void Zedd::PuttiesCalling ( Position pos, Map* m,Player& p){
+    if(p.getEnergy()>((this->_thirdWeapon)->getCost())){
+      if(this->_puttiesCalling==0){
+        Position p1 = pos;
+        p1.setY(pos.getY()+1);
+        Position p2 = pos;
+        p2.setY(pos.getY()-1);
+        Position p3 = pos;
+        p3.setX(pos.getX()+1);
+        Position p4 = pos;
+        p4.setX(pos.getX()-1);
+        if((m->isOnMap(pos))&&(m->isOnMap(p1))&&(m->isOnMap(p2))&&(m->isOnMap(p3))&&(m->isOnMap(p4))){
+          if((m->getElementW1(pos).getName()=="")&&(m->getElementW1(p1).getName()=="")&&(m->getElementW1(p2).getName()=="")&& (m->getElementW1(p3).getName()=="")&&(m->getElementW1(p4).getName()=="")){
+            Weapon *wp = new Weapon("Default",5,1,20);
+            Unit *n1 = new Putties(50,2,5,wp);
+            m->setElementW1(pos,*n1);
+            m->setElementW1(p1,*n1);
+            m->setElementW1(p2,*n1);
+            m->setElementW1(p3,*n1);
+            m->setElementW1(p4,*n1);
+            p.setEnergy(p.getEnergy()-(this->_thirdWeapon)->getCost());
+            this->_puttiesCalling = 4;
+          } else {
+            std::cout<<"There's already something on this tile !"<<std::endl;
+          }
+        } else {
+          std::cout<<"Out of bounds !"<<std::endl;
+        }
+      } else {
+        std::cout<<"Not available !"<<std::endl;
+      }
+    } else {
+      std::cout<<"You don't have enough energy"<<std::endl;
+    }
+}
+
+
+void Zedd::ApocalypseHole(Map *m,Player& p){
+
+  static int count = 0;
+  if(this->_apocalypseHole == 0){
+      if(p.getEnergy()>((this->_fourthWeapon)->getCost())){
+        if(count == 0){
+          m->getElementW2(this->_pos).setName("Lava2");
+          p.setEnergy(p.getEnergy()-(this->_fourthWeapon)->getCost());
+          count++;
+        }
+      }else {
+        std::cout<<"You don't have enough energy"<<std::endl;
+      }
+    } else {
+      Position p1 ;
+      Position p2 ;
+      Position p3 ;
+      Position p4 ;
+      Position currentPos;
+      Scenery *lava = new Lava;
+      for(int i =0;i<m->getSizeX();i++){
+        for(int j = 0;j< m->getSizeY();j++){
+          currentPos.setX(i);
+          currentPos.setY(j);
+
+          p1 = currentPos;
+          p1.setX(currentPos.getX());
+          p1.setY(currentPos.getY()+1);
+
+          p2 = currentPos;
+          p2.setX(currentPos.getX());
+          p2.setY(currentPos.getY()-1);
+
+          p3 = currentPos;
+          p3.setX(currentPos.getX()+1);
+          p3.setY(currentPos.getY());
+
+          p4 = currentPos;
+          p4.setX(currentPos.getX()-1);
+          p4.setY(currentPos.getY());
+          if((m->getElementW2(currentPos).getName()=="Lava2")){
+
+                if((m->isOnMap(p1))) {
+                  m->setElementW2(p1,*lava);
+                  m->getElementW2(p1).setName("Lava1");
+                }
+                if(m->isOnMap(p2)) {
+                  m->setElementW2(p2,*lava);
+                  m->getElementW2(p2).setName("Lava1");
+                }
+                if(m->isOnMap(p3)) {
+                  m->setElementW2(p3,*lava);
+                  m->getElementW2(p3).setName("Lava1");
+                }
+                if(m->isOnMap(p4)) {
+                  m->setElementW2(p4,*lava);
+                  m->getElementW2(p4).setName("Lava1");
+                }
+
+          }
+        }
+      }
+      for(int i =0;i<m->getSizeX();i++){
+        for(int j = 0;j< m->getSizeY();j++){
+          currentPos.setX(i);
+          currentPos.setY(j);
+          if(m->getElementW2(currentPos).getName()=="Lava1"){
+                m->getElementW2(currentPos).setName("Lava2");
+          }
+        }
+      }
+    }
+  }
+
+
+/*********************************************************/
+
+
+
 
 
 /****************************************************/

@@ -36,7 +36,7 @@ Map::~Map(){
      delete[] _tabUnit;
 }
 
-Unit Map::getElementW1(Position pos)const{
+Unit& Map::getElementW1(Position pos)const{
   return(this->_world1[pos.getX()][pos.getY()]);
 }
 
@@ -67,7 +67,7 @@ void Map::setCompt(int c){
   this->_compttab = c;
 }
 
-void Map::setInTab(Unit&& u){
+void Map::setInTab(Unit& u){
   this->_tabUnit[getCompt()] = u;
   setCompt((this->getCompt())+1);
 }
@@ -202,7 +202,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &e,Player &p){
      _tileClicked = 0;
      struct timeval debut,fin;                // variable temps
      float tempspasse;
-     float tempsjeux = 0.2;
+     float tempsjeux = 0.4;
      gettimeofday(&debut,NULL);
      if (mapEvent.type == sf::Event::MouseButtonPressed) {
           Menu m;
@@ -238,7 +238,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &e,Player &p){
                }
           }else{
                //Actuellement ne déplace pas
-               getElementW1(_unitSelected).move(_unitSelected,pos,this,5,p);
+               getElementW1(_unitSelected).move(_unitSelected,pos,this,1,p);
                std::cerr << "_unitSelected: " << '\n';
                std::cout << _unitSelected << '\n';
                std::cerr << "pos: " << '\n';

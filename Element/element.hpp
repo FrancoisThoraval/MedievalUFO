@@ -55,6 +55,7 @@ public:
   Element ();
   virtual ~Element ();
   Position getPosition()const;
+  void setPosition(Position);
   Element getElementOnPos(Position);
   void setElementPosition(Position);
   // friend class Map;
