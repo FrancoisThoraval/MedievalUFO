@@ -81,7 +81,7 @@ void Map::setElement(Position pos,Element* elt){
 }
 
 void Map::createTile(int x, int y, sf::RenderWindow &window,sf::Texture &t){
-     sf::RectangleShape rectangle(sf::Vector2f(32, 32));
+     // sf::RectangleShape rectangle(sf::Vector2f(32, 32));
      Position P;
      P.setX(x);
      P.setY(y);
@@ -220,6 +220,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &e,Player &p){
                }
                i++;
           }
+          p.showUnitOwned();
           if (_unitSelected.getX() == -1) {
                if((getNameOfElement(pos) == "blue")||(getNameOfElement(pos) == "pink")||(getNameOfElement(pos) == "green")||(getNameOfElement(pos) == "yellow")||(getNameOfElement(pos) == "red")) {
                     _unitSelected = pos;
@@ -258,11 +259,19 @@ Ui::~Ui(){
 
 }
 
-void Ui::drawUi(sf::RenderWindow &window){
+void Ui::drawUi(sf::RenderWindow &window, Player &p){
      std::cout << "Loading Ui..." << '\n';
      sf::Texture texture;
      texture.loadFromFile("./Textures/LPC_Terrain/terrain.png");
      sf::Sprite alpha,separationBar;
+     sf::RectangleShape whosPlaying(sf::Vector2f(100, 100));
+
+     if (p.getValue() == 2)
+          whosPlaying.setFillColor(sf::Color::Green);
+     else
+          whosPlaying.setFillColor(sf::Color::Red);
+
+     whosPlaying.setPosition(800-350,600-100);
 
      alpha.setTexture(texture);
      alpha.setTextureRect(sf::IntRect(768, 926, 250, 100));
@@ -274,6 +283,7 @@ void Ui::drawUi(sf::RenderWindow &window){
           separationBar.setPosition(i*45,600-120);
           window.draw(separationBar);
      }
+     window.draw(whosPlaying);
      window.draw(alpha);
      // _mapTile[x][y] = s;
 

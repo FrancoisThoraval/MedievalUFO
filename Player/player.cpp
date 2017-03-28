@@ -6,15 +6,20 @@ Player::Player(){
     this->_ownUnit = new Unit [5];
 }
 
-Player::Player(std::string name){
+Player::Player(std::string name,int value){
     this->_energy = 100;
     this->_lost = false;
     this->_name = name;
     this->_ownUnit = new Unit [5];
+    this->_value = value;
 }
 
 Player::~Player(){
 
+}
+
+int Player::getValue()const{
+     return(this->_value);
 }
 
 int Player::getEnergy()const{
@@ -27,6 +32,10 @@ bool Player::getLost()const{
 
 std::string Player::getName()const{
   return(this->_name);
+}
+
+void Player::setValue(int value){
+     this->_value = value;
 }
 
 void Player::setEnergy(int en){
@@ -51,7 +60,8 @@ void Player::pushUnit(Unit &u){
 
 void Player::showUnitOwned(){
      for (int i = 0; i < 5; i++) {
-          std::cout << "["<< _ownUnit[i].getName() << "]" << '\n';
+          std::cout << "["<< _ownUnit[i].getName() << "] -> ";
+          std::cout << _ownUnit[i].getMovement() << '\n';
      }
 }
 /*
