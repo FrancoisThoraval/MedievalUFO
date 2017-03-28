@@ -3,12 +3,14 @@
 Player::Player(){
     this->_energy = 100;
     this->_lost = false;
+    this->_ownUnit = new Unit [5];
 }
 
 Player::Player(std::string name){
     this->_energy = 100;
     this->_lost = false;
     this->_name = name;
+    this->_ownUnit = new Unit [5];
 }
 
 Player::~Player(){
@@ -37,6 +39,20 @@ void Player::setLost(bool butt){
 
 void Player::setName(std::string name){
   this->_name = name;
+}
+
+void Player::pushUnit(Unit &u){
+     int i = 0;
+     while (_ownUnit[i].getName() != "") {
+          i++;
+     }
+     _ownUnit[i] = u;
+}
+
+void Player::showUnitOwned(){
+     for (int i = 0; i < 5; i++) {
+          std::cout << "["<< _ownUnit[i].getName() << "]" << '\n';
+     }
 }
 /*
 void Player::EndOfTurn(Map *m){

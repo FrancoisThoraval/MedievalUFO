@@ -15,6 +15,7 @@ const int TILESIZEX = 32;
 const int TILESIZEY = 32;
 
 class Unit;
+class Player;
 
 class Map {
 protected:

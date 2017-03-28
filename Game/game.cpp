@@ -65,9 +65,12 @@ void Game::gameLoop(){
                     std::cout << "=====\nPlayer 2: ";
                     std::cin>>name;
                     p2.setName(name);
+
                     //Création des éléments du jeu
                     Map m(800,500);
                     Ui ui;
+
+                    //Création Unité p1 (power ranger)
                     PowerRanger pink("pink"), red("red"), blue("blue"), green("green"),yellow("yellow");
                     Position posPink(9,13),posRed(7,13),posBlue(8,13),posGreen(10,13),posYellow(11,13);
                     m.setElementW1(posRed,red);
@@ -75,6 +78,11 @@ void Game::gameLoop(){
                     m.setElementW1(posYellow,yellow);
                     m.setElementW1(posBlue,blue);
                     m.setElementW1(posPink,pink);
+                    p1.pushUnit(pink);
+                    p1.pushUnit(red);
+                    p1.pushUnit(blue);
+                    p1.pushUnit(green);
+                    p1.pushUnit(yellow);
 
                     _window.clear(sf::Color(0,0,0));
                     ui.drawUi(_window);
