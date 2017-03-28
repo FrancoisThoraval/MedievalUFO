@@ -132,7 +132,8 @@ void Unit::attack(Unit& u,int W,Player& p,Position posFinal,Map *m){
             u.setHealthPoints(u.getHealthPoints()-this->_primaryWeapon->getStrengh());
             p.setEnergy(p.getEnergy()-(this->_primaryWeapon)->getCost());
           } else {
-            Zedd::ThrowExtendNade(posFinal,m,p);
+
+            (Zedd)ThrowExtendNade(posFinal,m,p);
           }
         } else {
           std::cout<<"Tu n'as pas la portée necessaire"<<std::endl;
@@ -147,7 +148,9 @@ void Unit::attack(Unit& u,int W,Player& p,Position posFinal,Map *m){
                 u.setHealthPoints(u.getHealthPoints()-this->_secondaryWeapon->getStrengh());
                 p.setEnergy(p.getEnergy()-(this->_secondaryWeapon)->getCost());
               } else {
-                Invocation(posFinal,m,p);
+              // Zedd * z = new Zedd();
+              //  *z = m->getElementW1(posInit);
+              //  (*z).Invocation(posFinal,m,p);
               }
 
             } else {
@@ -159,7 +162,10 @@ void Unit::attack(Unit& u,int W,Player& p,Position posFinal,Map *m){
     } else if (W == 3){
               if(p.getEnergy()>((this->_thirdWeapon)->getCost())){
                   if((m->getNameOfElement(posInit) != "Putties") && (m->getNameOfElement(posInit) != "Zedd")){
-                    m->getElementW1(posInit).Transformation(m);
+                    PowerRanger *pr = new PowerRanger();
+                    *pr = m->getElementW1(posInit);
+                    (*pr).Transformation(m);
+
                   } else {
                     m->getElementW1(posInit).PuttiesCalling(posFinal,m,p);
                   }
@@ -169,8 +175,10 @@ void Unit::attack(Unit& u,int W,Player& p,Position posFinal,Map *m){
             } else {
                 if(p.getEnergy()>((this->_fourthWeapon)->getCost())){
                     if((m->getNameOfElement(posInit) != "Putties") && (m->getNameOfElement(posInit) != "Zedd")){
-                      this->CheaterWeaponOn(*m);
-                      if( getCapacityWeapon()==true){
+                      PowerRanger *pr = new PowerRanger();
+                      *pr = m->getElementW1(posInit);
+                      (*pr).CheaterWeaponOn(*m);
+                      if( (*pr).getCapacityWeapon()==true){
                         if(distance <= (this->_fourthWeapon)->getAttackRange()){
                           u.setHealthPoints(u.getHealthPoints()-this->_fourthWeapon->getStrengh());
                           p.setEnergy(p.getEnergy()-(this->_fourthWeapon)->getCost());
@@ -283,8 +291,8 @@ PowerRanger::PowerRanger(){
 PowerRanger::PowerRanger(std::string color){
   _capacityRobot = false;
   _capacityWeapon = false;
-  _robot = new Weapon("RobotTransformation",0,0,100);
-  _cheatedWeapon = new Weapon("MergeWeapon",400,10,100);
+  _thirdWeapon = new Weapon("RobotTransformation",0,0,100);
+  _fourthWeapon = new Weapon("MergeWeapon",400,10,100);
   this->setMovement(3);
   _defaultMovement = this->getMovement();
 

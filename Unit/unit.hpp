@@ -2,7 +2,7 @@
 #define unit_hpp
 
 #include "../Element/map.hpp"
-// #include "./zedd.hpp"
+//#include "./zedd.hpp"
 #include "../Element/element.hpp"
 #include "../Player/player.hpp"
 #include "weapon.hpp"
@@ -62,6 +62,9 @@ public:
     return(*this);
   }
 
+
+
+
 };
 
 /** le fantassin est une unité de base qui n'as rien de special ... il est nul **/
@@ -81,8 +84,7 @@ private:
   std::string _color;
   bool _capacityRobot;
   bool _capacityWeapon;
-  Weapon *_robot;
-  Weapon *_cheatedWeapon;
+
 
 public:
   PowerRanger ();
@@ -100,6 +102,11 @@ public:
   void BeTogether(Map*,Position,bool*,bool*);
   void Transformation(Map*);
   void CheaterWeaponOn(Map);
+  PowerRanger& operator=(const Unit& u){
+    this->setName(u.getName());
+    return(*this);
+  }
+
 };
 
 
