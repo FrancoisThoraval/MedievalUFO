@@ -62,7 +62,7 @@ private:
 public:
      Ui ();
      ~Ui ();
-     void drawUi(sf::RenderWindow &,Player &);
+     void drawUi(sf::RenderWindow &,Player &, Player &);
      void handleClick(sf::RenderWindow &,sf::Event &);
      void displayInfoPlayer(sf::RenderWindow &, Player &);
 };

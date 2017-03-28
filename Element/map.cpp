@@ -259,14 +259,14 @@ Ui::~Ui(){
 
 }
 
-void Ui::drawUi(sf::RenderWindow &window, Player &p){
+void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
      std::cout << "Loading Ui..." << '\n';
      sf::Texture texture;
      texture.loadFromFile("./Textures/LPC_Terrain/terrain.png");
      sf::Sprite alpha,separationBar;
      sf::RectangleShape whosPlaying(sf::Vector2f(100, 100));
 
-     if (p.getValue() == 2)
+     if (p1.getWhosPlaying())
           whosPlaying.setFillColor(sf::Color::Green);
      else
           whosPlaying.setFillColor(sf::Color::Red);

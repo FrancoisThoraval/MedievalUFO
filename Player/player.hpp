@@ -14,18 +14,18 @@ private:
   bool  _lost;
   std::string _name;
   Unit *_ownUnit;
-  int _value;
+  bool _isPlaying;
 public:
   Player();
-  Player (std::string,int);
+  Player (std::string,bool);
   ~Player ();
 
-  int getValue()const;
+  bool getWhosPlaying()const;
   int getEnergy()const;
   bool getLost()const;
   std::string getName()const;
 
-  void setValue(int);
+  void setWhosPlaying(bool);
   void setEnergy(int);
   void setLost(bool);
   void setName(std::string);

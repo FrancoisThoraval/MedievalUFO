@@ -62,11 +62,10 @@ void Game::gameLoop(){
                     std::cout << "=====\nPlayer 1: ";
                     std::cin>>name;
                     p1.setName(name);
-                    p1.setValue(1);
+                    p1.setWhosPlaying(true);
                     std::cout << "=====\nPlayer 2: ";
                     std::cin>>name;
                     p2.setName(name);
-                    p2.setValue(2);
 
                     //Création des éléments du jeu
                     Map m(800,500);
@@ -84,10 +83,10 @@ void Game::gameLoop(){
                     p1.pushUnit(blue);
                     p1.pushUnit(green);
                     p1.pushUnit(yellow);
-                    
+
                     _window.clear(sf::Color(0,0,0));
-                    ui.drawUi(_window,p1);
                     m.drawWorld(_window);
+                    ui.drawUi(_window,p1,p2);
                     while (_gameState == 4) {
                          _window.display();
                          // ui.displayInfoPlayer(_window,p);
@@ -100,6 +99,11 @@ void Game::gameLoop(){
                                    std::cout << "Opening menu" << '\n';
                                    if(currentEvent.key.code == sf::Keyboard::Escape){
                                         showMenu(); //Créer un menu spécial
+                                   }
+                                   if(currentEvent.key.code == sf::Keyboard::Return){
+                                        std::cerr << "ending turn" << '\n';
+                                        endTurn(p1,p2); //Créer un menu spécial
+                                        ui.drawUi(_window,p1,p2);
                                    }
 
                                    if (currentEvent.key.code == sf::Keyboard::F) {
@@ -121,7 +125,6 @@ void Game::gameLoop(){
                               }
                          }
                          m.handleClick(_window,currentEvent,p1);
-
                          if ((p1.getLost()!=false) || (p2.getLost()!= false )) {
                               std::cout << "one player lost, back to menu" << '\n';
                               _gameState = 3; //Retour au menu
@@ -157,5 +160,17 @@ void Game::showMenu(){
           std::cout << "Starting game..." << '\n';
      }else if(_gameState == 5){
           std::cout << "Closing game" << '\n';
+     }
+}
+
+void Game::endTurn(Player &p1, Player &p2){
+     if (p1.getWhosPlaying()) {
+          p1.setWhosPlaying(false);
+          p2.setWhosPlaying(true);
+          std::cerr << "Player 2, Your turn !" << '\n';
+     }else{
+          p2.setWhosPlaying(false);
+          p1.setWhosPlaying(true);
+          std::cerr << "Player 1, Your turn !" << '\n';
      }
 }

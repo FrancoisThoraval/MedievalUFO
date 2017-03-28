@@ -4,22 +4,23 @@ Player::Player(){
     this->_energy = 100;
     this->_lost = false;
     this->_ownUnit = new Unit [5];
+    this->_isPlaying = false;
 }
 
-Player::Player(std::string name,int value){
+Player::Player(std::string name,bool value){
     this->_energy = 100;
     this->_lost = false;
     this->_name = name;
     this->_ownUnit = new Unit [5];
-    this->_value = value;
+    this->_isPlaying = value;
 }
 
 Player::~Player(){
 
 }
 
-int Player::getValue()const{
-     return(this->_value);
+bool Player::getWhosPlaying()const{
+     return(this->_isPlaying);
 }
 
 int Player::getEnergy()const{
@@ -34,8 +35,8 @@ std::string Player::getName()const{
   return(this->_name);
 }
 
-void Player::setValue(int value){
-     this->_value = value;
+void Player::setWhosPlaying(bool value){
+     this->_isPlaying = value;
 }
 
 void Player::setEnergy(int en){
@@ -64,6 +65,8 @@ void Player::showUnitOwned(){
           std::cout << _ownUnit[i].getMovement() << '\n';
      }
 }
+
+
 /*
 void Player::EndOfTurn(Map *m){
   this->_energy = 100;
