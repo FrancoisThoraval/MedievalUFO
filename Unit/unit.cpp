@@ -156,7 +156,8 @@ void Unit::attack(Unit& u,int W,Player& p,Position posFinal,Map *m){
   int distance = Distance(posInit,posFinal);
   if(W == 1){
     std::cout<<"TEST1"<<std::endl;
-      if(p.getEnergy()>((this->_primaryWeapon)->getCost())){
+    std::cout<<"p.getener : "<<p.getEnergy()<<std::endl;
+      if(p.getEnergy()>((this->getPrimaryW())->getCost())){
         std::cout<<"TEST2"<<std::endl;
         if(distance <= (this->_primaryWeapon)->getAttackRange()){
           std::cout<<"TEST3"<<std::endl;
