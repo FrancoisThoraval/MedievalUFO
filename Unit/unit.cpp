@@ -83,11 +83,6 @@ void Unit::setPrice(int price){
 }
 
 
-
-void Unit::attack(){
-
-}
-
 int Unit::getMovement()const {
   return(this->_movement);
 }
@@ -126,12 +121,87 @@ void Unit::setSecondaryW(Weapon *wp){
 int Unit::getDefault()const{
   return(this->_defaultMovement);
 }
+/*
+void Unit::attack(Unit& u,int W,Player& p,Position posFinal,Map *m){
+  Position posInit = this->_pos;
+  int distance = Distance(posInit,posFinal);
+  if(W == 1){
+      if(p.getEnergy()>((this->_primaryWeapon)->getCost())){
+        if(distance <= (this->_primaryWeapon)->getAttackRange()){
+          if(m->getNameOfElement(posInit) != "Zedd"){
+            u.setHealthPoints(u.getHealthPoints()-this->_primaryWeapon->getStrengh());
+            p.setEnergy(p.getEnergy()-(this->_primaryWeapon)->getCost());
+          } else {
 
+            (Zedd)ThrowExtendNade(posFinal,m,p);
+          }
+        } else {
+          std::cout<<"Tu n'as pas la portée necessaire"<<std::endl;
+        }
+      } else {
+        std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
+      }
+  }else if(W == 2) {
+          if(p.getEnergy()>((this->_secondaryWeapon)->getCost())){
+            if(distance <= (this->_primaryWeapon)->getAttackRange()){
+              if(m->getNameOfElement(posInit) != "Zedd"){
+                u.setHealthPoints(u.getHealthPoints()-this->_secondaryWeapon->getStrengh());
+                p.setEnergy(p.getEnergy()-(this->_secondaryWeapon)->getCost());
+              } else {
+              // Zedd * z = new Zedd();
+              //  *z = m->getElementW1(posInit);
+              //  (*z).Invocation(posFinal,m,p);
+              }
 
+            } else {
+              std::cout<<"Tu n'as pas la portée necessaire"<<std::endl;
+            }
+          } else {
+            std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
+          }
+    } else if (W == 3){
+              if(p.getEnergy()>((this->_thirdWeapon)->getCost())){
+                  if((m->getNameOfElement(posInit) != "Putties") && (m->getNameOfElement(posInit) != "Zedd")){
+                    PowerRanger *pr = new PowerRanger();
+                    *pr = m->getElementW1(posInit);
+                    (*pr).Transformation(m);
+
+                  } else {
+                    m->getElementW1(posInit).PuttiesCalling(posFinal,m,p);
+                  }
+              } else {
+                std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
+              }
+            } else {
+                if(p.getEnergy()>((this->_fourthWeapon)->getCost())){
+                    if((m->getNameOfElement(posInit) != "Putties") && (m->getNameOfElement(posInit) != "Zedd")){
+                      PowerRanger *pr = new PowerRanger();
+                      *pr = m->getElementW1(posInit);
+                      (*pr).CheaterWeaponOn(*m);
+                      if( (*pr).getCapacityWeapon()==true){
+                        if(distance <= (this->_fourthWeapon)->getAttackRange()){
+                          u.setHealthPoints(u.getHealthPoints()-this->_fourthWeapon->getStrengh());
+                          p.setEnergy(p.getEnergy()-(this->_fourthWeapon)->getCost());
+                        } else {
+                          std::cout<<"Tu n'as pas la portée necessaire"<<std::endl;
+                        }
+                      } else {
+                        std::cout<<"Tu n'as pas la capacité disponible"<<std::endl;
+                      }
+                    } else {
+                      PuttiesCalling(posFinal,m,p);
+                    }
+                } else {
+                  std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
+                }
+            }
+}
+*/
 void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& p){
   int distance = Distance(posInit,posFinal);
+
   if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")){
-    //m->getElementW1(posInit).attack(m->getElementW1(posFinal),numattack,p,posFinal);
+    //(m->getElementW1(posInit)).attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
   } else {
    if(distance<=this->_movement){
      if(distance != 0){
@@ -176,7 +246,7 @@ Putties::~Putties(){
 
 }
 
-
+/*
 void Putties::attack(Unit& a,int W,Player& p,Position posFinal){
 Position posInit = this->_pos;
 int distance = Distance(posInit,posFinal);
@@ -205,10 +275,9 @@ int distance = Distance(posInit,posFinal);
   }
 
 }
-
+*/
 /*************************/
 
-/*** CLASS ZERG ***/
 
 
 
@@ -222,8 +291,8 @@ PowerRanger::PowerRanger(){
 PowerRanger::PowerRanger(std::string color){
   _capacityRobot = false;
   _capacityWeapon = false;
-  _robot = new Weapon("RobotTransformation",0,0,100);
-  _cheatedWeapon = new Weapon("MergeWeapon",400,10,100);
+  _thirdWeapon = new Weapon("RobotTransformation",0,0,100);
+  _fourthWeapon = new Weapon("MergeWeapon",400,10,100);
   this->setMovement(3);
   _defaultMovement = this->getMovement();
 
@@ -274,7 +343,7 @@ bool PowerRanger::getCapacityRobot()const{
 bool PowerRanger::getCapacityWeapon()const{
   return(this->_capacityWeapon);
 }
-
+/*
 void PowerRanger::attack(Unit& u,int W,Player& p,Map *m,Position posFinal){
   Position posInit = this->_pos;
   int distance = Distance(posInit,posFinal);
@@ -325,7 +394,7 @@ void PowerRanger::attack(Unit& u,int W,Player& p,Map *m,Position posFinal){
             }
 
 }
-
+*/
 void PowerRanger::TornadoDino(Map* m,Position pos){
   if((m->getNameOfElement(pos)=="Tree")||(m->getNameOfElement(pos)=="Hill")||(m->getNameOfElement(pos)=="Water")||(m->getNameOfElement(pos)=="Lava2")||(m->getNameOfElement(pos)=="Lava1")){
     Unit *d = new Dino;
@@ -333,21 +402,21 @@ void PowerRanger::TornadoDino(Map* m,Position pos){
   }
 }
 
-void PowerRanger::BeTogether(Map m,Position pos,bool* hor, bool* ver){
+void PowerRanger::BeTogether(Map *m,Position pos,bool* hor, bool* ver){
   int i = 0;
   int k = 0;
   Position currentPos;
   currentPos.setY(pos.getY());
-  for(int j =0;j<m.getSizeX();j++){
+  for(int j =0;j<m->getSizeX();j++){
     currentPos.setX(j);
-    if((m.getNameOfElement(currentPos)!="Putties")&&(m.getNameOfElement(currentPos)!="Zedd")&&(m.getNameOfElement(currentPos)!="green")){
+    if((m->getNameOfElement(currentPos)!="Putties")&&(m->getNameOfElement(currentPos)!="Zedd")&&(m->getNameOfElement(currentPos)!="green")){
       i++;
     }
   }
   currentPos.setX(pos.getX());
-  for(int j =0;j<m.getSizeY();j++){
+  for(int j =0;j<m->getSizeY();j++){
     currentPos.setY(j);
-    if((m.getNameOfElement(currentPos)!="Putties")&&(m.getNameOfElement(currentPos)!="Zedd")&&(m.getNameOfElement(currentPos)!="green")){
+    if((m->getNameOfElement(currentPos)!="Putties")&&(m->getNameOfElement(currentPos)!="Zedd")&&(m->getNameOfElement(currentPos)!="green")){
       k++;
     }
   }
@@ -370,7 +439,7 @@ void PowerRanger::Transformation(Map *m){
   Unit *r =  new RobotPR;
   bool hor;
   bool ver;
-  BeTogether(*m,pos,&hor,&ver);
+  BeTogether(m,pos,&hor,&ver);
   if((hor == true)||(ver == true)){
       this->_capacityRobot = true;
       if(hor == true){
@@ -400,7 +469,7 @@ void PowerRanger::CheaterWeaponOn(Map m){
   bool hor;
   bool ver;
   Position pos = this->_pos;
-  BeTogether(m,pos,&hor,&ver);
+  BeTogether(&m,pos,&hor,&ver);
   if((hor == true)||(ver == true)){
     this->_capacityWeapon = true;
   } else {
@@ -488,7 +557,7 @@ int RobotPR::getArmor()const{
 void RobotPR::setArmor(int armor){
   this->_armor = armor;
 }
-
+/*
 void RobotPR::attack(Unit& u,int W,Player& p,Position posFinal){
   Position posInit = this->_pos;
   int distance = Distance(posInit,posFinal);
@@ -516,7 +585,7 @@ void RobotPR::attack(Unit& u,int W,Player& p,Position posFinal){
               }
   }
 }
-
+*/
 
 /*************************************************/
 
@@ -535,7 +604,7 @@ TurtleTank::TurtleTank(){
 TurtleTank::~TurtleTank(){
 
 }
-
+/*
 void TurtleTank::attack(Unit& u,int W,Player& p,Position posFinal){
   Position posInit = this->_pos;
   int distance = Distance (posInit,posFinal);
@@ -549,90 +618,4 @@ void TurtleTank::attack(Unit& u,int W,Player& p,Position posFinal){
     } else {
       std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
     }
-}
-/*** Methode Archer ***/
-
-// Archer::Archer(){
-//_changeArrowTime = 1;
-//  _typeOfArrow = 1;
-
-//  _strengh = /** REMPLIR **/     // le nombre d'attaque du fantassin
-//  _name = "Archer";
-//  _attackRange = 1;
-//  _healthPoints = /** REMPLIR **/ // les HP du fantassin
-//  _price = /** REMPLIR **/ // Le prix du fantassin
-//  _energyCost = /** REMPLIR **/ // le cout en energie du fantassin
-//}
-
-// Archer::~Archer(){
-//
-// }
-//
-// void Archer::setOnFire(){
-// _typeOfArrow = 2;
-// }
-//
-// void Archer::setOnDefault(){
-// _typeOfArrow = 1;
-// }
-//
-// int Archer::getTypeOfArrow()const{
-// return(this->_typeOfArrow);
-// }
-//
-// int Archer::getChangeOfTime()const{
-// return(this->_changeArrowTime);
-// }
-//
-// void Archer::setChangeOnTime(int Arrowtime){
-// this->_changeArrowTime = Arrowtime;
-// }
-//
-// void Archer::attack(Unit& a){
-// a.setHealthPoints(a.getHealthPoints()-(this->getStrengh()));
-// }
-/************************************************/
-
-/*** Methode Cavalier ***/
-
-//Cavalier::Cavalier(){
-//  _strengh = /** REMPLIR **/     // le nombre d'attaque du fantassin
-//  _name = "Cavalier";
-//  _attackRange = 1;
-//  _healthPoints = /** REMPLIR **/ // les HP du fantassin
-//  _price = /** REMPLIR **/ // Le prix du fantassin
-//  _energyCost = /** REMPLIR **/ // le cout en energie du fantassin
-//}
-
-//Cavalier::~Cavalier(){
-
-//}
-//
-// void Cavalier::attack(Unit& a){
-// a.setHealthPoints(a.getHealthPoints()-(this->getStrengh()));
-// }
-
-/****************************************************************/
-
-/*** Methode Catapulte ***/
-
-// Catapulte::Catapulte(){
-//_reloadTime = /* REMPLIR */
-
-//  _strengh = /** REMPLIR **/     // le nombre d'attaque du fantassin
-//  _name = "Catapulte";
-//  _attackRange = 1;
-//  _healthPoints = /** REMPLIR **/ // les HP du fantassin
-//  _price = /** REMPLIR **/ // Le prix du fantassin
-//  _energyCost = /** REMPLIR **/ // le cout en energie du fantassin
-
-//}
-
-// Catapulte::~Catapulte(){
-//
-// }
-//
-// void Catapulte::attack(Unit& a){
-// a.setHealthPoints(a.getHealthPoints()-(this->getStrengh()));
-// }
-/*******************************/
+}*/

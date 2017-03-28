@@ -1,16 +1,17 @@
 #ifndef zedd_hpp
 #define zedd_hpp
-#include "unit.hpp"
+
+class Unit;
+
 #include "../Player/player.hpp"
 #include "../Element/map.hpp"
+#include "./weapon.hpp"
 #include <iostream>
 
 
 
-// Element -> Unit  -> Map
-//                  -> Zedd   -> Map
-//                            -> Unit
 // class Zedd;
+//class Unit;
 
 class Zedd : public Unit{
 private:
