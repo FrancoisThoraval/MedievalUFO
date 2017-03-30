@@ -37,6 +37,13 @@ public:
     this->_y = pos.getY();
     return(*this);
   }
+  bool operator!=(Position& pos){
+    if((this->getX()==pos.getX())&&(this->getY()==pos.getY())){
+      return(false);
+    } else {
+      return(true);
+    }
+  }
   friend std::ostream &operator<<(std::ostream &os,const Position &pos){
        os << "------- Position \n";
        os << "X: " << pos.getX() << " Y: " << pos.getY() << '\n';

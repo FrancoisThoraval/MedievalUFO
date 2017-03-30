@@ -221,6 +221,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &e,Player &p){
                i++;
           }
           p.showUnitOwned();
+          
           if (_unitSelected.getX() == -1) {
                if((getNameOfElement(pos) == "blue")||(getNameOfElement(pos) == "pink")||(getNameOfElement(pos) == "green")||(getNameOfElement(pos) == "yellow")||(getNameOfElement(pos) == "red")) {
                     _unitSelected = pos;

@@ -125,6 +125,7 @@ void Game::gameLoop(){
                               }
                          }
                          m.handleClick(_window,currentEvent,p1);
+
                          if ((p1.getLost()!=false) || (p2.getLost()!= false )) {
                               std::cout << "one player lost, back to menu" << '\n';
                               _gameState = 3; //Retour au menu
@@ -173,4 +174,6 @@ void Game::endTurn(Player &p1, Player &p2){
           p1.setWhosPlaying(true);
           std::cerr << "Player 1, Your turn !" << '\n';
      }
+     p1.setEnergy(100);
+     p2.setEnergy(100);
 }

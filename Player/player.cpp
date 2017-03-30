@@ -59,6 +59,20 @@ void Player::pushUnit(Unit &u){
      _ownUnit[i] = u;
 }
 
+
+bool Player::IsMineUnit(const Unit u){
+  bool rep = false;
+  std::cout<<"FCT ISMINEUNIT"<<std::endl;
+  std::cout<<"Name : "<<u.getName()<<std::endl;
+  for(int i = 0;i<5;i++){
+    std::cout<<"ownuni name : "<<this->_ownUnit[i].getName()<<std::endl;
+    if(u.getName()==this->_ownUnit[i].getName()){
+      rep = true;
+    }
+  }
+  return(rep);
+}
+
 void Player::showUnitOwned(){
      for (int i = 0; i < 5; i++) {
           std::cout << "["<< _ownUnit[i].getName() << "] -> ";

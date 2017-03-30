@@ -152,13 +152,18 @@ int Unit::getDefault()const{
 }
 
 void Unit::attack(Unit& u,int W,Player& p,Position posFinal,Map *m){
+
   Position posInit = this->_pos;
-  int distance = Distance(posInit,posFinal);
-  if(W == 1){
-    std::cout<<"TEST1"<<std::endl;
-    std::cout<<"p.getener : "<<p.getEnergy()<<std::endl;
-      if(p.getEnergy()>((this->getPrimaryW())->getCost())){
+  if(this->_primaryWeapon != NULL){
+    std::cout<<"HP AVANT ATTAQUE :"<<u.getHealthPoints()<<std::endl;
+    int distance = Distance(posInit,posFinal);
+    if(W == 1){
+      std::cout<<"TEST1"<<std::endl;
+      std::cout<<"p.getener : "<<p.getEnergy()<<std::endl;
+      if(p.getEnergy()>(this->getPrimaryW())->getCost()){
         std::cout<<"TEST2"<<std::endl;
+        std::cout<<"Distnce : "<<distance<<std::endl;
+        std::cout<<"range : "<<(this->_primaryWeapon)->getAttackRange()<<std::endl;
         if(distance <= (this->_primaryWeapon)->getAttackRange()){
           std::cout<<"TEST3"<<std::endl;
           if(m->getNameOfElement(posInit) != "Zedd"){
@@ -166,11 +171,16 @@ void Unit::attack(Unit& u,int W,Player& p,Position posFinal,Map *m){
             u.setHealthPoints(u.getHealthPoints()-this->_primaryWeapon->getStrengh());
             std::cout<<"TEST5"<<std::endl;
             p.setEnergy(p.getEnergy()-(this->_primaryWeapon)->getCost());
+            std::cout<<"HP APRES ATTAQUE : "<<u.getHealthPoints()<<std::endl;
+            if(u.getHealthPoints()<=0){
+              Unit u;
+              m->setElementW1(posFinal,u);
+            }
           } else {
             std::cout<<"TEST6"<<std::endl;
-            Zedd *z = new Zedd();
-            *z = m->getElementW1(posInit);
-            (*z).ThrowExtendNade(posFinal,m,p);
+            Zedd z ;
+            z = m->getElementW1(posInit);
+            z.ThrowExtendNade(posFinal,m,p);
           }
         } else {
           std::cout<<"Tu n'as pas la portée necessaire"<<std::endl;
@@ -178,90 +188,120 @@ void Unit::attack(Unit& u,int W,Player& p,Position posFinal,Map *m){
       } else {
         std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
       }
-  }else if(W == 2) {
-          if(p.getEnergy()>((this->_secondaryWeapon)->getCost())){
-            if(distance <= (this->_primaryWeapon)->getAttackRange()){
-              if(m->getNameOfElement(posInit) != "Zedd"){
-                u.setHealthPoints(u.getHealthPoints()-this->_secondaryWeapon->getStrengh());
-                p.setEnergy(p.getEnergy()-(this->_secondaryWeapon)->getCost());
-              } else {
-               Zedd * z = new Zedd;
-                *z = m->getElementW1(posInit);
-                (*z).Invocation(posFinal,m,p);
-              }
+    }else if(W == 2) {
+      if(p.getEnergy()>((this->_secondaryWeapon)->getCost())){
+        if(distance <= (this->_primaryWeapon)->getAttackRange()){
+          if(m->getNameOfElement(posInit) != "Zedd"){
+            u.setHealthPoints(u.getHealthPoints()-this->_secondaryWeapon->getStrengh());
+            p.setEnergy(p.getEnergy()-(this->_secondaryWeapon)->getCost());
+            if(u.getHealthPoints()<=0){
+              Unit u;
+              m->setElementW1(posFinal,u);
+            }
+          } else {
+            Zedd z;
+            z = m->getElementW1(posInit);
+            z.Invocation(posFinal,m,p);
+          }
 
+        } else {
+          std::cout<<"Tu n'as pas la portée necessaire"<<std::endl;
+        }
+      } else {
+        std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
+      }
+    } else if (W == 3){
+      if(p.getEnergy()>((this->_thirdWeapon)->getCost())){
+        if((m->getNameOfElement(posInit) != "Putties") && (m->getNameOfElement(posInit) != "Zedd")){
+          PowerRanger pr ;
+          pr = m->getElementW1(posInit);
+          pr.Transformation(m);
+
+        } else {
+          Zedd z;
+          z = m->getElementW1(posInit);
+          z.PuttiesCalling(posFinal,m,p);
+        }
+      } else {
+        std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
+      }
+    } else {
+      if(p.getEnergy()>((this->_fourthWeapon)->getCost())){
+        if((m->getNameOfElement(posInit) != "Putties") && (m->getNameOfElement(posInit) != "Zedd")){
+          PowerRanger pr;
+          pr = m->getElementW1(posInit);
+          pr.CheaterWeaponOn(*m);
+          if( pr.getCapacityWeapon()==true){
+            if(distance <= (this->_fourthWeapon)->getAttackRange()){
+              u.setHealthPoints(u.getHealthPoints()-this->_fourthWeapon->getStrengh());
+              p.setEnergy(p.getEnergy()-(this->_fourthWeapon)->getCost());
+              if(u.getHealthPoints()<=0){
+                Unit u;
+                m->setElementW1(posFinal,u);
+              }
             } else {
               std::cout<<"Tu n'as pas la portée necessaire"<<std::endl;
             }
           } else {
-            std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
+            std::cout<<"Tu n'as pas la capacité disponible"<<std::endl;
           }
-    } else if (W == 3){
-              if(p.getEnergy()>((this->_thirdWeapon)->getCost())){
-                  if((m->getNameOfElement(posInit) != "Putties") && (m->getNameOfElement(posInit) != "Zedd")){
-                    PowerRanger *pr = new PowerRanger();
-                    *pr = m->getElementW1(posInit);
-                    (*pr).Transformation(m);
+        } else {
+          Zedd z ;
+          z = m->getElementW1(posInit);
+          z.ApocalypseHole(m,p);
+        }
+      } else {
+        std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
+      }
+    }
 
-                  } else {
-                    Zedd *z = new Zedd();
-                    (*z) = m->getElementW1(posInit);
-                    (*z).PuttiesCalling(posFinal,m,p);
-                  }
-              } else {
-                std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
-              }
-            } else {
-                if(p.getEnergy()>((this->_fourthWeapon)->getCost())){
-                    if((m->getNameOfElement(posInit) != "Putties") && (m->getNameOfElement(posInit) != "Zedd")){
-                      PowerRanger *pr = new PowerRanger();
-                      *pr = m->getElementW1(posInit);
-                      (*pr).CheaterWeaponOn(*m);
-                      if( (*pr).getCapacityWeapon()==true){
-                        if(distance <= (this->_fourthWeapon)->getAttackRange()){
-                          u.setHealthPoints(u.getHealthPoints()-this->_fourthWeapon->getStrengh());
-                          p.setEnergy(p.getEnergy()-(this->_fourthWeapon)->getCost());
-                        } else {
-                          std::cout<<"Tu n'as pas la portée necessaire"<<std::endl;
-                        }
-                      } else {
-                        std::cout<<"Tu n'as pas la capacité disponible"<<std::endl;
-                      }
-                    } else {
-                      Zedd *z = new Zedd();
-                      (*z) = m->getElementW1(posInit);
-                      (*z).PuttiesCalling(posFinal,m,p);
-                    }
-                } else {
-                  std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
-                }
-            }
+  } else {
+    std::cout<<"L'ARME VAUT NUL"<<std::endl;
+  }
 }
 
 void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& p){
   int distance = Distance(posInit,posFinal);
+  if(p.IsMineUnit(m->getElementW1(posInit)) == true){
+    if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")){
+      if(posInit != posFinal){
+        //(m->getElementW1(posInit)).attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
+        if(m->getNameOfElement(posInit)=="red"){
+          Unit *red = new PowerRanger("red");
+          red->setPosition(posInit);
+          red->attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
+        } else if (m->getNameOfElement(posInit) == "green") {
+          Unit *green = new PowerRanger("green");
+          green->setPosition(posInit);
+          green->attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
+        } else {
+          Unit *other = new PowerRanger("other");
+          other->setPosition(posInit);
+          other->attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
+        }
+      }
 
-  if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")){
-    //(m->getElementW1(posInit)).attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
-
-  } else {
-   if(distance<=this->_movement){
-     if(distance != 0){
-       Unit *u = new Unit();
-       m->setElementW1(posFinal,*this);
-       m->setElementW1(posInit,*u);
-       m->getElementW1(posFinal).setMovement(m->getElementW1(posFinal).getMovement()-(distance));
-       this->setPosition(posFinal);
-       //std::cout<<"Distance : "<<distance<<std::endl;
-       std::cout<<"HP : :"<<m->getElementW1(posFinal).getHealthPoints()<<std::endl;
-       std::cout<<"Movement :"<<this->getMovement()<<std::endl;
-     } else {
-       std::cout <<"Tu ne peux pas te deplacer sur ta case actuel"<<std::endl;
-     }
-   } else {
-     std::cout<<"Pas assez de point de deplacement"<<std::endl;
-   }
- }
+    } else {
+      if(distance<=this->_movement){
+        if(distance != 0){
+          Unit *u = new Unit();
+          m->setElementW1(posFinal,*this);
+          m->setElementW1(posInit,*u);
+          m->getElementW1(posFinal).setMovement(m->getElementW1(posFinal).getMovement()-(distance));
+          this->setPosition(posFinal);
+          //std::cout<<"Distance : "<<distance<<std::endl;
+          // std::cout<<"HP : :"<<m->getElementW1(posFinal).getHealthPoints()<<std::endl;
+          // std::cout<<"Movement :"<<this->getMovement()<<std::endl;
+        } else {
+          std::cout <<"Tu ne peux pas te deplacer sur ta case actuel"<<std::endl;
+        }
+      } else {
+        std::cout<<"Pas assez de point de deplacement"<<std::endl;
+      }
+    }
+  }else {
+    std::cout<<"Cette unite ne t'appartient pas "<<std::endl;
+  }
 }
 
 /****************************************/

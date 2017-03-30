@@ -1,7 +1,7 @@
 #ifndef player_hpp
 #define player_hpp
 
-// #include "../Element/map.hpp"
+//#include "../Element/map.hpp"
 #include "../Unit/unit.hpp"
 #include <iostream>
 #include <string>
@@ -24,6 +24,7 @@ public:
   int getEnergy()const;
   bool getLost()const;
   std::string getName()const;
+  bool IsMineUnit(const Unit);
 
   void setWhosPlaying(bool);
   void setEnergy(int);
