@@ -58,14 +58,93 @@ void Game::gameLoop(){
                case 4 : {
                     _window.clear();
                     //Saisie des noms de joueurs
-                    std::string name;
+                    std::string name,name2;
+                    // COMMENTAIRE ICI JUSQUA
                     std::cout << "=====\nPlayer 1: ";
-                    std::cin>>name;
-                    p1.setName(name);
+                    sf::Event evenementnom;
+                    std::string nomtest;
+                    int k = 0;
+                    bool end = false;
+                    while((k<10)&&(end == false)){
+
+                      while(_window.pollEvent(evenementnom)){
+                        if(evenementnom.type == sf::Event::TextEntered){
+                          if(evenementnom.text.unicode <128){
+                            //if(evenementnom.text.unicode == )
+                            //name += static_cast<char>(evenementnom.text.unicode);
+                            std::cout<<"test carac : "<<static_cast<char>(evenementnom.text.unicode)<<std::endl;
+                            nomtest += static_cast<char>(evenementnom.text.unicode);
+                            k++;
+                            if((evenementnom.text.unicode == 10)||(evenementnom.text.unicode == 13)){
+                              end = true;
+                            }
+                          }
+                        }
+                      }
+                    }
+                    sf::Font font;
+                    font.loadFromFile("/home/taiqui/Documents/FAC/MedievalUFO/Game/arial.ttf");
+                    sf::Text text;
+                    text.setFont(font);
+                    // text.setString(nomtest);
+                    text.setColor(sf::Color::White);
+                    text.setCharacterSize(24);
+                    // _window.clear();
+                    // _window.draw(text);
+                    // _window.display();
+                    //_window.display();
+                    std::cout<<"nom complet : "<<nomtest<<std::endl;
+                    p1.setName(nomtest);
                     p1.setWhosPlaying(true);
                     std::cout << "=====\nPlayer 2: ";
-                    std::cin>>name;
-                    p2.setName(name);
+                    //std::cin>>name;
+                    k = 0;
+                    end = false;
+                    //nomtest = "";
+                    while((k<10)&&(end == false)){
+
+                      while(_window.pollEvent(evenementnom)){
+                        if(evenementnom.type == sf::Event::TextEntered){
+                          if(evenementnom.text.unicode <128){
+                            //name += static_cast<char>(evenementnom.text.unicode);
+                            std::cout<<"test carac : "<<static_cast<char>(evenementnom.text.unicode)<<std::endl;
+                            name2 += static_cast<char>(evenementnom.text.unicode);
+                            k++;
+                            if((evenementnom.text.unicode == 10)||(evenementnom.text.unicode == 13)){
+                              end = true;
+                            }
+                          }
+                        }
+                      }
+                    }
+                    std::cout<<"nom complet : "<<nomtest<<std::endl;
+                    p2.setName(nomtest);
+                    text.setString("Joueur 1 :"+nomtest+"\n"+"Joueur 2 : "+name2);
+                    _window.clear();
+                    _window.draw(text);
+                    _window.display();
+                    bool continuer = true;
+                    while(continuer){
+                      while(_window.pollEvent(evenementnom)){
+                        if(evenementnom.type == sf::Event::KeyPressed){
+                          if(evenementnom.key.code == sf::Keyboard::Return){
+                          continuer = false;
+                          }
+                        }
+                      }
+                    }
+                    // JUSQUICI
+                    /*                                        (J'ai enlever sa pour esseyer mon truc)
+                      std::cout << "=====\nPlayer 1: ";
+                      std::cin>>name;
+                      p1.setName(name);
+                      p1.setWhosPlaying(true);
+                      std::cout << "=====\nPlayer 2: ";
+                      std::cin>>name;
+                      p2.setName(name);
+                      p2.setWhosPlaying(false);
+
+                    */
                     //Création des éléments du jeu
                     Map m(800,500);
                     Ui ui;

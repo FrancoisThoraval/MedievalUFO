@@ -177,7 +177,6 @@ public:
 class AYAYAY_Assistant : public Unit{
 private:
   std::string _advice;
-
 public:
  AYAYAY_Assistant ();
  ~AYAYAY_Assistant ();
