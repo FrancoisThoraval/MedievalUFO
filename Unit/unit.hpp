@@ -122,7 +122,7 @@ private:
 public:
   Putties ();
   ~Putties ();
-  Putties(int,int,int,Weapon*); //hp,mvmt,price,arme
+  Putties(int,int,int,Weapon*,std::string= "Putties"); //hp,mvmt,price,arme
   void attack(Unit&,int,Player&,Position);
 };
 

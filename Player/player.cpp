@@ -70,6 +70,11 @@ bool Player::IsMineUnit(const Unit u){
       rep = true;
     }
   }
+  if(rep == true){
+    std::cout<<"rep = true"<<std::endl;
+  } else {
+    std::cout<<"rep = false"<<std::endl;
+  }
   return(rep);
 }
 

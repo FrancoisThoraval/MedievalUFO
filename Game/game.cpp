@@ -66,7 +66,6 @@ void Game::gameLoop(){
                     std::cout << "=====\nPlayer 2: ";
                     std::cin>>name;
                     p2.setName(name);
-
                     //Création des éléments du jeu
                     Map m(800,500);
                     Ui ui;
@@ -124,7 +123,11 @@ void Game::gameLoop(){
 
                               }
                          }
-                         m.handleClick(_window,currentEvent,p1);
+                         if (p1.getWhosPlaying()) {
+                           m.handleClick(_window,currentEvent,p1);
+                         } else if(p2.getWhosPlaying()){
+                           m.handleClick(_window,currentEvent,p2);
+                         }
 
                          if ((p1.getLost()!=false) || (p2.getLost()!= false )) {
                               std::cout << "one player lost, back to menu" << '\n';

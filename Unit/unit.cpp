@@ -263,43 +263,52 @@ void Unit::attack(Unit& u,int W,Player& p,Position posFinal,Map *m){
 void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& p){
   int distance = Distance(posInit,posFinal);
   if(p.IsMineUnit(m->getElementW1(posInit)) == true){
-    if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")){
-      if(posInit != posFinal){
-        //(m->getElementW1(posInit)).attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
-        if(m->getNameOfElement(posInit)=="red"){
-          Unit *red = new PowerRanger("red");
-          red->setPosition(posInit);
-          red->attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
-        } else if (m->getNameOfElement(posInit) == "green") {
-          Unit *green = new PowerRanger("green");
-          green->setPosition(posInit);
-          green->attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
-        } else {
-          Unit *other = new PowerRanger("other");
-          other->setPosition(posInit);
-          other->attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
+    if(m->getNameOfElement(posInit)!="zedd"){
+      if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")){
+        if(posInit != posFinal){
+          //(m->getElementW1(posInit)).attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
+          if(m->getNameOfElement(posInit)=="red"){
+            Unit *red = new PowerRanger("red");
+            red->setPosition(posInit);
+            red->attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
+          } else if (m->getNameOfElement(posInit) == "green") {
+            Unit *green = new PowerRanger("green");
+            green->setPosition(posInit);
+            green->attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
+          } else if (m->getNameOfElement(posInit) == "Putties"){
+            Unit *putties = new Putties;
+            putties->setPosition(posInit);
+            putties->attack(m->getElementW1(posFinal),1,p,posFinal,m);
+          }  else {
+            Unit *other = new PowerRanger("other");
+            other->setPosition(posInit);
+            other->attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
+          }
         }
-      }
 
-    } else {
-      if(distance<=this->_movement){
-        if(distance != 0){
-          Unit *u = new Unit();
-          m->setElementW1(posFinal,*this);
-          m->setElementW1(posInit,*u);
-          m->getElementW1(posFinal).setMovement(m->getElementW1(posFinal).getMovement()-(distance));
-          this->setPosition(posFinal);
-          //std::cout<<"Distance : "<<distance<<std::endl;
-          // std::cout<<"HP : :"<<m->getElementW1(posFinal).getHealthPoints()<<std::endl;
-          // std::cout<<"Movement :"<<this->getMovement()<<std::endl;
-        } else {
-          std::cout <<"Tu ne peux pas te deplacer sur ta case actuel"<<std::endl;
-        }
       } else {
-        std::cout<<"Pas assez de point de deplacement"<<std::endl;
+        if(distance<=this->_movement){
+          if(distance != 0){
+            Unit *u = new Unit();
+            m->setElementW1(posFinal,*this);
+            m->setElementW1(posInit,*u);
+            m->getElementW1(posFinal).setMovement(m->getElementW1(posFinal).getMovement()-(distance));
+            this->setPosition(posFinal);
+            //std::cout<<"Distance : "<<distance<<std::endl;
+            // std::cout<<"HP : :"<<m->getElementW1(posFinal).getHealthPoints()<<std::endl;
+            // std::cout<<"Movement :"<<this->getMovement()<<std::endl;
+          } else {
+            std::cout <<"Tu ne peux pas te deplacer sur ta case actuel"<<std::endl;
+          }
+        } else {
+          std::cout<<"Pas assez de point de deplacement"<<std::endl;
+        }
       }
+    }else {
+      /** ACTION DE ZEDD ICI **/
     }
-  }else {
+
+  } else {
     std::cout<<"Cette unite ne t'appartient pas "<<std::endl;
   }
 }
@@ -319,8 +328,8 @@ Putties::Putties(){
 }
 
 
-Putties::Putties(int hp,int mvmt,int price,Weapon *wp){
-  this->setName("Putties");
+Putties::Putties(int hp,int mvmt,int price,Weapon *wp,std::string nom){
+  this->setName(nom);
   this->setHealthPoints(hp);
   this->setMovement(mvmt);
   this->setPrimaryW(wp);
