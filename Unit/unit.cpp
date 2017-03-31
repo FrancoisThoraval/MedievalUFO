@@ -266,23 +266,31 @@ void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& 
     if(m->getNameOfElement(posInit)!="zedd"){
       if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")){
         if(posInit != posFinal){
-          //(m->getElementW1(posInit)).attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
-          if(m->getNameOfElement(posInit)=="red"){
-            Unit *red = new PowerRanger("red");
-            red->setPosition(posInit);
-            red->attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
-          } else if (m->getNameOfElement(posInit) == "green") {
-            Unit *green = new PowerRanger("green");
-            green->setPosition(posInit);
-            green->attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
-          } else if (m->getNameOfElement(posInit) == "Putties"){
-            Unit *putties = new Putties;
-            putties->setPosition(posInit);
-            putties->attack(m->getElementW1(posFinal),1,p,posFinal,m);
-          }  else {
-            Unit *other = new PowerRanger("other");
-            other->setPosition(posInit);
-            other->attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
+          if(p.IsMineUnit(m->getElementW1(posFinal)) != true){
+            //(m->getElementW1(posInit)).attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
+            if(m->getNameOfElement(posInit)=="red"){
+              Unit *red = new PowerRanger("red");
+              red->setPosition(posInit);
+              red->attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
+            } else if (m->getNameOfElement(posInit) == "green") {
+                Unit *green = new PowerRanger("green");
+                green->setPosition(posInit);
+                green->attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
+            } else if (m->getNameOfElement(posInit) == "Putties"){
+                Unit *putties = new Putties;
+                putties->setPosition(posInit);
+                putties->attack(m->getElementW1(posFinal),1,p,posFinal,m);
+              }  else if(m->getNameOfElement(posInit)=="zedd"){
+                  Unit *zed = new Zedd;
+                  zed->setPosition(posInit);
+                  zed->attack(m->getElementW1(posInit),numattack,p,posFinal,m);
+            } else {
+              Unit *other = new PowerRanger("other");
+              other->setPosition(posInit);
+              other->attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
+            }
+          } else  {
+            std::cout<<"Tu ne peux pas attaquer ta propre unite"<<std::endl;
           }
         }
 
@@ -305,7 +313,7 @@ void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& 
         }
       }
     }else {
-      /** ACTION DE ZEDD ICI **/
+
     }
 
   } else {

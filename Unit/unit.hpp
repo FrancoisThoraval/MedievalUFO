@@ -173,6 +173,7 @@ public:
   ~Dino ();
 };
 
+
 class AYAYAY_Assistant : public Unit{
 private:
   std::string _advice;
@@ -182,6 +183,7 @@ public:
  ~AYAYAY_Assistant ();
  void setAdvice(std::string);
  std::string getAdvice()const;
+
 
 };
 /*
