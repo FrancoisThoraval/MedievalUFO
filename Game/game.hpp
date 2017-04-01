@@ -31,7 +31,7 @@ public:
      Game(int x, int y);
      ~Game();
      void start();
-     void endTurn(Player &, Player &);
+     void endTurn(Player &, Player &,Map*);
 
 };
 

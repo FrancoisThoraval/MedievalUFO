@@ -7,6 +7,7 @@
 #include <string>
 
 class Unit;
+class Map;
 
 class Player {
 private:
@@ -33,7 +34,8 @@ public:
 
   void pushUnit(Unit &);
   void showUnitOwned();
-  //void EndOfTurn(Map*);
+  void EndOfTurn(Map*);
+  void ResetMovement(Map*);
 };
 
 #endif

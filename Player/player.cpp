@@ -86,7 +86,7 @@ void Player::showUnitOwned(){
 }
 
 
-/*
+
 void Player::EndOfTurn(Map *m){
   this->_energy = 100;
   ResetMovement(m);
@@ -98,10 +98,11 @@ void Player::ResetMovement(Map *m){
     for(int j=0;j<m->getSizeY();j++){
       currentPos.setX(i);
       currentPos.setY(j);
-      if(m->getNameOfElement(currentPos)!=""){
+      if((m->getNameOfElement(currentPos)!="Hill")&&(m->getNameOfElement(currentPos)!="Water")&&(m->getNameOfElement(currentPos)!="Tree")&&(m->getNameOfElement(currentPos)!="")){
         (m->getElementW1(currentPos)).setMovement((m->getElementW1(currentPos)).getDefault());
+        std::cout<<"bite"<<std::endl;
+        std::cout<<"DEFAULT : "<<m->getElementW1(currentPos).getDefault()<<std::endl;
       }
     }
   }
 }
-*/

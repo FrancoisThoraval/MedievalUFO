@@ -180,7 +180,7 @@ void Game::gameLoop(){
                                    }
                                    if(currentEvent.key.code == sf::Keyboard::Return){
                                         std::cerr << "ending turn" << '\n';
-                                        endTurn(p1,p2); //Créer un menu spécial
+                                        endTurn(p1,p2,&m); //Créer un menu spécial
                                         ui.drawUi(_window,p1,p2);
                                    }
 
@@ -246,16 +246,16 @@ void Game::showMenu(){
      }
 }
 
-void Game::endTurn(Player &p1, Player &p2){
+void Game::endTurn(Player &p1, Player &p2,Map *m){
      if (p1.getWhosPlaying()) {
           p1.setWhosPlaying(false);
           p2.setWhosPlaying(true);
           std::cerr << "Player 2, Your turn !" << '\n';
+          p1.EndOfTurn(m);
      }else{
           p2.setWhosPlaying(false);
           p1.setWhosPlaying(true);
           std::cerr << "Player 1, Your turn !" << '\n';
+          p2.EndOfTurn(m);
      }
-     p1.setEnergy(100);
-     p2.setEnergy(100);
 }

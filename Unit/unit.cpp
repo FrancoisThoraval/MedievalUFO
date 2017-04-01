@@ -332,7 +332,7 @@ Putties::Putties(){
   this->setPrice(5);  // Le prix du Putties
   this->setMovement(2);
   _primaryWeapon = new Weapon("fist",5,1,20);
-  _defaultMovement = this->getMovement();
+  this->_defaultMovement = this->getMovement();
 }
 
 
@@ -397,9 +397,9 @@ PowerRanger::PowerRanger(std::string color){
   _thirdWeapon = new Weapon("RobotTransformation",0,0,100);
   _fourthWeapon = new Weapon("MergeWeapon",400,10,100);
   this->setMovement(3);
-  _defaultMovement = this->getMovement();
 
   this->setMovement(4);
+  _defaultMovement = this->getMovement();
   if(color == "red"){
     _primaryWeapon = new Weapon("Fist",60,1,30);
     _secondaryWeapon = new Weapon("Gun",20,10,30);
