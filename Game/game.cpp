@@ -63,6 +63,9 @@ void Game::gameLoop(){
                     std::cout << "=====\nPlayer 1: ";
                     sf::Event evenementnom;
                     std::string nomtest;
+                    // Unit u;
+                    // AYAYAY_Assistant<Unit> testayayay(u);
+                    // testayayay.test();
                     int k = 0;
                     bool end = false;
                     while((k<10)&&(end == false)){

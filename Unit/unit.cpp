@@ -626,26 +626,26 @@ Dino::~Dino(){
 /********************************************************/
 
 
-/*** CLASS AYAYAY ASSISTANT ***/
-
-
-AYAYAY_Assistant::AYAYAY_Assistant(){
-
-}
-
-AYAYAY_Assistant::~AYAYAY_Assistant(){
-
-}
-
-void AYAYAY_Assistant::setAdvice(std::string advice){
-  this->_advice = advice;
-}
-
-std::string AYAYAY_Assistant::getAdvice()const{
-  return(this->_advice);
-}
-
-/******************************************************/
+// /*** CLASS AYAYAY ASSISTANT ***/
+//
+//
+// AYAYAY_Assistant::AYAYAY_Assistant(){
+//
+// }
+//
+// AYAYAY_Assistant::~AYAYAY_Assistant(){
+//
+// }
+//
+// void AYAYAY_Assistant::setAdvice(std::string advice){
+//   this->_advice = advice;
+// }
+//
+// std::string AYAYAY_Assistant::getAdvice()const{
+//   return(this->_advice);
+// }
+//
+// /******************************************************/
 
 /**** CLASS ZEDD ***/
 

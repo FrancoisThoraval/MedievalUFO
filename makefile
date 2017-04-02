@@ -3,8 +3,8 @@ LIBS	=	-lsfml-graphics -lsfml-window -lsfml-system
 all: main
 	rm *.o
 
-./main: game.o menu.o splashScreen.o element.o map.o scenery.o unit.o  weapon.o player.o main.cpp
-	g++ --std=c++11 -Wall -o programme unit.o menu.o game.o weapon.o splashScreen.o element.o map.o scenery.o player.o main.cpp $(LIBS)
+./main: game.o menu.o splashScreen.o element.o map.o scenery.o unit.o  weapon.o player.o ayayay.o main.cpp
+	g++ --std=c++11 -Wall -o programme unit.o menu.o game.o weapon.o splashScreen.o element.o map.o scenery.o player.o ayayay.o main.cpp $(LIBS)
 
 element.o: ./Element/element.cpp
 	g++ --std=c++11 -Wall -c -o element.o ./Element/element.cpp $(LIBS)
@@ -32,3 +32,5 @@ weapon.o: ./Unit/weapon.cpp
 
 player.o: ./Player/player.cpp
 	g++ --std=c++11 -Wall -c -o player.o ./Player/player.cpp $(LIBS)
+ayayay.o : ./Unit/ayayay.cpp
+	g++  --std=c++11 -Wall -c -o ayayay.o ./Unit/ayayay.cpp $(LIBS)

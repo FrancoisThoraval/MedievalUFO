@@ -6,13 +6,14 @@
 #include "../Element/element.hpp"
 #include "../Player/player.hpp"
 #include "weapon.hpp"
+// #include "ayayay.hpp"
 #include <string>
 
 /***** Classe des unités, class mères de tous les types d'unites ********/
 class Unit;
 class Putties;
 class PowerRanger;
-class AYAYAY_Assistant;
+// class AYAYAY_Assistant;
 class RobotPR;
 class TurtleTank;
 class Zedd;
@@ -184,17 +185,17 @@ public:
 };
 
 
-class AYAYAY_Assistant : public Unit{
-private:
-  std::string _advice;
-public:
- AYAYAY_Assistant ();
- ~AYAYAY_Assistant ();
- void setAdvice(std::string);
- std::string getAdvice()const;
-
-
-};
+// class AYAYAY_Assistant : public Unit{
+// private:
+//   std::string _advice;
+// public:
+//  AYAYAY_Assistant ();
+//  ~AYAYAY_Assistant ();
+//  void setAdvice(std::string);
+//  std::string getAdvice()const;
+//
+//
+// };
 /*
 class Zedd : public Unit{
 private:

@@ -8,6 +8,7 @@
 #include "menu.hpp"
 #include "../Element/map.hpp"
 #include "../Player/player.hpp"
+#include "../Unit/ayayay.cpp"
 // _gameState  ->   0    =    Initialization
 // _gameState  ->   1    =    Splash
 // _gameState  ->   2    =    Pause
