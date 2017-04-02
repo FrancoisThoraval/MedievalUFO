@@ -26,6 +26,8 @@ public:
   bool getLost()const;
   std::string getName()const;
   bool IsMineUnit(const Unit);
+  Unit& getUnit(int);
+
 
   void setWhosPlaying(bool);
   void setEnergy(int);

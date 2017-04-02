@@ -60,6 +60,8 @@ void Player::pushUnit(Unit &u){
 }
 
 
+
+
 bool Player::IsMineUnit(const Unit u){
   bool rep = false;
   std::cout<<"FCT ISMINEUNIT"<<std::endl;
@@ -82,14 +84,21 @@ void Player::showUnitOwned(){
      for (int i = 0; i < 5; i++) {
           std::cout << "["<< _ownUnit[i].getName() << "] -> ";
           std::cout << _ownUnit[i].getMovement() << '\n';
+          std::cout<<" : "<<_ownUnit[i].getDefault()<<std::endl;
      }
 }
 
-
+Unit& Player::getUnit(int pos){
+  return(this->_ownUnit[pos]);
+}
 
 void Player::EndOfTurn(Map *m){
   this->_energy = 100;
-  ResetMovement(m);
+   ResetMovement(m);
+  Position pos;
+  // for(int i =0;i<5;i++){
+  //   _ownUnit[i].setMovement(_ownUnit[i].getDefault());
+  // }
 }
 
 void Player::ResetMovement(Map *m){
@@ -100,8 +109,8 @@ void Player::ResetMovement(Map *m){
       currentPos.setY(j);
       if((m->getNameOfElement(currentPos)!="Hill")&&(m->getNameOfElement(currentPos)!="Water")&&(m->getNameOfElement(currentPos)!="Tree")&&(m->getNameOfElement(currentPos)!="")){
         (m->getElementW1(currentPos)).setMovement((m->getElementW1(currentPos)).getDefault());
-        std::cout<<"bite"<<std::endl;
         std::cout<<"DEFAULT : "<<m->getElementW1(currentPos).getDefault()<<std::endl;
+        std::cout<<"MVMT : "<<m->getElementW1(currentPos).getMovement()<<std::endl;
       }
     }
   }

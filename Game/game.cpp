@@ -151,6 +151,7 @@ void Game::gameLoop(){
                     //Création Unité p1 (power ranger)
                     PowerRanger pink("pink"), red("red"), blue("blue"), green("green"),yellow("yellow");
                     Position posPink(9,13),posRed(7,13),posBlue(8,13),posGreen(10,13),posYellow(11,13);
+                    //  std::cout<<"DEFAULT : "<<pink.getDefault()<<std::endl;
                     m.setElementW1(posRed,red);
                     m.setElementW1(posGreen,green);
                     m.setElementW1(posYellow,yellow);
@@ -161,6 +162,18 @@ void Game::gameLoop(){
                     p1.pushUnit(blue);
                     p1.pushUnit(green);
                     p1.pushUnit(yellow);
+                    m.getElementW1(posRed).setDefault(4);
+                    // p1.getUnit(1).setDefault(4);
+                    m.getElementW1(posBlue).setDefault(4);
+                    // p1.getUnit(2).setDefault(4);
+                    m.getElementW1(posGreen).setDefault(4);
+                    // p1.getUnit(3).setDefault(4);
+                    m.getElementW1(posYellow).setDefault(4);
+                    // p1.getUnit(4).setDefault(4);
+                    m.getElementW1(posPink).setDefault(4);
+                    // p1.getUnit(0).setDefault(4);
+                    std::cout<<"NAME TEST : "<<m.getElementW1(posRed).getName()<<"\n"<<"NAME TEST 2 : "<<red.getName()<<"\n"<<"NAME TEST 3  : "<<p1.getUnit(1).getName()<<std::endl;
+                    std::cout<<"DEFAULT TEST : "<<m.getElementW1(posRed).getDefault()<<"\n"<<"DEfault TEST 2 : "<<red.getDefault()<<"\n"<<"DEFAULT TEST 3 :"<<p1.getUnit(1).getDefault()<<std::endl;
 
                     _window.clear(sf::Color(0,0,0));
                     m.drawWorld(_window);

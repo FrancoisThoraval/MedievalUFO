@@ -214,6 +214,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &e,Player &p){
                          pos.setY(sf::Mouse::getPosition(window).y/32);
                          std::cout << "x: " << sf::Mouse::getPosition(window).x<< " y: " << sf::Mouse::getPosition(window).y << '\n';
                          std::cout << "You clicked on: " << getNameOfElement(pos) <<'\n';
+                         //std::cout<<"DEfault on your clicked : "<<getElementW1(pos).getDefault()<<std::endl;
 
                     }
                     j++;
@@ -221,7 +222,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &e,Player &p){
                i++;
           }
           p.showUnitOwned();
-          
+
           if (_unitSelected.getX() == -1) {
                if((getNameOfElement(pos) == "blue")||(getNameOfElement(pos) == "pink")||(getNameOfElement(pos) == "green")||(getNameOfElement(pos) == "yellow")||(getNameOfElement(pos) == "red")) {
                     _unitSelected = pos;

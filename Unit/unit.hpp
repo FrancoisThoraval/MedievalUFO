@@ -9,7 +9,7 @@
 #include <string>
 
 /***** Classe des unités, class mères de tous les types d'unites ********/
-// class Unit;
+class Unit;
 class Putties;
 class PowerRanger;
 class AYAYAY_Assistant;
@@ -18,6 +18,7 @@ class TurtleTank;
 class Zedd;
 
 class Map;
+
 
 class Unit : public Element {
 private:
@@ -66,6 +67,15 @@ public:
     this->_movement = u._movement;
     return(*this);
   }
+
+  //Unit& operator=( PowerRanger&);
+  //   this->_name = pr._name;
+  //   this->_healthPoints = pr._healthPoints;
+  //   this->_price = pr._price;
+  //   this->_movement = pr._movement;
+  //   this->_defaultMovement = pr._defaultMovement;
+  //   return(*this);
+  // }
 
 
 
@@ -143,7 +153,7 @@ public:
   void setCapacityWeapon(bool);
   bool getCapacityRobot()const;
   bool getCapacityWeapon()const;
-
+  int getDefault()const;
   void TornadoDino(Map*,Position);
   //void attack(Unit &, int,Player&,Map *m,Position);
   void BeTogether(Map*,Position,bool*,bool*);
