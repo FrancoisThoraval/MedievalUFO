@@ -86,7 +86,7 @@ void Game::gameLoop(){
                       }
                     }
                     sf::Font font;
-                    font.loadFromFile("/home/taiqui/Documents/FAC/MedievalUFO/Game/arial.ttf");
+                    font.loadFromFile("./arial.ttf");
                     sf::Text text;
                     text.setFont(font);
                     // text.setString(nomtest);
