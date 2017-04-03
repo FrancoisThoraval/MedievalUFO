@@ -31,7 +31,7 @@ Unit::Unit(){
   _healthPoints=0;
   _price=0;
   _movement = 0;
-  _defaultMovement = 0;
+  _defaultMovement = _movement;
 }
 
 //Destructeur
@@ -107,21 +107,6 @@ void Unit::setPrimaryW(Weapon *wp){
     this->_secondaryWeapon = wp;
   }
 }
-
-
-
-
-
-// Unit& operator=(const PowerRanger& pr){
-//   this->_name = pr._name;
-//   this->_healthPoints = pr._healthPoints;
-//   this->_price = pr._price;
-//   this->_movement = pr._movement;
-//   this->_defaultMovement = pr._defaultMovement;
-//   return(*this);
-// }
-
-
 
 void Unit::setThirdW(Weapon* wp){
   if(wp == NULL){
@@ -298,7 +283,7 @@ void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& 
               }  else if(m->getNameOfElement(posInit)=="zedd"){
                   Unit *zed = new Zedd;
                   zed->setPosition(posInit);
-                  zed->attack(m->getElementW1(posInit),numattack,p,posFinal,m);
+                  zed->attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
             } else {
               Unit *other = new PowerRanger("other");
               other->setPosition(posInit);
@@ -313,14 +298,10 @@ void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& 
         if(distance<=this->_movement){
           if(distance != 0){
             Unit *u = new Unit();
-            std::cout<<"IN FCT MOOVE 1: "<<m->getElementW1(posInit).getDefault()<<std::endl;
-            int _default = m->getElementW1(posInit).getDefault();
             m->setElementW1(posFinal,*this);
             m->setElementW1(posInit,*u);
             m->getElementW1(posFinal).setMovement(m->getElementW1(posFinal).getMovement()-(distance));
             this->setPosition(posFinal);
-            m->getElementW1(posFinal).setDefault(_default);
-            std::cout<<"IN FCT MOOVE 2: "<<m->getElementW1(posFinal).getDefault()<<std::endl;
             //std::cout<<"Distance : "<<distance<<std::endl;
             // std::cout<<"HP : :"<<m->getElementW1(posFinal).getHealthPoints()<<std::endl;
             // std::cout<<"Movement :"<<this->getMovement()<<std::endl;
@@ -351,7 +332,7 @@ Putties::Putties(){
   this->setPrice(5);  // Le prix du Putties
   this->setMovement(2);
   _primaryWeapon = new Weapon("fist",5,1,20);
-  this->setDefault(2);
+  _defaultMovement = this->getMovement();
 }
 
 
@@ -361,7 +342,7 @@ Putties::Putties(int hp,int mvmt,int price,Weapon *wp,std::string nom){
   this->setMovement(mvmt);
   this->setPrimaryW(wp);
   this->setPrice(price);
-  this->setDefault(mvmt);
+  this->_defaultMovement = this->getMovement();
 }
 
 Putties::~Putties(){
@@ -415,10 +396,10 @@ PowerRanger::PowerRanger(std::string color){
   _capacityWeapon = false;
   _thirdWeapon = new Weapon("RobotTransformation",0,0,100);
   _fourthWeapon = new Weapon("MergeWeapon",400,10,100);
-
+  this->setMovement(3);
+  _defaultMovement = this->getMovement();
 
   this->setMovement(4);
-  this->setDefault(4);
   if(color == "red"){
     _primaryWeapon = new Weapon("Fist",60,1,30);
     _secondaryWeapon = new Weapon("Gun",20,10,30);
@@ -448,6 +429,10 @@ void PowerRanger::setColor(std::string color){
 
 std::string PowerRanger::getColor()const{
   return(this->_color);
+}
+
+int PowerRanger::getDefault()const{
+  return(this->_defaultMovement);
 }
 
 void PowerRanger::setCapacityRobot(bool cap){
@@ -522,10 +507,6 @@ void PowerRanger::TornadoDino(Map* m,Position pos){
     Unit *d = new Dino;
     m->setElementW1(pos,*d);
   }
-}
-
-int PowerRanger::getDefault()const{
-  return(this->_defaultMovement);
 }
 
 void PowerRanger::BeTogether(Map *m,Position pos,bool* hor, bool* ver){
@@ -614,7 +595,7 @@ Dino::Dino(){
     this->setHealthPoints(150);
     this->setMovement(3);
     _primaryWeapon = new Weapon("Tornado",0,0,50);
-    this->_defaultMovement = 3;
+    this->_defaultMovement = this->getMovement();
 }
 
 Dino::~Dino(){
@@ -626,7 +607,7 @@ Dino::~Dino(){
 /********************************************************/
 
 
-// /*** CLASS AYAYAY ASSISTANT ***/
+/*** CLASS AYAYAY ASSISTANT ***/
 //
 //
 // AYAYAY_Assistant::AYAYAY_Assistant(){
@@ -644,8 +625,8 @@ Dino::~Dino(){
 // std::string AYAYAY_Assistant::getAdvice()const{
 //   return(this->_advice);
 // }
-//
-// /******************************************************/
+
+/******************************************************/
 
 /**** CLASS ZEDD ***/
 
@@ -901,7 +882,7 @@ RobotPR::RobotPR(){
   _primaryWeapon = new Weapon("Fist",300,1,60);
   _secondaryWeapon = new Weapon("Sword",600,3,100);
   this->setMovement(5);
-  this->_defaultMovement = 5;
+  this->_defaultMovement = this->getMovement();
 }
 
 RobotPR::~RobotPR(){
@@ -956,7 +937,7 @@ TurtleTank::TurtleTank(){
     setName("TurtleTank");
     _primaryWeapon = new Weapon("Fatality",10000,30,100);
     setMovement(5);
-    this->_defaultMovement = 5;
+    this->_defaultMovement = this->getMovement();
 }
 
 TurtleTank::~TurtleTank(){

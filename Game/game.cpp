@@ -56,86 +56,9 @@ void Game::gameLoop(){
                     break;
                }
                case 4 : {
-                    _window.clear();
+                    //_window.clear();
                     //Saisie des noms de joueurs
-                    std::string name,name2;
-                    // COMMENTAIRE ICI JUSQUA
-                    std::cout << "=====\nPlayer 1: ";
-                    sf::Event evenementnom;
-                    std::string nomtest;
-                    // Unit u;
-                    // AYAYAY_Assistant<Unit> testayayay(u);
-                    // testayayay.test();
-                    int k = 0;
-                    bool end = false;
-                    while((k<10)&&(end == false)){
 
-                      while(_window.pollEvent(evenementnom)){
-                        if(evenementnom.type == sf::Event::TextEntered){
-                          if(evenementnom.text.unicode <128){
-                            //if(evenementnom.text.unicode == )
-                            //name += static_cast<char>(evenementnom.text.unicode);
-                            std::cout<<"test carac : "<<static_cast<char>(evenementnom.text.unicode)<<std::endl;
-                            nomtest += static_cast<char>(evenementnom.text.unicode);
-                            k++;
-                            if((evenementnom.text.unicode == 10)||(evenementnom.text.unicode == 13)){
-                              end = true;
-                            }
-                          }
-                        }
-                      }
-                    }
-                    sf::Font font;
-                    font.loadFromFile("./arial.ttf");
-                    sf::Text text;
-                    text.setFont(font);
-                    // text.setString(nomtest);
-                    text.setColor(sf::Color::White);
-                    text.setCharacterSize(24);
-                    // _window.clear();
-                    // _window.draw(text);
-                    // _window.display();
-                    //_window.display();
-                    std::cout<<"nom complet : "<<nomtest<<std::endl;
-                    p1.setName(nomtest);
-                    p1.setWhosPlaying(true);
-                    std::cout << "=====\nPlayer 2: ";
-                    //std::cin>>name;
-                    k = 0;
-                    end = false;
-                    //nomtest = "";
-                    while((k<10)&&(end == false)){
-
-                      while(_window.pollEvent(evenementnom)){
-                        if(evenementnom.type == sf::Event::TextEntered){
-                          if(evenementnom.text.unicode <128){
-                            //name += static_cast<char>(evenementnom.text.unicode);
-                            std::cout<<"test carac : "<<static_cast<char>(evenementnom.text.unicode)<<std::endl;
-                            name2 += static_cast<char>(evenementnom.text.unicode);
-                            k++;
-                            if((evenementnom.text.unicode == 10)||(evenementnom.text.unicode == 13)){
-                              end = true;
-                            }
-                          }
-                        }
-                      }
-                    }
-                    std::cout<<"nom complet : "<<nomtest<<std::endl;
-                    p2.setName(nomtest);
-                    text.setString("Joueur 1 :"+nomtest+"\n"+"Joueur 2 : "+name2);
-                    _window.clear();
-                    _window.draw(text);
-                    _window.display();
-                    bool continuer = true;
-                    while(continuer){
-                      while(_window.pollEvent(evenementnom)){
-                        if(evenementnom.type == sf::Event::KeyPressed){
-                          if(evenementnom.key.code == sf::Keyboard::Return){
-                          continuer = false;
-                          }
-                        }
-                      }
-                    }
                     // JUSQUICI
                     /*                                        (J'ai enlever sa pour esseyer mon truc)
                       std::cout << "=====\nPlayer 1: ";
@@ -146,8 +69,8 @@ void Game::gameLoop(){
                       std::cin>>name;
                       p2.setName(name);
                       p2.setWhosPlaying(false);
-
                     */
+                    enterName();
                     //Création des éléments du jeu
                     Map m(800,500);
                     Ui ui;
@@ -175,8 +98,11 @@ void Game::gameLoop(){
                     // p1.getUnit(4).setDefault(4);
                     m.getElementW1(posPink).setDefault(4);
                     // p1.getUnit(0).setDefault(4);
+
                     std::cout<<"NAME TEST : "<<m.getElementW1(posRed).getName()<<"\n"<<"NAME TEST 2 : "<<red.getName()<<"\n"<<"NAME TEST 3  : "<<p1.getUnit(1).getName()<<std::endl;
                     std::cout<<"DEFAULT TEST : "<<m.getElementW1(posRed).getDefault()<<"\n"<<"DEfault TEST 2 : "<<red.getDefault()<<"\n"<<"DEFAULT TEST 3 :"<<p1.getUnit(1).getDefault()<<std::endl;
+
+                    std::cout<<"TYPE : "<<typeid(m.getElementW1(posRed)).name()<<std::endl;
 
                     _window.clear(sf::Color(0,0,0));
                     m.drawWorld(_window);
@@ -274,4 +200,87 @@ void Game::endTurn(Player &p1, Player &p2,Map *m){
           std::cerr << "Player 1, Your turn !" << '\n';
           p2.EndOfTurn(m);
      }
+}
+
+
+void Game::enterName(){
+  std::string name2;
+  std::cout << "=====\nPlayer 1: ";
+  sf::Event evenementnom;
+  std::string nomtest;
+  // Unit u;
+  // AYAYAY_Assistant<Unit> testayayay(u);
+  // testayayay.test();
+  sf::Font font;
+  font.loadFromFile("./arial.ttf");
+  sf::Text text;
+  text.setFont(font);
+  text.setPosition(0,500);
+  text.setColor(sf::Color::White);
+  text.setCharacterSize(24);
+  int k = 0;
+  bool end = false;
+  while((k<10)&&(end == false)){
+
+    while(_window.pollEvent(evenementnom)){
+      if(evenementnom.type == sf::Event::TextEntered){
+        if(evenementnom.text.unicode <128){
+          //if(evenementnom.text.unicode == )
+          //name += static_cast<char>(evenementnom.text.unicode);
+          std::cout<<"test carac : "<<static_cast<char>(evenementnom.text.unicode)<<std::endl;
+          nomtest += static_cast<char>(evenementnom.text.unicode);
+          k++;
+          text.setString(nomtest);
+          _window.draw(text);
+          _window.display();
+          if((evenementnom.text.unicode == 10)||(evenementnom.text.unicode == 13)){
+            end = true;
+          }
+        }
+      }
+    }
+  }
+
+  std::cout<<"nom complet : "<<nomtest<<std::endl;
+  p1.setName(nomtest);
+  p1.setWhosPlaying(true);
+
+  std::cout <<"=====\nPlayer 2: ";
+  _window.draw(text);
+  _window.display();
+  k = 0;
+  end = false;
+  text.setPosition(0,550);
+  while((k<10)&&(end == false)){
+
+    while(_window.pollEvent(evenementnom)){
+      if(evenementnom.type == sf::Event::TextEntered){
+        if(evenementnom.text.unicode <128){
+          //name += static_cast<char>(evenementnom.text.unicode);
+          std::cout<<"test carac : "<<static_cast<char>(evenementnom.text.unicode)<<std::endl;
+          name2 += static_cast<char>(evenementnom.text.unicode);
+          k++;
+          text.setString(name2);
+          _window.draw(text);
+          _window.display();
+          if((evenementnom.text.unicode == 10)||(evenementnom.text.unicode == 13)){
+            end = true;
+          }
+        }
+      }
+    }
+  }
+  std::cout<<"nom complet : "<<nomtest<<std::endl;
+  p2.setName(nomtest);
+
+  bool continuer = true;
+  while(continuer){
+    while(_window.pollEvent(evenementnom)){
+      if(evenementnom.type == sf::Event::KeyPressed){
+        if(evenementnom.key.code == sf::Keyboard::Return){
+        continuer = false;
+        }
+      }
+    }
+  }
 }

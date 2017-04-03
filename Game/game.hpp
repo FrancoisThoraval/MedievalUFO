@@ -9,6 +9,8 @@
 #include "../Element/map.hpp"
 #include "../Player/player.hpp"
 #include "../Unit/ayayay.cpp"
+#include <typeinfo>
+
 // _gameState  ->   0    =    Initialization
 // _gameState  ->   1    =    Splash
 // _gameState  ->   2    =    Pause
@@ -33,6 +35,7 @@ public:
      ~Game();
      void start();
      void endTurn(Player &, Player &,Map*);
+     void enterName();
 
 };
 
