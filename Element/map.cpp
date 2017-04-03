@@ -87,7 +87,12 @@ void Map::createTile(int x, int y, sf::RenderWindow &window,sf::Texture &t){
      P.setX(x);
      P.setY(y);
      if (this->getNameOfElement(P) == "zedd") {
-
+          sf::Sprite s;
+          s.setTexture(t);
+          s.setTextureRect(sf::IntRect(409, 844, 32, 32));
+          s.setPosition(x*32,y*32);
+          window.draw(s);
+          _mapTile[x][y] = s;
      }
      if (this->getNameOfElement(P) == "putties") {
 

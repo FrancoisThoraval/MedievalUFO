@@ -76,9 +76,12 @@ void Game::gameLoop(){
                     m.createWorld(_window);
                     Ui ui;
                     //Création Unité p1 (power ranger)
+                    Zedd zedd;
                     PowerRanger pink("pink"), red("red"), blue("blue"), green("green"),yellow("yellow");
                     Position posPink(9,13),posRed(7,13),posBlue(8,13),posGreen(10,13),posYellow(11,13);
+                    Position posZedd(1,1);
                     //  std::cout<<"DEFAULT : "<<pink.getDefault()<<std::endl;
+                    m.setElementW1(posZedd,zedd);
                     m.setElementW1(posRed,red);
                     m.setElementW1(posGreen,green);
                     m.setElementW1(posYellow,yellow);
@@ -89,6 +92,7 @@ void Game::gameLoop(){
                     p1.pushUnit(blue);
                     p1.pushUnit(green);
                     p1.pushUnit(yellow);
+                    p2.pushUnit(zedd);
                     m.getElementW1(posRed).setDefault(4);
                     // p1.getUnit(1).setDefault(4);
                     m.getElementW1(posBlue).setDefault(4);
