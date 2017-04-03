@@ -1,4 +1,5 @@
 #include "map.hpp"
+
 // A faire, appliquer les textures correctement
 // Verification
 
@@ -157,24 +158,42 @@ void Map::createTile(int x, int y, sf::RenderWindow &window,sf::Texture &t){
 
 }
 
+void Map::createWorld(sf::RenderWindow &window){
+     int nbTree =0;
+     int nbWater =0;
+     int nbHill =0;
+     std::cout << "Generating map..." << '\n';
+     sf::Texture texture;
+     texture.loadFromFile("./Textures/LPC_Terrain/terrain.png");
+     for(int i = 0; i< this->_sizeX/32; i++){
+          for(int j = 0; j< this->_sizeY/32; j++){
+               int k = rand() %3 +1;
+               std::cout << "k: " << k << '\n';
+               if(k == 1){
+                    Scenery *t = new Tree;
+                    _world2[i][j] = *t;
+                    nbTree++;
+               }
+               if((k == 2)){
+                    Scenery *w = new Water;
+                    _world2[i][j] = *w;
+                    nbWater++;
+               }
+               if((k == 3)){
+                    Scenery *h = new Hill;
+                    _world2[i][j] = *h;
+                    nbHill++;
+               }
+          }
+     }
+}
+
 void Map::drawWorld(sf::RenderWindow &window){
      std::cout << "Loading map..." << '\n';
      sf::Texture texture;
      texture.loadFromFile("./Textures/LPC_Terrain/terrain.png");
      for(int i = 0; i< this->_sizeX/32; i++){
           for(int j = 0; j< this->_sizeY/32; j++){
-               if(j < 5){
-                    Scenery *t = new Tree;
-                    _world2[i][j] = *t;
-               }
-               if(j>= 5){
-                    Scenery *w = new Water;
-                    _world2[i][j] = *w;
-               }
-               if(i>= (_sizeX/32)-3){
-                    Scenery *h = new Hill;
-                    _world2[i][j] = *h;
-               }
                createTile(i,j, window,texture);
           }
      }
@@ -214,7 +233,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &e,Player &p){
                          pos.setY(sf::Mouse::getPosition(window).y/32);
                          std::cout << "x: " << sf::Mouse::getPosition(window).x<< " y: " << sf::Mouse::getPosition(window).y << '\n';
                          std::cout << "You clicked on: " << getNameOfElement(pos) <<'\n';
-                         //std::cout<<"DEfault on your clicked : "<<getElementW1(pos).getDefault()<<std::endl;
+                         // std::cout<<"typeid: "<< typeid(getNameOfElement(pos))<< std::endl;
 
                     }
                     j++;

@@ -73,6 +73,7 @@ void Game::gameLoop(){
                     enterName();
                     //Création des éléments du jeu
                     Map m(800,500);
+                    m.createWorld(_window);
                     Ui ui;
                     //Création Unité p1 (power ranger)
                     PowerRanger pink("pink"), red("red"), blue("blue"), green("green"),yellow("yellow");

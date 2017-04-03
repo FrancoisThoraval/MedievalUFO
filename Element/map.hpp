@@ -10,6 +10,7 @@
 #include <iostream>
 #include <sstream>
 #include <sys/time.h>
+#include <typeinfo>
 
 const int TILESIZEX = 32;
 const int TILESIZEY = 32;
@@ -38,6 +39,7 @@ public:
   void setElementW2(Position,Scenery&);
   std::string getNameOfElement(Position)const;
   void setElement(Position,Element*);
+  void createWorld(sf::RenderWindow &);
   void drawWorld(sf::RenderWindow &);
   void createTile(int,int,sf::RenderWindow &,sf::Texture &);
   bool isOnMap(Position pos);
