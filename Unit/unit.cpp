@@ -298,10 +298,12 @@ void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& 
         if(distance<=this->_movement){
           if(distance != 0){
             Unit *u = new Unit();
+            int mouvementdefault = m->getElementW1(posInit).getDefault();
             m->setElementW1(posFinal,*this);
             m->setElementW1(posInit,*u);
             m->getElementW1(posFinal).setMovement(m->getElementW1(posFinal).getMovement()-(distance));
             this->setPosition(posFinal);
+            m->getElementW1(posFinal).setDefault(mouvementdefault);
             //std::cout<<"Distance : "<<distance<<std::endl;
             // std::cout<<"HP : :"<<m->getElementW1(posFinal).getHealthPoints()<<std::endl;
             // std::cout<<"Movement :"<<this->getMovement()<<std::endl;
