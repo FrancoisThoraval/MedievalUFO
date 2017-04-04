@@ -3,8 +3,8 @@
 #include "unit.hpp"
 
 
-template<class T>
-void Advice_ayaya(T type){
+template<typename T>
+void Advice_ayayay(T type){
 
 }
 /******************************************************/
