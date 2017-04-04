@@ -17,6 +17,7 @@ const int TILESIZEY = 32;
 
 class Unit;
 class Player;
+class Ui;
 
 class Map {
 protected:
@@ -44,7 +45,7 @@ public:
   void createTile(int,int,sf::RenderWindow &,sf::Texture &);
   bool isOnMap(Position pos);
 
-  void handleClick(sf::RenderWindow &, sf::Event &,Player&);
+  void handleClick(sf::RenderWindow &, sf::Event &,Player&,Ui&);
 
   int getSizeX();
   int getSizeY();
@@ -60,13 +61,15 @@ public:
 
 class Ui {
 private:
-
+  int _state;
 public:
      Ui ();
      ~Ui ();
      void drawUi(sf::RenderWindow &,Player &, Player &);
      void handleClick(sf::RenderWindow &,sf::Event &);
-     void displayInfoPlayer(sf::RenderWindow &, Player &);
+     void displayInfoUnit(sf::RenderWindow &, Unit&);
+     void setState(int);
+     int getState()const;
 };
 
 #endif

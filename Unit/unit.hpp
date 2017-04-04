@@ -135,6 +135,15 @@ public:
   ~Putties ();
   Putties(int,int,int,Weapon*,std::string= "Putties"); //hp,mvmt,price,arme
   void attack(Unit&,int,Player&,Position);
+  Putties& operator=(const Unit& u){
+    this->setName(u.getName());
+    this->setHealthPoints(u.getHealthPoints());
+    this->setPrice(u.getPrice());
+    this->setMovement(u.getMovement());
+    this->setPrimaryW(u.getPrimaryW());
+    this->setDefault(u.getDefault());
+    return(*this);
+  }
 };
 
 class PowerRanger : public Unit {
@@ -235,6 +244,16 @@ public:
   int getArmor()const;
   void setArmor(int);
   //void attack(Unit&, int,Player&, Position );
+  RobotPR& operator=(const Unit& u){
+    this->setName(u.getName());
+    this->setHealthPoints(u.getHealthPoints());
+    this->setPrice(u.getPrice());
+    this->setMovement(u.getMovement());
+    this->setPrimaryW(u.getPrimaryW());
+    this->setSecondaryW(u.getSecondaryW());
+    this->setDefault(u.getDefault());
+    return(*this);
+  }
 };
 
 class TurtleTank : public RobotPR {
@@ -244,6 +263,15 @@ public:
   TurtleTank ();
   virtual ~TurtleTank ();
   //void attack(Unit&,int,Player&,Position);
+  TurtleTank& operator=(const Unit& u){
+    this->setName(u.getName());
+    this->setHealthPoints(u.getHealthPoints());
+    this->setPrice(u.getPrice());
+    this->setMovement(u.getMovement());
+    this->setPrimaryW(u.getPrimaryW());
+    this->setDefault(u.getDefault());
+    return(*this);
+  }
 
 };
 
