@@ -219,7 +219,7 @@ int Map::getSizeX(){return this->_sizeX;}
 void Map::setSizeY(int y){this->_sizeY = y;}
 void Map::setSizeX(int x){this->_sizeX = x;}
 
-void Map::handleClick(sf::RenderWindow &window,sf::Event &e,Player &p){
+void Map::handleClick(sf::RenderWindow &window,sf::Event &e,Player &p,Ui& ui){
      sf::Event mapEvent =e;
      int i = 0;
      int j =0;
@@ -250,6 +250,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &e,Player &p){
           if (_unitSelected.getX() == -1) {
                if((getNameOfElement(pos) == "blue")||(getNameOfElement(pos) == "pink")||(getNameOfElement(pos) == "green")||(getNameOfElement(pos) == "yellow")||(getNameOfElement(pos) == "red")) {
                     _unitSelected = pos;
+                    ui.setState(1);
                     std::cerr << "saving position of unit selected" << '\n';
                     gettimeofday(&fin,NULL);
                     while (tempspasse < tempsjeux){
@@ -259,11 +260,13 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &e,Player &p){
                     }
 
                }else{
+                    ui.setState(0);
                     _unitSelected.setX(-1);
                     _unitSelected.setY(-1);
                }
           }else{
                //Actuellement ne déplace pas
+
                getElementW1(_unitSelected).move(_unitSelected,pos,this,1,p);
                std::cerr << "_unitSelected: " << '\n';
                std::cout << _unitSelected << '\n';
@@ -278,11 +281,19 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &e,Player &p){
 
 /* ====================  Game UI   ========================== */
 Ui::Ui(){
-
+ _state = 0;
 }
 
 Ui::~Ui(){
 
+}
+
+void Ui::setState(int st){
+  this->_state = st;
+}
+
+int Ui::getState()const{
+  return(this->_state);
 }
 
 void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
@@ -319,11 +330,102 @@ void Ui::handleClick(sf::RenderWindow &window, sf::Event &event){
 
 }
 
-void Ui::displayInfoPlayer(sf::RenderWindow &window, Player &p){
+void Ui::displayInfoUnit(sf::RenderWindow &_window, Unit& u){
+      sf::Texture t;
+      t.loadFromFile("./Textures/LPC_Terrain/terrain.png");
+      int x = 0;
+      int y = 0;
+
      // sf::Text info;
      // std::stringstream ss;
      // ss << p.getEnergy();
      // info.setString( ss.str().c_str() );
      // window.draw(info);
      // window.display();
+
+     if(u.getName()=="Putties"){
+       Putties pu;
+       sf::Sprite s;
+       s.setTexture(t);
+
+       pu = u;
+
+       if(u.getPrimaryW()->getName()=="Canon a eau"){
+         s.setTextureRect(sf::IntRect());
+       } else if (u.getPrimaryW()->getName()=="Lancer de terre"){
+         s.setTextureRect(sf::IntRect());
+       } else if (u.getPrimaryW()->getName()=="Lancer de tronc"){
+         s.setTextureRect(sf::IntRect());
+       } else {
+         s.setTextureRect(sf::IntRect());
+       }
+       //x= ;
+       //y= ;
+       s.setPosition(x*50,y*50);
+       _window.draw(s);
+     } else if (u.getName()=="zedd"){
+              Zedd zed;
+              sf::Sprite s1,s2,s3,s4;
+              s1.setTextureRect(sf::IntRect()); // GRENADE
+              s2.setTextureRect(sf::IntRect()); //PUTTIES CALLING
+              s3.setTextureRect(sf::IntRect()); // INVOCATION
+              s4.setTextureRect(sf::IntRect()); // APOCALYPSE HOLLE
+              //x= ;
+              //y= ;
+              s1.setPosition(x*50,y*50);
+              //x= ;
+              //y= ;
+              s2.setPosition(x*50,y*50);
+              //x= ;
+              //y= ;
+              s3.setPosition(x*50,y*50);
+              //x= ;
+              //y= ;
+              s4.setPosition(x*50,y*50);
+
+              zed = u;
+
+              _window.draw(s1);
+              _window.draw(s2);
+              _window.draw(s3);
+              _window.draw(s4);
+
+      } else  if(u.getName()=="green"){
+              PowerRanger green;
+              sf::Sprite s1,s2;
+              s1.setTextureRect(sf::IntRect());    // FIST
+              s2.setTextureRect(sf::IntRect());    // FLUTE
+              //x= ;
+              //y= ;
+              s1.setPosition(x*50,y*50);
+              //x= ;
+              //y= ;
+              s2.setPosition(x*50,y*50);
+              green = u;
+
+              _window.draw(s1);
+              _window.draw(s2);
+
+
+            } else {
+              PowerRanger pr;
+              sf::Sprite s1,s2;
+
+              pr = u;
+
+              s1.setTextureRect(sf::IntRect()); // FIST
+              s2.setTextureRect(sf::IntRect()); // GUN
+
+              //x= ;
+              //y= ;
+              s1.setPosition(x*50,y*50);
+              //x= ;
+              //y= ;
+              s2.setPosition(x*50,y*50);
+
+              _window.draw(s1);
+              _window.draw(s2);
+
+            }
+
 }

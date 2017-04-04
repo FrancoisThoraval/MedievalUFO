@@ -150,11 +150,12 @@ void Game::gameLoop(){
                               }
                          }
                          if (p1.getWhosPlaying()) {
-                           m.handleClick(_window,currentEvent,p1);
+                           m.handleClick(_window,currentEvent,p1,ui);
                          } else if(p2.getWhosPlaying()){
-                           m.handleClick(_window,currentEvent,p2);
+                           m.handleClick(_window,currentEvent,p2,ui);
                          }
 
+                         
                          if ((p1.getLost()!=false) || (p2.getLost()!= false )) {
                               std::cout << "one player lost, back to menu" << '\n';
                               _gameState = 3; //Retour au menu
