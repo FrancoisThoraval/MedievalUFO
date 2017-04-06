@@ -232,10 +232,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &e,Player &p,Ui& ui){
           Menu m;
           Position pos,posUi;
 
-          // if(ui._mapTile[i].getGlobalBound().contain(sf::Mouse::getPosition(window).x/32,sf::Mouse::getPosition(window).y/32)){
-          //   posUi.setX(sf::Mouse::getPosition(window).x/32);
-          //   posUi.setY(sf::Mouse::getPosition(window).y/32);
-          // }
+
           while ((i < (_sizeX/32)) && (_tileClicked == 0)) {
                while ((j < (_sizeY/32)) &&(_tileClicked ==0)) {
                     if (_mapTile[i][j].getGlobalBounds().contains(sf::Mouse::getPosition(window).x/32,sf::Mouse::getPosition(window).y/32)) {
@@ -253,7 +250,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &e,Player &p,Ui& ui){
           p.showUnitOwned();
           if(ui.getState()==1){
             //ui.handleClick()
-            std::cout<<"BITE"<<std::endl;
+
           }
           if (_unitSelected.getX() == -1) {
                 window.clear();
@@ -279,7 +276,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &e,Player &p,Ui& ui){
                }
           }else{
                //Actuellement ne déplace pas
-               
+
                getElementW1(_unitSelected).move(_unitSelected,pos,this,1,p);
                std::cerr << "_unitSelected: " << '\n';
                std::cout << _unitSelected << '\n';
@@ -343,7 +340,14 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
 }
 
 void Ui::handleClick(sf::RenderWindow &window, sf::Event &event){
-  // if(_mapTile[x]== pos.x)
+  sf::Event test;
+  while(window.pollEvent(test)){
+    // if(ui._mapTile[i].getGlobalBound().contain(sf::Mouse::getPosition(window).x/32,sf::Mouse::getPosition(window).y/32)){
+    //   posUi.setX(sf::Mouse::getPosition(window).x/32);
+    //   posUi.setY(sf::Mouse::getPosition(window).y/32);
+    // }
+
+  }
 }
 
 void Ui::displayInfoUnit(sf::RenderWindow &_window, Unit& u){
