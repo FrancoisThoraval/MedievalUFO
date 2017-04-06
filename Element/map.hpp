@@ -62,6 +62,7 @@ public:
 class Ui {
 private:
   int _state;
+  sf::Sprite *_mapTile;
 public:
      Ui ();
      ~Ui ();

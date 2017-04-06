@@ -230,7 +230,12 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &e,Player &p,Ui& ui){
      gettimeofday(&debut,NULL);
      if (mapEvent.type == sf::Event::MouseButtonPressed) {
           Menu m;
-          Position pos;
+          Position pos,posUi;
+
+          // if(ui._mapTile[i].getGlobalBound().contain(sf::Mouse::getPosition(window).x/32,sf::Mouse::getPosition(window).y/32)){
+          //   posUi.setX(sf::Mouse::getPosition(window).x/32);
+          //   posUi.setY(sf::Mouse::getPosition(window).y/32);
+          // }
           while ((i < (_sizeX/32)) && (_tileClicked == 0)) {
                while ((j < (_sizeY/32)) &&(_tileClicked ==0)) {
                     if (_mapTile[i][j].getGlobalBounds().contains(sf::Mouse::getPosition(window).x/32,sf::Mouse::getPosition(window).y/32)) {
@@ -246,8 +251,13 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &e,Player &p,Ui& ui){
                i++;
           }
           p.showUnitOwned();
-
+          if(ui.getState()==1){
+            //ui.handleClick()
+            std::cout<<"BITE"<<std::endl;
+          }
           if (_unitSelected.getX() == -1) {
+                window.clear();
+                drawWorld(window);
                if((getNameOfElement(pos) == "blue")||(getNameOfElement(pos) == "pink")||(getNameOfElement(pos) == "green")||(getNameOfElement(pos) == "yellow")||(getNameOfElement(pos) == "red")) {
                     _unitSelected = pos;
                     ui.setState(1);
@@ -258,15 +268,18 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &e,Player &p,Ui& ui){
                       tempspasse = (((fin.tv_sec - debut.tv_sec)*1000000L+fin.tv_usec) - debut.tv_usec);
                       tempspasse = (tempspasse/1000)/1000;
                     }
+                    //ui.displayInfoUnit(window,getElementW1(_unitSelected));
 
                }else{
+
                     ui.setState(0);
                     _unitSelected.setX(-1);
                     _unitSelected.setY(-1);
+
                }
           }else{
                //Actuellement ne déplace pas
-
+               
                getElementW1(_unitSelected).move(_unitSelected,pos,this,1,p);
                std::cerr << "_unitSelected: " << '\n';
                std::cout << _unitSelected << '\n';
@@ -282,6 +295,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &e,Player &p,Ui& ui){
 /* ====================  Game UI   ========================== */
 Ui::Ui(){
  _state = 0;
+ _mapTile = new sf::Sprite[10];
 }
 
 Ui::~Ui(){
@@ -324,10 +338,12 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
      window.draw(alpha);
      // _mapTile[x][y] = s;
 
+
+
 }
 
 void Ui::handleClick(sf::RenderWindow &window, sf::Event &event){
-
+  // if(_mapTile[x]== pos.x)
 }
 
 void Ui::displayInfoUnit(sf::RenderWindow &_window, Unit& u){
