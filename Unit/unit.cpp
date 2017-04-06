@@ -881,6 +881,7 @@ void Zedd::ApocalypseHole(Map *m,Player& p){
 RobotPR::RobotPR(){
   this->setArmor(1000);
   this->setHealthPoints(1000);
+  this->setName("RobotPR");
   _primaryWeapon = new Weapon("Fist",300,1,60);
   _secondaryWeapon = new Weapon("Sword",600,3,100);
   this->setMovement(5);

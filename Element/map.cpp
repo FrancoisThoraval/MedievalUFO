@@ -1,5 +1,5 @@
 #include "map.hpp"
-
+#include "../Unit/ayayay.cpp"
 // A faire, appliquer les textures correctement
 // Verification
 
@@ -260,6 +260,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &e,Player &p,Ui& ui){
                     ui.setState(1);
                     std::cerr << "saving position of unit selected" << '\n';
                     gettimeofday(&fin,NULL);
+                    Advice_ayayay(window,getElementW1(_unitSelected));
                     while (tempspasse < tempsjeux){
                       gettimeofday(&fin,NULL);
                       tempspasse = (((fin.tv_sec - debut.tv_sec)*1000000L+fin.tv_usec) - debut.tv_usec);
