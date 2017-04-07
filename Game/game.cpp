@@ -155,7 +155,6 @@ void Game::gameLoop(){
                            m.handleClick(_window,currentEvent,p2,ui);
                          }
 
-                         
                          if ((p1.getLost()!=false) || (p2.getLost()!= false )) {
                               std::cout << "one player lost, back to menu" << '\n';
                               _gameState = 3; //Retour au menu

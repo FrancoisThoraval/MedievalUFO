@@ -264,7 +264,7 @@ void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& 
   int distance = Distance(posInit,posFinal);
   if(p.IsMineUnit(m->getElementW1(posInit)) == true){
     if(m->getNameOfElement(posInit)!="zedd"){
-      if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")){
+      if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")&&(m->getNameOfElement(posFinal)!="")){
         if(posInit != posFinal){
           if(p.IsMineUnit(m->getElementW1(posFinal)) != true){
             //(m->getElementW1(posInit)).attack(m->getElementW1(posFinal),numattack,p,posFinal,m);

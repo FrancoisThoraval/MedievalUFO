@@ -64,14 +64,17 @@ class Ui {
 private:
   int _state;
   sf::Sprite *_mapTile;
+  int _numattack;
 public:
      Ui ();
      ~Ui ();
      void drawUi(sf::RenderWindow &,Player &, Player &);
-     void handleClick(sf::RenderWindow &,sf::Event &);
+     void handleClick(sf::RenderWindow &);
      void displayInfoUnit(sf::RenderWindow &, Unit&);
      void setState(int);
      int getState()const;
+     int getAttack() const;
+     void setAttack(int);
 };
 
 #endif

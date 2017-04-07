@@ -253,14 +253,14 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &e,Player &p,Ui& ui){
 
           }
           if (_unitSelected.getX() == -1) {
-                window.clear();
+                //window.clear();
                 drawWorld(window);
                if((getNameOfElement(pos) == "blue")||(getNameOfElement(pos) == "pink")||(getNameOfElement(pos) == "green")||(getNameOfElement(pos) == "yellow")||(getNameOfElement(pos) == "red")) {
                     _unitSelected = pos;
                     ui.setState(1);
                     std::cerr << "saving position of unit selected" << '\n';
                     gettimeofday(&fin,NULL);
-                    Advice_ayayay(window,getElementW1(_unitSelected));
+                    //Advice_ayayay(window,getElementW1(_unitSelected));
                     while (tempspasse < tempsjeux){
                       gettimeofday(&fin,NULL);
                       tempspasse = (((fin.tv_sec - debut.tv_sec)*1000000L+fin.tv_usec) - debut.tv_usec);
@@ -294,6 +294,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &e,Player &p,Ui& ui){
 Ui::Ui(){
  _state = 0;
  _mapTile = new sf::Sprite[10];
+ _numattack = 0;
 }
 
 Ui::~Ui(){
@@ -308,6 +309,28 @@ int Ui::getState()const{
   return(this->_state);
 }
 
+//
+// void Ui::handleClick(sf::RenderWindow &window){
+//   sf::Event test;
+//   Position pos;
+//   std::cout<<"TEST UI HANDLE"<<std::endl;
+//   while(window.pollEvent(test)){
+//     // if(ui._mapTile[i].getGlobalBound().contain(sf::Mouse::getPosition(window).x/32,sf::Mouse::getPosition(window).y/32)){
+//     //   posUi.setX(sf::Mouse::getPosition(window).x/32);
+//     //   posUi.setY(sf::Mouse::getPosition(window).y/32);
+//     // }
+//     if(test.type == sf::Event::MouseButtonPressed){
+//       pos.setX(sf::Mouse::getPosition(window).x/50);
+//       pos.setY(sf::Mouse::getPosition(window).y/50);
+//     }
+//     if((pos.getX()<550)&&(pos.getX()>=0) && (pos.getY()<600) && ( pos.getY()>=500)){
+//       this->_numattack = 1;
+//     } else {
+//       this->numattack = 0;
+//     }
+//
+//   }
+// }
 void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
      std::cout << "Loading Ui..." << '\n';
      sf::Texture texture;
@@ -335,21 +358,27 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
      window.draw(whosPlaying);
      window.draw(alpha);
      // _mapTile[x][y] = s;
+    //  for(int i = 0;i < 800 / 50 ; i++){
+    //    for(int j = 600; j < 600 ; j++){
+    //
+    //    }
+    //  }
+     if(this->getState()==1){
+       //this->handleClick(window);
+     }
 
 
 
 }
 
-void Ui::handleClick(sf::RenderWindow &window, sf::Event &event){
-  sf::Event test;
-  while(window.pollEvent(test)){
-    // if(ui._mapTile[i].getGlobalBound().contain(sf::Mouse::getPosition(window).x/32,sf::Mouse::getPosition(window).y/32)){
-    //   posUi.setX(sf::Mouse::getPosition(window).x/32);
-    //   posUi.setY(sf::Mouse::getPosition(window).y/32);
-    // }
-
-  }
+void Ui::setAttack(int a){
+  this->_numattack = a;
 }
+
+int Ui::getAttack()const{
+  return(_numattack);
+}
+
 
 void Ui::displayInfoUnit(sf::RenderWindow &_window, Unit& u){
       sf::Texture t;
@@ -434,14 +463,14 @@ void Ui::displayInfoUnit(sf::RenderWindow &_window, Unit& u){
 
               pr = u;
 
-              s1.setTextureRect(sf::IntRect()); // FIST
-              s2.setTextureRect(sf::IntRect()); // GUN
+              s1.setTextureRect(sf::IntRect(311,844,50,50)); // FIST
+              s2.setTextureRect(sf::IntRect(311,844,50,50)); // GUN
 
-              //x= ;
-              //y= ;
+              x= 100;
+              y= 530;
               s1.setPosition(x*50,y*50);
-              //x= ;
-              //y= ;
+              x= 200;
+              y= 530;
               s2.setPosition(x*50,y*50);
 
               _window.draw(s1);
