@@ -331,7 +331,6 @@ void Ui::handleClick(sf::RenderWindow &window,Position pos){
      while ((i < 4)&&(!found)) {
           if (_buttonArray[i].getGlobalBounds().contains(pos.getX(),pos.getY())) {
                found = true;
-               _buttonArray[i].move(sf::Vector2f(0,-10));
                std::cout << "clicked on a button !" << '\n';
                std::cout << "You clicked on the " << i<< " button" << '\n';
                // ****
