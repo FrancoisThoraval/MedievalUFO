@@ -66,6 +66,7 @@ public:
     this->_healthPoints = u._healthPoints;
     this->_price = u._price;
     this->_movement = u._movement;
+    this->setPosition(u.getPosition());
     return(*this);
   }
 
@@ -173,6 +174,7 @@ public:
     this->setName(u.getName());
     this->setHealthPoints(u.getHealthPoints());
     this->setPrice(u.getPrice());
+    this->setPosition(u.getPosition());
     this->setMovement(u.getMovement());
     this->setPrimaryW(u.getPrimaryW());
     this->setSecondaryW(u.getSecondaryW());

@@ -79,7 +79,7 @@ void Game::gameLoop(){
                     Zedd zedd;
                     PowerRanger pink("pink"), red("red"), blue("blue"), green("green"),yellow("yellow");
                     Position posPink(9,13),posRed(7,13),posBlue(8,13),posGreen(10,13),posYellow(11,13);
-                    Position posZedd(1,1);
+                    Position posZedd(8,11);
                     //  std::cout<<"DEFAULT : "<<pink.getDefault()<<std::endl;
                     m.setElementW1(posZedd,zedd);
                     m.setElementW1(posRed,red);
@@ -202,11 +202,13 @@ void Game::endTurn(Player &p1, Player &p2,Map *m){
           p1.setWhosPlaying(false);
           p2.setWhosPlaying(true);
           std::cerr << "Player 2, Your turn !" << '\n';
+          std::cerr<<" Player 2, Energy : "<<p2.getEnergy()<<std::endl;
           p1.EndOfTurn(m);
      }else{
           p2.setWhosPlaying(false);
           p1.setWhosPlaying(true);
           std::cerr << "Player 1, Your turn !" << '\n';
+          std::cerr<<"Player 1, Energy : "<<p1.getEnergy()<<std::endl;
           p2.EndOfTurn(m);
      }
 }

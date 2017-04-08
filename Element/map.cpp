@@ -95,7 +95,12 @@ void Map::createTile(int x, int y, sf::RenderWindow &window,sf::Texture &t){
           _mapTile[x][y] = s;
      }
      if (this->getNameOfElement(P) == "putties") {
-
+      //  sf::Sprite s;
+      //  s.setTexture(t);
+      //  s.setTextureRect(sf::IntRect(409, 844, 32, 32));
+      //  s.setPosition(x*32,y*32);
+      //  window.draw(s);
+      //  _mapTile[x][y] = s;
      }
      if (this->getNameOfElement(P) == "red") {
           sf::Sprite s;
@@ -288,7 +293,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p,Ui&
 
                     }
                }else{//Si une unité est déjà sélectionnée.
-                    getElementW1(_unitSelected).move(_unitSelected,pos,this,1,p);
+                    getElementW1(_unitSelected).move(_unitSelected,pos,this,ui.getAttack()+1,p);
                     drawWorld(window);
                     _unitSelected.setX(-1);
                     _unitSelected.setY(-1);
@@ -337,8 +342,13 @@ void Ui::handleClick(sf::RenderWindow &window,Position pos){
                // Gestion des attaques
                // ****
 
+               this->_numattack = i;
+
           }
           i++;
+     }
+     if(found == false){
+       _numattack = 0;
      }
 }
 void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
@@ -388,15 +398,172 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
                b3.setTextureRect(sf::IntRect(296,973,50,50)); //robot
                b3.setPosition(100,600-100);
                //
+               b4.setTexture(texture);
+               b4.setTextureRect(sf::IntRect(457,975,50,50));
+               b4.setPosition(150,600-100);
                // On rempli le tableau de boutons
                _buttonArray[0]=b1;
                _buttonArray[1]=b2;
                _buttonArray[2]=b3;
+               _buttonArray[3]=b4;
                // On dessine les boutons
                window.draw(b1);
                window.draw(b2);
                window.draw(b3);
+               window.draw(b4);
           }break;
+          case 1 : {
+            std::cout << "now drawing ui's character 1." << '\n';
+            b1.setTexture(texture);
+            b1.setTextureRect(sf::IntRect(616,975,50,50)); //fist
+            b1.setPosition(0,600-100);
+            //
+            b2.setTexture(texture);
+            b2.setTextureRect(sf::IntRect(402,973,50,50)); //pistol
+            b2.setPosition(50,600-100);
+            //
+            b3.setTexture(texture);
+            b3.setTextureRect(sf::IntRect(296,973,50,50)); //robot
+            b3.setPosition(100,600-100);
+            //
+            b4.setTexture(texture);
+            b4.setTextureRect(sf::IntRect(457,975,50,50));
+            b4.setPosition(150,600-100);
+            //
+            // On rempli le tableau de boutons
+            _buttonArray[0]=b1;
+            _buttonArray[1]=b2;
+            _buttonArray[2]=b3;
+            _buttonArray[3]=b4;
+            // On dessine les boutons
+            window.draw(b1);
+            window.draw(b2);
+            window.draw(b3);
+            window.draw(b4);
+          }break;
+          case 2 : {
+            std::cout << "now drawing ui's character 2." << '\n';
+            b1.setTexture(texture);
+            b1.setTextureRect(sf::IntRect(616,975,50,50)); //fist
+            b1.setPosition(0,600-100);
+            //
+            b2.setTexture(texture);
+            b2.setTextureRect(sf::IntRect(402,973,50,50)); //pistol
+            b2.setPosition(50,600-100);
+            //
+            b3.setTexture(texture);
+            b3.setTextureRect(sf::IntRect(296,973,50,50)); //robot
+            b3.setPosition(100,600-100);
+            //
+            b4.setTexture(texture);
+            b4.setTextureRect(sf::IntRect(457,975,50,50));
+            b4.setPosition(150,600-100);
+            // On rempli le tableau de boutons
+            _buttonArray[0]=b1;
+            _buttonArray[1]=b2;
+            _buttonArray[2]=b3;
+            _buttonArray[3]=b4;
+            // On dessine les boutons
+            window.draw(b1);
+            window.draw(b2);
+            window.draw(b3);
+            window.draw(b4);
+          }break;
+          case 3 : {
+            std::cout << "now drawing ui's character 3." << '\n';
+            b1.setTexture(texture);
+            b1.setTextureRect(sf::IntRect(616,975,50,50)); //fist
+            b1.setPosition(0,600-100);
+            //
+            b2.setTexture(texture);
+            b2.setTextureRect(sf::IntRect(402,973,50,50)); //pistol
+            b2.setPosition(50,600-100);
+            //
+            b3.setTexture(texture);
+            b3.setTextureRect(sf::IntRect(296,973,50,50)); //robot
+            b3.setPosition(100,600-100);
+            //
+            b4.setTexture(texture);
+            b4.setTextureRect(sf::IntRect(457,975,50,50));
+            b4.setPosition(150,600-100);
+            // On rempli le tableau de boutons
+            _buttonArray[0]=b1;
+            _buttonArray[1]=b2;
+            _buttonArray[2]=b3;
+            _buttonArray[3]=b4;
+            // On dessine les boutons
+            window.draw(b1);
+            window.draw(b2);
+            window.draw(b3);
+            window.draw(b4);
+          }break;
+          case 4 : {
+            std::cout << "now drawing ui's character 4." << '\n';
+            b1.setTexture(texture);
+            b1.setTextureRect(sf::IntRect(616,975,50,50)); //fist
+            b1.setPosition(0,600-100);
+            //
+            b2.setTexture(texture);
+            b2.setTextureRect(sf::IntRect(563,975,50,50)); //pistol
+            b2.setPosition(50,600-100);
+            //
+            b3.setTexture(texture);
+            b3.setTextureRect(sf::IntRect(296,973,50,50)); //robot
+            b3.setPosition(100,600-100);
+            //
+            b4.setTexture(texture);
+            b4.setTextureRect(sf::IntRect(457,975,50,50));
+            b4.setPosition(150,600-100);
+            // On rempli le tableau de boutons
+            _buttonArray[0]=b1;
+            _buttonArray[1]=b2;
+            _buttonArray[2]=b3;
+            _buttonArray[3]=b4;
+            // On dessine les boutons
+            window.draw(b1);
+            window.draw(b2);
+            window.draw(b3);
+            window.draw(b4);
+          }break;
+          case 5:{
+            std::cout << "now drawing ui's character 5." << '\n';
+            b1.setTexture(texture);
+            b1.setTextureRect(sf::IntRect(667,975,50,50)); //Grenade
+            b1.setPosition(0,600-100);
+            //
+            b2.setTexture(texture);
+            b2.setTextureRect(sf::IntRect(350,973,50,50)); //PuttiesCalling
+            b2.setPosition(50,600-100);
+            //
+            b3.setTexture(texture);
+            b3.setTextureRect(sf::IntRect(510,973,50,50)); //Invocation
+            b3.setPosition(100,600-100);
+            //
+            b4.setTexture(texture);                       //Apocalypse
+            b4.setTextureRect(sf::IntRect(718,975,50,50));
+            b4.setPosition(150,600-100);
+            // On rempli le tableau de boutons
+            _buttonArray[0]=b1;
+            _buttonArray[1]=b2;
+            _buttonArray[2]=b3;
+            _buttonArray[3]=b4;
+            // On dessine les boutons
+            window.draw(b1);
+            window.draw(b2);
+            window.draw(b3);
+            window.draw(b4);
+          }break;
+          case 6:{
+            std::cout << "now drawing ui's character 6." << '\n';
+            b1.setTexture(texture);
+            b1.setTextureRect(sf::IntRect(616,975,50,50)); //fist
+            b1.setPosition(0,600-100);
+            //
+            // On rempli le tableau de boutons
+            _buttonArray[0]=b1;
+            // On dessine les boutons
+            window.draw(b1);
+          }
           default:{
                sf::Sprite bidon;
                for (int i = 0; i < 4; i++) {
@@ -555,5 +722,8 @@ void Ui::setUnitClicked(std::string nameOfUnit){
      }
      if (nameOfUnit == "Zedd") {
           setUnitClicked(5);
+     }
+     if(nameOfUnit == "Putties"){
+          setUnitClicked(6);
      }
 }
