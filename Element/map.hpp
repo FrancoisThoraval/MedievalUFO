@@ -20,6 +20,7 @@ class Unit;
 class Player;
 class Ui;
 
+
 class Map {
 protected:
   Unit **_world1;
@@ -63,18 +64,21 @@ public:
 class Ui {
 private:
   int _state;
-  sf::Sprite *_mapTile;
+  sf::Sprite *_buttonArray;
   int _numattack;
+  int _unitClicked;
 public:
      Ui ();
      ~Ui ();
      void drawUi(sf::RenderWindow &,Player &, Player &);
-     void handleClick(sf::RenderWindow &);
+     void handleClick(sf::RenderWindow &,Position pos);
      void displayInfoUnit(sf::RenderWindow &, Unit&);
      void setState(int);
      int getState()const;
      int getAttack() const;
      void setAttack(int);
+     void setUnitClicked(int);
+     void setUnitClicked(std::string);
 };
 
 #endif

@@ -86,7 +86,7 @@ void Map::createTile(int x, int y, sf::RenderWindow &window,sf::Texture &t){
      Position P;
      P.setX(x);
      P.setY(y);
-     if (this->getNameOfElement(P) == "zedd") {
+     if (this->getNameOfElement(P) == "Zedd") {
           sf::Sprite s;
           s.setTexture(t);
           s.setTextureRect(sf::IntRect(409, 844, 32, 32));
@@ -232,68 +232,74 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &e,Player &p,Ui& ui){
           Menu m;
           Position pos,posUi;
 
-
-          while ((i < (_sizeX/32)) && (_tileClicked == 0)) {
-               while ((j < (_sizeY/32)) &&(_tileClicked ==0)) {
-                    if (_mapTile[i][j].getGlobalBounds().contains(sf::Mouse::getPosition(window).x/32,sf::Mouse::getPosition(window).y/32)) {
-                         pos.setX(sf::Mouse::getPosition(window).x/32);
-                         pos.setY(sf::Mouse::getPosition(window).y/32);
-                         std::cout << "x: " << sf::Mouse::getPosition(window).x<< " y: " << sf::Mouse::getPosition(window).y << '\n';
-                         std::cout << "You clicked on: " << getNameOfElement(pos) <<'\n';
-                         // std::cout<<"typeid: "<< typeid(getNameOfElement(pos))<< std::endl;
-
+          // Si on a cliqué dans une zone hors map (ici en dessous)
+          if (sf::Mouse::getPosition(window).y > 500) {
+               ui.drawUi(window,p,p);
+               pos.setX(sf::Mouse::getPosition(window).x);
+               pos.setY(sf::Mouse::getPosition(window).y);
+               ui.handleClick(window,pos);
+          }else{
+               // Si on a cliqué sur la map
+               while ((i < (_sizeX/32)) && (_tileClicked == 0)) {
+                    while ((j < (_sizeY/32)) &&(_tileClicked ==0)) {
+                         if (_mapTile[i][j].getGlobalBounds().contains(sf::Mouse::getPosition(window).x/32,sf::Mouse::getPosition(window).y/32)) {
+                              pos.setX(sf::Mouse::getPosition(window).x/32);
+                              pos.setY(sf::Mouse::getPosition(window).y/32);
+                              std::cout << "x: " << sf::Mouse::getPosition(window).x<< " y: " << sf::Mouse::getPosition(window).y << '\n';
+                              std::cout << "You clicked on: " << getNameOfElement(pos) <<'\n';
+                              // std::cout<<"typeid: "<< typeid(getNameOfElement(pos))<< std::endl;
+                              ui.setState(1);
+                              ui.setUnitClicked(getNameOfElement(pos));
+                         }
+                         j++;
                     }
-                    j++;
+                    i++;
                }
-               i++;
-          }
-          p.showUnitOwned();
-          if(ui.getState()==1){
-            //ui.handleClick()
+               ui.drawUi(window,p,p);
+               p.showUnitOwned();
+               if (_unitSelected.getX() == -1) {
+                    //window.clear();
+                    drawWorld(window);
+                    if((getNameOfElement(pos) == "blue")||(getNameOfElement(pos) == "pink")||(getNameOfElement(pos) == "green")||(getNameOfElement(pos) == "yellow")||(getNameOfElement(pos) == "red")||(getNameOfElement(pos) == "Zedd")) {
+                         _unitSelected = pos;
+                         ui.setState(1);
+                         std::cerr << "saving position of unit selected" << '\n';
+                         gettimeofday(&fin,NULL);
+                         //Advice_ayayay(window,getElementW1(_unitSelected));
+                         while (tempspasse < tempsjeux){
+                              gettimeofday(&fin,NULL);
+                              tempspasse = (((fin.tv_sec - debut.tv_sec)*1000000L+fin.tv_usec) - debut.tv_usec);
+                              tempspasse = (tempspasse/1000)/1000;
+                         }
+                         //ui.displayInfoUnit(window,getElementW1(_unitSelected));
 
-          }
-          if (_unitSelected.getX() == -1) {
-                //window.clear();
-                drawWorld(window);
-               if((getNameOfElement(pos) == "blue")||(getNameOfElement(pos) == "pink")||(getNameOfElement(pos) == "green")||(getNameOfElement(pos) == "yellow")||(getNameOfElement(pos) == "red")) {
-                    _unitSelected = pos;
-                    ui.setState(1);
-                    std::cerr << "saving position of unit selected" << '\n';
-                    gettimeofday(&fin,NULL);
-                    //Advice_ayayay(window,getElementW1(_unitSelected));
-                    while (tempspasse < tempsjeux){
-                      gettimeofday(&fin,NULL);
-                      tempspasse = (((fin.tv_sec - debut.tv_sec)*1000000L+fin.tv_usec) - debut.tv_usec);
-                      tempspasse = (tempspasse/1000)/1000;
+                    }else{
+
+                         ui.setState(0);
+                         _unitSelected.setX(-1);
+                         _unitSelected.setY(-1);
+
                     }
-                    //ui.displayInfoUnit(window,getElementW1(_unitSelected));
-
                }else{
-
-                    ui.setState(0);
+                    getElementW1(_unitSelected).move(_unitSelected,pos,this,1,p);
+                    std::cerr << "_unitSelected: " << '\n';
+                    std::cout << _unitSelected << '\n';
+                    std::cerr << "pos: " << '\n';
+                    std::cout << pos << '\n';
+                    drawWorld(window);
                     _unitSelected.setX(-1);
                     _unitSelected.setY(-1);
-
                }
-          }else{
-               //Actuellement ne déplace pas
 
-               getElementW1(_unitSelected).move(_unitSelected,pos,this,1,p);
-               std::cerr << "_unitSelected: " << '\n';
-               std::cout << _unitSelected << '\n';
-               std::cerr << "pos: " << '\n';
-               std::cout << pos << '\n';
-               drawWorld(window);
-               _unitSelected.setX(-1);
-               _unitSelected.setY(-1);
           }
+
      }
 }
 
 /* ====================  Game UI   ========================== */
 Ui::Ui(){
  _state = 0;
- _mapTile = new sf::Sprite[10];
+ _buttonArray = new sf::Sprite[10];
  _numattack = 0;
 }
 
@@ -309,46 +315,46 @@ int Ui::getState()const{
   return(this->_state);
 }
 
-//
-// void Ui::handleClick(sf::RenderWindow &window){
-//   sf::Event test;
-//   Position pos;
-//   std::cout<<"TEST UI HANDLE"<<std::endl;
-//   while(window.pollEvent(test)){
-//     // if(ui._mapTile[i].getGlobalBound().contain(sf::Mouse::getPosition(window).x/32,sf::Mouse::getPosition(window).y/32)){
-//     //   posUi.setX(sf::Mouse::getPosition(window).x/32);
-//     //   posUi.setY(sf::Mouse::getPosition(window).y/32);
-//     // }
-//     if(test.type == sf::Event::MouseButtonPressed){
-//       pos.setX(sf::Mouse::getPosition(window).x/50);
-//       pos.setY(sf::Mouse::getPosition(window).y/50);
-//     }
-//     if((pos.getX()<550)&&(pos.getX()>=0) && (pos.getY()<600) && ( pos.getY()>=500)){
-//       this->_numattack = 1;
-//     } else {
-//       this->numattack = 0;
-//     }
-//
-//   }
-// }
+
+void Ui::handleClick(sf::RenderWindow &window,Position pos){
+     bool found = false;
+     int i =0;
+     std::cout << "entering ui event handler" << '\n';
+
+     while ((i < 4)&&(!found)) {
+          // std::cout << "_mapTile["<<i<<"]:" << '\n';
+          // std::cout << "getGlobalBounds: x:"<< _mapTile[i].getPosition().x << " y: "<<_mapTile[i].getPosition().y <<"   -   pos: "<< pos<< '\n';
+          if (_buttonArray[i].getGlobalBounds().contains(pos.getX(),pos.getY())) {
+
+               std::cout << "clicked on a button !" << '\n';
+               std::cout << "You clicked on the " << i<< " button" << '\n';
+          }
+          i++;
+     }
+
+
+}
 void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
      std::cout << "Loading Ui..." << '\n';
      sf::Texture texture;
      texture.loadFromFile("./Textures/LPC_Terrain/terrain.png");
-     sf::Sprite alpha,separationBar;
+     sf::Sprite alpha,separationBar,b1,b2,b3,b4;
      sf::RectangleShape whosPlaying(sf::Vector2f(100, 100));
-
+     // Rectangle pour effacer l'ui
+     sf::RectangleShape clearUi(sf::Vector2f(500, 100));
+     // Dessine un carré rouge ou vert pour indiquer qui doit jouer.
      if (p1.getWhosPlaying())
           whosPlaying.setFillColor(sf::Color::Green);
      else
           whosPlaying.setFillColor(sf::Color::Red);
 
      whosPlaying.setPosition(800-350,600-100);
-
+     // Dessine le bouton demande d'aide du jeu.
      alpha.setTexture(texture);
      alpha.setTextureRect(sf::IntRect(768, 926, 250, 100));
      alpha.setPosition(800-250,600-100);
 
+     // Dessine une barre de séparation entre le terrain de jeu et les boutons de l'interface.
      separationBar.setTexture(texture);
      separationBar.setTextureRect(sf::IntRect(355,476,45,20));
      for (double i = 0; i < window.getSize().x/45+1; i++) {
@@ -357,6 +363,42 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
      }
      window.draw(whosPlaying);
      window.draw(alpha);
+
+     // En fonction de l'unité qu'on a cliqué, on affiche les bons boutons
+     // Voir -> setUnitClicked pour les valeurs des unités.
+     switch (_unitClicked) {
+          case 0:{ //Red
+               std::cout << "now drawing ui's character 0." << '\n';
+               b1.setTexture(texture);
+               b1.setTextureRect(sf::IntRect(616,975,50,50)); //fist
+               b1.setPosition(0,600-100);
+               //
+               b2.setTexture(texture);
+               b2.setTextureRect(sf::IntRect(402,973,50,50)); //pistol
+               b2.setPosition(50,600-100);
+               //
+               b3.setTexture(texture);
+               b3.setTextureRect(sf::IntRect(296,973,50,50)); //robot
+               b3.setPosition(100,600-100);
+               //
+               // On rempli le tableau de boutons
+               _buttonArray[0]=b1;
+               _buttonArray[1]=b2;
+               _buttonArray[2]=b3;
+               // On dessine les boutons
+               window.draw(b1);
+               window.draw(b2);
+               window.draw(b3);
+          }break;
+          default:{
+               // On dessine un carré noir pour "effacer" les boutons dessinés.
+               clearUi.setFillColor(sf::Color::Black);
+               clearUi.setPosition(0,600-100);
+               window.draw(clearUi);
+               // Draw Player infos
+               std::cout << "drawing player's info" << '\n';
+          }
+     }
      // _mapTile[x][y] = s;
     //  for(int i = 0;i < 800 / 50 ; i++){
     //    for(int j = 600; j < 600 ; j++){
@@ -380,102 +422,127 @@ int Ui::getAttack()const{
 }
 
 
-void Ui::displayInfoUnit(sf::RenderWindow &_window, Unit& u){
-      sf::Texture t;
-      t.loadFromFile("./Textures/LPC_Terrain/terrain.png");
-      int x = 0;
-      int y = 0;
+// void Ui::displayInfoUnit(sf::RenderWindow &_window/*, Unit& u*/){
+//       sf::Texture t;
+//       t.loadFromFile("./Textures/LPC_Terrain/terrain.png");
+//       int x = 0;
+//       int y = 0;
+//
+//      // sf::Text info;
+//      // std::stringstream ss;
+//      // ss << p.getEnergy();
+//      // info.setString( ss.str().c_str() );
+//      // window.draw(info);
+//      // window.display();
+//
+//      if(u.getName()=="Putties"){
+//        Putties pu;
+//        sf::Sprite s;
+//        s.setTexture(t);
+//
+//        pu = u;
+//
+//        if(u.getPrimaryW()->getName()=="Canon a eau"){
+//          s.setTextureRect(sf::IntRect());
+//        } else if (u.getPrimaryW()->getName()=="Lancer de terre"){
+//          s.setTextureRect(sf::IntRect());
+//        } else if (u.getPrimaryW()->getName()=="Lancer de tronc"){
+//          s.setTextureRect(sf::IntRect());
+//        } else {
+//          s.setTextureRect(sf::IntRect());
+//        }
+//        //x= ;
+//        //y= ;
+//        s.setPosition(x*50,y*50);
+//        _window.draw(s);
+//      } else if (u.getName()=="zedd"){
+//               Zedd zed;
+//               sf::Sprite s1,s2,s3,s4;
+//               s1.setTextureRect(sf::IntRect()); // GRENADE
+//               s2.setTextureRect(sf::IntRect()); //PUTTIES CALLING
+//               s3.setTextureRect(sf::IntRect()); // INVOCATION
+//               s4.setTextureRect(sf::IntRect()); // APOCALYPSE HOLLE
+//               //x= ;
+//               //y= ;
+//               s1.setPosition(x*50,y*50);
+//               //x= ;
+//               //y= ;
+//               s2.setPosition(x*50,y*50);
+//               //x= ;
+//               //y= ;
+//               s3.setPosition(x*50,y*50);
+//               //x= ;
+//               //y= ;
+//               s4.setPosition(x*50,y*50);
+//
+//               zed = u;
+//
+//               _window.draw(s1);
+//               _window.draw(s2);
+//               _window.draw(s3);
+//               _window.draw(s4);
+//
+//       } else  if(u.getName()=="green"){
+//               PowerRanger green;
+//               sf::Sprite s1,s2;
+//               s1.setTextureRect(sf::IntRect());    // FIST
+//               s2.setTextureRect(sf::IntRect());    // FLUTE
+//               //x= ;
+//               //y= ;
+//               s1.setPosition(x*50,y*50);
+//               //x= ;
+//               //y= ;
+//               s2.setPosition(x*50,y*50);
+//               green = u;
+//
+//               _window.draw(s1);
+//               _window.draw(s2);
+//
+//
+//             } else {
+//               PowerRanger pr;
+//               sf::Sprite s1,s2;
+//
+//               pr = u;
+//
+//               s1.setTextureRect(sf::IntRect(311,844,50,50)); // FIST
+//               s2.setTextureRect(sf::IntRect(311,844,50,50)); // GUN
+//
+//               x= 100;
+//               y= 530;
+//               s1.setPosition(x*50,y*50);
+//               x= 200;
+//               y= 530;
+//               s2.setPosition(x*50,y*50);
+//
+//               _window.draw(s1);
+//               _window.draw(s2);
+//
+//             }
+//
+// }
 
-     // sf::Text info;
-     // std::stringstream ss;
-     // ss << p.getEnergy();
-     // info.setString( ss.str().c_str() );
-     // window.draw(info);
-     // window.display();
+void Ui::setUnitClicked(int value){
+     _unitClicked = value;
+}
 
-     if(u.getName()=="Putties"){
-       Putties pu;
-       sf::Sprite s;
-       s.setTexture(t);
-
-       pu = u;
-
-       if(u.getPrimaryW()->getName()=="Canon a eau"){
-         s.setTextureRect(sf::IntRect());
-       } else if (u.getPrimaryW()->getName()=="Lancer de terre"){
-         s.setTextureRect(sf::IntRect());
-       } else if (u.getPrimaryW()->getName()=="Lancer de tronc"){
-         s.setTextureRect(sf::IntRect());
-       } else {
-         s.setTextureRect(sf::IntRect());
-       }
-       //x= ;
-       //y= ;
-       s.setPosition(x*50,y*50);
-       _window.draw(s);
-     } else if (u.getName()=="zedd"){
-              Zedd zed;
-              sf::Sprite s1,s2,s3,s4;
-              s1.setTextureRect(sf::IntRect()); // GRENADE
-              s2.setTextureRect(sf::IntRect()); //PUTTIES CALLING
-              s3.setTextureRect(sf::IntRect()); // INVOCATION
-              s4.setTextureRect(sf::IntRect()); // APOCALYPSE HOLLE
-              //x= ;
-              //y= ;
-              s1.setPosition(x*50,y*50);
-              //x= ;
-              //y= ;
-              s2.setPosition(x*50,y*50);
-              //x= ;
-              //y= ;
-              s3.setPosition(x*50,y*50);
-              //x= ;
-              //y= ;
-              s4.setPosition(x*50,y*50);
-
-              zed = u;
-
-              _window.draw(s1);
-              _window.draw(s2);
-              _window.draw(s3);
-              _window.draw(s4);
-
-      } else  if(u.getName()=="green"){
-              PowerRanger green;
-              sf::Sprite s1,s2;
-              s1.setTextureRect(sf::IntRect());    // FIST
-              s2.setTextureRect(sf::IntRect());    // FLUTE
-              //x= ;
-              //y= ;
-              s1.setPosition(x*50,y*50);
-              //x= ;
-              //y= ;
-              s2.setPosition(x*50,y*50);
-              green = u;
-
-              _window.draw(s1);
-              _window.draw(s2);
-
-
-            } else {
-              PowerRanger pr;
-              sf::Sprite s1,s2;
-
-              pr = u;
-
-              s1.setTextureRect(sf::IntRect(311,844,50,50)); // FIST
-              s2.setTextureRect(sf::IntRect(311,844,50,50)); // GUN
-
-              x= 100;
-              y= 530;
-              s1.setPosition(x*50,y*50);
-              x= 200;
-              y= 530;
-              s2.setPosition(x*50,y*50);
-
-              _window.draw(s1);
-              _window.draw(s2);
-
-            }
-
+void Ui::setUnitClicked(std::string nameOfUnit){
+     if (nameOfUnit == "red") {
+          setUnitClicked(0);
+     }
+     if (nameOfUnit == "blue") {
+          setUnitClicked(1);
+     }
+     if (nameOfUnit == "yellow") {
+          setUnitClicked(2);
+     }
+     if (nameOfUnit == "pink") {
+          setUnitClicked(3);
+     }
+     if (nameOfUnit == "green") {
+          setUnitClicked(4);
+     }
+     if (nameOfUnit == "Zedd") {
+          setUnitClicked(5);
+     }
 }
