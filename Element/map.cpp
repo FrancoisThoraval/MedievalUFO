@@ -219,25 +219,27 @@ int Map::getSizeX(){return this->_sizeX;}
 void Map::setSizeY(int y){this->_sizeY = y;}
 void Map::setSizeX(int x){this->_sizeX = x;}
 
-void Map::handleClick(sf::RenderWindow &window,sf::Event &e,Player &p,Ui& ui){
-     sf::Event mapEvent =e;
+void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p,Ui& ui){
+     // sf::Event mapEvent =e;
      int i = 0;
      int j =0;
      _tileClicked = 0;
      struct timeval debut,fin;                // variable temps
      float tempspasse;
      float tempsjeux = 0.4;
+
      gettimeofday(&debut,NULL);
      if (mapEvent.type == sf::Event::MouseButtonPressed) {
+
           Menu m;
           Position pos,posUi;
 
           // Si on a cliqué dans une zone hors map (ici en dessous)
           if (sf::Mouse::getPosition(window).y > 500) {
-               ui.drawUi(window,p,p);
                pos.setX(sf::Mouse::getPosition(window).x);
                pos.setY(sf::Mouse::getPosition(window).y);
                ui.handleClick(window,pos);
+               ui.drawUi(window,p,p);//Je crois que ça pose probleme comme c'est deux fois le même player (au niveau de la couleur du carré rouge ou vert)
           }else{
                // Si on a cliqué sur la map
                while ((i < (_sizeX/32)) && (_tileClicked == 0)) {
@@ -248,19 +250,23 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &e,Player &p,Ui& ui){
                               std::cout << "x: " << sf::Mouse::getPosition(window).x<< " y: " << sf::Mouse::getPosition(window).y << '\n';
                               std::cout << "You clicked on: " << getNameOfElement(pos) <<'\n';
                               // std::cout<<"typeid: "<< typeid(getNameOfElement(pos))<< std::endl;
-                              ui.setState(1);
-                              ui.setUnitClicked(getNameOfElement(pos));
                          }
                          j++;
                     }
                     i++;
                }
-               ui.drawUi(window,p,p);
+
                p.showUnitOwned();
+
+               // Si on n'a pas sélectionner d'unité
                if (_unitSelected.getX() == -1) {
                     //window.clear();
                     drawWorld(window);
+                    ui.setState(1);
+                    ui.setUnitClicked(getNameOfElement(pos));
+                    ui.drawUi(window,p,p);
                     if((getNameOfElement(pos) == "blue")||(getNameOfElement(pos) == "pink")||(getNameOfElement(pos) == "green")||(getNameOfElement(pos) == "yellow")||(getNameOfElement(pos) == "red")||(getNameOfElement(pos) == "Zedd")) {
+
                          _unitSelected = pos;
                          ui.setState(1);
                          std::cerr << "saving position of unit selected" << '\n';
@@ -273,27 +279,28 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &e,Player &p,Ui& ui){
                          }
                          //ui.displayInfoUnit(window,getElementW1(_unitSelected));
 
-                    }else{
+                    }else{ //Si on a cliqué sur élement autre qu'une unité
 
                          ui.setState(0);
                          _unitSelected.setX(-1);
                          _unitSelected.setY(-1);
+                         ui.setUnitClicked(-1);
 
                     }
-               }else{
+               }else{//Si une unité est déjà sélectionnée.
                     getElementW1(_unitSelected).move(_unitSelected,pos,this,1,p);
-                    std::cerr << "_unitSelected: " << '\n';
-                    std::cout << _unitSelected << '\n';
-                    std::cerr << "pos: " << '\n';
-                    std::cout << pos << '\n';
                     drawWorld(window);
                     _unitSelected.setX(-1);
                     _unitSelected.setY(-1);
+                    ui.setUnitClicked(-1);
+                    ui.drawUi(window,p,p);
                }
 
           }
+          std::cout << "_unitSelected:" << _unitSelected<< '\n';
 
      }
+
 }
 
 /* ====================  Game UI   ========================== */
@@ -320,19 +327,20 @@ void Ui::handleClick(sf::RenderWindow &window,Position pos){
      bool found = false;
      int i =0;
      std::cout << "entering ui event handler" << '\n';
-
+     // Tant qu'on a pas trouvé le sprite correspondant à pos
      while ((i < 4)&&(!found)) {
-          // std::cout << "_mapTile["<<i<<"]:" << '\n';
-          // std::cout << "getGlobalBounds: x:"<< _mapTile[i].getPosition().x << " y: "<<_mapTile[i].getPosition().y <<"   -   pos: "<< pos<< '\n';
           if (_buttonArray[i].getGlobalBounds().contains(pos.getX(),pos.getY())) {
-
+               found = true;
+               _buttonArray[i].move(sf::Vector2f(0,-10));
                std::cout << "clicked on a button !" << '\n';
                std::cout << "You clicked on the " << i<< " button" << '\n';
+               // ****
+               // Gestion des attaques
+               // ****
+
           }
           i++;
      }
-
-
 }
 void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
      std::cout << "Loading Ui..." << '\n';
@@ -341,7 +349,7 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
      sf::Sprite alpha,separationBar,b1,b2,b3,b4;
      sf::RectangleShape whosPlaying(sf::Vector2f(100, 100));
      // Rectangle pour effacer l'ui
-     sf::RectangleShape clearUi(sf::Vector2f(500, 100));
+     sf::RectangleShape clearUi(sf::Vector2f(450, 100));
      // Dessine un carré rouge ou vert pour indiquer qui doit jouer.
      if (p1.getWhosPlaying())
           whosPlaying.setFillColor(sf::Color::Green);
@@ -391,6 +399,10 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
                window.draw(b3);
           }break;
           default:{
+               sf::Sprite bidon;
+               for (int i = 0; i < 4; i++) {
+                    _buttonArray[i]=bidon;
+               }
                // On dessine un carré noir pour "effacer" les boutons dessinés.
                clearUi.setFillColor(sf::Color::Black);
                clearUi.setPosition(0,600-100);

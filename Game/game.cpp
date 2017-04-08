@@ -121,8 +121,11 @@ void Game::gameLoop(){
                               }
                               if(currentEvent.type == sf::Event::KeyPressed)
                               {
-                                   std::cout << "Opening menu" << '\n';
+
+                                   // Il doit y avoir un souci avec la sfml peut-être qui fais que le code de l'event pour la touche entrée est pris pour celui de la touche echap.
+                                   // Si on commente l'event du menu y'a plus le bug du spam de la touche entrée.
                                    if(currentEvent.key.code == sf::Keyboard::Escape){
+                                        std::cout << "Opening menu" << '\n';
                                         showMenu(); //Créer un menu spécial
                                    }
                                    if(currentEvent.key.code == sf::Keyboard::Return){
@@ -134,12 +137,12 @@ void Game::gameLoop(){
                                    if (currentEvent.key.code == sf::Keyboard::F) {
                                         std::cout << "Toggling fullscreen" << '\n';
                                         if (_isFullScreen) {
-                                             _window.create(sf::VideoMode(_xWindow,_yWindow,32),"Medieval UFO",sf::Style::Default);
+                                             _window.create(sf::VideoMode(_xWindow,_yWindow,32),"Power Rangers - Ultimate Battle Simulator (Alpha)",sf::Style::Default);
                                              _isFullScreen = false;
                                              m.drawWorld(_window);
                                              _window.display();
                                         }else{
-                                             _window.create(sf::VideoMode(_xWindow,_yWindow,32),"Medieval UFO",sf::Style::Fullscreen);
+                                             _window.create(sf::VideoMode(_xWindow,_yWindow,32),"Power Rangers - Ultimate Battle Simulator (Alpha)",sf::Style::Fullscreen);
                                              _isFullScreen = true;
                                              m.drawWorld(_window);
                                              _window.display();
@@ -151,6 +154,7 @@ void Game::gameLoop(){
                          }
                          if (p1.getWhosPlaying()) {
                            m.handleClick(_window,currentEvent,p1,ui);
+
                          } else if(p2.getWhosPlaying()){
                            m.handleClick(_window,currentEvent,p2,ui);
                          }
