@@ -264,7 +264,7 @@ void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& 
   int distance = Distance(posInit,posFinal);
   if(p.IsMineUnit(m->getElementW1(posInit)) == true){
     if(m->getNameOfElement(posInit)!="zedd"){
-      if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")){
+      if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")&&(m->getNameOfElement(posFinal)!="")){
         if(posInit != posFinal){
           if(p.IsMineUnit(m->getElementW1(posFinal)) != true){
             //(m->getElementW1(posInit)).attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
@@ -881,6 +881,7 @@ void Zedd::ApocalypseHole(Map *m,Player& p){
 RobotPR::RobotPR(){
   this->setArmor(1000);
   this->setHealthPoints(1000);
+  this->setName("RobotPR");
   _primaryWeapon = new Weapon("Fist",300,1,60);
   _secondaryWeapon = new Weapon("Sword",600,3,100);
   this->setMovement(5);
