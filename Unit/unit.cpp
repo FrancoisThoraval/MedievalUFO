@@ -201,6 +201,7 @@ void Unit::attack(Unit& u,int W,Player& p,Position posFinal,Map *m){
               if(m->getNameOfElement(posInit) != "Zedd"){
                 u.setHealthPoints(u.getHealthPoints()-this->_secondaryWeapon->getStrengh());
                 p.setEnergy(p.getEnergy()-(this->_secondaryWeapon)->getCost());
+                std::cout<<"HP APRES ATTAQUE : "<<u.getHealthPoints()<<std::endl;
                 if(u.getHealthPoints()<=0){
                   Unit dead;
                   m->setElementW1(posFinal,dead);
@@ -244,7 +245,7 @@ void Unit::attack(Unit& u,int W,Player& p,Position posFinal,Map *m){
               PowerRanger pr;
               pr = (*this);
               // pr = m->getElementW1(posInit);
-              pr.CheaterWeaponOn(*m);
+              pr.CheaterWeaponOn(m);
               std::cout<<"APRES FCT CHEATEDWEAPONON"<<std::endl;
               if( pr.getCapacityWeapon()==true){
                 std::cout<<"TEST GETCAPACITYWEAPON"<<std::endl;
@@ -252,6 +253,7 @@ void Unit::attack(Unit& u,int W,Player& p,Position posFinal,Map *m){
                   std::cout<<"TEST RANGE"<<std::endl;
                   u.setHealthPoints(u.getHealthPoints()-this->_fourthWeapon->getStrengh());
                   p.setEnergy(p.getEnergy()-(this->_fourthWeapon)->getCost());
+                  std::cout<<"HP APRES ATTAQUE : "<<u.getHealthPoints()<<std::endl;
                   if(u.getHealthPoints()<=0){
                     std::cout<<"TEST DEAD"<<std::endl;
                     Unit dead;
@@ -603,11 +605,11 @@ void PowerRanger::Transformation(Map *m){
   }
 }
 
-void PowerRanger::CheaterWeaponOn(Map m){
+void PowerRanger::CheaterWeaponOn(Map *m){
   bool hor = false;
   bool ver = false;
   Position pos = this->_pos;
-  BeTogether(&m,pos,&hor,&ver);
+  BeTogether(m,pos,&hor,&ver);
   if((hor == true)||(ver == true)){
     this->_capacityWeapon = true;
   } else {

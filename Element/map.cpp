@@ -299,12 +299,55 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p,Ui&
                     _unitSelected.setY(-1);
                     ui.setUnitClicked(-1);
                     ui.drawUi(window,p,p);
+                    if(isloose()){
+                      std::cout<<"GROSSE BITTE PERDU"<<std::endl;
+                    } else {
+                      std::cout<<"GROSSE BITE PAS PERDU"<<std::endl;
+                    }
+                    p.setLost(isloose());
                }
 
           }
           std::cout << "_unitSelected:" << _unitSelected<< '\n';
 
      }
+
+}
+
+bool Map::isloose(){
+  Position currentPos;
+  bool zedAlive = false;
+  bool PowerrangerAlive = false;
+  int i =0;
+  int j = 0;
+  while((i<_sizeX/32)&&((zedAlive != true) && (PowerrangerAlive != true))){
+    while((j<_sizeY/32)&&((zedAlive != true) && (PowerrangerAlive != true))){
+      currentPos.setX(i);
+      currentPos.setY(j);
+      if(getNameOfElement(currentPos)=="zedd"){
+        zedAlive = true;
+      }
+      if((getNameOfElement(currentPos)=="red")||(getNameOfElement(currentPos)=="blue")||(getNameOfElement(currentPos)=="yellow")||(getNameOfElement(currentPos)=="pink")||(getNameOfElement(currentPos)=="green")){
+        PowerrangerAlive = true;
+      }
+      j++;
+    }
+    i++;
+  }
+  if((zedAlive == true)&&(PowerrangerAlive == true)){
+      std::cout<<"IS LOOSE TEST 1"<<std::endl;
+      return(false);
+  } else if((zedAlive == true)&&(PowerrangerAlive == false)){
+        std::cout<<"IS LOOSE TEST 2"<<std::endl;
+      return(true);
+  } else if((zedAlive == false)&&(PowerrangerAlive==true)){
+      std::cout<<"IS LOOSE TEST 3"<<std::endl;
+    return(true);
+  } else {
+      std::cout<<"IS LOOSE TEST 4"<<std::endl;
+    return(false);
+  }
+
 
 }
 

@@ -169,7 +169,7 @@ public:
   //void attack(Unit &, int,Player&,Map *m,Position);
   void BeTogether(Map*,Position,bool*,bool*);
   void Transformation(Map*);
-  void CheaterWeaponOn(Map);
+  void CheaterWeaponOn(Map*);
   PowerRanger& operator=(const Unit& u){
     this->setName(u.getName());
     this->setHealthPoints(u.getHealthPoints());

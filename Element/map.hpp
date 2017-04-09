@@ -49,6 +49,8 @@ public:
 
   void handleClick(sf::RenderWindow &, sf::Event &,Player&,Ui&);
 
+  bool isloose();
+
   int getSizeX();
   int getSizeY();
   int getCompt()const;

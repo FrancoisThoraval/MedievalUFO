@@ -80,6 +80,8 @@ void Game::gameLoop(){
                     PowerRanger pink("pink"), red("red"), blue("blue"), green("green"),yellow("yellow");
                     Position posPink(9,13),posRed(7,13),posBlue(8,13),posGreen(10,13),posYellow(11,13);
                     Position posZedd(8,11);
+                    pink.setPosition(posPink);
+                    std::cout<<"POS PINK : "<<pink.getPosition()<<std::endl;
                     //  std::cout<<"DEFAULT : "<<pink.getDefault()<<std::endl;
                     m.setElementW1(posZedd,zedd);
                     m.setElementW1(posRed,red);
@@ -163,6 +165,7 @@ void Game::gameLoop(){
                               std::cout << "one player lost, back to menu" << '\n';
                               _gameState = 3; //Retour au menu
                          }
+
                     }
                break;
                }
@@ -295,3 +298,34 @@ void Game::enterName(){
     }
   }
 }
+
+// bool Game::isloose(Map m){
+//   Position currentPos;
+//   bool zedAlive = false;
+//   bool PowerrangerAlive = false;
+//   int i =0;
+//   int j = 0;
+//   while((i<m._sizeX/32)&&((zedAlive != true) && (PowerrangerAlive != true))){
+//     while((j<m._sizeY/32)&&((zedAlive != true) && (PowerrangerAlive != true))){
+//       currentPos.setX(i);
+//       currentPos.setY(j);
+//       if(m.getNameOfElement(currentPos)=="zedd"){
+//         zedAlive = true;
+//       }
+//       if((m.getNameOfElement(currentPos)=="red")||(m.getNameOfElement(currentPos)=="blue")||(m.getNameOfElement(currentPos)=="yellow")||(m.getNameOfElement(currentPos)=="pink")||(m.getNameOfElement(currentPos)=="green")){
+//         PowerrangerAlive = true;
+//       }
+//       j++;
+//     }
+//     i++;
+//   }
+//   if((zedAlive == true)&&(PowerrangerAlive == true)){
+//       return(false);
+//   } else if((zedAlive == true)&&(PowerrangerAlive == false)){
+//     return(true);
+//   } else if((zedAlive == false)&&(PowerrangerAlive==true)){
+//     return(true);
+//   }
+//
+//
+// }
