@@ -224,7 +224,7 @@ int Map::getSizeX(){return this->_sizeX;}
 void Map::setSizeY(int y){this->_sizeY = y;}
 void Map::setSizeX(int x){this->_sizeX = x;}
 
-void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p,Ui& ui){
+void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, Player &p2,Ui& ui){
      // sf::Event mapEvent =e;
      int i = 0;
      int j =0;
@@ -244,7 +244,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p,Ui&
                pos.setX(sf::Mouse::getPosition(window).x);
                pos.setY(sf::Mouse::getPosition(window).y);
                ui.handleClick(window,pos);
-               ui.drawUi(window,p,p);//Je crois que ça pose probleme comme c'est deux fois le même player (au niveau de la couleur du carré rouge ou vert)
+               ui.drawUi(window,p1,p2);//Je crois que ça pose probleme comme c'est deux fois le même player (au niveau de la couleur du carré rouge ou vert)
           }else{
                // Si on a cliqué sur la map
                while ((i < (_sizeX/32)) && (_tileClicked == 0)) {
@@ -261,26 +261,33 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p,Ui&
                     i++;
                }
 
-               p.showUnitOwned();
+               p1.showUnitOwned();
 
                // Si on n'a pas sélectionner d'unité
                if (_unitSelected.getX() == -1) {
                     //window.clear();
                     drawWorld(window);
                     ui.setState(1);
-                    ui.setUnitClicked(getNameOfElement(pos));
-                    ui.drawUi(window,p,p);
+                    if (p1.isMineUnit(getNameOfElement(pos))) {
+                         ui.setUnitClicked(getNameOfElement(pos));
+                    }else{
+                         std::cout << "TEST zedd health points:"<<getElementW1(pos).getHealthPoints() << '\n';
+                         std::cout << "This unit is not yours !" << '\n';
+                    }
+                    ui.drawUi(window,p1,p2);
                     if((getNameOfElement(pos) == "blue")||(getNameOfElement(pos) == "pink")||(getNameOfElement(pos) == "green")||(getNameOfElement(pos) == "yellow")||(getNameOfElement(pos) == "red")||(getNameOfElement(pos) == "Zedd")) {
+                         if (p1.isMineUnit(getElementW1(pos))) {
 
-                         _unitSelected = pos;
-                         ui.setState(1);
-                         std::cerr << "saving position of unit selected" << '\n';
-                         gettimeofday(&fin,NULL);
-                         //Advice_ayayay(window,getElementW1(_unitSelected));
-                         while (tempspasse < tempsjeux){
+                              _unitSelected = pos;
+                              ui.setState(1);
+                              std::cerr << "saving position of unit selected" << '\n';
                               gettimeofday(&fin,NULL);
-                              tempspasse = (((fin.tv_sec - debut.tv_sec)*1000000L+fin.tv_usec) - debut.tv_usec);
-                              tempspasse = (tempspasse/1000)/1000;
+                              //Advice_ayayay(window,getElementW1(_unitSelected));
+                              while (tempspasse < tempsjeux){
+                                   gettimeofday(&fin,NULL);
+                                   tempspasse = (((fin.tv_sec - debut.tv_sec)*1000000L+fin.tv_usec) - debut.tv_usec);
+                                   tempspasse = (tempspasse/1000)/1000;
+                              }
                          }
                          //ui.displayInfoUnit(window,getElementW1(_unitSelected));
 
@@ -293,61 +300,19 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p,Ui&
 
                     }
                }else{//Si une unité est déjà sélectionnée.
-                    getElementW1(_unitSelected).move(_unitSelected,pos,this,ui.getAttack()+1,p);
+                    getElementW1(_unitSelected).move(_unitSelected,pos,this,ui.getAttack()+1,p1,p2);
                     drawWorld(window);
                     _unitSelected.setX(-1);
                     _unitSelected.setY(-1);
                     ui.setUnitClicked(-1);
-                    ui.drawUi(window,p,p);
-                    if(isloose()){
-                      std::cout<<"GROSSE BITTE PERDU"<<std::endl;
-                    } else {
-                      std::cout<<"GROSSE BITE PAS PERDU"<<std::endl;
-                    }
-                    p.setLost(isloose());
+                    ui.drawUi(window,p1,p2);
+                    p2.hasLost();
                }
 
           }
           std::cout << "_unitSelected:" << _unitSelected<< '\n';
 
      }
-
-}
-
-bool Map::isloose(){
-  Position currentPos;
-  bool zedAlive = false;
-  bool PowerrangerAlive = false;
-  int i =0;
-  int j = 0;
-  while((i<_sizeX/32)&&((zedAlive != true) && (PowerrangerAlive != true))){
-    while((j<_sizeY/32)&&((zedAlive != true) && (PowerrangerAlive != true))){
-      currentPos.setX(i);
-      currentPos.setY(j);
-      if(getNameOfElement(currentPos)=="zedd"){
-        zedAlive = true;
-      }
-      if((getNameOfElement(currentPos)=="red")||(getNameOfElement(currentPos)=="blue")||(getNameOfElement(currentPos)=="yellow")||(getNameOfElement(currentPos)=="pink")||(getNameOfElement(currentPos)=="green")){
-        PowerrangerAlive = true;
-      }
-      j++;
-    }
-    i++;
-  }
-  if((zedAlive == true)&&(PowerrangerAlive == true)){
-      std::cout<<"IS LOOSE TEST 1"<<std::endl;
-      return(false);
-  } else if((zedAlive == true)&&(PowerrangerAlive == false)){
-        std::cout<<"IS LOOSE TEST 2"<<std::endl;
-      return(true);
-  } else if((zedAlive == false)&&(PowerrangerAlive==true)){
-      std::cout<<"IS LOOSE TEST 3"<<std::endl;
-    return(true);
-  } else {
-      std::cout<<"IS LOOSE TEST 4"<<std::endl;
-    return(false);
-  }
-
 
 }
 
@@ -426,6 +391,7 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
 
      // En fonction de l'unité qu'on a cliqué, on affiche les bons boutons
      // Voir -> setUnitClicked pour les valeurs des unités.
+
      switch (_unitClicked) {
           case 0:{ //Red
                std::cout << "now drawing ui's character 0." << '\n';

@@ -151,7 +151,7 @@ int Unit::getDefault()const{
   return(this->_defaultMovement);
 }
 
-void Unit::attack(Unit& u,int W,Player& p,Position posFinal,Map *m){
+void Unit::attack(Unit& u,int W,Player& p,Player &p2,Position posFinal,Map *m){
 
   Position posInit = this->_pos;
   if(W != 0){
@@ -258,6 +258,7 @@ void Unit::attack(Unit& u,int W,Player& p,Position posFinal,Map *m){
                     std::cout<<"TEST DEAD"<<std::endl;
                     Unit dead;
                     m->setElementW1(posFinal,dead);
+                    p2.removeUnit(u);
                   }
                 } else {
                   std::cout<<"Tu n'as pas la portée necessaire"<<std::endl;
@@ -283,34 +284,34 @@ void Unit::attack(Unit& u,int W,Player& p,Position posFinal,Map *m){
   }
 }
 
-void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& p){
+void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& p,Player &p2){
   int distance = Distance(posInit,posFinal);
-  if(p.IsMineUnit(m->getElementW1(posInit)) == true){
+  if(p.isMineUnit(m->getElementW1(posInit)) == true){
     if(m->getNameOfElement(posInit)!="zedd"){
       if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")&&(m->getNameOfElement(posFinal)!="")){
         if(posInit != posFinal){
-          if(p.IsMineUnit(m->getElementW1(posFinal)) != true){
+          if(p.isMineUnit(m->getElementW1(posFinal)) != true){
             //(m->getElementW1(posInit)).attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
             if(m->getNameOfElement(posInit)=="red"){
               Unit *red = new PowerRanger("red");
               red->setPosition(posInit);
-              red->attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
+              red->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
             } else if (m->getNameOfElement(posInit) == "green") {
                 Unit *green = new PowerRanger("green");
                 green->setPosition(posInit);
-                green->attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
+                green->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
             } else if (m->getNameOfElement(posInit) == "Putties"){
                 Unit *putties = new Putties;
                 putties->setPosition(posInit);
-                putties->attack(m->getElementW1(posFinal),1,p,posFinal,m);
+                putties->attack(m->getElementW1(posFinal),1,p,p2,posFinal,m);
               }  else if(m->getNameOfElement(posInit)=="zedd"){
                   Unit *zed = new Zedd;
                   zed->setPosition(posInit);
-                  zed->attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
+                  zed->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
             } else {
               Unit *other = new PowerRanger("other");
               other->setPosition(posInit);
-              other->attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
+              other->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
             }
           } else  {
             std::cout<<"Tu ne peux pas attaquer ta propre unite"<<std::endl;
@@ -331,7 +332,7 @@ void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& 
             // std::cout<<"HP : :"<<m->getElementW1(posFinal).getHealthPoints()<<std::endl;
             // std::cout<<"Movement :"<<this->getMovement()<<std::endl;
           } else {
-            std::cout <<"Tu ne peux pas te deplacer sur ta case actuel"<<std::endl;
+            std::cout <<"Tu ne peux pas te deplacer sur ta case actuelle"<<std::endl;
           }
         } else {
           std::cout<<"Pas assez de point de deplacement"<<std::endl;

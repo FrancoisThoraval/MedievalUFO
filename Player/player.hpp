@@ -15,6 +15,7 @@ private:
   bool  _lost;
   std::string _name;
   Unit *_ownUnit;
+  int _sizeOwnUnit;
   bool _isPlaying;
 public:
   Player();
@@ -25,7 +26,8 @@ public:
   int getEnergy()const;
   bool getLost()const;
   std::string getName()const;
-  bool IsMineUnit(const Unit);
+  bool isMineUnit(const Unit);
+  bool isMineUnit(const std::string);
   Unit& getUnit(int);
 
 
@@ -35,9 +37,12 @@ public:
   void setName(std::string);
 
   void pushUnit(Unit &);
+  void removeUnit(Unit &);
   void showUnitOwned();
   void EndOfTurn(Map*);
   void ResetMovement(Map*);
+
+  void hasLost();
 };
 
 #endif

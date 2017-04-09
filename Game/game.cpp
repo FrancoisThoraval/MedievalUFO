@@ -155,10 +155,10 @@ void Game::gameLoop(){
                               }
                          }
                          if (p1.getWhosPlaying()) {
-                           m.handleClick(_window,currentEvent,p1,ui);
+                           m.handleClick(_window,currentEvent,p1,p2,ui);
 
                          } else if(p2.getWhosPlaying()){
-                           m.handleClick(_window,currentEvent,p2,ui);
+                           m.handleClick(_window,currentEvent,p2,p1,ui);
                          }
 
                          if ((p1.getLost()!=false) || (p2.getLost()!= false )) {

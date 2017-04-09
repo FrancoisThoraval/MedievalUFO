@@ -4,6 +4,7 @@ Player::Player(){
     this->_energy = 100;
     this->_lost = false;
     this->_ownUnit = new Unit [5];
+    this->_sizeOwnUnit = 0;
     this->_isPlaying = false;
 }
 
@@ -12,6 +13,7 @@ Player::Player(std::string name,bool value){
     this->_lost = false;
     this->_name = name;
     this->_ownUnit = new Unit [5];
+    this->_sizeOwnUnit = 0;
     this->_isPlaying = value;
 }
 
@@ -57,18 +59,50 @@ void Player::pushUnit(Unit &u){
           i++;
      }
      _ownUnit[i] = u;
+     _sizeOwnUnit++;
+}
+
+void Player::removeUnit(Unit &u){
+     showUnitOwned();
+     int i = 0;
+     while ((i<_sizeOwnUnit)&&(u.getName()!=_ownUnit[i].getName())) {
+          i++;
+     }
+     for (int j = i; j < _sizeOwnUnit; j++) {
+          _ownUnit[i]=_ownUnit[i+1];
+     }
+     _sizeOwnUnit--;
+     showUnitOwned();
+     std::cout << "Have i lost ?" << getLost()<< '\n';
+     std::cout << true << '\n';
 }
 
 
-
-
-bool Player::IsMineUnit(const Unit u){
+bool Player::isMineUnit(const Unit u){
   bool rep = false;
   std::cout<<"FCT ISMINEUNIT"<<std::endl;
   std::cout<<"Name : "<<u.getName()<<std::endl;
   for(int i = 0;i<5;i++){
     std::cout<<"ownuni name : "<<this->_ownUnit[i].getName()<<std::endl;
     if(u.getName()==this->_ownUnit[i].getName()){
+      rep = true;
+    }
+  }
+  if(rep == true){
+    std::cout<<"rep = true"<<std::endl;
+  } else {
+    std::cout<<"rep = false"<<std::endl;
+  }
+  return(rep);
+}
+
+bool Player::isMineUnit(const std::string name){
+  bool rep = false;
+  std::cout<<"FCT ISMINEUNIT"<<std::endl;
+  std::cout<<"Name : "<<name<<std::endl;
+  for(int i = 0;i<5;i++){
+    std::cout<<"ownuni name : "<<this->_ownUnit[i].getName()<<std::endl;
+    if(name==this->_ownUnit[i].getName()){
       rep = true;
     }
   }
@@ -114,4 +148,12 @@ void Player::ResetMovement(Map *m){
       }
     }
   }
+}
+
+void Player::hasLost(){
+     if (!getLost()) {
+          if (_sizeOwnUnit == 0) {
+               setLost(true);
+          }
+     }
 }

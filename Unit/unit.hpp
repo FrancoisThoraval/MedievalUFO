@@ -58,8 +58,8 @@ public:
   void setThirdW(Weapon*);
   void setFourthW(Weapon*);
   /** Methode **/
-  void attack(Unit&,int,Player&,Position,Map*);
-  void move(Position,Position,Map*,int,Player&);
+  void attack(Unit&,int,Player&,Player&,Position,Map*);
+  void move(Position,Position,Map*,int,Player&,Player&);
   friend class Weapon;
   Unit& operator=(Unit& u){
     this->_name = u._name;
