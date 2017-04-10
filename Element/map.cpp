@@ -247,7 +247,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, P
           if (sf::Mouse::getPosition(window).y > 500) {
                pos.setX(sf::Mouse::getPosition(window).x);
                pos.setY(sf::Mouse::getPosition(window).y);
-               ui.handleClick(window,pos);
+               ui.handleClick(window,pos,this);
                ui.drawUi(window,p1,p2);//Je crois que ça pose probleme comme c'est deux fois le même player (au niveau de la couleur du carré rouge ou vert)
           }else{
                // Si on a cliqué sur la map
@@ -320,6 +320,12 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, P
 
 }
 
+Position Map::getUnitSelected(){
+     std::cout << "UnitSelected: \n"<< _unitSelected << '\n';
+     std::cout << "who is at that position: "<< getNameOfElement(_unitSelected) << '\n';
+     return this->_unitSelected;
+}
+
 /* ====================  Game UI   ========================== */
 Ui::Ui(){
  _state = 0;
@@ -341,7 +347,7 @@ int Ui::getState()const{
 }
 
 
-void Ui::handleClick(sf::RenderWindow &window,Position pos){
+void Ui::handleClick(sf::RenderWindow &window,Position pos, Map *m){
      bool found = false;
      int i =0;
      std::cout << "entering ui event handler" << '\n';
@@ -362,6 +368,10 @@ void Ui::handleClick(sf::RenderWindow &window,Position pos){
      }
      if(found == false){
        _numattack = 0;
+       if (_alpha.getGlobalBounds().contains(pos.getX(),pos.getY())) {
+          std::cout << "ayayay" << '\n';
+          Advice_ayayay(window,m->getElementW1(m->getUnitSelected()));
+       }
      }
 
 }
@@ -369,7 +379,7 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
      std::cout << "Loading Ui..." << '\n';
      sf::Texture texture;
      texture.loadFromFile("./Textures/LPC_Terrain/terrain.png");
-     sf::Sprite alpha,separationBar,b1,b2,b3,b4;
+     sf::Sprite separationBar,b1,b2,b3,b4;
      sf::RectangleShape whosPlaying(sf::Vector2f(100, 100));
      // Rectangle pour effacer l'ui
      sf::RectangleShape clearUi(sf::Vector2f(450, 100));
@@ -381,9 +391,9 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
 
      whosPlaying.setPosition(800-350,600-100);
      // Dessine le bouton demande d'aide du jeu.
-     alpha.setTexture(texture);
-     alpha.setTextureRect(sf::IntRect(768, 926, 250, 100));
-     alpha.setPosition(800-250,600-100);
+     _alpha.setTexture(texture);
+     _alpha.setTextureRect(sf::IntRect(768, 926, 250, 100));
+     _alpha.setPosition(800-250,600-100);
 
      // Dessine une barre de séparation entre le terrain de jeu et les boutons de l'interface.
      separationBar.setTexture(texture);
@@ -393,14 +403,12 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
           window.draw(separationBar);
      }
      window.draw(whosPlaying);
-     window.draw(alpha);
+     window.draw(_alpha);
 
      // En fonction de l'unité qu'on a cliqué, on affiche les bons boutons
      // Voir -> setUnitClicked pour les valeurs des unités.
 
      // Reset
-     std::cout << "reset" << '\n';
-     std::cout << "unitclicked: "<<_unitClicked << '\n';
      sf::Sprite bidon;
      for (int i = 0; i < 4; i++) {
           _buttonArray[i]=bidon;
@@ -591,30 +599,7 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
             // On dessine les boutons
             window.draw(b1);
           }
-          default:{
-               sf::Sprite bidon;
-               for (int i = 0; i < 4; i++) {
-                    _buttonArray[i]=bidon;
-               }
-               // On dessine un carré noir pour "effacer" les boutons dessinés.
-               clearUi.setFillColor(sf::Color::Black);
-               clearUi.setPosition(0,600-100);
-               window.draw(clearUi);
-               // Draw Player infos
-               std::cout << "drawing player's info" << '\n';
-          }
      }
-     // _mapTile[x][y] = s;
-    //  for(int i = 0;i < 800 / 50 ; i++){
-    //    for(int j = 600; j < 600 ; j++){
-    //
-    //    }
-    //  }
-     if(this->getState()==1){
-       //this->handleClick(window);
-     }
-
-
 }
 
 void Ui::setAttack(int a){
@@ -624,107 +609,6 @@ void Ui::setAttack(int a){
 int Ui::getAttack()const{
   return(_numattack);
 }
-
-
-// void Ui::displayInfoUnit(sf::RenderWindow &_window/*, Unit& u*/){
-//       sf::Texture t;
-//       t.loadFromFile("./Textures/LPC_Terrain/terrain.png");
-//       int x = 0;
-//       int y = 0;
-//
-//      // sf::Text info;
-//      // std::stringstream ss;
-//      // ss << p.getEnergy();
-//      // info.setString( ss.str().c_str() );
-//      // window.draw(info);
-//      // window.display();
-//
-//      if(u.getName()=="Putties"){
-//        Putties pu;
-//        sf::Sprite s;
-//        s.setTexture(t);
-//
-//        pu = u;
-//
-//        if(u.getPrimaryW()->getName()=="Canon a eau"){
-//          s.setTextureRect(sf::IntRect());
-//        } else if (u.getPrimaryW()->getName()=="Lancer de terre"){
-//          s.setTextureRect(sf::IntRect());
-//        } else if (u.getPrimaryW()->getName()=="Lancer de tronc"){
-//          s.setTextureRect(sf::IntRect());
-//        } else {
-//          s.setTextureRect(sf::IntRect());
-//        }
-//        //x= ;
-//        //y= ;
-//        s.setPosition(x*50,y*50);
-//        _window.draw(s);
-//      } else if (u.getName()=="zedd"){
-//               Zedd zed;
-//               sf::Sprite s1,s2,s3,s4;
-//               s1.setTextureRect(sf::IntRect()); // GRENADE
-//               s2.setTextureRect(sf::IntRect()); //PUTTIES CALLING
-//               s3.setTextureRect(sf::IntRect()); // INVOCATION
-//               s4.setTextureRect(sf::IntRect()); // APOCALYPSE HOLLE
-//               //x= ;
-//               //y= ;
-//               s1.setPosition(x*50,y*50);
-//               //x= ;
-//               //y= ;
-//               s2.setPosition(x*50,y*50);
-//               //x= ;
-//               //y= ;
-//               s3.setPosition(x*50,y*50);
-//               //x= ;
-//               //y= ;
-//               s4.setPosition(x*50,y*50);
-//
-//               zed = u;
-//
-//               _window.draw(s1);
-//               _window.draw(s2);
-//               _window.draw(s3);
-//               _window.draw(s4);
-//
-//       } else  if(u.getName()=="green"){
-//               PowerRanger green;
-//               sf::Sprite s1,s2;
-//               s1.setTextureRect(sf::IntRect());    // FIST
-//               s2.setTextureRect(sf::IntRect());    // FLUTE
-//               //x= ;
-//               //y= ;
-//               s1.setPosition(x*50,y*50);
-//               //x= ;
-//               //y= ;
-//               s2.setPosition(x*50,y*50);
-//               green = u;
-//
-//               _window.draw(s1);
-//               _window.draw(s2);
-//
-//
-//             } else {
-//               PowerRanger pr;
-//               sf::Sprite s1,s2;
-//
-//               pr = u;
-//
-//               s1.setTextureRect(sf::IntRect(311,844,50,50)); // FIST
-//               s2.setTextureRect(sf::IntRect(311,844,50,50)); // GUN
-//
-//               x= 100;
-//               y= 530;
-//               s1.setPosition(x*50,y*50);
-//               x= 200;
-//               y= 530;
-//               s2.setPosition(x*50,y*50);
-//
-//               _window.draw(s1);
-//               _window.draw(s2);
-//
-//             }
-//
-// }
 
 void Ui::setUnitClicked(int value){
      _unitClicked = value;

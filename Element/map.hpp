@@ -58,20 +58,22 @@ public:
   void setCompt(int);
   void setInTab(Unit&);
 
+  Position getUnitSelected();
 };
 
 
-class Ui {
+class Ui{
 private:
   int _state;
   sf::Sprite *_buttonArray;
   int _numattack;
   int _unitClicked;
+  sf::Sprite _alpha;
 public:
      Ui ();
      ~Ui ();
      void drawUi(sf::RenderWindow &,Player &, Player &);
-     void handleClick(sf::RenderWindow &,Position pos);
+     void handleClick(sf::RenderWindow &,Position pos, Map *);
      void displayInfoUnit(sf::RenderWindow &, Unit&);
      void setState(int);
      int getState()const;
