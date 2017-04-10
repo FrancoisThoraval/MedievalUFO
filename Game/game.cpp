@@ -132,7 +132,7 @@ void Game::gameLoop(){
                                    }
                                    if(currentEvent.key.code == sf::Keyboard::Return){
                                         std::cerr << "ending turn" << '\n';
-                                        endTurn(p1,p2,&m); //Créer un menu spécial
+                                        endTurn(p1,p2,&m);
                                         ui.drawUi(_window,p1,p2);
                                    }
 

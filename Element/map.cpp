@@ -244,16 +244,12 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, P
 
           Menu m;
           Position pos,posUi;
-          std::cout<<"TEST DRAW UI 4: "<<p1.getWhosPlaying()<<std::endl;
-          std::cout<<"TEST DRAW UI 4: "<<p2.getWhosPlaying()<<std::endl;
           // Si on a cliqué dans une zone hors map (ici en dessous)
           if (sf::Mouse::getPosition(window).y > 500) {
                pos.setX(sf::Mouse::getPosition(window).x);
                pos.setY(sf::Mouse::getPosition(window).y);
                ui.handleClick(window,pos);
                ui.drawUi(window,p1,p2);//Je crois que ça pose probleme comme c'est deux fois le même player (au niveau de la couleur du carré rouge ou vert)
-               std::cerr<<"TEST DRAW UI 5: "<<p1.getWhosPlaying()<<std::endl;
-               std::cerr<<"TEST DRAW UI 5: "<<p2.getWhosPlaying()<<std::endl;
           }else{
                // Si on a cliqué sur la map
                while ((i < (_sizeX/32)) && (_tileClicked == 0)) {
@@ -264,8 +260,6 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, P
                               std::cout << "x: " << sf::Mouse::getPosition(window).x<< " y: " << sf::Mouse::getPosition(window).y << '\n';
                               std::cout << "You clicked on: " << getNameOfElement(pos) <<'\n';
                               // std::cout<<"typeid: "<< typeid(getNameOfElement(pos))<< std::endl;
-                              std::cout<<"TEST DRAW UI 6: "<<p1.getWhosPlaying()<<std::endl;
-                              std::cout<<"TEST DRAW UI 6: "<<p2.getWhosPlaying()<<std::endl;
                          }
                          j++;
                     }
@@ -273,8 +267,6 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, P
                }
 
                p1.showUnitOwned();
-               std::cout<<"TEST DRAW UI 7: "<<p1.getWhosPlaying()<<std::endl;
-               std::cout<<"TEST DRAW UI 7: "<<p2.getWhosPlaying()<<std::endl;
                // Si on n'a pas sélectionner d'unité
                if (_unitSelected.getX() == -1) {
                     //window.clear();
@@ -287,8 +279,6 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, P
                          std::cout << "This unit is not yours !" << '\n';
                     }
                     ui.drawUi(window,p1,p2);
-                    std::cout<<"TEST DRAW UI 8: "<<p1.getWhosPlaying()<<std::endl;
-                    std::cout<<"TEST DRAW UI 8: "<<p2.getWhosPlaying()<<std::endl;
                     if((getNameOfElement(pos) == "blue")||(getNameOfElement(pos) == "pink")||(getNameOfElement(pos) == "green")||(getNameOfElement(pos) == "yellow")||(getNameOfElement(pos) == "red")||(getNameOfElement(pos) == "Zedd")) {
                          //if (p1.isMineUnit(getElementW1(pos))) {
 
@@ -302,8 +292,6 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, P
                                    tempspasse = (((fin.tv_sec - debut.tv_sec)*1000000L+fin.tv_usec) - debut.tv_usec);
                                    tempspasse = (tempspasse/1000)/1000;
                               }
-                              std::cout<<"TEST DRAW UI 9: "<<p1.getWhosPlaying()<<std::endl;
-                              std::cout<<"TEST DRAW UI 9: "<<p2.getWhosPlaying()<<std::endl;
                          //}
                          //ui.displayInfoUnit(window,getElementW1(_unitSelected));
 
@@ -324,8 +312,6 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, P
                     ui.drawUi(window,p1,p2);
                     p2.hasLost();
                     //p1.haslost();
-                    std::cout<<"TEST DRAW UI 10: "<<p1.getWhosPlaying()<<std::endl;
-                    std::cout<<"TEST DRAW UI 10: "<<p2.getWhosPlaying()<<std::endl;
                }
 
           }
@@ -390,7 +376,7 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
      // Dessine un carré rouge ou vert pour indiquer qui doit jouer.
      std::cout<<"TEST DRAW UI : "<<p1.getWhosPlaying()<<std::endl;
      std::cout<<"TEST DRAW UI : "<<p2.getWhosPlaying()<<std::endl;
-     if (p1.getWhosPlaying())
+     if ((p1.isMineUnit("red"))||(p1.isMineUnit("blue"))||(p1.isMineUnit("yellow"))||(p1.isMineUnit("green"))||(p1.isMineUnit("pink")))
           whosPlaying.setFillColor(sf::Color::Green);
      else
           whosPlaying.setFillColor(sf::Color::Red);

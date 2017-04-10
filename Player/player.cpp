@@ -81,36 +81,20 @@ void Player::removeUnit(Unit &u){
 
 bool Player::isMineUnit(const Unit u){
   bool rep = false;
-  std::cout<<"FCT ISMINEUNIT"<<std::endl;
-  std::cout<<"Name : "<<u.getName()<<std::endl;
   for(int i = 0;i<5;i++){
-    std::cout<<"ownuni name : "<<this->_ownUnit[i].getName()<<std::endl;
     if(u.getName()==this->_ownUnit[i].getName()){
       rep = true;
     }
-  }
-  if(rep == true){
-    std::cout<<"rep = true"<<std::endl;
-  } else {
-    std::cout<<"rep = false"<<std::endl;
   }
   return(rep);
 }
 
 bool Player::isMineUnit(const std::string name){
   bool rep = false;
-  std::cout<<"FCT ISMINEUNIT"<<std::endl;
-  std::cout<<"Name : "<<name<<std::endl;
   for(int i = 0;i<5;i++){
-    std::cout<<"ownuni name : "<<this->_ownUnit[i].getName()<<std::endl;
     if(name==this->_ownUnit[i].getName()){
       rep = true;
     }
-  }
-  if(rep == true){
-    std::cout<<"rep = true"<<std::endl;
-  } else {
-    std::cout<<"rep = false"<<std::endl;
   }
   return(rep);
 }
@@ -128,12 +112,8 @@ Unit& Player::getUnit(int pos){
 }
 
 void Player::EndOfTurn(Map *m){
-  this->_energy = 100;
-   ResetMovement(m);
-  Position pos;
-  // for(int i =0;i<5;i++){
-  //   _ownUnit[i].setMovement(_ownUnit[i].getDefault());
-  // }
+     this->_energy = 100;
+     ResetMovement(m);
 }
 
 void Player::ResetMovement(Map *m){

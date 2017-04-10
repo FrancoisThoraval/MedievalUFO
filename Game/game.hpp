@@ -36,7 +36,7 @@ public:
      void start();
      void endTurn(Player &, Player &,Map*);
      void enterName();
-     
+
 
 };
 
