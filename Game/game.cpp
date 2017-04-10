@@ -106,11 +106,6 @@ void Game::gameLoop(){
                     m.getElementW1(posPink).setDefault(4);
                     // p1.getUnit(0).setDefault(4);
 
-                    std::cout<<"NAME TEST : "<<m.getElementW1(posRed).getName()<<"\n"<<"NAME TEST 2 : "<<red.getName()<<"\n"<<"NAME TEST 3  : "<<p1.getUnit(1).getName()<<std::endl;
-                    std::cout<<"DEFAULT TEST : "<<m.getElementW1(posRed).getDefault()<<"\n"<<"DEfault TEST 2 : "<<red.getDefault()<<"\n"<<"DEFAULT TEST 3 :"<<p1.getUnit(1).getDefault()<<std::endl;
-
-                    std::cout<<"TYPE : "<<typeid(m.getElementW1(posRed)).name()<<std::endl;
-
                     _window.clear(sf::Color(0,0,0));
                     m.drawWorld(_window);
                     ui.drawUi(_window,p1,p2);
@@ -132,8 +127,7 @@ void Game::gameLoop(){
                                    }
                                    if(currentEvent.key.code == sf::Keyboard::Return){
                                         std::cerr << "ending turn" << '\n';
-                                        endTurn(p1,p2,&m);
-                                        ui.drawUi(_window,p1,p2);
+                                        endTurn(p1,p2,&m,&ui);
                                    }
 
                                    if (currentEvent.key.code == sf::Keyboard::F) {
@@ -200,16 +194,19 @@ void Game::showMenu(){
      }
 }
 
-void Game::endTurn(Player &p1, Player &p2,Map *m){
+void Game::endTurn(Player &p1, Player &p2,Map *m, Ui *ui){
+     ui->setUnitClicked(-1);
      if (p1.getWhosPlaying()) {
           p1.setWhosPlaying(false);
           p2.setWhosPlaying(true);
+          ui->drawUi(_window,p2,p1);
           std::cerr << "Player 2, Your turn !" << '\n';
           std::cerr<<" Player 2, Energy : "<<p2.getEnergy()<<std::endl;
           p1.EndOfTurn(m);
      }else{
           p2.setWhosPlaying(false);
           p1.setWhosPlaying(true);
+          ui->drawUi(_window,p1,p2);
           std::cerr << "Player 1, Your turn !" << '\n';
           std::cerr<<"Player 1, Energy : "<<p1.getEnergy()<<std::endl;
           p2.EndOfTurn(m);

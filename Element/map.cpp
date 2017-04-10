@@ -184,7 +184,6 @@ void Map::createWorld(sf::RenderWindow &window){
      for(int i = 0; i< this->_sizeX/32; i++){
           for(int j = 0; j< this->_sizeY/32; j++){
                int k = rand() %3 +1;
-               std::cout << "k: " << k << '\n';
                if(k == 1){
                     Scenery *t = new Tree;
                     _world2[i][j] = *t;
@@ -279,7 +278,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, P
                          std::cout << "This unit is not yours !" << '\n';
                     }
                     ui.drawUi(window,p1,p2);
-                    if((getNameOfElement(pos) == "blue")||(getNameOfElement(pos) == "pink")||(getNameOfElement(pos) == "green")||(getNameOfElement(pos) == "yellow")||(getNameOfElement(pos) == "red")||(getNameOfElement(pos) == "Zedd")) {
+                    if((getNameOfElement(pos) == "blue")||(getNameOfElement(pos) == "pink")||(getNameOfElement(pos) == "green")||(getNameOfElement(pos) == "yellow")||(getNameOfElement(pos) == "red")||(getNameOfElement(pos) == "Zedd")||(getNameOfElement(pos) == "Putties")) {
                          //if (p1.isMineUnit(getElementW1(pos))) {
 
                               _unitSelected = pos;
@@ -326,6 +325,7 @@ Ui::Ui(){
  _state = 0;
  _buttonArray = new sf::Sprite[10];
  _numattack = 0;
+ _unitClicked = -1;
 }
 
 Ui::~Ui(){
@@ -374,8 +374,6 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
      // Rectangle pour effacer l'ui
      sf::RectangleShape clearUi(sf::Vector2f(450, 100));
      // Dessine un carré rouge ou vert pour indiquer qui doit jouer.
-     std::cout<<"TEST DRAW UI : "<<p1.getWhosPlaying()<<std::endl;
-     std::cout<<"TEST DRAW UI : "<<p2.getWhosPlaying()<<std::endl;
      if ((p1.isMineUnit("red"))||(p1.isMineUnit("blue"))||(p1.isMineUnit("yellow"))||(p1.isMineUnit("green"))||(p1.isMineUnit("pink")))
           whosPlaying.setFillColor(sf::Color::Green);
      else
@@ -399,8 +397,19 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
 
      // En fonction de l'unité qu'on a cliqué, on affiche les bons boutons
      // Voir -> setUnitClicked pour les valeurs des unités.
-     std::cout<<"TEST DRAW UI 2 : "<<p1.getWhosPlaying()<<std::endl;
-     std::cout<<"TEST DRAW UI 2: "<<p2.getWhosPlaying()<<std::endl;
+
+     // Reset
+     std::cout << "reset" << '\n';
+     std::cout << "unitclicked: "<<_unitClicked << '\n';
+     sf::Sprite bidon;
+     for (int i = 0; i < 4; i++) {
+          _buttonArray[i]=bidon;
+     }
+     // On dessine un carré noir pour "effacer" les boutons dessinés.
+     clearUi.setFillColor(sf::Color::Black);
+     clearUi.setPosition(0,600-100);
+     window.draw(clearUi);
+
      switch (_unitClicked) {
           case 0:{ //Red
                std::cout << "now drawing ui's character 0." << '\n';
@@ -606,8 +615,6 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
      }
 
 
-     std::cout<<"TEST DRAW UI 3: "<<p1.getWhosPlaying()<<std::endl;
-     std::cout<<"TEST DRAW UI 3: "<<p2.getWhosPlaying()<<std::endl;
 }
 
 void Ui::setAttack(int a){
