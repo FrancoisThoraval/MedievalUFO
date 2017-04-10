@@ -90,8 +90,7 @@ private:
   int _invocation;
   int _puttiesCalling;
   int _apocalypseHole;
-  Weapon* _thirdWeapon;
-  Weapon* _fourthWeapon;
+
 
 public:
   Zedd ();

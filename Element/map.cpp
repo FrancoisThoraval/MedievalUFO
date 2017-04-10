@@ -94,7 +94,7 @@ void Map::createTile(int x, int y, sf::RenderWindow &window,sf::Texture &t){
           window.draw(s);
           _mapTile[x][y] = s;
      }
-     if (this->getNameOfElement(P) == "putties") {
+     if (this->getNameOfElement(P) == "Putties") {
       //  sf::Sprite s;
       //  s.setTexture(t);
       //  s.setTextureRect(sf::IntRect(409, 844, 32, 32));

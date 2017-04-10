@@ -47,6 +47,8 @@ Unit::Unit(Unit& u){
   this->_movement = u._movement;
   this->_primaryWeapon = u._primaryWeapon;
   this->_secondaryWeapon = u._secondaryWeapon;
+  this->_thirdWeapon = u._thirdWeapon;
+  this->_fourthWeapon = u._fourthWeapon;
   this->_defaultMovement = u._defaultMovement;
 
 }
@@ -342,10 +344,11 @@ void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& 
         }
       }
     } else {
-      std::cout<<"TEST MOOVE ZED"<<std::endl;
-      std::cout<<"NUMATTACK :"<<numattack<<std::endl;
+
       Unit *zed = new Zedd;
-      //std::cout<<"NOM ARME : "<<zed->getThirdW()->getName()<<std::endl;
+      (*zed) = m->getElementW1(posInit);
+      // std::cout<<"NOM ARME : "<<zed->getSecondaryW()->getName()<<std::endl;
+      // std::cout<<"NOM ARME : "<<zed->getThirdW()->getName()<<std::endl;
       zed->setPosition(posInit);
       zed->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
     }
@@ -681,6 +684,7 @@ Zedd::Zedd(){
   _thirdWeapon = new Weapon("PuttiesCalling",0,-1,50);
   _fourthWeapon = new Weapon("ApocalypseHole",1200,0,100);
   setName("Zedd");
+  setPuttiesCalling(0);
   //std::cout<<"ARME : "<<_thirdWeapon->getName()<<std::endl;
 }
 
@@ -795,6 +799,7 @@ void Zedd::Invocation(Position pos, Map *m,Player& p){
 
 
 void Zedd::PuttiesCalling ( Position pos, Map* m,Player& p){
+  std::cout << "IN FCT PUTTIESCALLING" << std::endl;
     if(p.getEnergy()>((this->_thirdWeapon)->getCost())){
       if(this->_puttiesCalling==0){
         Position p1 = pos;
@@ -816,6 +821,7 @@ void Zedd::PuttiesCalling ( Position pos, Map* m,Player& p){
             m->setElementW1(p4,*n1);
             p.setEnergy(p.getEnergy()-(this->_thirdWeapon)->getCost());
             this->_puttiesCalling = 4;
+            std::cout << "TEST A LA FIN DE PUTTIESCALLING" << std::endl;
           } else {
             std::cout<<"There's already something on this tile !"<<std::endl;
           }
