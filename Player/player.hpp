@@ -17,6 +17,7 @@ private:
   Unit *_ownUnit;
   int _sizeOwnUnit;
   bool _isPlaying;
+  int _sizeOwnMax;
 public:
   Player();
   Player (std::string,bool);

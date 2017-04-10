@@ -90,6 +90,7 @@ private:
   int _invocation;
   int _puttiesCalling;
   int _apocalypseHole;
+  bool apoon;
 
 
 public:

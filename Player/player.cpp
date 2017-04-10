@@ -3,16 +3,18 @@
 Player::Player(){
     this->_energy = 100;
     this->_lost = false;
-    this->_ownUnit = new Unit [5];
+    this->_ownUnit = new Unit [1];
     this->_sizeOwnUnit = 0;
     this->_isPlaying = false;
+    this->_sizeOwnMax = 0;
 }
 
 Player::Player(std::string name,bool value){
     this->_energy = 100;
     this->_lost = false;
     this->_name = name;
-    this->_ownUnit = new Unit [5];
+    this->_ownUnit = new Unit [1];
+    this->_sizeOwnMax = 0;
     this->_sizeOwnUnit = 0;
     this->_isPlaying = value;
 }
@@ -55,12 +57,34 @@ void Player::setName(std::string name){
 }
 
 void Player::pushUnit(Unit &u){
-     int i = 0;
-     while (_ownUnit[i].getName() != "") {
-          i++;
+    //int i = 0;
+    std::cout << "/* message */" << std::endl;
+     if(this->_sizeOwnUnit < this->_sizeOwnMax){
+       _ownUnit[_sizeOwnUnit] = u;
+       this->_sizeOwnUnit++;
+     } else {
+       Unit tab[_sizeOwnMax];
+       for(int i =0; i<_sizeOwnMax;i++){
+         tab[i]=_ownUnit[i];
+       }
+       delete[] _ownUnit;
+       this->_ownUnit = new Unit[_sizeOwnMax +1];
+       for(int i =0;i<_sizeOwnMax;i++){
+         _ownUnit[i]=tab[i];
+       }
+       _ownUnit[_sizeOwnMax]=u;
+       _sizeOwnMax++;
+       _sizeOwnUnit++;
      }
-     _ownUnit[i] = u;
-     _sizeOwnUnit++;
+
+
+
+
+    //  while (_ownUnit[i].getName() != "") {
+    //       i++;
+    //  }
+    //  _ownUnit[i] = u;
+    //  _sizeOwnUnit++;
 }
 
 void Player::removeUnit(Unit &u){
@@ -81,7 +105,7 @@ void Player::removeUnit(Unit &u){
 
 bool Player::isMineUnit(const Unit u){
   bool rep = false;
-  for(int i = 0;i<5;i++){
+  for(int i = 0;i<_sizeOwnUnit;i++){
     if(u.getName()==this->_ownUnit[i].getName()){
       rep = true;
     }
@@ -91,7 +115,7 @@ bool Player::isMineUnit(const Unit u){
 
 bool Player::isMineUnit(const std::string name){
   bool rep = false;
-  for(int i = 0;i<5;i++){
+  for(int i = 0;i<_sizeOwnUnit;i++){
     if(name==this->_ownUnit[i].getName()){
       rep = true;
     }
@@ -100,7 +124,7 @@ bool Player::isMineUnit(const std::string name){
 }
 
 void Player::showUnitOwned(){
-     for (int i = 0; i < 5; i++) {
+     for (int i = 0; i < _sizeOwnUnit; i++) {
           std::cout << "["<< _ownUnit[i].getName() << "] -> ";
           std::cout << _ownUnit[i].getMovement() << '\n';
           std::cout<<" : "<<_ownUnit[i].getDefault()<<std::endl;

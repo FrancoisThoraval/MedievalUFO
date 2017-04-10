@@ -210,7 +210,8 @@ void Unit::attack(Unit& u,int W,Player& p,Player &p2,Position posFinal,Map *m){
                 }
               } else {
                 Zedd z;
-                z = m->getElementW1(posInit);
+                //z = m->getElementW1(posInit);
+                std::cout << "/* message */" << std::endl;
                 z.Invocation(posFinal,m,p);
               }
 
@@ -684,7 +685,11 @@ Zedd::Zedd(){
   _thirdWeapon = new Weapon("PuttiesCalling",0,-1,50);
   _fourthWeapon = new Weapon("ApocalypseHole",1200,0,100);
   setName("Zedd");
+  setHealthPoints(500);
   setPuttiesCalling(0);
+  setInvocation(0);
+  setApocalypseHole(0);
+  apoon = false;
   //std::cout<<"ARME : "<<_thirdWeapon->getName()<<std::endl;
 }
 
@@ -813,12 +818,23 @@ void Zedd::PuttiesCalling ( Position pos, Map* m,Player& p){
         if((m->isOnMap(pos))&&(m->isOnMap(p1))&&(m->isOnMap(p2))&&(m->isOnMap(p3))&&(m->isOnMap(p4))){
           if((m->getElementW1(pos).getName()=="")&&(m->getElementW1(p1).getName()=="")&&(m->getElementW1(p2).getName()=="")&& (m->getElementW1(p3).getName()=="")&&(m->getElementW1(p4).getName()=="")){
             Weapon *wp = new Weapon("Default",5,1,20);
-            Unit *n1 = new Putties(50,2,5,wp);
+            Unit *n1 = new Putties;
+            n1->setMovement(3);
             m->setElementW1(pos,*n1);
+            m->getElementW1(pos).setPosition(pos);
+            p.pushUnit(m->getElementW1(pos));
             m->setElementW1(p1,*n1);
+            m->getElementW1(p1).setPosition(p1);
+            p.pushUnit(m->getElementW1(p1));
             m->setElementW1(p2,*n1);
+            m->getElementW1(p2).setPosition(p2);
+            p.pushUnit(m->getElementW1(p2));
             m->setElementW1(p3,*n1);
+            m->getElementW1(p3).setPosition(p3);
+            p.pushUnit(m->getElementW1(p3));
             m->setElementW1(p4,*n1);
+            m->getElementW1(p4).setPosition(p4);
+            p.pushUnit(m->getElementW1(p4));
             p.setEnergy(p.getEnergy()-(this->_thirdWeapon)->getCost());
             this->_puttiesCalling = 4;
             std::cout << "TEST A LA FIN DE PUTTIESCALLING" << std::endl;
@@ -840,17 +856,25 @@ void Zedd::PuttiesCalling ( Position pos, Map* m,Player& p){
 void Zedd::ApocalypseHole(Map *m,Player& p){
 
   static int count = 0;
-  if(this->_apocalypseHole == 0){
-      if(p.getEnergy()>((this->_fourthWeapon)->getCost())){
-        if(count == 0){
+
+  if(this->apoon == false ){
+      if(p.getEnergy() >=((this->_fourthWeapon)->getCost())){
+        std::cout << "/* message */" << std::endl;
+        if(this->apoon == false){
+          std::cout << "/* message2 */" << std::endl;
           m->getElementW2(this->_pos).setName("Lava2");
+          std::cout << "/* message3 */" << std::endl;
           p.setEnergy(p.getEnergy()-(this->_fourthWeapon)->getCost());
-          count++;
+          std::cout << "/* message4 */" << std::endl;
+          //count++;
+          this->apoon = true;
+          std::cout << "map : " <<m->getElementW2(this->_pos).getName()<< std::endl;
         }
       }else {
         std::cout<<"You don't have enough energy"<<std::endl;
       }
     } else {
+      std::cout << "/* message5 */" << std::endl;
       Position p1 ;
       Position p2 ;
       Position p3 ;
