@@ -100,6 +100,8 @@ public:
   int getInvocation()const;
   int getPuttiesCalling()const;
   int getApocalypseHole()const;
+  bool getApoon()const;
+  void setApoon(bool);
 
   void setActiceExpendNade(int);
   void setInvocation(int);

@@ -34,8 +34,10 @@ public:
      Game(int x, int y);
      ~Game();
      void start();
-     void endTurn(Player &, Player &,Map*,Ui*);
+     void endTurn(Player &, Player &,Map*,Ui*,Position);
      void enterName();
+     void LavaDetector(Map*);
+     void LavaDamage(Map*,Player&);
 
 
 };

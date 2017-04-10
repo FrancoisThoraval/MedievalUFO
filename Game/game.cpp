@@ -81,6 +81,7 @@ void Game::gameLoop(){
                     Position posPink(9,13),posRed(7,13),posBlue(8,13),posGreen(10,13),posYellow(11,13);
                     Position posZedd(8,11);
                     pink.setPosition(posPink);
+                    zedd.setPosition(posZedd);
                     std::cout<<"POS PINK : "<<pink.getPosition()<<std::endl;
                     //  std::cout<<"DEFAULT : "<<pink.getDefault()<<std::endl;
                     m.setElementW1(posZedd,zedd);
@@ -127,7 +128,9 @@ void Game::gameLoop(){
                                    }
                                    if(currentEvent.key.code == sf::Keyboard::Return){
                                         std::cerr << "ending turn" << '\n';
-                                        endTurn(p1,p2,&m,&ui);
+                                        endTurn(p1,p2,&m,&ui,posZedd);
+                                        m.drawWorld(_window);
+                                        _window.display();
                                    }
 
                                    if (currentEvent.key.code == sf::Keyboard::F) {
@@ -194,7 +197,91 @@ void Game::showMenu(){
      }
 }
 
-void Game::endTurn(Player &p1, Player &p2,Map *m, Ui *ui){
+void Game::LavaDetector(Map* m){
+  std::cout << "/* message5 */" << std::endl;
+  Position p1 ;
+  Position p2 ;
+  Position p3 ;
+  Position p4 ;
+  Position currentPos;
+  Scenery *lava = new Lava;
+  lava->setName("Lava1");
+  for(int i =0;i<m->getSizeX();i++){
+    for(int j = 0;j< m->getSizeY();j++){
+      currentPos.setX(i);
+      currentPos.setY(j);
+
+      p1 = currentPos;
+      p1.setX(currentPos.getX());
+      p1.setY(currentPos.getY()+1);
+
+      p2 = currentPos;
+      p2.setX(currentPos.getX());
+      p2.setY(currentPos.getY()-1);
+
+      p3 = currentPos;
+      p3.setX(currentPos.getX()+1);
+      p3.setY(currentPos.getY());
+
+      p4 = currentPos;
+      p4.setX(currentPos.getX()-1);
+      p4.setY(currentPos.getY());
+      if((m->getElementW2(currentPos).getName()=="Lava2")){
+
+            if((m->isOnMap(p1))) {
+              m->setElementW2(p1,*lava);
+              //m->getElementW2(p1).setName("Lava1");
+            }
+            if(m->isOnMap(p2)) {
+              m->setElementW2(p2,*lava);
+              //m->getElementW2(p2).setName("Lava1");
+            }
+            if(m->isOnMap(p3)) {
+              m->setElementW2(p3,*lava);
+            //  m->getElementW2(p3).setName("Lava1");
+            }
+            if(m->isOnMap(p4)) {
+              m->setElementW2(p4,*lava);
+              //m->getElementW2(p4).setName("Lava1");
+            }
+
+      }
+    }
+  }
+  lava->setName("Lava2");
+  for(int i =0;i<m->getSizeX();i++){
+    for(int j = 0;j< m->getSizeY();j++){
+      currentPos.setX(i);
+      currentPos.setY(j);
+      if(m->getElementW2(currentPos).getName()=="Lava1"){
+            //m->getElemm-ntW2(currentPos).setName("Lava2");
+            m->setElementW2(currentPos,*lava);
+      }
+    }
+  }
+}
+
+void Game::LavaDamage(Map* m,Player& p){
+  Position currentPos;
+  for(int i =0;i<m->getSizeX()/32;i++){
+    for(int j = 0;j<m->getSizeY()/32;j++){
+      currentPos.setX(i);
+      currentPos.setY(j);
+      if(m->getElementW2(currentPos).getName()=="Lava2"){
+        if(p.isMineUnit(m->getNameOfElement(currentPos))){
+          m->getElementW1(currentPos).setHealthPoints(m->getElementW1(currentPos).getHealthPoints()-1200);
+          if(m->getElementW1(currentPos).getHealthPoints()<=0){
+            Unit u;
+            m->setElementW1(currentPos,u);
+          }
+        }
+      }
+    }
+  }
+}
+
+
+void Game::endTurn(Player &p1, Player &p2,Map *m, Ui *ui,Position posZedd){
      ui->setUnitClicked(-1);
      if (p1.getWhosPlaying()) {
           p1.setWhosPlaying(false);
@@ -202,6 +289,9 @@ void Game::endTurn(Player &p1, Player &p2,Map *m, Ui *ui){
           ui->drawUi(_window,p2,p1);
           std::cerr << "Player 2, Your turn !" << '\n';
           std::cerr<<" Player 2, Energy : "<<p2.getEnergy()<<std::endl;
+          LavaDetector(m);
+          //std::cout << "APOOOON : "<<zed.getApoon() << '\n';
+
           p1.EndOfTurn(m);
      }else{
           p2.setWhosPlaying(false);
@@ -209,6 +299,7 @@ void Game::endTurn(Player &p1, Player &p2,Map *m, Ui *ui){
           ui->drawUi(_window,p1,p2);
           std::cerr << "Player 1, Your turn !" << '\n';
           std::cerr<<"Player 1, Energy : "<<p1.getEnergy()<<std::endl;
+          LavaDamage(m,p1);
           p2.EndOfTurn(m);
      }
 }

@@ -275,6 +275,7 @@ void Unit::attack(Unit& u,int W,Player& p,Player &p2,Position posFinal,Map *m){
 
               Zedd z ;
               z = m->getElementW1(posInit);
+              z.setPosition(posInit);
               z.ApocalypseHole(m,p);
             }
           } else {
@@ -729,6 +730,14 @@ void Zedd::setApocalypseHole(int hole){
   this->_apocalypseHole = hole;
 }
 
+void Zedd::setApoon(bool ap){
+  this->apoon = ap;
+}
+
+bool Zedd::getApoon()const{
+  return(this->apoon);
+}
+
 void Zedd::EnableGrenade(Map m){
   Position currentPos;
   for(int i = 0;i<m.getSizeX();i++){
@@ -803,6 +812,7 @@ void Zedd::Invocation(Position pos, Map *m,Player& p){
 }
 
 
+
 void Zedd::PuttiesCalling ( Position pos, Map* m,Player& p){
   std::cout << "IN FCT PUTTIESCALLING" << std::endl;
     if(p.getEnergy()>((this->_thirdWeapon)->getCost())){
@@ -862,13 +872,16 @@ void Zedd::ApocalypseHole(Map *m,Player& p){
         std::cout << "/* message */" << std::endl;
         if(this->apoon == false){
           std::cout << "/* message2 */" << std::endl;
-          m->getElementW2(this->_pos).setName("Lava2");
+          std::cout << "Position : " <<this->getPosition()<< '\n';
+          Scenery *s = new Lava;
+          s->setName("Lava2");
+          m->setElementW2(this->getPosition(),*s);
+          std::cout << "map : " <<m->getElementW2(this->getPosition()).getName()<< std::endl;
           std::cout << "/* message3 */" << std::endl;
           p.setEnergy(p.getEnergy()-(this->_fourthWeapon)->getCost());
           std::cout << "/* message4 */" << std::endl;
           //count++;
           this->apoon = true;
-          std::cout << "map : " <<m->getElementW2(this->_pos).getName()<< std::endl;
         }
       }else {
         std::cout<<"You don't have enough energy"<<std::endl;

@@ -60,7 +60,7 @@ Hill::~Hill(){
 /*** Methode Lava ***/
 
 Lava::Lava(){
-  this->setName("Lava");
+  this->setName("Lava1");
   this->setTransformation(0);
 }
 

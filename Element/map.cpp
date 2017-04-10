@@ -170,6 +170,13 @@ void Map::createTile(int x, int y, sf::RenderWindow &window,sf::Texture &t){
           s.setPosition(x*32,y*32);
           window.draw(s);
           _mapTile[x][y] = s;
+     } else if(this->getNameOfElement(P) == "Lava2"){
+       sf::Sprite s;
+       s.setTexture(t);
+       s.setTextureRect(sf::IntRect(510, 94, 32, 32));
+       s.setPosition(x*32,y*32);
+       window.draw(s);
+       _mapTile[x][y] = s;
      }
 
 }
@@ -217,7 +224,7 @@ void Map::drawWorld(sf::RenderWindow &window){
 /****************************************/
 
 bool Map::isOnMap(Position pos){
-     if(((pos.getX()<0)||(pos.getX()>_sizeX))&&((pos.getY()<0)||(pos.getY()>_sizeY))) {
+     if(((pos.getX()<0)||(pos.getX()>_sizeX))||((pos.getY()<0)||(pos.getY()>_sizeY))) {
           std::cerr << "You cannot access this position !" << '\n';
           return false;
      }else
