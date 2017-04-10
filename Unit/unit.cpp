@@ -219,9 +219,10 @@ void Unit::attack(Unit& u,int W,Player& p,Player &p2,Position posFinal,Map *m){
             std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
           }
         } else if (W == 3){
-          std::cout<<"Tu veux attaque avec : "<<this->_thirdWeapon->getName()<<std::endl;
-          std::cout<<"Tu as "<<this->_thirdWeapon->getAttackRange()<<" de portée et la cible est a  "<<distance<<std::endl;
-          std::cout<<"Tu as "<<p.getEnergy()<<" et ton arme consomme "<<this->_thirdWeapon->getCost()<<std::endl;
+          std::cout<<"TEST 3EME ARME "<<std::endl;
+          // std::cout<<"Tu veux attaque avec : "<<this->_thirdWeapon->getName()<<std::endl;
+          // std::cout<<"Tu as "<<this->_thirdWeapon->getAttackRange()<<" de portée et la cible est a  "<<distance<<std::endl;
+          // std::cout<<"Tu as "<<p.getEnergy()<<" et ton arme consomme "<<this->_thirdWeapon->getCost()<<std::endl;
           if(p.getEnergy()>((this->_thirdWeapon)->getCost())){
             if((m->getNameOfElement(posInit) != "Putties") && (m->getNameOfElement(posInit) != "Zedd")){
               PowerRanger pr ;
@@ -229,6 +230,7 @@ void Unit::attack(Unit& u,int W,Player& p,Player &p2,Position posFinal,Map *m){
               pr.Transformation(m);
 
             } else {
+              std::cout<<"TEST ATTACK PUTTIESCALLING"<<std::endl;
               Zedd z;
               z = m->getElementW1(posInit);
               z.PuttiesCalling(posFinal,m,p);
@@ -267,6 +269,7 @@ void Unit::attack(Unit& u,int W,Player& p,Player &p2,Position posFinal,Map *m){
                 std::cout<<"Tu n'as pas la capacité disponible"<<std::endl;
               }
             } else {
+
               Zedd z ;
               z = m->getElementW1(posInit);
               z.ApocalypseHole(m,p);
@@ -287,7 +290,7 @@ void Unit::attack(Unit& u,int W,Player& p,Player &p2,Position posFinal,Map *m){
 void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& p,Player &p2){
   int distance = Distance(posInit,posFinal);
   if(p.isMineUnit(m->getElementW1(posInit)) == true){
-    if(m->getNameOfElement(posInit)!="zedd"){
+    if(m->getNameOfElement(posInit)!="Zedd"){
       if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")&&(m->getNameOfElement(posFinal)!="")){
         if(posInit != posFinal){
           if(p.isMineUnit(m->getElementW1(posFinal)) != true){
@@ -304,7 +307,7 @@ void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& 
                 Unit *putties = new Putties;
                 putties->setPosition(posInit);
                 putties->attack(m->getElementW1(posFinal),1,p,p2,posFinal,m);
-              }  else if(m->getNameOfElement(posInit)=="zedd"){
+              }  else if(m->getNameOfElement(posInit)=="Zedd"){
                   Unit *zed = new Zedd;
                   zed->setPosition(posInit);
                   zed->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
@@ -338,8 +341,13 @@ void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& 
           std::cout<<"Pas assez de point de deplacement"<<std::endl;
         }
       }
-    }else {
-
+    } else {
+      std::cout<<"TEST MOOVE ZED"<<std::endl;
+      std::cout<<"NUMATTACK :"<<numattack<<std::endl;
+      Unit *zed = new Zedd;
+      //std::cout<<"NOM ARME : "<<zed->getThirdW()->getName()<<std::endl;
+      zed->setPosition(posInit);
+      zed->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
     }
 
   } else {
@@ -668,15 +676,12 @@ Dino::~Dino(){
 
 Zedd::Zedd(){
   _activeExpendNade = false;
-  this->setHealthPoints(500);
-  _invocation = 0;
-  _puttiesCalling = 0;
-  _apocalypseHole = 10;
-  this->setName("Zedd");
   _primaryWeapon = new Weapon("Grenade",0,-1,100);
   _secondaryWeapon = new Weapon("Invocation",0,-1,50);
   _thirdWeapon = new Weapon("PuttiesCalling",0,-1,50);
   _fourthWeapon = new Weapon("ApocalypseHole",1200,0,100);
+  setName("Zedd");
+  //std::cout<<"ARME : "<<_thirdWeapon->getName()<<std::endl;
 }
 
 Zedd::~Zedd(){

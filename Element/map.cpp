@@ -564,11 +564,11 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
             b1.setPosition(0,600-100);
             //
             b2.setTexture(texture);
-            b2.setTextureRect(sf::IntRect(350,973,50,50)); //PuttiesCalling
+            b2.setTextureRect(sf::IntRect(510,973,50,50)); //Invocation
             b2.setPosition(50,600-100);
             //
             b3.setTexture(texture);
-            b3.setTextureRect(sf::IntRect(510,973,50,50)); //Invocation
+            b3.setTextureRect(sf::IntRect(350,973,50,50)); //PuttiesCalling
             b3.setPosition(100,600-100);
             //
             b4.setTexture(texture);                       //Apocalypse
