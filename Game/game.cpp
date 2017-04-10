@@ -286,6 +286,7 @@ void Game::enterName(){
   }
   std::cout<<"nom complet : "<<nomtest<<std::endl;
   p2.setName(nomtest);
+  p2.setWhosPlaying(false);
 
   bool continuer = true;
   while(continuer){

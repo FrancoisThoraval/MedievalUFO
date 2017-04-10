@@ -38,6 +38,7 @@ std::string Player::getName()const{
 }
 
 void Player::setWhosPlaying(bool value){
+      //std::cout<<"ENTER ON WHOSPLAYING"<<std::endl;
      this->_isPlaying = value;
 }
 

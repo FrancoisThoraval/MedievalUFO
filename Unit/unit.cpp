@@ -168,7 +168,7 @@ void Unit::attack(Unit& u,int W,Player& p,Player &p2,Position posFinal,Map *m){
             std::cout<<"TEST2"<<std::endl;
             std::cout<<"Distnce : "<<distance<<std::endl;
             std::cout<<"range : "<<(this->_primaryWeapon)->getAttackRange()<<std::endl;
-            if(distance <= (this->_primaryWeapon)->getAttackRange()){
+            if((distance <= (this->_primaryWeapon)->getAttackRange()) || (this->_primaryWeapon->getAttackRange()==-1)){
               std::cout<<"TEST3"<<std::endl;
               if(m->getNameOfElement(posInit) != "Zedd"){
                 std::cout<<"TEST4"<<std::endl;
@@ -197,7 +197,7 @@ void Unit::attack(Unit& u,int W,Player& p,Player &p2,Position posFinal,Map *m){
           std::cout<<"Tu as "<<this->_secondaryWeapon->getAttackRange()<<" de portée et la cible est a  "<<distance<<std::endl;
           std::cout<<"Tu as "<<p.getEnergy()<<" et ton arme consomme "<<this->_secondaryWeapon->getCost()<<std::endl;
           if(p.getEnergy()>((this->_secondaryWeapon)->getCost())){
-            if(distance <= (this->_secondaryWeapon)->getAttackRange()){
+            if((distance <= (this->_secondaryWeapon)->getAttackRange()) || (this->_secondaryWeapon->getAttackRange()==-1)){
               if(m->getNameOfElement(posInit) != "Zedd"){
                 u.setHealthPoints(u.getHealthPoints()-this->_secondaryWeapon->getStrengh());
                 p.setEnergy(p.getEnergy()-(this->_secondaryWeapon)->getCost());
@@ -249,7 +249,7 @@ void Unit::attack(Unit& u,int W,Player& p,Player &p2,Position posFinal,Map *m){
               std::cout<<"APRES FCT CHEATEDWEAPONON"<<std::endl;
               if( pr.getCapacityWeapon()==true){
                 std::cout<<"TEST GETCAPACITYWEAPON"<<std::endl;
-                if(distance <= (this->_fourthWeapon)->getAttackRange()){
+                if((distance <= (this->_fourthWeapon)->getAttackRange()) || (this->_fourthWeapon->getAttackRange()==-1)){
                   std::cout<<"TEST RANGE"<<std::endl;
                   u.setHealthPoints(u.getHealthPoints()-this->_fourthWeapon->getStrengh());
                   p.setEnergy(p.getEnergy()-(this->_fourthWeapon)->getCost());
