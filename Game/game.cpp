@@ -70,7 +70,6 @@ void Game::gameLoop(){
                       p2.setName(name);
                       p2.setWhosPlaying(false);
                     */
-                    enterName();
                     //Création des éléments du jeu
                     Map m(800,500);
                     m.createWorld(_window);
@@ -168,6 +167,10 @@ void Game::gameLoop(){
                }
                case 5 : {
                     _window.close();
+               }break;
+               case 6 : {
+                    _window.clear();
+                    enterName();
                }
           }
      }
@@ -185,7 +188,7 @@ void Game::showMenu(){
      m.show(_window);
      m.handleClick(_window);
      switch (m.getMenuChoice()) {
-          case 1: _gameState = 4;
+          case 1: _gameState = 6;
                break;
           case 2: _gameState = 5;
                break;
@@ -287,7 +290,7 @@ void Game::endTurn(Player &p1, Player &p2,Map *m, Ui *ui,Position posZedd){
           p1.setWhosPlaying(false);
           p2.setWhosPlaying(true);
           ui->drawUi(_window,p2,p1);
-          std::cerr << "Player 2, Your turn !" << '\n';
+          std::cerr << p2.getName()<<", Your turn !" << '\n';
           std::cerr<<" Player 2, Energy : "<<p2.getEnergy()<<std::endl;
           LavaDetector(m);
           //std::cout << "APOOOON : "<<zed.getApoon() << '\n';
@@ -297,7 +300,7 @@ void Game::endTurn(Player &p1, Player &p2,Map *m, Ui *ui,Position posZedd){
           p2.setWhosPlaying(false);
           p1.setWhosPlaying(true);
           ui->drawUi(_window,p1,p2);
-          std::cerr << "Player 1, Your turn !" << '\n';
+          std::cerr << p1.getName()<<", Your turn !" << '\n';
           std::cerr<<"Player 1, Energy : "<<p1.getEnergy()<<std::endl;
           LavaDamage(m,p1);
           p2.EndOfTurn(m);
@@ -317,11 +320,15 @@ void Game::enterName(){
   font.loadFromFile("./arial.ttf");
   sf::Text text;
   text.setFont(font);
-  text.setPosition(0,500);
+  text.setPosition(0,0);
   text.setColor(sf::Color::White);
-  text.setCharacterSize(24);
+  text.setCharacterSize(35);
   int k = 0;
   bool end = false;
+  text.setString("Joueur 1, Saisissez votre nom: ");
+  _window.draw(text);
+  _window.display();
+  text.setPosition(0,100);
   while((k<10)&&(end == false)){
 
     while(_window.pollEvent(evenementnom)){
@@ -346,13 +353,14 @@ void Game::enterName(){
   std::cout<<"nom complet : "<<nomtest<<std::endl;
   p1.setName(nomtest);
   p1.setWhosPlaying(true);
-
+  text.setPosition(0,0);
   std::cout <<"=====\nPlayer 2: ";
+  text.setString("Joueur 2, Saisissez votre nom: ");
   _window.draw(text);
   _window.display();
+  text.setPosition(0,100);
   k = 0;
   end = false;
-  text.setPosition(0,550);
   while((k<10)&&(end == false)){
 
     while(_window.pollEvent(evenementnom)){
@@ -372,8 +380,8 @@ void Game::enterName(){
       }
     }
   }
-  std::cout<<"nom complet : "<<nomtest<<std::endl;
-  p2.setName(nomtest);
+  std::cout<<"nom complet : "<<name2<<std::endl;
+  p2.setName(name2);
   p2.setWhosPlaying(false);
 
   bool continuer = true;
@@ -386,6 +394,7 @@ void Game::enterName(){
       }
     }
   }
+  _gameState = 4;
 }
 
 // bool Game::isloose(Map m){

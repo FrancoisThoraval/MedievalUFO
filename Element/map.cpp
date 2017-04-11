@@ -391,11 +391,23 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
      // Rectangle pour effacer l'ui
      sf::RectangleShape clearUi(sf::Vector2f(450, 100));
      // Dessine un carré rouge ou vert pour indiquer qui doit jouer.
-     if ((p1.isMineUnit("red"))||(p1.isMineUnit("blue"))||(p1.isMineUnit("yellow"))||(p1.isMineUnit("green"))||(p1.isMineUnit("pink")))
+     //
+     sf::Font font;
+     font.loadFromFile("./arial.ttf");
+     sf::Text text;
+     text.setFont(font);
+     text.setPosition(0,550);
+     text.setColor(sf::Color::White);
+     text.setCharacterSize(10);
+     //
+     if ((p1.isMineUnit("red"))||(p1.isMineUnit("blue"))||(p1.isMineUnit("yellow"))||(p1.isMineUnit("green"))||(p1.isMineUnit("pink"))){
           whosPlaying.setFillColor(sf::Color::Green);
-     else
+          text.setString(p1.getName());
+     }
+     else{
           whosPlaying.setFillColor(sf::Color::Red);
-
+          text.setString(p1.getName());
+     }
      whosPlaying.setPosition(800-350,600-100);
      // Dessine le bouton demande d'aide du jeu.
      _alpha.setTexture(texture);
@@ -607,6 +619,7 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
             window.draw(b1);
           }
      }
+     window.draw(text);
 }
 
 void Ui::setAttack(int a){
