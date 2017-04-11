@@ -293,11 +293,11 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, P
                               std::cerr << "saving position of unit selected" << '\n';
                               gettimeofday(&fin,NULL);
                               //Advice_ayayay(window,getElementW1(_unitSelected));
-                              while (tempspasse < tempsjeux){
-                                   gettimeofday(&fin,NULL);
-                                   tempspasse = (((fin.tv_sec - debut.tv_sec)*1000000L+fin.tv_usec) - debut.tv_usec);
-                                   tempspasse = (tempspasse/1000)/1000;
-                              }
+                              // while (tempspasse < tempsjeux){
+                              //      gettimeofday(&fin,NULL);
+                              //      tempspasse = (((fin.tv_sec - debut.tv_sec)*1000000L+fin.tv_usec) - debut.tv_usec);
+                              //      tempspasse = (tempspasse/1000)/1000;
+                              // }
                          //}
                          //ui.displayInfoUnit(window,getElementW1(_unitSelected));
 

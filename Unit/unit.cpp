@@ -295,7 +295,7 @@ void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& 
   int distance = Distance(posInit,posFinal);
   if(p.isMineUnit(m->getElementW1(posInit)) == true){
     if(m->getNameOfElement(posInit)!="Zedd"){
-      if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")&&(m->getNameOfElement(posFinal)!="")){
+      if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")&&(m->getNameOfElement(posFinal)!="")&&(m->getNameOfElement(posFinal)!="Lava2")){
         if(posInit != posFinal){
           if(p.isMineUnit(m->getElementW1(posFinal)) != true){
             //(m->getElementW1(posInit)).attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
@@ -798,6 +798,9 @@ void Zedd::Invocation(Position pos, Map *m,Player& p){
           }
           Unit *u = new Putties(hp,mvmt,60,wp);
           m->setElementW1(pos,*u);
+          m->getElementW1(pos).setMovement(mvmt);
+          m->getElementW1(pos).setDefault(mvmt);
+          p.pushUnit(m->getElementW1(pos));
           p.setEnergy(p.getEnergy()-(this->_secondaryWeapon)->getCost());
           this->_invocation= 5;                                  // WARNING WARNING WARNING
         } else {
@@ -830,23 +833,36 @@ void Zedd::PuttiesCalling ( Position pos, Map* m,Player& p){
             Weapon *wp = new Weapon("Default",5,1,20);
             Unit *n1 = new Putties;
             n1->setMovement(3);
+            n1->setDefault(3);
             m->setElementW1(pos,*n1);
+            m->getElementW1(pos).setDefault(3);
             m->getElementW1(pos).setPosition(pos);
             p.pushUnit(m->getElementW1(pos));
+            //
             m->setElementW1(p1,*n1);
+            m->getElementW1(p1).setDefault(3);
             m->getElementW1(p1).setPosition(p1);
             p.pushUnit(m->getElementW1(p1));
+            //
             m->setElementW1(p2,*n1);
+            m->getElementW1(p2).setDefault(3);
             m->getElementW1(p2).setPosition(p2);
             p.pushUnit(m->getElementW1(p2));
+            //
             m->setElementW1(p3,*n1);
+            m->getElementW1(p3).setDefault(3);
             m->getElementW1(p3).setPosition(p3);
             p.pushUnit(m->getElementW1(p3));
+            //
             m->setElementW1(p4,*n1);
+            m->getElementW1(p4).setDefault(3);
             m->getElementW1(p4).setPosition(p4);
             p.pushUnit(m->getElementW1(p4));
+            //
             p.setEnergy(p.getEnergy()-(this->_thirdWeapon)->getCost());
             this->_puttiesCalling = 4;
+            m->getElementW1(pos).setDefault(3);
+            std::cout << "DEFAULT POSITION GETdEFAIULT : " <<m->getElementW1(pos).getDefault()<< std::endl;
             std::cout << "TEST A LA FIN DE PUTTIESCALLING" << std::endl;
           } else {
             std::cout<<"There's already something on this tile !"<<std::endl;
