@@ -111,7 +111,6 @@ void Game::gameLoop(){
                     ui.drawUi(_window,p1,p2);
                     while (_gameState == 4) {
                          _window.display();
-                         // ui.displayInfoPlayer(_window,p);
                          while (_window.pollEvent(currentEvent)) {
                               if (currentEvent.type == sf::Event::Closed) {
                                    _gameState = 5; //End
@@ -353,7 +352,7 @@ void Game::enterName(){
   std::cout<<"nom complet : "<<nomtest<<std::endl;
   p1.setName(nomtest);
   p1.setWhosPlaying(true);
-  _window.clear();  
+  _window.clear();
   text.setPosition(0,0);
   std::cout <<"=====\nPlayer 2: ";
   text.setString("Joueur 2, Saisissez votre nom: ");

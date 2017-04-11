@@ -374,11 +374,15 @@ void Ui::handleClick(sf::RenderWindow &window,Position pos, Map *m){
           i++;
      }
      if(found == false){
-       _numattack = 0;
-       if (_alpha.getGlobalBounds().contains(pos.getX(),pos.getY())) {
-          std::cout << "ayayay" << '\n';
-          Advice_ayayay(window,m->getElementW1(m->getUnitSelected()));
-       }
+          _numattack = 0;
+          std::cout << m->getUnitSelected() << '\n';
+          if ((m->getUnitSelected().getX()>= 0)&&(m->getUnitSelected().getY()>=0)) {
+               if (_alpha.getGlobalBounds().contains(pos.getX(),pos.getY())) {
+                    std::cout << "ayayay" << '\n';
+                    Advice_ayayay(window,m->getElementW1(m->getUnitSelected()));
+               }
+          }else
+               std::cerr << "Please select a unit !" << '\n';
      }
 
 }
@@ -396,18 +400,16 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
      font.loadFromFile("./arial.ttf");
      sf::Text text;
      text.setFont(font);
-     text.setPosition(0,575);
+     text.setPosition(0,585);
      text.setColor(sf::Color::White);
-     text.setCharacterSize(20);
+     text.setCharacterSize(10);
      //
-     if ((p1.isMineUnit("red"))||(p1.isMineUnit("blue"))||(p1.isMineUnit("yellow"))||(p1.isMineUnit("green"))||(p1.isMineUnit("pink"))){
+     text.setString("Turn of: " + p1.getName());
+     if ((p1.isMineUnit("red"))||(p1.isMineUnit("blue"))||(p1.isMineUnit("yellow"))||(p1.isMineUnit("green"))||(p1.isMineUnit("pink")))
           whosPlaying.setFillColor(sf::Color::Green);
-          text.setString(p1.getName());
-     }
-     else{
+     else
           whosPlaying.setFillColor(sf::Color::Red);
-          text.setString(p1.getName());
-     }
+
      whosPlaying.setPosition(800-350,600-100);
      // Dessine le bouton demande d'aide du jeu.
      _alpha.setTexture(texture);
@@ -619,7 +621,20 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
             window.draw(b1);
           }
      }
+
+     // Drawing info for player
      window.draw(text);
+     text.setCharacterSize(15);
+     text.setPosition(205,500);
+     text.setString("Attack Points: " + std::to_string(p1.getEnergy()));
+     window.draw(text);
+
+     //À revoir pasque je sens que ça va être problématique
+     text.setCharacterSize(15);
+     text.setPosition(205,520);
+     text.setString("Movement Points: " + std::to_string(p1.getUnit(_unitClicked).getMovement()));
+     window.draw(text);
+
 }
 
 void Ui::setAttack(int a){
