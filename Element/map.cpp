@@ -396,9 +396,9 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
      font.loadFromFile("./arial.ttf");
      sf::Text text;
      text.setFont(font);
-     text.setPosition(0,550);
+     text.setPosition(0,575);
      text.setColor(sf::Color::White);
-     text.setCharacterSize(10);
+     text.setCharacterSize(20);
      //
      if ((p1.isMineUnit("red"))||(p1.isMineUnit("blue"))||(p1.isMineUnit("yellow"))||(p1.isMineUnit("green"))||(p1.isMineUnit("pink"))){
           whosPlaying.setFillColor(sf::Color::Green);

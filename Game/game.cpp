@@ -353,6 +353,7 @@ void Game::enterName(){
   std::cout<<"nom complet : "<<nomtest<<std::endl;
   p1.setName(nomtest);
   p1.setWhosPlaying(true);
+  _window.clear();  
   text.setPosition(0,0);
   std::cout <<"=====\nPlayer 2: ";
   text.setString("Joueur 2, Saisissez votre nom: ");
