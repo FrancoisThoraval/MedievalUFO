@@ -13,19 +13,24 @@ void Advice_ayayay(sf::RenderWindow& _window,T type){
   int y;
   // t.loadFromFile("./Textures/LPC_Terrain/terrain.png");
   // sf::Sprite s;
-  // sf::Text text;
+   sf::Text text;
+   sf::Font font;
+   text.setFont(font);
+   font.loadFromFile("./arial.ttf");
+   text.setColor(sf::Color::White);
+   text.setCharacterSize(15);
   // s.setTexture(t);
   // s.setTextureRect(sf::IntRect());
   // s.setPosition(x*50,y*50);
   // _window.draw(s);
 
   if(type.getName()=="Zedd"){
-     Zedd zed;
-     zed = type;
-
-    // text.setString("C'est Zedd ! il lui reste :"+std::to_string(zed.getHealthPoints()));
-    // text.setPosition();
-    std::cout << "c'est zedd magle" << '\n';
+    std::cout << "TEST AYAYAYAYY" << std::endl;
+    text.setString("HP :"+std::to_string(type.getHealthPoints()));
+    text.setPosition(340,500);
+    _window.draw(text);
+    _window.display();
+    
   } else if(type.getName()=="Putties"){
     Putties pu;
     pu = type;
