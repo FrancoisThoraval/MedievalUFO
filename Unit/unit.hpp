@@ -109,7 +109,7 @@ public:
   void setApocalypseHole(int);
 
   void ThrowExtendNade(Position,Map*,Player&);
-  void EnableGrenade(Map);
+  void EnableGrenade(Map*);
   void Invocation(Position,Map*,Player&);
   void PuttiesCalling(Position,Map*,Player&);
   void ApocalypseHole(Map*,Player&);

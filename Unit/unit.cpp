@@ -166,7 +166,7 @@ void Unit::attack(Unit& u,int W,Player& p,Player &p2,Position posFinal,Map *m){
           std::cout<<"Tu as "<<p.getEnergy()<<" et ton arme consomme "<<this->_primaryWeapon->getCost()<<std::endl;
           std::cout<<"TEST1"<<std::endl;
           std::cout<<"p.getener : "<<p.getEnergy()<<std::endl;
-          if(p.getEnergy()>(this->getPrimaryW())->getCost()){
+          if(p.getEnergy()>=(this->getPrimaryW())->getCost()){
             std::cout<<"TEST2"<<std::endl;
             std::cout<<"Distnce : "<<distance<<std::endl;
             std::cout<<"range : "<<(this->_primaryWeapon)->getAttackRange()<<std::endl;
@@ -738,14 +738,14 @@ bool Zedd::getApoon()const{
   return(this->apoon);
 }
 
-void Zedd::EnableGrenade(Map m){
+void Zedd::EnableGrenade(Map* m){
   Position currentPos;
-  for(int i = 0;i<m.getSizeX();i++){
-    for(int j=0;j<m.getSizeY();j++){
+  for(int i = 0;i<m->getSizeX();i++){
+    for(int j=0;j<m->getSizeY();j++){
       currentPos.setX(i);
       currentPos.setY(j);
-      if(m.getNameOfElement(currentPos)=="Putties"){
-        if((m.getElementW1(currentPos)).getHealthPoints()<= 40){
+      if(m->getNameOfElement(currentPos)=="Putties"){
+        if((m->getElementW1(currentPos)).getHealthPoints()<= 40){
           this->_activeExpendNade = true;
         }
       }
@@ -755,14 +755,15 @@ void Zedd::EnableGrenade(Map m){
 
 
 void Zedd::ThrowExtendNade(Position pos,Map *m,Player& p){
-    this->EnableGrenade(*m);
-    if(p.getEnergy()>((this->_primaryWeapon)->getCost())){
+    this->EnableGrenade(m);
+    if(p.getEnergy()>=((this->_primaryWeapon)->getCost())){
       if(this->getActiveExpendNade()==true){
         if((m->getNameOfElement(pos))=="Putties") {
           (m->getElementW1(pos)).setHealthPoints(1500);
           Weapon *wp = new Weapon("Big attack",200,1,60);
-          (m->getElementW1(pos)).setPrimaryW(wp);
+          m->getElementW1(pos).setPrimaryW(wp);
           p.setEnergy(p.getEnergy()-(this->_primaryWeapon)->getCost());
+          std::cout << "HP : "<<m->getElementW1(pos).getHealthPoints() << '\n';
         } else {
           std::cout <<"Mauvais personnage a boost"<<std::endl;
         }
@@ -779,7 +780,7 @@ void Zedd::ThrowExtendNade(Position pos,Map *m,Player& p){
 void Zedd::Invocation(Position pos, Map *m,Player& p){
     if(p.getEnergy()>((this->_secondaryWeapon)->getCost())){
       if(this->getInvocation() == 0){
-        if(m->getNameOfElement(pos)!= ""){
+        if(m->getElementW1(pos).getName()== ""){
           int hp;
           int mvmt;
           Weapon *wp;

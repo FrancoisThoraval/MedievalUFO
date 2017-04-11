@@ -30,11 +30,14 @@ void Advice_ayayay(sf::RenderWindow& _window,T type){
     text.setPosition(340,500);
     _window.draw(text);
     _window.display();
-    
+
   } else if(type.getName()=="Putties"){
-    Putties pu;
-    pu = type;
-    std::cout << "c'est un put magle" << '\n';
+  
+    std::cout << "TEST AYAYAYAYY" << std::endl;
+    text.setString("HP :"+std::to_string(type.getHealthPoints()));
+    text.setPosition(340,500);
+    _window.draw(text);
+    _window.display();
     // text.setString("C'est un Putties, il lui reste : "+pu.getHealthPoints());
   }  else if (type.getName()=="RobotPR"){
     RobotPR rpr;
