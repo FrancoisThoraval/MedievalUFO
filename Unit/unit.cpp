@@ -106,25 +106,25 @@ void Unit::setPrimaryW(Weapon *wp){
     Weapon *Nwp = new Weapon("Default",5,1,20);
     this->_primaryWeapon = Nwp;
   } else {
-    this->_secondaryWeapon = wp;
+    this->_primaryWeapon = wp;
   }
 }
 
 void Unit::setThirdW(Weapon* wp){
   if(wp == NULL){
     Weapon *Nwp = new Weapon("Default",5,1,20);
-    this->_primaryWeapon = Nwp;
+    this->_thirdWeapon = Nwp;
   } else {
-    this->_secondaryWeapon = wp;
+    *(this->_thirdWeapon )= *wp;
   }
 }
 
 void Unit::setFourthW(Weapon *wp){
   if(wp == NULL){
     Weapon *Nwp = new Weapon("Default",5,1,20);
-    this->_primaryWeapon = Nwp;
+    this->_fourthWeapon = Nwp;
   } else {
-    this->_secondaryWeapon = wp;
+    this->_fourthWeapon = wp;
   }
 }
 
@@ -143,7 +143,7 @@ Weapon* Unit::getFourthW()const{
 void Unit::setSecondaryW(Weapon *wp){
   if(wp == NULL){
     Weapon *Nwp = new Weapon("Default",0,0,0);
-    this->_primaryWeapon = Nwp;
+    this->_secondaryWeapon = Nwp;
   } else {
     this->_secondaryWeapon = wp;
   }
@@ -185,7 +185,7 @@ void Unit::attack(Unit& u,int W,Player& p,Player &p2,Position posFinal,Map *m){
               } else {
                 std::cout<<"TEST6"<<std::endl;
                 Zedd z ;
-                z = m->getElementW1(posInit);
+                //z = m->getElementW1(posInit);
                 z.ThrowExtendNade(posFinal,m,p);
               }
             } else {
@@ -235,7 +235,7 @@ void Unit::attack(Unit& u,int W,Player& p,Player &p2,Position posFinal,Map *m){
             } else {
               std::cout<<"TEST ATTACK PUTTIESCALLING"<<std::endl;
               Zedd z;
-              z = m->getElementW1(posInit);
+              //z = m->getElementW1(posInit)
               z.PuttiesCalling(posFinal,m,p);
             }
           } else {
@@ -248,7 +248,8 @@ void Unit::attack(Unit& u,int W,Player& p,Player &p2,Position posFinal,Map *m){
           if(p.getEnergy()>=((this->_fourthWeapon)->getCost())){
             if((m->getNameOfElement(posInit) != "Putties") && (m->getNameOfElement(posInit) != "Zedd")){
               PowerRanger pr;
-              pr = (*this);
+              //pr = (*this);
+              pr.setPosition(this->_pos);
               // pr = m->getElementW1(posInit);
               pr.CheaterWeaponOn(m);
               std::cout<<"APRES FCT CHEATEDWEAPONON"<<std::endl;
@@ -348,7 +349,7 @@ void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& 
     } else {
 
       Unit *zed = new Zedd;
-      (*zed) = m->getElementW1(posInit);
+      //(*zed) = m->getElementW1(posInit);
       // std::cout<<"NOM ARME : "<<zed->getSecondaryW()->getName()<<std::endl;
       // std::cout<<"NOM ARME : "<<zed->getThirdW()->getName()<<std::endl;
       zed->setPosition(posInit);
@@ -740,8 +741,8 @@ bool Zedd::getApoon()const{
 
 void Zedd::EnableGrenade(Map* m){
   Position currentPos;
-  for(int i = 0;i<m->getSizeX();i++){
-    for(int j=0;j<m->getSizeY();j++){
+  for(int i = 0;i<m->getSizeX()/32;i++){
+    for(int j=0;j<m->getSizeY()/32;j++){
       currentPos.setX(i);
       currentPos.setY(j);
       if(m->getNameOfElement(currentPos)=="Putties"){
@@ -755,15 +756,29 @@ void Zedd::EnableGrenade(Map* m){
 
 
 void Zedd::ThrowExtendNade(Position pos,Map *m,Player& p){
+  std::cout << "TEST GRENADE" << '\n';
     this->EnableGrenade(m);
-    if(p.getEnergy()>=((this->_primaryWeapon)->getCost())){
+    std::cout << "/* message */" << '\n';
+    if(p.getEnergy()>=(getPrimaryW()->getCost())){
+      std::cout << "/* message2 */" << '\n';
       if(this->getActiveExpendNade()==true){
+        std::cout << "/* message3 */" << '\n';
         if((m->getNameOfElement(pos))=="Putties") {
-          (m->getElementW1(pos)).setHealthPoints(1500);
-          Weapon *wp = new Weapon("Big attack",200,1,60);
-          m->getElementW1(pos).setPrimaryW(wp);
+          std::cout << "/* message4 */" << '\n';
+          // std::cout << "Postition : "<<pos << '\';
+          // m->getElementW1(pos).setHealthPoints(1500);
+          //Weapon *wp = new Weapon("Big attack",200,1,60);
+          //m->getElementW1(pos).setPrimaryW(wp);
+          Weapon *wp = new Weapon("BIGTTACK",200,1,50);
+          Unit *u = new Putties(1500,3,100,wp);
+          m->setElementW1(pos,*u);
+          // m->getElementW1(pos).getPrimaryW()->setName("BIG ATTACK");
+          // m->getElementW1(pos).getPrimaryW()->setStrengh(200);
           p.setEnergy(p.getEnergy()-(this->_primaryWeapon)->getCost());
+          std::cout << "/* message5 */" << '\n';
           std::cout << "HP : "<<m->getElementW1(pos).getHealthPoints() << '\n';
+          std::cout << "/* message6 */" << '\n';
+        //  std::cout << "FORCE : "<<m->getElementW1(pos).getPrimaryW()->getStrengh() << '\n';
         } else {
           std::cout <<"Mauvais personnage a boost"<<std::endl;
         }
@@ -819,7 +834,14 @@ void Zedd::Invocation(Position pos, Map *m,Player& p){
 
 void Zedd::PuttiesCalling ( Position pos, Map* m,Player& p){
   std::cout << "IN FCT PUTTIESCALLING" << std::endl;
-    if(p.getEnergy()>((this->_thirdWeapon)->getCost())){
+  if(getThirdW()==NULL){
+    std::cout << "GROSSE BITYE" << '\n';
+  } else {
+    std::cout << "PAS GROSSE BITE" << '\n';
+  }
+  std::cout << "name : "<<getThirdW()->getName() << '\n';
+    if(p.getEnergy()>=(getThirdW()->getCost())){
+      std::cout << "/* message */" << '\n';
       if(this->_puttiesCalling==0){
         Position p1 = pos;
         p1.setY(pos.getY()+1);
