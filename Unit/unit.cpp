@@ -294,7 +294,7 @@ void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& 
   int distance = Distance(posInit,posFinal);
   if(p.isMineUnit(*(m->getElementW1(posInit))) == true){
     if(m->getNameOfElement(posInit) != "Zedd"){
-      if((m->getNameOfElement(posInit) != "red")&&(numattack == 3)){
+      //if((m->getNameOfElement(posInit) != "red")||(numattack == 3)){
         if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")&&(m->getNameOfElement(posFinal)!="")&&(m->getNameOfElement(posFinal)!="Lava2")){
           if(posInit != posFinal){
             if(p.isMineUnit(*(m->getElementW1(posFinal))) != true){
@@ -333,9 +333,9 @@ void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& 
             std::cout<<"Pas assez de point de deplacement"<<std::endl;
           }
         }
-      } else {
-        m->getElementW1(posInit)->attack(NULL,numattack,p,p2,posFinal,m);
-      }
+      // } else {
+      //   m->getElementW1(posInit)->attack(NULL,numattack,p,p2,posFinal,m);
+      // }
     } else {
       m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
     }
