@@ -14,7 +14,8 @@ void Scenery::setName(std::string name){
   this->_name = name;
 }
 
-std::string Scenery::getName(){
+std::string Scenery::getName()const{
+  // std::cout << "IN FCT GETNAME SCENERY" << '\n';
   return(this->_name);
 }
 

@@ -75,13 +75,25 @@ void Game::gameLoop(){
                     m.createWorld(_window);
                     Ui ui;
                     //Création Unité p1 (power ranger)
-                    Zedd zedd;
-                    PowerRanger pink("pink"), red("red"), blue("blue"), green("green"),yellow("yellow");
+                    // Zedd zedd;
+                    // PowerRanger pink("pink"), red("red"), blue("blue"), green("green"),yellow("yellow");
                     Position posPink(9,13),posRed(7,13),posBlue(8,13),posGreen(10,13),posYellow(11,13);
                     Position posZedd(8,11);
-                    pink.setPosition(posPink);
-                    zedd.setPosition(posZedd);
-                    std::cout<<"POS PINK : "<<pink.getPosition()<<std::endl;
+                    Unit *red = new PowerRanger("red");
+                    Unit *blue = new PowerRanger("blue");
+                    Unit *yellow = new PowerRanger("yellow");
+                    Unit *pink = new PowerRanger("pink");
+                    Unit *green = new PowerRanger("green");
+                    Unit *zedd = new Zedd;
+
+                    // pink.setPosition(posPink);
+                    zedd->setPosition(posZedd);
+                    red->setPosition(posRed);
+                    blue->setPosition(posBlue);
+                    yellow->setPosition(posYellow);
+                    pink->setPosition(posPink);
+                    green->setPosition(posGreen);
+                    std::cout<<"POS PINK : "<<pink->getPosition()<<std::endl;
                     //  std::cout<<"DEFAULT : "<<pink.getDefault()<<std::endl;
                     m.setElementW1(posZedd,zedd);
                     m.setElementW1(posRed,red);
@@ -89,21 +101,21 @@ void Game::gameLoop(){
                     m.setElementW1(posYellow,yellow);
                     m.setElementW1(posBlue,blue);
                     m.setElementW1(posPink,pink);
-                    p1.pushUnit(pink);
-                    p1.pushUnit(red);
-                    p1.pushUnit(blue);
-                    p1.pushUnit(green);
-                    p1.pushUnit(yellow);
-                    p2.pushUnit(zedd);
-                    m.getElementW1(posRed).setDefault(4);
+                    p1.pushUnit(*pink);
+                    p1.pushUnit(*red);
+                    p1.pushUnit(*blue);
+                    p1.pushUnit(*green);
+                    p1.pushUnit(*yellow);
+                    p2.pushUnit(*zedd);
+                    m.getElementW1(posRed)->setDefault(4);
                     // p1.getUnit(1).setDefault(4);
-                    m.getElementW1(posBlue).setDefault(4);
+                    m.getElementW1(posBlue)->setDefault(4);
                     // p1.getUnit(2).setDefault(4);
-                    m.getElementW1(posGreen).setDefault(4);
+                    m.getElementW1(posGreen)->setDefault(4);
                     // p1.getUnit(3).setDefault(4);
-                    m.getElementW1(posYellow).setDefault(4);
+                    m.getElementW1(posYellow)->setDefault(4);
                     // p1.getUnit(4).setDefault(4);
-                    m.getElementW1(posPink).setDefault(4);
+                    m.getElementW1(posPink)->setDefault(4);
                     // p1.getUnit(0).setDefault(4);
 
                     _window.clear(sf::Color(0,0,0));
@@ -250,6 +262,7 @@ void Game::LavaDetector(Map* m){
       }
     }
   }
+  std::cout << "middle of lava detector" << '\n';
   lava->setName("Lava2");
   for(int i =0;i<m->getSizeX();i++){
     for(int j = 0;j< m->getSizeY();j++){
@@ -261,6 +274,7 @@ void Game::LavaDetector(Map* m){
       }
     }
   }
+  std::cout << "FIN DE LVADETECTOR" << '\n';
 }
 
 void Game::LavaDamage(Map* m,Player& p){
@@ -270,12 +284,15 @@ void Game::LavaDamage(Map* m,Player& p){
       currentPos.setX(i);
       currentPos.setY(j);
       if(m->getElementW2(currentPos).getName()=="Lava2"){
-        if(p.isMineUnit(m->getNameOfElement(currentPos))){
-          m->getElementW1(currentPos).setHealthPoints(m->getElementW1(currentPos).getHealthPoints()-1200);
-          if(m->getElementW1(currentPos).getHealthPoints()<=0){
-            Unit u;
-            m->setElementW1(currentPos,u);
+        if(m->getElementW1(currentPos)!= NULL){
+          if(p.isMineUnit(m->getNameOfElement(currentPos))){
+            m->getElementW1(currentPos)->setHealthPoints(m->getElementW1(currentPos)->getHealthPoints()-1200);
+            if(m->getElementW1(currentPos)->getHealthPoints()<=0){
+              Unit *u = new Unit;
+              m->setElementW1(currentPos,u);
+            }
           }
+
         }
       }
     }

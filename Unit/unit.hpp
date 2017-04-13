@@ -58,7 +58,7 @@ public:
   void setThirdW(Weapon*);
   void setFourthW(Weapon*);
   /** Methode **/
-  void attack(Unit&,int,Player&,Player&,Position,Map*);
+  virtual void attack(Unit*,int,Player&,Player&,Position,Map*){std::cout << "TU ATTAQUE AVEC UNIT " << '\n';}//Unit&,int,Player&,Player&,Position,Map*);
   void move(Position,Position,Map*,int,Player&,Player&);
   friend class Weapon;
   Unit& operator=(Unit& u){
@@ -113,6 +113,7 @@ public:
   void Invocation(Position,Map*,Player&);
   void PuttiesCalling(Position,Map*,Player&);
   void ApocalypseHole(Map*,Player&);
+  void attack(Unit*,int,Player&,Player& ,Position,Map*);
   Zedd& operator=(const Unit& u){
     this->setName(u.getName());
     this->setHealthPoints(u.getHealthPoints());
@@ -137,7 +138,7 @@ public:
   Putties ();
   ~Putties ();
   Putties(int,int,int,Weapon*,std::string= "Putties"); //hp,mvmt,price,arme
-  void attack(Unit&,int,Player&,Position);
+  virtual void attack(Unit*,int,Player&,Player&,Position,Map*);
   Putties& operator=(const Unit& u){
     this->setName(u.getName());
     this->setHealthPoints(u.getHealthPoints());
@@ -168,9 +169,9 @@ public:
   bool getCapacityWeapon()const;
   int getDefault()const;
   void TornadoDino(Map*,Position);
-  //void attack(Unit &, int,Player&,Map *m,Position);
+  virtual void attack(Unit*,int,Player&,Player&,Position,Map*);
   void BeTogether(Map*,Position,bool*,bool*);
-  void Transformation(Map*);
+  void Transformation(Map*,Player&);
   void CheaterWeaponOn(Map*);
   PowerRanger& operator=(const Unit& u){
     this->setName(u.getName());
@@ -247,7 +248,7 @@ public:
   virtual ~RobotPR ();
   int getArmor()const;
   void setArmor(int);
-  //void attack(Unit&, int,Player&, Position );
+  virtual void attack(Unit*,int,Player&,Player&,Position,Map*);
   RobotPR& operator=(const Unit& u){
     this->setName(u.getName());
     this->setHealthPoints(u.getHealthPoints());
@@ -266,7 +267,7 @@ private:
 public:
   TurtleTank ();
   virtual ~TurtleTank ();
-  //void attack(Unit&,int,Player&,Position);
+  virtual void attack(Unit*,int,Player&,Player&,Position,Map*);
   TurtleTank& operator=(const Unit& u){
     this->setName(u.getName());
     this->setHealthPoints(u.getHealthPoints());

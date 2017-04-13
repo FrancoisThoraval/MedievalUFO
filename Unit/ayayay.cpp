@@ -24,35 +24,35 @@ void Advice_ayayay(sf::RenderWindow& _window,T type){
   // s.setPosition(x*50,y*50);
   // _window.draw(s);
 
-  if(type.getName()=="Zedd"){
+  if(type->getName()=="Zedd"){
     std::cout << "TEST AYAYAYAYY" << std::endl;
-    text.setString("HP :"+std::to_string(type.getHealthPoints()));
+    text.setString("HP :"+std::to_string(type->getHealthPoints()));
     text.setPosition(340,500);
     _window.draw(text);
     _window.display();
 
-  } else if(type.getName()=="Putties"){
-  
+  } else if(type->getName()=="Putties"){
+
     std::cout << "TEST AYAYAYAYY" << std::endl;
-    text.setString("HP :"+std::to_string(type.getHealthPoints()));
+    text.setString("HP :"+std::to_string(type->getHealthPoints()));
     text.setPosition(340,500);
     _window.draw(text);
     _window.display();
     // text.setString("C'est un Putties, il lui reste : "+pu.getHealthPoints());
-  }  else if (type.getName()=="RobotPR"){
-    RobotPR rpr;
-    rpr = type;
+  }  else if (type->getName()=="RobotPR"){
+    // RobotPR rpr;
+    // rpr = type;
     // text.setString("C'est LE RobotPR, il lui reste : "+std::to_string(rpr.getHealthPoints()));
-  } else if(type.getName()=="TurtleTank"){
-    TurtleTank tt;
-    tt = type;
+  } else if(type->getName()=="TurtleTank"){
+    // TurtleTank tt;
+    // tt = type;
     // text.setString("C'est le ROBOT TORTUE ULTIME !!, il lui reste : "+std::to_string(tt.getHealthPoints()));
   } else {
-    PowerRanger pr;
-    pr = type;
+    // PowerRanger pr;
+    // pr = type;
     // text.setString("C'est un des PowerRanger ! il lui reste "++std::to_string(pr.getHealthPoints()));
     // std::cout<<"GROSSE BITE"<<std::endl;
-    // std::string test = "Il lui reste "+std::to_string(type.getHealthPoints());
+    // std::string test = "Il lui reste "+std::to_string(type->getHealthPoints());
     // std::cout<<test<<std::endl<<"FIN"<<std::endl;;
   }
   // text.setPosition();

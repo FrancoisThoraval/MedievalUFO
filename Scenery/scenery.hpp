@@ -3,6 +3,7 @@
 
 #include "../Element/element.hpp"
 #include <string>
+#include <iostream>
 
 class Scenery;
 class Tree;
@@ -17,7 +18,7 @@ protected:
 public:
   Scenery ();
   ~Scenery ();
-  virtual std::string getName();
+  virtual std::string getName()const;
   void setName(std::string);
 };
 

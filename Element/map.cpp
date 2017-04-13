@@ -11,11 +11,11 @@ Map::Map(int sizeX, int sizeY){
     this->_sizeY = sizeY;
     this->_compttab = 0;
     _tabUnit = new Unit[6];
-    _world1 = new Unit* [_sizeX];
+    _world1 = new Unit** [_sizeX];
     _world2 = new Scenery* [_sizeX];
     _mapTile = new sf::Sprite* [(_sizeX/32)];
     for(int i =0; i <_sizeX;++i){
-        _world1[i]= new Unit[_sizeY];
+        _world1[i]= new Unit*[_sizeY];
         _world2[i]= new Scenery[_sizeY];
     }
     for (int i = 0; i < _sizeX/32; i++) {
@@ -24,6 +24,11 @@ Map::Map(int sizeX, int sizeY){
     _tileClicked = 0;
     _unitSelected.setX(-1);
     _unitSelected.setY(-1);
+    for(int i =0;i<_sizeX;i++){
+      for(int j =0;j<_sizeY;j++){
+        _world1[i][j] = NULL;
+      }
+    }
 }
 
 Map::~Map(){
@@ -37,12 +42,17 @@ Map::~Map(){
      delete[] _tabUnit;
 }
 
-Unit& Map::getElementW1(Position pos)const{
+Unit* Map::getElementW1(Position pos)const{
   return(this->_world1[pos.getX()][pos.getY()]);
 }
 
-void Map::setElementW1(Position pos,Unit &u){
-  this->_world1[pos.getX()][pos.getY()]=u;
+void Map::setElementW1(Position pos,Unit *u){
+  if(u->getName()!= ""){
+
+    this->_world1[pos.getX()][pos.getY()]=u;
+  } else {
+    this->_world1[pos.getX()][pos.getY()] = NULL;
+  }
 }
 
 void Map::setElementW2(Position pos,Scenery &u){
@@ -54,10 +64,18 @@ Scenery Map::getElementW2(Position pos)const{
 }
 
 std::string Map::getNameOfElement(Position pos)const{
-     if (this->getElementW1(pos).getName() == "") {
-          return(this->getElementW2(pos).getName());
-     }else
-          return (this->getElementW1(pos).getName());
+   if(this->getElementW1(pos)!=NULL){
+  //   std::cout << "PAS NUUUUL" << '\n';
+    // if (this->getElementW1(pos)->getName() == "") {
+  //  std::cout << "NAME : "<<getElementW1(pos)->getName() << '\n';
+      return(this->getElementW1(pos)->getName());
+    // }else
+    // return (this->getElementW1(pos)->getName());
+
+  } else {
+    // std::cout << "NUUUUL" << '\n';
+    return(this->getElementW2(pos).getName());
+  }
 }
 
 int Map::getCompt()const{
@@ -219,6 +237,7 @@ void Map::drawWorld(sf::RenderWindow &window){
                createTile(i,j, window,texture);
           }
      }
+     std::cout << "test fin drawworld" << '\n';
 }
 
 /****************************************/
@@ -278,14 +297,17 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, P
                     //window.clear();
                     drawWorld(window);
                     ui.setState(1);
-                    if (p1.isMineUnit(getNameOfElement(pos))) {
-                         ui.setUnitClicked(getNameOfElement(pos));
-                    }else{
-                         std::cout << "TEST zedd health points:"<<getElementW1(pos).getHealthPoints() << '\n';
-                         std::cout << "This unit is not yours !" << '\n';
+                    if(getElementW1(pos)!=NULL){
+                      if (p1.isMineUnit(getNameOfElement(pos))) {
+                        ui.setUnitClicked(getNameOfElement(pos));
+                      }else{
+                        std::cout << "TEST zedd health points:"<<getElementW1(pos)->getHealthPoints() << '\n';
+                        std::cout << "This unit is not yours !" << '\n';
+                      }
+
                     }
                     ui.drawUi(window,p1,p2);
-                    if((getNameOfElement(pos) == "blue")||(getNameOfElement(pos) == "pink")||(getNameOfElement(pos) == "green")||(getNameOfElement(pos) == "yellow")||(getNameOfElement(pos) == "red")||(getNameOfElement(pos) == "Zedd")||(getNameOfElement(pos) == "Putties")) {
+                    if((getNameOfElement(pos) == "blue")||(getNameOfElement(pos) == "pink")||(getNameOfElement(pos) == "green")||(getNameOfElement(pos) == "yellow")||(getNameOfElement(pos) == "red")||(getNameOfElement(pos) == "Zedd")||(getNameOfElement(pos) == "Putties") ||(getNameOfElement(pos)=="RobotPR")) {
                          //if (p1.isMineUnit(getElementW1(pos))) {
 
                               _unitSelected = pos;
@@ -310,7 +332,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, P
 
                     }
                }else{//Si une unité est déjà sélectionnée.
-                    getElementW1(_unitSelected).move(_unitSelected,pos,this,ui.getAttack()+1,p1,p2);
+                    getElementW1(_unitSelected)->move(_unitSelected,pos,this,ui.getAttack()+1,p1,p2);
                     drawWorld(window);
                     _unitSelected.setX(-1);
                     _unitSelected.setY(-1);

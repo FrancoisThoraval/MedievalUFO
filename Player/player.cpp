@@ -142,17 +142,20 @@ void Player::EndOfTurn(Map *m){
 
 void Player::ResetMovement(Map *m){
   Position currentPos;
+  std::cout << "DEBUT RESETMSVMT" << '\n';
   for(int i=0;i<m->getSizeX();i++){
     for(int j=0;j<m->getSizeY();j++){
       currentPos.setX(i);
       currentPos.setY(j);
-      if((m->getNameOfElement(currentPos)!="Hill")&&(m->getNameOfElement(currentPos)!="Water")&&(m->getNameOfElement(currentPos)!="Tree")&&(m->getNameOfElement(currentPos)!="")){
-        (m->getElementW1(currentPos)).setMovement((m->getElementW1(currentPos)).getDefault());
-        std::cout<<"DEFAULT : "<<m->getElementW1(currentPos).getDefault()<<std::endl;
-        std::cout<<"MVMT : "<<m->getElementW1(currentPos).getMovement()<<std::endl;
+      if(m->getElementW1(currentPos)!=NULL){
+      // if((m->getNameOfElement(currentPos)!="Hill")&&(m->getNameOfElement(currentPos)!="Water")&&(m->getNameOfElement(currentPos)!="Tree")&&(m->getNameOfElement(currentPos)!="")&&(m->getNameOfElement(currentPos)!="Lava2")){
+        (m->getElementW1(currentPos))->setMovement((m->getElementW1(currentPos))->getDefault());
+        std::cout<<"DEFAULT : "<<m->getElementW1(currentPos)->getDefault()<<std::endl;
+        std::cout<<"MVMT : "<<m->getElementW1(currentPos)->getMovement()<<std::endl;
       }
     }
   }
+  std::cout << "FIN RESET MVMT" << '\n';
 }
 
 void Player::hasLost(){
