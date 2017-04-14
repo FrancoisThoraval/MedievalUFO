@@ -233,19 +233,4 @@ public:
   }
 
 };
-
-
- la catapulte est une unité qui peut faire de gros dommages a moyennes distances en zone
-
-class Catapulte : public Unit {
-private:
-int _reloadTime;
-public:
-Catapulte ();
-~Catapulte ();
-int getReloadTime()const;
-void setReloadTime(int);
-void attack(Unit&);
-};
-*/
 #endif
