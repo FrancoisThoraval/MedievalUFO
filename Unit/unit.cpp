@@ -1,11 +1,29 @@
 #include "unit.hpp"
 
+/************************************************************************
+*************************************************************************
+COMMENTAIRE :
 
-int Distance(Position posInit,Position posFinal){
-  int max;
-  int min;
-  int max2;
-  int min2;
+
+
+
+
+
+Les fonctions d'attaques sont par unité mais elle reste a peu pres les
+mêmes leurs implementations, je decris la fonction d'attaques pour les
+PUTTIES seulement
+
+
+
+************************************************************************
+***********************************************************************/
+
+
+int Distance(Position posInit,Position posFinal){                      // fonction permettant de calculer la distance entre 2 point dans la map pour les attaques et les deplacementq
+  int max;                                                             // Je recupere la position initial (posInit) et la position final (posFinal)
+  int min;                                                             // je prends le max et le min du X et du Y entre les deux
+  int max2;                                                            // je fais une soustraction entre le max et le min puis max2 et min2 puis une addition entre les deux resultats
+  int min2;                                                            // et je recupere avec cette operation la distance
   if(posInit.getX()>posFinal.getX()){
     max = posInit.getX();
     min = posFinal.getX();
@@ -26,7 +44,7 @@ int Distance(Position posInit,Position posFinal){
 
 /**** METHODE UNIT *****/
 //Constructeur
-Unit::Unit(){
+Unit::Unit(){                                                           // CONSTRUCTEUR UNIT
   _name = "";
   _healthPoints=0;
   _price=0;
@@ -35,11 +53,11 @@ Unit::Unit(){
 }
 
 //Destructeur
-Unit::~Unit(){
+Unit::~Unit(){                                                          // DESTRUCTEUR UNIT
 
 }
 
-Unit::Unit(Unit& u){
+Unit::Unit(Unit& u){                                                    // CONSTRUCTEUR PAR RECOPIE UNIT
 
   this->_name = u._name;
   this->_healthPoints = u._healthPoints;
@@ -53,13 +71,13 @@ Unit::Unit(Unit& u){
 
 }
 
-//Getter
+//***************************************************
+//************ GETTER *******************************
+//***************************************************
 std::string Unit::getName()const{
   // std::cout << "IN FCT GETNAME UNIT" << '\n';
   return(this->_name);
 }
-
-
 
 int Unit::getHealthPoints()const{
   return(this->_healthPoints);
@@ -69,9 +87,34 @@ int Unit::getPrice()const{
   return(this->_price);
 }
 
+int Unit::getMovement()const {
+  return(this->_movement);
+}
 
+Weapon* Unit::getPrimaryW()const{
+  return(this->_primaryWeapon);
+}
 
-//Setter
+Weapon* Unit::getSecondaryW()const{
+  return(this->_secondaryWeapon);
+}
+
+Weapon * Unit::getThirdW()const{
+  return(this->_thirdWeapon);
+}
+
+Weapon* Unit::getFourthW()const{
+  return(this->_fourthWeapon);
+}
+
+int Unit::getDefault()const{
+  return(this->_defaultMovement);
+}
+
+//**************************************************
+//*********** SETTER *******************************
+//**************************************************
+
 void Unit::setName(std::string name){
   this->_name = name;
 }
@@ -90,17 +133,11 @@ void Unit::setPrice(int price){
 }
 
 
-int Unit::getMovement()const {
-  return(this->_movement);
-}
 
 void Unit::setMovement(int mvmt){
   this->_movement = mvmt;
 }
 
-Weapon* Unit::getPrimaryW()const{
-  return(this->_primaryWeapon);
-}
 
 void Unit::setPrimaryW(Weapon *wp){
   if(wp == NULL){
@@ -129,17 +166,6 @@ void Unit::setFourthW(Weapon *wp){
   }
 }
 
-Weapon* Unit::getSecondaryW()const{
-  return(this->_secondaryWeapon);
-}
-
-Weapon * Unit::getThirdW()const{
-  return(this->_thirdWeapon);
-}
-
-Weapon* Unit::getFourthW()const{
-  return(this->_fourthWeapon);
-}
 
 void Unit::setSecondaryW(Weapon *wp){
   if(wp == NULL){
@@ -150,23 +176,22 @@ void Unit::setSecondaryW(Weapon *wp){
   }
 }
 
-int Unit::getDefault()const{
-  return(this->_defaultMovement);
-}
+//****************************************************
+//*********** METHODE ********************************
+//****************************************************
 
 
-
-void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& p,Player &p2){
+void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& p,Player &p2){                                                                                                                                                // Fonction qui permet le deplacement des unité
   int distance = Distance(posInit,posFinal);
   std::cout << "POS INIT :"<<m->getNameOfElement(posInit) << '\n';
   std::cout << "POS FINAL : "<<m->getNameOfElement(posFinal) << '\n';
-  if(p.isMineUnit(*(m->getElementW1(posInit))) == true){
-    if(m->getNameOfElement(posInit) != "Zedd"){
-      if(((m->getNameOfElement(posInit) != "red")||(m->getNameOfElement(posInit)!="blue")||(m->getNameOfElement(posInit)!="yellow")||(m->getNameOfElement(posInit)!="pink")||(m->getNameOfElement(posInit)!="green"))&&(numattack != 3)){
+  if(p.isMineUnit(*(m->getElementW1(posInit))) == true){                                                                                                                                                                                      // je teste en premiere si l'unite qu'on veux deplacer et la notre
+    if(m->getNameOfElement(posInit) != "Zedd"){                                                                                                                                                                                               // je teste en second si l'unité que l'ont veux deplacer n'est PAS zedd car il n'as aucun point de mouvement donc il ne fais qu'attaquer
+      if(((m->getNameOfElement(posInit) != "red")||(m->getNameOfElement(posInit)!="blue")||(m->getNameOfElement(posInit)!="yellow")||(m->getNameOfElement(posInit)!="pink")||(m->getNameOfElement(posInit)!="green"))&&(numattack != 3)){     // ensuite je regarde si je n'ai pas selectionner un des powerranger avec l'attaque numero 3 car c'est une transformation si c'est le cas on attaque aulieux de se deplacer
         std::cout << "POS FINAL : "<<m->getNameOfElement(posFinal) << '\n';
-        if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")&&(m->getNameOfElement(posFinal)!="")&&(m->getNameOfElement(posFinal)!="Lava2")){
-          if(posInit != posFinal){
-            if(p.isMineUnit(*(m->getElementW1(posFinal))) != true){
+        if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")&&(m->getNameOfElement(posFinal)!="")&&(m->getNameOfElement(posFinal)!="Lava2")){             // si la position ou j'ai cliqué n'est pas une unité alors c'est un decors donc on peut se deplacer SEULEMENT si
+          if(posInit != posFinal){                                                                                                                                                                                                            // la position final n'est pas sa propre case
+            if(p.isMineUnit(*(m->getElementW1(posFinal))) != true){                                                                                                                                                                           // Si on veut attaqué alors si l'unité a la position final n'est pas la notres alors on peut attaqué
               //(m->getElementW1(posInit)).attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
               if (m->getNameOfElement(posInit) == "Putties"){
 
@@ -184,11 +209,11 @@ void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& 
           }
 
         } else {
-          if(distance<=this->_movement){
+          if(distance<=this->_movement){                                                                                                                                                                                                      // si on a assez de deplacement on se deplace
             if(distance != 0){
               Unit *u = new Unit();
               int mouvementdefault = m->getElementW1(posInit)->getDefault();
-              m->setElementW1(posFinal,this);
+              m->setElementW1(posFinal,this);                                                                                                                                                                                                 // je  crée un unité vide que je mettrais a l'ancienne position qui mettrat avec la fonction "setElementW1" vide dans le tableaux
               m->setElementW1(posInit,u);
               m->getElementW1(posFinal)->setMovement(m->getElementW1(posFinal)->getMovement()-(distance));
               this->setPosition(posFinal);
@@ -223,7 +248,7 @@ void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& 
 
 /*** Methode Fantassin ***/
 
-Putties::Putties(){
+Putties::Putties(){                                                                                     // CONSTRUCTEUR PUTTIES PAR DEFAULT
 
   this->setName("Putties");
   this->setHealthPoints(50); // les HP du Putties
@@ -234,7 +259,7 @@ Putties::Putties(){
 }
 
 
-Putties::Putties(int hp,int mvmt,int price,Weapon *wp,std::string nom){
+Putties::Putties(int hp,int mvmt,int price,Weapon *wp,std::string nom){                                  // CONSTREUR PUTTIES
   this->setName(nom);
   this->setHealthPoints(hp);
   this->setMovement(mvmt);
@@ -243,24 +268,24 @@ Putties::Putties(int hp,int mvmt,int price,Weapon *wp,std::string nom){
   this->_defaultMovement = this->getMovement();
 }
 
-Putties::~Putties(){
+Putties::~Putties(){                                                                                    // DESTRUCTEUR PUTTIES
 
 }
 
 
-  void Putties::attack(Unit* u,int W ,Player& p,Player& p2,Position posFinal,Map* m){
+  void Putties::attack(Unit* u,int W ,Player& p,Player& p2,Position posFinal,Map* m){                   // Fonction d'attaque de l'unité Putties
     std::cout << "IN FCT PUTTIES ATTAQUE" << '\n';
 Position posInit = this->_pos;
-int distance = Distance(posInit,posFinal);
-  if(W == 1){
-    if(p.getEnergy()>((this->_primaryWeapon)->getCost())){
-      if(distance <= (this->_primaryWeapon)->getAttackRange()) {
-        u->setHealthPoints(u->getHealthPoints()-this->getPrimaryW()->getStrengh());
+int distance = Distance(posInit,posFinal);                                                              // je recupere la distance entre la position de l'unité attaquante et la position à attaquer
+  if(W == 1){                                                                                           // si c'est l'attaque numero 1
+    if(p.getEnergy()>((this->_primaryWeapon)->getCost())){                                              // alors si on a assez d'energie
+      if(distance <= (this->_primaryWeapon)->getAttackRange()) {                                        // alors si on a assez de portée
+        u->setHealthPoints(u->getHealthPoints()-this->getPrimaryW()->getStrengh());                     // on attaques, on enleve un nombre de point de vie egale a la force du numero de l'arme
         p.setEnergy(p.getEnergy()-(this->_primaryWeapon)->getCost());
-        if(u->getHealthPoints()<=0){
+        if(u->getHealthPoints()<=0){                                                                    // si l'unité est morte on la supprimes
             Unit *dead = new Unit;
             m->setElementW1(posFinal,dead);
-            p2.removeUnit(*u);
+            p2.removeUnit(*u);                                                                          // on l'enleve du tableaux des unités alliées
           }
       } else {
         std::cout<<"Tu n'as pas la portee necessaire"<<std::endl;
@@ -279,11 +304,11 @@ int distance = Distance(posInit,posFinal);
 /*** CLASS POWERRANGER ***/
 
 
-PowerRanger::PowerRanger(){
+PowerRanger::PowerRanger(){                                                                               // Constructeur par default powerranger
 
 }
 
-PowerRanger::PowerRanger(std::string color){
+PowerRanger::PowerRanger(std::string color){                                                              // constructeur POWERRANGER suivant sa couleurs
   _capacityRobot = false;
   _capacityWeapon = false;
   _thirdWeapon = new Weapon("RobotTransformation",0,0,100);
@@ -311,13 +336,12 @@ PowerRanger::PowerRanger(std::string color){
 
 }
 
-PowerRanger::~PowerRanger(){
+PowerRanger::~PowerRanger(){                                                                            // DESTRUCTERUR POWERRANGER
 
 }
 
-void PowerRanger::setColor(std::string color){
-  this->_color = color;
-}
+
+/** GETTER **/
 
 std::string PowerRanger::getColor()const{
   return(this->_color);
@@ -325,14 +349,6 @@ std::string PowerRanger::getColor()const{
 
 int PowerRanger::getDefault()const{
   return(this->_defaultMovement);
-}
-
-void PowerRanger::setCapacityRobot(bool cap){
-  this->_capacityRobot = cap;
-}
-
-void PowerRanger::setCapacityWeapon(bool cap){
-  this->_capacityWeapon = cap;
 }
 
 bool PowerRanger::getCapacityRobot()const{
@@ -343,7 +359,23 @@ bool PowerRanger::getCapacityWeapon()const{
   return(this->_capacityWeapon);
 }
 
-  void PowerRanger::attack(Unit* u,int W ,Player& p,Player& p2,Position posFinal,Map* m){
+/** SETTER **/
+
+void PowerRanger::setColor(std::string color){
+  this->_color = color;
+}
+
+void PowerRanger::setCapacityRobot(bool cap){
+  this->_capacityRobot = cap;
+}
+
+void PowerRanger::setCapacityWeapon(bool cap){
+  this->_capacityWeapon = cap;
+}
+
+/** METHODE **/
+
+  void PowerRanger::attack(Unit* u,int W ,Player& p,Player& p2,Position posFinal,Map* m){                           // fonction d'attaque powerranger
     std::cout << "IN FCT POWERRANGER ATTAQUE" << '\n';
     if(u != NULL){
 
@@ -352,9 +384,6 @@ bool PowerRanger::getCapacityWeapon()const{
     Position posInit = this->_pos;
     std::cout << "POS INIT : "<<posInit<<std::endl<<"Pos final :"<<posFinal << '\n';
     int distance = Distance(posInit,posFinal);
-    // std::cout<<"Tu veux attaque avec : "<<this->_secondaryWeapon->getName()<<std::endl;
-    // std::cout<<"Tu as "<<this->_secondaryWeapon->getAttackRange()<<" de portée et la cible est a  "<<distance<<std::endl;
-    // std::cout<<"Tu as "<<p.getEnergy()<<" et ton arme consomme "<<this->_secondaryWeapon->getCost()<<std::endl;
   if(W != -1){
     if(W == 1){
       if(p.getEnergy()>((this->_primaryWeapon)->getCost())){
@@ -417,14 +446,14 @@ bool PowerRanger::getCapacityWeapon()const{
 
 }
 
-void PowerRanger::TornadoDino(Map* m,Position pos){
+void PowerRanger::TornadoDino(Map* m,Position pos){                                                                                                                                                           // Fonction qui invoque un finosaure totalement inutile dans la partie
   if((m->getNameOfElement(pos)=="Tree")||(m->getNameOfElement(pos)=="Hill")||(m->getNameOfElement(pos)=="Water")||(m->getNameOfElement(pos)=="Lava2")||(m->getNameOfElement(pos)=="Lava1")){
     Unit *d = new Dino;
     m->setElementW1(pos,d);
   }
 }
 
-void PowerRanger::BeTogether(Map *m,Position pos,bool* hor, bool* ver){
+void PowerRanger::BeTogether(Map *m,Position pos,bool* hor, bool* ver){                                                   // fonction qui regarde avec la position donnée si dans l'axe X ou l'axe Y si 5 powerranger sont aligné
   int i = 0;
   int k = 0;
   std::cout<<"IN FCT BETOGETHER"<<std::endl;
@@ -450,7 +479,7 @@ void PowerRanger::BeTogether(Map *m,Position pos,bool* hor, bool* ver){
       k++;
     }
   }
-  if(i>=5){
+  if(i>=5){                                                                                                                                                                   // si c'est le cas on renvois l'axe en question
     (*hor)=true;
   } else if(k>=5){
     (*ver)=true;
@@ -461,10 +490,10 @@ void PowerRanger::BeTogether(Map *m,Position pos,bool* hor, bool* ver){
   std::cout<<"TEST FIN BOUCLE BETOGETHER"<<std::endl;
 }
 
-void PowerRanger::Transformation(Map *m,Player&p){
-  std::cout << "DEBUT DCT TRANSFOR" << '\n';
-  Position pos = this->_pos;
-  Position currentPos;
+void PowerRanger::Transformation(Map *m,Player&p){                                                                                                                            // fonction qui transporte les powerranger ( sauf le verts) dans un robotPR
+  std::cout << "DEBUT DCT TRANSFOR" << '\n';                                                                                                                                  // recherche dans l'axe retourné par "betogether"
+  Position pos = this->_pos;                                                                                                                                                  // met les powerranger dans un tableaux pour ne pas les effacé
+  Position currentPos;                                                                                                                                                        // met a la place un robot PR
   Unit *u = new Unit;
 
   Unit *r =  new RobotPR;
@@ -504,7 +533,7 @@ void PowerRanger::Transformation(Map *m,Player&p){
   std::cout << "FIN FCT TRANSFOR" << '\n';
 }
 
-void PowerRanger::CheaterWeaponOn(Map *m){
+void PowerRanger::CheaterWeaponOn(Map *m){                                                              // fonction qui active la capacité arme cheaté
   bool hor = false;
   bool ver = false;
   Position pos = this->_pos;
@@ -523,7 +552,7 @@ void PowerRanger::CheaterWeaponOn(Map *m){
 
 /*** class Dino ***/
 
-Dino::Dino(){
+Dino::Dino(){                                                                                   // constructeur DINO
     this->setName("TornadoDino");
     this->setHealthPoints(150);
     this->setMovement(3);
@@ -531,40 +560,14 @@ Dino::Dino(){
     this->_defaultMovement = this->getMovement();
 }
 
-Dino::~Dino(){
+Dino::~Dino(){                                                                                  // destructeur DINO
 
 }
-
-
-
-/********************************************************/
-
-
-/*** CLASS AYAYAY ASSISTANT ***/
-//
-//
-// AYAYAY_Assistant::AYAYAY_Assistant(){
-//
-// }
-//
-// AYAYAY_Assistant::~AYAYAY_Assistant(){
-//
-// }
-//
-// void AYAYAY_Assistant::setAdvice(std::string advice){
-//   this->_advice = advice;
-// }
-//
-// std::string AYAYAY_Assistant::getAdvice()const{
-//   return(this->_advice);
-// }
-
-/******************************************************/
 
 /**** CLASS ZEDD ***/
 
 
-Zedd::Zedd(){
+Zedd::Zedd(){                                                                                       // constructeur ZEDD
   _activeExpendNade = false;
   _primaryWeapon = new Weapon("Grenade",0,-1,100);
   _secondaryWeapon = new Weapon("Invocation",0,-1,50);
@@ -579,9 +582,11 @@ Zedd::Zedd(){
   //std::cout<<"ARME : "<<_thirdWeapon->getName()<<std::endl;
 }
 
-Zedd::~Zedd(){
+Zedd::~Zedd(){                                                                                    // DESTRUCTEUR ZEDD
 
 }
+
+/** GETTER **/
 
 int Zedd::getActiveExpendNade()const{
   return(this->_activeExpendNade);
@@ -598,6 +603,12 @@ int Zedd::getPuttiesCalling()const{
 int Zedd::getApocalypseHole()const{
   return(this->_apocalypseHole);
 }
+
+bool Zedd::getApoon()const{
+  return(this->apoon);
+}
+
+/** SETTER **/
 
 void Zedd::setActiceExpendNade(int nade){
   this->_activeExpendNade = nade;
@@ -619,11 +630,9 @@ void Zedd::setApoon(bool ap){
   this->apoon = ap;
 }
 
-bool Zedd::getApoon()const{
-  return(this->apoon);
-}
+/** METHODE **/
 
-void Zedd::attack(Unit* u,int W ,Player& p,Player& p2,Position posFinal,Map* m){
+void Zedd::attack(Unit* u,int W ,Player& p,Player& p2,Position posFinal,Map* m){             // fonction d'attaque pour ZEDD
   std::cout << "IN FCT ZEDD ATTAQUE" << '\n';
   if(W != -1){
     if(W == 1){
@@ -640,7 +649,7 @@ void Zedd::attack(Unit* u,int W ,Player& p,Player& p2,Position posFinal,Map* m){
   }
 }
 
-void Zedd::EnableGrenade(Map* m){
+void Zedd::EnableGrenade(Map* m){                                                             // fonction qui regarde si les points de vie d'un serviteur sont en dessous de 40 et si c'estle cas permet l'utilisation de la grenade renforçante
   Position currentPos;
   for(int i = 0;i<m->getSizeX()/32;i++){
     for(int j=0;j<m->getSizeY()/32;j++){
@@ -656,8 +665,8 @@ void Zedd::EnableGrenade(Map* m){
 }
 
 
-void Zedd::ThrowExtendNade(Position pos,Map *m,Player& p){
-  std::cout << "TEST GRENADE" << '\n';
+void Zedd::ThrowExtendNade(Position pos,Map *m,Player& p){                                    // utilisation de la grenade
+  std::cout << "TEST GRENADE" << '\n';                                                        // donne a l'unité plus de point de vie et d'attaque
     this->EnableGrenade(m);
     std::cout << "/* message */" << '\n';
     if(p.getEnergy()>=(getPrimaryW()->getCost())){
@@ -694,9 +703,9 @@ void Zedd::ThrowExtendNade(Position pos,Map *m,Player& p){
 
 
 /**** PAS SUR DE CELLE CI *****/
-void Zedd::Invocation(Position pos, Map *m,Player& p){
-    if(p.getEnergy()>((this->_secondaryWeapon)->getCost())){
-      if(this->getInvocation() == 0){
+void Zedd::Invocation(Position pos, Map *m,Player& p){                                                          // utilisation de la fonction dinvocation
+    if(p.getEnergy()>((this->_secondaryWeapon)->getCost())){                                                    // suivant le decors ou on invoque une creature differente
+      if(this->getInvocation() == 0){                                                                           // et la met dans le tableaux d'unité du joueur
         if(m->getElementW1(pos)==NULL){
           int hp;
           int mvmt;
@@ -720,7 +729,7 @@ void Zedd::Invocation(Position pos, Map *m,Player& p){
 
           p.pushUnit(*(m->getElementW1(pos)));
           p.setEnergy(p.getEnergy()-(this->_secondaryWeapon)->getCost());
-          this->_invocation= 5;                                  // WARNING WARNING WARNING
+          this->_invocation = 5;                                  // WARNING WARNING WARNING
         } else {
           std::cout<<"There's already something on this tile !"<<std::endl;
         }
@@ -734,13 +743,8 @@ void Zedd::Invocation(Position pos, Map *m,Player& p){
 
 
 
-void Zedd::PuttiesCalling ( Position pos, Map* m,Player& p){
-  std::cout << "IN FCT PUTTIESCALLING" << std::endl;
-  if(getThirdW()==NULL){
-    std::cout << "GROSSE BITYE" << '\n';
-  } else {
-    std::cout << "PAS GROSSE BITE" << '\n';
-  }
+void Zedd::PuttiesCalling ( Position pos, Map* m,Player& p){                                                                                                                // fonction d'appel des putties
+  std::cout << "IN FCT PUTTIESCALLING" << std::endl;                                                                                                                        // je prends la position ou on veut les invoqué je regarde si autour de la position il n'y a rien d'autre et si c'est le cas je les invoques
   std::cout << "name : "<<getThirdW()->getName() << '\n';
     if(p.getEnergy()>=(getThirdW()->getCost())){
       std::cout << "/* message */" << '\n';
@@ -807,10 +811,10 @@ void Zedd::PuttiesCalling ( Position pos, Map* m,Player& p){
 }
 
 
-void Zedd::ApocalypseHole(Map *m,Player& p){
-
-  //static int count = 0;
-
+void Zedd::ApocalypseHole(Map *m,Player& p){                                                                // fonction de l'attaque apocalypse
+                                                                                                            // si je la lance pour la premieres fois, la position sur laquelle se trouve ZEDD devient de la lave
+  //static int count = 0;                                                                                   // si ce n'est pas la premiere fois, toute les cases autours d'une case lave se transforme en lave aussi
+                                                                                                            // si une unité enemies a zedd touche la lave, elle pers 1200 point de vie
   if(this->apoon == false ){
       if(p.getEnergy() >=((this->_fourthWeapon)->getCost())){
         std::cout << "/* message */" << std::endl;
@@ -904,7 +908,7 @@ void Zedd::ApocalypseHole(Map *m,Player& p){
 
 // Robot PR
 
-RobotPR::RobotPR(){
+RobotPR::RobotPR(){                                                                                       // constructeur robotPR
   this->setArmor(1000);
   this->setHealthPoints(1000);
   this->setName("RobotPR");
@@ -915,7 +919,7 @@ RobotPR::RobotPR(){
   this->_defaultMovement = this->getMovement();
 }
 
-RobotPR::~RobotPR(){
+RobotPR::~RobotPR(){                                                                                        // destructeur robotPR
 
 }
 
@@ -929,7 +933,7 @@ void RobotPR::setArmor(int armor){
 
 
 
-void RobotPR::TransformationTurtle(Map* m,Player& p,Player& p2,Position pos){
+void RobotPR::TransformationTurtle(Map* m,Player& p,Player& p2,Position pos){                               // transformation identique a la transformation du powerranger en robotpr
   if(p2.getSizeOwnUnit() > 4){
     if(m->getNameOfElement(pos)=="RobotPR"){
       Unit *tt = new TurtleTank;
@@ -943,7 +947,7 @@ void RobotPR::TransformationTurtle(Map* m,Player& p,Player& p2,Position pos){
   }
 }
 
-void RobotPR::attack(Unit* u,int W ,Player& p,Player& p2,Position posFinal,Map* m){
+void RobotPR::attack(Unit* u,int W ,Player& p,Player& p2,Position posFinal,Map* m){                           // fonction attaque du robot pR
     std::cout << "IN FCT ROBOTPR ATTACK" << '\n';
   Position posInit = this->_pos;
   int distance = Distance(posInit,posFinal);
@@ -994,7 +998,7 @@ void RobotPR::attack(Unit* u,int W ,Player& p,Player& p2,Position posFinal,Map* 
 
 /*** TurtleTank ***/
 
-TurtleTank::TurtleTank(){
+TurtleTank::TurtleTank(){                                                                               // constructeur turtletank
     setHealthPoints(10000);
     setArmor(10000);
     setName("TurtleTank");
@@ -1003,11 +1007,11 @@ TurtleTank::TurtleTank(){
     this->_defaultMovement = this->getMovement();
 }
 
-TurtleTank::~TurtleTank(){
+TurtleTank::~TurtleTank(){                                                                              // destructeur turtletank
 
 }
 
-  void TurtleTank::attack(Unit* u,int W ,Player& p,Player& p2,Position posFinal,Map* m){
+  void TurtleTank::attack(Unit* u,int W ,Player& p,Player& p2,Position posFinal,Map* m){                 // fonction attaque du robot pr
   Position posInit = this->_pos;
   int distance = Distance (posInit,posFinal);
     if(p.getEnergy()>=((this->_primaryWeapon)->getCost())){

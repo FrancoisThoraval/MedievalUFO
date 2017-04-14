@@ -9,8 +9,8 @@
 class Unit;
 class Map;
 
-class Player {
-private:
+class Player {                                              // CLASSE DES JOUEURS
+private:                                                    // elle contient son nom, son energy, un tableau pour ranger les unités, la taille et la taille max de ce tableaux et si le joueurs est entrain de joeur en ce moment
   int _energy;
   bool  _lost;
   std::string _name;
@@ -22,7 +22,7 @@ public:
   Player();
   Player (std::string,bool);
   ~Player ();
-
+  /**GETTER**/
   bool getWhosPlaying()const;
   int getEnergy()const;
   bool getLost()const;
@@ -32,13 +32,13 @@ public:
   Unit& getUnit(int);
   int getSizeOwnUnit()const;
 
-
+  /** SETTER **/
   void setWhosPlaying(bool);
   void setEnergy(int);
   void setLost(bool);
   void setName(std::string);
 
-
+  /**METHODE**/
   void pushUnit(Unit &);
   void removeUnit(Unit &);
   void showUnitOwned();

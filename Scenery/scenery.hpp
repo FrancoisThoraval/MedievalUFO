@@ -12,7 +12,7 @@ class Hill;
 
 /** Class principal du decors **/
 
-class Scenery : public Element {
+class Scenery : public Element {                                 // classe principale des decors heritant de element pour sa position
 protected:
   std::string _name;
 public:
@@ -23,7 +23,7 @@ public:
 };
 
 
-class Tree : public Scenery{
+class Tree : public Scenery{                                    // sous classe de SCENERY, decors d'arbre
 private:
   /* Vide */
 public:
@@ -32,7 +32,7 @@ public:
 
 };
 
-class Water : public Scenery {
+class Water : public Scenery {                                     // sous classe de SCENERY, decors d'eau
 private:
   /* Vide */
 public:
@@ -41,7 +41,7 @@ public:
 
 };
 
-class Hill : public Scenery {
+class Hill : public Scenery {                                         // sous classe de SCENERY, decors de colline
 private:
   /* Vide */
 public:
@@ -50,7 +50,7 @@ public:
 
 };
 
-class Lava : public Scenery {
+class Lava : public Scenery {                                         // sous classe de SCENERY, decors de lave                
 private:
   int _waitToTransform;
 public:

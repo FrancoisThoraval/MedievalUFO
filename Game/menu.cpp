@@ -1,6 +1,6 @@
 #include "menu.hpp"
 #include <iostream>
-void Menu::show(sf::RenderWindow &window){
+void Menu::show(sf::RenderWindow &window){                                                                                                          //constructeur menu
      _menuChoice =0;
      window.clear(sf::Color(0,0,0));
      sf::Texture image;
@@ -22,7 +22,7 @@ void Menu::show(sf::RenderWindow &window){
      window.display();
 }
 
-int Menu::checkZone(int x, int y, Button b){
+int Menu::checkZone(int x, int y, Button b){                                                                                                        // fonction qui montre ou on a clické
      std::cout << "testing: x="<< b.rect.left << " y= " <<b.rect.top << '\n';
      if(b.rect.contains(x,y)) {
           // std::cout << "choice: " <<getMenuChoice() << '\n';
@@ -32,7 +32,7 @@ int Menu::checkZone(int x, int y, Button b){
      return 0;
 }
 
-void Menu::handleClick(sf::RenderWindow &window){
+void Menu::handleClick(sf::RenderWindow &window){                                                                                                   // fonction qui gere l'evenement d'ou l'on a cliqué par rapport au menus
      sf::Event menuEvent;
      bool test = true;
      while (test) {

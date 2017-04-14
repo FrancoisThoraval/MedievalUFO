@@ -55,7 +55,7 @@ public:
 /****** Classe d'element, classe mère des unites et des décors, *********/
 
 
-class Element {
+class Element {                                                                                       // class mere des unit et scenery, elle a en variable privé la position des objets qui sont derivé d'elle
 protected:
   Position _pos;
 public:

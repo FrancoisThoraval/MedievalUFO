@@ -4,7 +4,7 @@
 #include <string>
 #include <iostream>
 
-class Weapon {
+class Weapon {                               // classe d'une armes, elle contient sa forces, sa portée, sont nom et son prix
 private:
   int _strengh;
   int _attackRange;
@@ -14,11 +14,12 @@ public:
   Weapon ();
   Weapon(std::string,int,int,int);
   virtual ~Weapon ();
+  /** GETTER **/
   int getStrengh()const;
   int getAttackRange()const;
   int getCost()const;
   std::string getName()const;
-
+  /** SETTER **/
   void setStrengh(int);
   void setAttackRange(int);
   void setCost(int);

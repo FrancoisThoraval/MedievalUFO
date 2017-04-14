@@ -7,7 +7,7 @@
 
 /*******************************************************/
 template<typename T>
-void Advice_ayayay(sf::RenderWindow& _window,T type){
+void Advice_ayayay(sf::RenderWindow& _window,T type){                                                            // fonction qui suivant le type de l'unité en parametre va afficher cest point de vie et d'attaque
   // sf::Texture t;
   int x;
   int y;

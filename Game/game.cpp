@@ -1,22 +1,22 @@
 #include "game.hpp"
 
 #include <iostream>
-Game::Game(int x, int y){
+Game::Game(int x, int y){                                                                                                                   //constructeur game
      _gameState = 0; //Initialization
      _xWindow = x;
      _yWindow = y;
      _isFullScreen = false;
 }
 
-Game::~Game(){
+Game::~Game(){                                                                                                                              // destructeur game
 
 }
 
-void Game::start(){
+void Game::start(){                                                                                                                         //Lancement du jeux
      if (_gameState != 0)
           return;
 
-     _window.create(sf::VideoMode(_xWindow,_yWindow,32),"Power Rangers - Ultimate Battle Simulator (Alpha)",sf::Style::Default);
+     _window.create(sf::VideoMode(_xWindow,_yWindow,32),"Power Rangers - Ultimate Battle Simulator (Alpha)",sf::Style::Default);            // Creation de la fenetre de jeux
      _gameState = 2;
 
      while (!isExiting()) {
@@ -41,7 +41,7 @@ bool Game::isExiting(){
 
 
 
-void Game::gameLoop(){
+void Game::gameLoop(){                                                                                                      // Boucle du jeux
      sf::Event currentEvent;
      while (_window.pollEvent(currentEvent)) {
           std::cout << "isFullscreen: "<< _isFullScreen << '\n';
@@ -77,7 +77,7 @@ void Game::gameLoop(){
                     //Création Unité p1 (power ranger)
                     // Zedd zedd;
                     // PowerRanger pink("pink"), red("red"), blue("blue"), green("green"),yellow("yellow");
-                    Position posPink(9,13),posRed(7,13),posBlue(8,13),posGreen(10,13),posYellow(11,13);
+                    Position posPink(9,13),posRed(7,13),posBlue(8,13),posGreen(10,13),posYellow(11,13);                     //Creation des personnages du jeux
                     Position posZedd(8,11);
                     Unit *red = new PowerRanger("red");
                     Unit *blue = new PowerRanger("blue");
@@ -87,7 +87,7 @@ void Game::gameLoop(){
                     Unit *zedd = new Zedd;
 
                     // pink.setPosition(posPink);
-                    zedd->setPosition(posZedd);
+                    zedd->setPosition(posZedd);                                                                             // placement des joueurs sur la map
                     red->setPosition(posRed);
                     blue->setPosition(posBlue);
                     yellow->setPosition(posYellow);
@@ -124,19 +124,19 @@ void Game::gameLoop(){
                     while (_gameState == 4) {
                          _window.display();
                          while (_window.pollEvent(currentEvent)) {
-                              if (currentEvent.type == sf::Event::Closed) {
+                              if (currentEvent.type == sf::Event::Closed) {                                                                                                                           // evenement si on clique sur la croix rouge
                                    _gameState = 5; //End
                               }
-                              if(currentEvent.type == sf::Event::KeyPressed)
+                              if(currentEvent.type == sf::Event::KeyPressed)                                                                                                                          //evenement si on appuis sur une touche
                               {
 
                                    // Il doit y avoir un souci avec la sfml peut-être qui fais que le code de l'event pour la touche entrée est pris pour celui de la touche echap.
                                    // Si on commente l'event du menu y'a plus le bug du spam de la touche entrée.
-                                   if(currentEvent.key.code == sf::Keyboard::Escape){
+                                   if(currentEvent.key.code == sf::Keyboard::Escape){                                                                                                                   // evenement si cette touche est la touche echape
                                         std::cout << "Opening menu" << '\n';
                                         showMenu(); //Créer un menu spécial
                                    }
-                                   if(currentEvent.key.code == sf::Keyboard::Return){
+                                   if(currentEvent.key.code == sf::Keyboard::Return){                                                                                                                     // evenement si cette touche est latouche entree
                                         std::cerr << "ending turn" << '\n';
                                         endTurn(p1,p2,&m,&ui,posZedd);
                                         m.drawWorld(_window);
@@ -161,7 +161,7 @@ void Game::gameLoop(){
 
                               }
                          }
-                         if (p1.getWhosPlaying()) {
+                         if (p1.getWhosPlaying()) {                                                             // fonction qui permet le jeux a la souris
                            m.handleClick(_window,currentEvent,p1,p2,ui);
 
                          } else if(p2.getWhosPlaying()){
@@ -187,14 +187,14 @@ void Game::gameLoop(){
      }
 }
 
-void Game::showSpashScreen(){
+void Game::showSpashScreen(){                                                                                     // affichage du fond decran du debut
      SplashScreen s;
      s.show(_window);
      _gameState = 3;
 }
 
 
-void Game::showMenu(){
+void Game::showMenu(){                                                                                            // affichage du menus
      Menu m;
      m.show(_window);
      m.handleClick(_window);
@@ -211,7 +211,7 @@ void Game::showMenu(){
      }
 }
 
-void Game::LavaDetector(Map* m){
+void Game::LavaDetector(Map* m){                                                                                  // foction qui fais progresser l'attaque de zed "apocalypse holl"
   std::cout << "/* message5 */" << std::endl;
   Position p1 ;
   Position p2 ;
@@ -277,7 +277,7 @@ void Game::LavaDetector(Map* m){
   std::cout << "FIN DE LVADETECTOR" << '\n';
 }
 
-void Game::LavaDamage(Map* m,Player& p){
+void Game::LavaDamage(Map* m,Player& p){                                                                                    // fonction qui inflige les dommages de l'attaque apocalypse holl
   Position currentPos;
   for(int i =0;i<m->getSizeX()/32;i++){
     for(int j = 0;j<m->getSizeY()/32;j++){
@@ -300,7 +300,7 @@ void Game::LavaDamage(Map* m,Player& p){
 }
 
 
-void Game::endTurn(Player &p1, Player &p2,Map *m, Ui *ui,Position posZedd){
+void Game::endTurn(Player &p1, Player &p2,Map *m, Ui *ui,Position posZedd){                                                 // fonction de game qui passe la main a l'autre joueurs
      ui->setUnitClicked(-1);
      if (p1.getWhosPlaying()) {
           p1.setWhosPlaying(false);
@@ -324,7 +324,7 @@ void Game::endTurn(Player &p1, Player &p2,Map *m, Ui *ui,Position posZedd){
 }
 
 
-void Game::enterName(){
+void Game::enterName(){                                                                                                     // fonction qui permet d'entree les noms des joueurs au debut du jeux
   std::string name2;
   std::cout << "=====\nPlayer 1: ";
   sf::Event evenementnom;

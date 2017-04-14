@@ -21,7 +21,7 @@ class Player;
 class Ui;
 
 
-class Map {
+class Map {                                                                                             // classe map, ou l'on va placer tous les decors, unité ...
 protected:
   Unit ***_world1;
   Scenery **_world2;

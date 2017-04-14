@@ -17,7 +17,7 @@
 // _gameState  ->   3    =    Menu
 // _gameState  ->   4    =    Playing
 // _gameState  ->   5    =    End
-class Game {
+class Game {                                                       // class game, cette classe est la classe du jeux
 private:
      bool isExiting();
      void gameLoop();

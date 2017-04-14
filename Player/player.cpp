@@ -56,8 +56,8 @@ void Player::setName(std::string name){
   this->_name = name;
 }
 
-void Player::pushUnit(Unit &u){
-    //int i = 0;
+void Player::pushUnit(Unit &u){                               // fonction qui rentre dans un tableaux les unités que le joueurs possedes
+    //int i = 0;                                              // c'est un tableaux dynamiques
     std::cout << "/* message */" << std::endl;
      if(this->_sizeOwnUnit < this->_sizeOwnMax){
        _ownUnit[_sizeOwnUnit] = u;
@@ -91,7 +91,7 @@ int Player::getSizeOwnUnit()const{
   return(this->_sizeOwnUnit);
 }
 
-void Player::removeUnit(Unit &u){
+void Player::removeUnit(Unit &u){                                                             // fonction qui supprimes du tableaux une unité qui est morte
      showUnitOwned();
      int i = 0;
      while ((i<_sizeOwnUnit)&&(u.getName()!=_ownUnit[i].getName())) {
@@ -107,7 +107,7 @@ void Player::removeUnit(Unit &u){
 }
 
 
-bool Player::isMineUnit(const Unit u){
+bool Player::isMineUnit(const Unit u){                                                        // fonction qui retournes si une unité passer en parametre est bien a un joueurs
   bool rep = false;
   for(int i = 0;i<_sizeOwnUnit;i++){
     if(u.getName()==this->_ownUnit[i].getName()){
@@ -117,7 +117,7 @@ bool Player::isMineUnit(const Unit u){
   return(rep);
 }
 
-bool Player::isMineUnit(const std::string name){
+bool Player::isMineUnit(const std::string name){                                               // fonction identique a la precedente sauf que c'est un nom qui est passe en parametre
   bool rep = false;
   for(int i = 0;i<_sizeOwnUnit;i++){
     if(name==this->_ownUnit[i].getName()){
@@ -127,7 +127,7 @@ bool Player::isMineUnit(const std::string name){
   return(rep);
 }
 
-void Player::showUnitOwned(){
+void Player::showUnitOwned(){                                                                   // fonction qui parcout le tableaux des unité possedé et qui les affiches
      for (int i = 0; i < _sizeOwnUnit; i++) {
           std::cout << "["<< _ownUnit[i].getName() << "] -> ";
           std::cout << _ownUnit[i].getMovement() << '\n';
@@ -139,12 +139,12 @@ Unit& Player::getUnit(int pos){
   return(this->_ownUnit[pos]);
 }
 
-void Player::EndOfTurn(Map *m){
+void Player::EndOfTurn(Map *m){                                                               // fonction passer son tours elle remet a zero l'energie du joueurs
      this->_energy = 100;
      ResetMovement(m);
 }
 
-void Player::ResetMovement(Map *m){
+void Player::ResetMovement(Map *m){                                                           //fonction qui parcourt toute la map et qui remet a zero le mouvement des untiés
   Position currentPos;
   std::cout << "DEBUT RESETMSVMT" << '\n';
   for(int i=0;i<m->getSizeX();i++){
@@ -162,7 +162,7 @@ void Player::ResetMovement(Map *m){
   std::cout << "FIN RESET MVMT" << '\n';
 }
 
-void Player::hasLost(){
+void Player::hasLost(){                                                                       // fonction qui renvois si un joueurs a perdu ou non
      if (!getLost()) {
           if (_sizeOwnUnit == 0) {
                setLost(true);

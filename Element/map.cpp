@@ -6,8 +6,8 @@
 
 /*** Methode Map ***/
 
-Map::Map(int sizeX, int sizeY){
-    this->_sizeX = sizeX;
+Map::Map(int sizeX, int sizeY){                                                                     //constructeur map
+    this->_sizeX = sizeX;                                                                           // Initialisation de la map de jeux
     this->_sizeY = sizeY;
     this->_compttab = 0;
     _tabUnit = new Unit[6];
@@ -31,7 +31,7 @@ Map::Map(int sizeX, int sizeY){
     }
 }
 
-Map::~Map(){
+Map::~Map(){                                                                                        // destructeur map
      std::cerr << "deleting w1" << '\n';
      delete[] _world1;
      std::cerr << "deleting w2" << '\n';
@@ -63,7 +63,7 @@ Scenery Map::getElementW2(Position pos)const{
     return(this->_world2[pos.getX()][pos.getY()]);
 }
 
-std::string Map::getNameOfElement(Position pos)const{
+std::string Map::getNameOfElement(Position pos)const{                                               // recupere le nom d'un objet
    if(this->getElementW1(pos)!=NULL){
   //   std::cout << "PAS NUUUUL" << '\n';
     // if (this->getElementW1(pos)->getName() == "") {
@@ -99,8 +99,8 @@ void Map::setElement(Position pos,Element* elt){
 
 }
 
-void Map::createTile(int x, int y, sf::RenderWindow &window,sf::Texture &t){
-     // sf::RectangleShape rectangle(sf::Vector2f(32, 32));
+void Map::createTile(int x, int y, sf::RenderWindow &window,sf::Texture &t){                            //fonction qui affecte  a un objets sa texture
+     // sf::RectangleShape rectangle(sf::Vector2f(32, 32));                                             // et la place dans le tableau mapTile pour pouvoir les recuperer plus tard quand on appuis dessus
      Position P;
      P.setX(x);
      P.setY(y);
@@ -213,7 +213,7 @@ void Map::createTile(int x, int y, sf::RenderWindow &window,sf::Texture &t){
 
 }
 
-void Map::createWorld(sf::RenderWindow &window){
+void Map::createWorld(sf::RenderWindow &window){                                                                    // fonction qui crée la map en la remplissant de decors en premeier lieux
      int nbTree =0;
      int nbWater =0;
      int nbHill =0;
@@ -242,7 +242,7 @@ void Map::createWorld(sf::RenderWindow &window){
      }
 }
 
-void Map::drawWorld(sf::RenderWindow &window){
+void Map::drawWorld(sf::RenderWindow &window){                                                                      // fonction qui dessines la map, c'est la fonction de rafrechissemment
      std::cout << "Loading map..." << '\n';
      sf::Texture texture;
      texture.loadFromFile("./Textures/LPC_Terrain/terrain.png");
@@ -256,7 +256,7 @@ void Map::drawWorld(sf::RenderWindow &window){
 
 /****************************************/
 
-bool Map::isOnMap(Position pos){
+bool Map::isOnMap(Position pos){                                                                                    // fonction qui retourne si une posisiton passer en parametre est dans la map ou pas
      if(((pos.getX()<0)||(pos.getX()>_sizeX))||((pos.getY()<0)||(pos.getY()>_sizeY))) {
           std::cerr << "You cannot access this position !" << '\n';
           return false;
@@ -269,8 +269,8 @@ int Map::getSizeX(){return this->_sizeX;}
 void Map::setSizeY(int y){this->_sizeY = y;}
 void Map::setSizeX(int x){this->_sizeX = x;}
 
-void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, Player &p2,Ui& ui){
-     // sf::Event mapEvent =e;
+void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, Player &p2,Ui& ui){                                                                          // fonction qui gere l'evenement au clic de la souris
+     // sf::Event mapEvent =e;                                                                                                                                              // suivant la ou on appuis
      int i = 0;
      int j =0;
      _tileClicked = 0;
@@ -364,7 +364,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, P
 
 }
 
-Position Map::getUnitSelected(){
+Position Map::getUnitSelected(){                                                                                                            // retourne l'unité selecté
      std::cout << "UnitSelected: \n"<< _unitSelected << '\n';
      std::cout << "who is at that position: "<< getNameOfElement(_unitSelected) << '\n';
      return this->_unitSelected;
@@ -391,7 +391,7 @@ int Ui::getState()const{
 }
 
 
-void Ui::handleClick(sf::RenderWindow &window,Position pos, Map *m){
+void Ui::handleClick(sf::RenderWindow &window,Position pos, Map *m){                                                          // fonction qui gere le clic de la souris sur la surface en dessous de la map de jeux, elle permet de recuperer le numero d'attaque
      bool found = false;
      int i =0;
      std::cout << "entering ui event handler" << '\n';
@@ -423,7 +423,7 @@ void Ui::handleClick(sf::RenderWindow &window,Position pos, Map *m){
      }
 
 }
-void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
+void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){                                                                                    // fonction qui dessine l'espace en dessous de la map pour les attaques, ayayay et les info de point de vie et d'energie
      std::cout << "Loading Ui..." << '\n';
      sf::Texture texture;
      texture.loadFromFile("./Textures/LPC_Terrain/terrain.png");
@@ -718,7 +718,7 @@ void Ui::setUnitClicked(int value){
      _unitClicked = value;
 }
 
-void Ui::setUnitClicked(std::string nameOfUnit){
+void Ui::setUnitClicked(std::string nameOfUnit){                                                                  // fonction qui permet d'affecter a une unité un numero 
      if (nameOfUnit == "red") {
           setUnitClicked(0);
      }

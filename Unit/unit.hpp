@@ -2,43 +2,43 @@
 #define unit_hpp
 
 #include "../Element/map.hpp"
-//#include "./zedd.hpp"
 #include "../Element/element.hpp"
 #include "../Player/player.hpp"
 #include "weapon.hpp"
-// #include "ayayay.hpp"
 #include <string>
+// #include "ayayay.hpp"
+//#include "./zedd.hpp"
 
 /***** Classe des unités, class mères de tous les types d'unites ********/
 class Unit;
 class Putties;
 class PowerRanger;
-// class AYAYAY_Assistant;
 class RobotPR;
 class TurtleTank;
 class Zedd;
-
 class Map;
 
+// class AYAYAY_Assistant;
 
-class Unit : public Element {       // Class UNIT, class mere des unité
+
+class Unit : public Element {             // Class UNIT, class mere des unité
 private:
-  std::string _name;
-  int _healthPoints;
-  int _price;
-  int _movement;
+  std::string _name;                     // nom de l'unité
+  int _healthPoints;                     // Point de vie de l'unité
+  int _price;                           // Prix de l'unité
+  int _movement;                        // point de mouvement
 protected:
-  int _defaultMovement;
-  Weapon *_primaryWeapon;
+  int _defaultMovement;                 // Point de mouvement par default
+  Weapon *_primaryWeapon;               // Liste des armes
   Weapon *_secondaryWeapon;
   Weapon *_thirdWeapon;
   Weapon *_fourthWeapon;
 public:
-  Unit ();
-  ~Unit ();
-  Unit(Unit&);
-  std::string getName()const;
+  Unit ();                              //constructeur
+  ~Unit ();                             //Destructeur
+  Unit(Unit&);                          // constructeur par recopie
   /** Getter **/
+  std::string getName()const;
   int getHealthPoints()const;
   int getPrice()const;
   int getMovement()const;
@@ -47,8 +47,8 @@ public:
   Weapon* getThirdW()const;
   Weapon* getFourthW()const;
   int getDefault()const;
-  void setDefault(int);
   /** Setter **/
+  void setDefault(int);
   void setName(std::string);
   void setHealthPoints(int);
   void setPrice(int);
@@ -58,10 +58,10 @@ public:
   void setThirdW(Weapon*);
   void setFourthW(Weapon*);
   /** Methode **/
-  virtual void attack(Unit*,int,Player&,Player&,Position,Map*){std::cout << "TU ATTAQUE AVEC UNIT " << '\n';}//Unit&,int,Player&,Player&,Position,Map*);
-  void move(Position,Position,Map*,int,Player&,Player&);
-  friend class Weapon;
-  Unit& operator=(Unit& u){
+  virtual void attack(Unit*,int,Player&,Player&,Position,Map*){std::cout << "TU ATTAQUE AVEC UNIT " << '\n';}   // fonctionelle virtuelle d'attaque
+  void move(Position,Position,Map*,int,Player&,Player&);                                                        // fonction de deplacement commune a toute les unités
+  friend class Weapon;                                                                                          // class Weapon amie de la classe Unit
+  Unit& operator=(Unit& u) {                                                                                    // Surcharge operataeur d'affectation
     this->_name = u._name;
     this->_healthPoints = u._healthPoints;
     this->_price = u._price;
@@ -73,7 +73,7 @@ public:
 
 class Zedd : public Unit{                    // class heritant de Unit
 private:                                     // class principal "enemie"
-  bool _activeExpendNade;
+  bool _activeExpendNade;                    // booleen  et INT pour utiliser capacité
   int _invocation;
   int _puttiesCalling;
   int _apocalypseHole;
@@ -83,18 +83,19 @@ private:                                     // class principal "enemie"
 public:
   Zedd ();
   ~Zedd ();
+  /** GETTER **/
   int getActiveExpendNade()const;
   int getInvocation()const;
   int getPuttiesCalling()const;
   int getApocalypseHole()const;
   bool getApoon()const;
   void setApoon(bool);
-
+  /** SETTER **/
   void setActiceExpendNade(int);
   void setInvocation(int);
   void setPuttiesCalling(int);
   void setApocalypseHole(int);
-
+  /** Methode **/
   void ThrowExtendNade(Position,Map*,Player&);
   void EnableGrenade(Map*);
   void Invocation(Position,Map*,Player&);
@@ -118,7 +119,7 @@ public:
 
 
 
-class Putties : public Unit {
+class Putties : public Unit {                                                              // sous classe de Unit
 private:
 
 public:
@@ -137,10 +138,10 @@ public:
   }
 };
 
-class PowerRanger : public Unit {
+class PowerRanger : public Unit {                               //sous classe de UNIT
 private:
-  std::string _color;
-  bool _capacityRobot;
+  std::string _color;                                           // indique la couleur du POWERANGER
+  bool _capacityRobot;                                          // BOOLEN pour l'utilisation des capacité
   bool _capacityWeapon;
 
 
@@ -148,13 +149,16 @@ public:
   PowerRanger ();
   PowerRanger (std::string);
   ~PowerRanger();
-  void setColor(std::string);
+  /** GETTER **/
   std::string getColor()const;
   void setCapacityRobot(bool);
   void setCapacityWeapon(bool);
   bool getCapacityRobot()const;
   bool getCapacityWeapon()const;
   int getDefault()const;
+  /** SETTER **/
+  void setColor(std::string);
+  /** METHODE **/
   void TornadoDino(Map*,Position);
   virtual void attack(Unit*,int,Player&,Player&,Position,Map*);
   void BeTogether(Map*,Position,bool*,bool*);
@@ -185,14 +189,17 @@ public:
   ~Dino ();
 };
 
-class RobotPR : public Unit {
+class RobotPR : public Unit {                                           // sous classe d'unité
 private:
-  int _armor;
+  int _armor;                                                            // armure de l'unité
 public:
   RobotPR ();
   virtual ~RobotPR ();
+  /** GETTER **/
   int getArmor()const;
+  /** SETTER **/
   void setArmor(int);
+  /** METHODE **/
   void TransformationTurtle(Map*,Player&,Player&,Position);
   virtual void attack(Unit*,int,Player&,Player&,Position,Map*);
   RobotPR& operator=(const Unit& u){
@@ -207,12 +214,13 @@ public:
   }
 };
 
-class TurtleTank : public RobotPR {
+class TurtleTank : public RobotPR {                                // Sous classe de robotPR heritant lui meme de UNIT
 private:
 
 public:
   TurtleTank ();
   virtual ~TurtleTank ();
+  /** METHODE **/
   virtual void attack(Unit*,int,Player&,Player&,Position,Map*);
   TurtleTank& operator=(const Unit& u){
     this->setName(u.getName());
@@ -226,34 +234,6 @@ public:
 
 };
 
-/* l'archer est une unité qui peut tirer a distance et changer de type de fleches pour faire plus mal
-
-class Archer : public Unit {
-private:
-int _changeArrowTime;
-int _typeOfArrow;
-public:
-Archer ();
-~Archer ();
-void setOnFire();
-void setOnDefault();
-int getTypeOfArrow()const;
-int getChangeOfTime()const;
-void setChangeOnTime(int);
-void attack(Unit&);
-};
-
- le cavalier est une unité qui peut se deplacer sur plusieur cases
-
-class Cavalier : public Unit {
-private:
-
-public:
-Cavalier ();
-~Cavalier ();
-void attack(Unit&);
-
-};
 
  la catapulte est une unité qui peut faire de gros dommages a moyennes distances en zone
 

@@ -1,7 +1,7 @@
 #include "splashScreen.hpp"
 #include <iostream>
 
-void SplashScreen::show(sf::RenderWindow &window){
+void SplashScreen::show(sf::RenderWindow &window){                                                                                                              
      sf::Texture image;
      if (!(image.loadFromFile("./splashScreen.png"))) {
           return;
