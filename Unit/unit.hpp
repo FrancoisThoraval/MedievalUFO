@@ -21,7 +21,7 @@ class Zedd;
 class Map;
 
 
-class Unit : public Element {
+class Unit : public Element {       // Class UNIT, class mere des unité
 private:
   std::string _name;
   int _healthPoints;
@@ -69,23 +69,10 @@ public:
     this->setPosition(u.getPosition());
     return(*this);
   }
-
-  //Unit& operator=( PowerRanger&);
-  //   this->_name = pr._name;
-  //   this->_healthPoints = pr._healthPoints;
-  //   this->_price = pr._price;
-  //   this->_movement = pr._movement;
-  //   this->_defaultMovement = pr._defaultMovement;
-  //   return(*this);
-  // }
-
-
-
-
 };
 
-class Zedd : public Unit{
-private:
+class Zedd : public Unit{                    // class heritant de Unit
+private:                                     // class principal "enemie"
   bool _activeExpendNade;
   int _invocation;
   int _puttiesCalling;
@@ -129,7 +116,7 @@ public:
 };
 
 
-/** le fantassin est une unité de base qui n'as rien de special ... il est nul **/
+
 
 class Putties : public Unit {
 private:
@@ -198,47 +185,6 @@ public:
   ~Dino ();
 };
 
-
-// class AYAYAY_Assistant : public Unit{
-// private:
-//   std::string _advice;
-// public:
-//  AYAYAY_Assistant ();
-//  ~AYAYAY_Assistant ();
-//  void setAdvice(std::string);
-//  std::string getAdvice()const;
-//
-//
-// };
-/*
-class Zedd : public Unit{
-private:
-  bool _activeExpendNade;
-  int _invocation;
-  int _puttiesCalling;
-  int _apocalypseHole;
-  Weapon* _thirdWeapon;
-  Weapon* _fourthWeapon;
-
-public:
-  Zedd ();
-  virtual ~Zedd ();
-  int getActiveExpendNade()const;
-  int getInvocation()const;
-  int getPuttiesCalling()const;
-  int getApocalypseHole()const;
-
-  void setActiceExpendNade(int);
-  void setInvocation(int);
-  void setPuttiesCalling(int);
-  void setApocalypseHole(int);
-
-  void ThrowExtendNade(Position);
-  void Invocation(Position,Map &);
-  //void PuttiesCalling(Position);
-  //void ApocalypseHole();
-};
-*/
 class RobotPR : public Unit {
 private:
   int _armor;
