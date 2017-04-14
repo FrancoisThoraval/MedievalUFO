@@ -53,12 +53,14 @@ public:
   int getSizeY();
   int getCompt()const;
   Unit getTab(int)const;
+  
+
   void setSizeX(int);
   void setSizeY(int);
   void setCompt(int);
   void setInTab(Unit&);
 
-  Position getUnitSelected();
+  Position   getUnitSelected();
 };
 
 

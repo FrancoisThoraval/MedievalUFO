@@ -101,12 +101,12 @@ void Game::gameLoop(){                                                          
                     m.setElementW1(posYellow,yellow);
                     m.setElementW1(posBlue,blue);
                     m.setElementW1(posPink,pink);
-                    p1.pushUnit(*pink);
-                    p1.pushUnit(*red);
-                    p1.pushUnit(*blue);
-                    p1.pushUnit(*green);
-                    p1.pushUnit(*yellow);
-                    p2.pushUnit(*zedd);
+                    p1.pushUnit(pink);
+                    p1.pushUnit(red);
+                    p1.pushUnit(blue);
+                    p1.pushUnit(green);
+                    p1.pushUnit(yellow);
+                    p2.pushUnit(zedd);
                     m.getElementW1(posRed)->setDefault(4);
                     // p1.getUnit(1).setDefault(4);
                     m.getElementW1(posBlue)->setDefault(4);
@@ -307,9 +307,11 @@ void Game::endTurn(Player &p1, Player &p2,Map *m, Ui *ui,Position posZedd){     
           p2.setWhosPlaying(true);
           ui->drawUi(_window,p2,p1);
           std::cerr << p2.getName()<<", Your turn !" << '\n';
+          // Substraction(p2);
           std::cerr<<" Player 2, Energy : "<<p2.getEnergy()<<std::endl;
           LavaDetector(m);
           //std::cout << "APOOOON : "<<zed.getApoon() << '\n';
+
 
           p1.EndOfTurn(m);
      }else{
@@ -319,11 +321,28 @@ void Game::endTurn(Player &p1, Player &p2,Map *m, Ui *ui,Position posZedd){     
           std::cerr << p1.getName()<<", Your turn !" << '\n';
           std::cerr<<"Player 1, Energy : "<<p1.getEnergy()<<std::endl;
           LavaDamage(m,p1);
+
           p2.EndOfTurn(m);
      }
 }
 
 
+// void Game::Substraction(Player& p){
+//   for(int i = 0;i < p.getSizeOwnUnit();i++){
+//     if(p.getUnit(i)->getName() == "Zedd"){
+//     //  std::cout << "Invoc : "<<p.getUnit(i)->getInvocation() << '\n'<<"puttiesclling : "<<p.getUnit(i)->getPuttiesCalling()<<'\n'<<"Apoc : "<<p.getUnit(i)->getApocalypseHole()<<std::endl;
+//       if(p.getUnit(i)->getInvocation()>0 ){
+//         p.getUnit(i)->setInvocation(p.getUnit(i)->getInvocation() - 1);
+//       }
+//       if(p.getUnit(i)->getPuttiesCalling() > 0){
+//         p.getUnit(i)->setPuttiesCalling(p.getUnit(i)->getPuttiesCalling() - 1);
+//       }
+//       if(p.getUnit(i)->getApocalypseHole()>0){
+//         p.getUnit(i)->setApocalypseHole(p.getUnit(i)->getApocalypseHole() - 1);
+//       }
+//     }
+//   }
+// }
 void Game::enterName(){                                                                                                     // fonction qui permet d'entree les noms des joueurs au debut du jeux
   std::string name2;
   std::cout << "=====\nPlayer 1: ";

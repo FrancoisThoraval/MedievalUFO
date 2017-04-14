@@ -38,6 +38,7 @@ public:
      void enterName();
      void LavaDetector(Map*);
      void LavaDamage(Map*,Player&);
+     void Substraction(Player&);
 
 
 };

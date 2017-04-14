@@ -209,6 +209,13 @@ void Map::createTile(int x, int y, sf::RenderWindow &window,sf::Texture &t){    
        s.setPosition(x*32,y*32);
        window.draw(s);
        _mapTile[x][y] = s;
+     } else if(this->getNameOfElement(P) == "TornadoDino"){
+       sf::Sprite s;
+       s.setTexture(t);
+       s.setTextureRect(sf::IntRect(311, 844, 32, 32));
+       s.setPosition(x*32,y*32);
+       window.draw(s);
+       _mapTile[x][y] = s;
      }
 
 }
@@ -366,8 +373,13 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, P
 
 Position Map::getUnitSelected(){                                                                                                            // retourne l'unité selecté
      std::cout << "UnitSelected: \n"<< _unitSelected << '\n';
-     std::cout << "who is at that position: "<< getNameOfElement(_unitSelected) << '\n';
-     return this->_unitSelected;
+     if((_unitSelected.getX()==-1)||(_unitSelected.getY()==-1)){
+        std::cout << "appuis pas sur AYAYAY comme sa toi batard" << '\n';
+     } else {
+
+       std::cout << "who is at that position: "<< getNameOfElement(_unitSelected) << '\n';
+     }
+     return(_unitSelected);
 }
 
 /* ====================  Game UI   ========================== */
@@ -412,15 +424,26 @@ void Ui::handleClick(sf::RenderWindow &window,Position pos, Map *m){            
      }
      if(found == false){
           _numattack = 0;
+          std::cout << "/* message test 1 */" << '\n';
           std::cout << m->getUnitSelected() << '\n';
-          if ((m->getUnitSelected().getX()>= 0)&&(m->getUnitSelected().getY()>=0)) {
-               if (_alpha.getGlobalBounds().contains(pos.getX(),pos.getY())) {
+          std::cout << "/* message2 */" << '\n';
+
+          if((m->getUnitSelected().getX()==-1)||(m->getUnitSelected().getY()==-1)){
+
+            } else {
+
+              if(m->getElementW1(m->getUnitSelected()) != NULL){
+                std::cout << m->getUnitSelected() << '\n';
+                if ((m->getUnitSelected().getX()>= 0)&&(m->getUnitSelected().getY()>=0)) {
+                  if (_alpha.getGlobalBounds().contains(pos.getX(),pos.getY())) {
                     std::cout << "ayayay" << '\n';
                     Advice_ayayay(window,m->getElementW1(m->getUnitSelected()));
-               }
-          }else
-               std::cerr << "Please select a unit !" << '\n';
-     }
+                  }
+                }else
+                std::cerr << "Please select a unit !" << '\n';
+              }
+            }
+          }
 
 }
 void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){                                                                                    // fonction qui dessine l'espace en dessous de la map pour les attaques, ayayay et les info de point de vie et d'energie
@@ -689,20 +712,26 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){              
             //
             window.draw(b1);
           }break;
+          case 9:{
+            std::cout << "now drawing ui's character 8." << '\n';
+            b1.setTexture(texture);
+            b1.setTextureRect(sf::IntRect(616,975,50,50)); //fist
+            b1.setPosition(0,600-100);
+            //
+            _buttonArray[0]=b1;
+            //
+            window.draw(b1);
+          }
      }
 
-     // Drawing info for player
+    // Drawing info for player
      window.draw(text);
      text.setCharacterSize(15);
      text.setPosition(205,500);
-     text.setString("Attack Points: " + std::to_string(p1.getEnergy()));
+     text.setString("Energy : " + std::to_string(p1.getEnergy()));
      window.draw(text);
 
      //À revoir pasque je sens que ça va être problématique
-     text.setCharacterSize(15);
-     text.setPosition(205,520);
-     text.setString("Movement Points: " + std::to_string(p1.getUnit(_unitClicked).getMovement()));
-     window.draw(text);
 
 }
 
@@ -718,7 +747,7 @@ void Ui::setUnitClicked(int value){
      _unitClicked = value;
 }
 
-void Ui::setUnitClicked(std::string nameOfUnit){                                                                  // fonction qui permet d'affecter a une unité un numero 
+void Ui::setUnitClicked(std::string nameOfUnit){                                                                  // fonction qui permet d'affecter a une unité un numero
      if (nameOfUnit == "red") {
           setUnitClicked(0);
      }
@@ -745,5 +774,8 @@ void Ui::setUnitClicked(std::string nameOfUnit){                                
      }
      if(nameOfUnit == "TurtleTank"){
           setUnitClicked(8);
+     }
+     if(nameOfUnit == "TornadoDino"){
+          setUnitClicked(9);
      }
 }

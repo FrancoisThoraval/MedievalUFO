@@ -69,6 +69,24 @@ public:
     this->setPosition(u.getPosition());
     return(*this);
   }
+
+  /** ZEDD **/
+  /**getter**/
+  virtual int getActiveExpendNade()const{return(-1);}
+  virtual int getInvocation()const{return(-1);}
+  virtual int getPuttiesCalling()const{return(-1);}
+  virtual int getApocalypseHole()const{return(-1);}
+  virtual bool getApoon()const{return(true);}
+  virtual void setApoon(bool){}
+  /** SETTER **/
+  virtual void setActiceExpendNade(int){}
+  virtual void setInvocation(int){}
+  virtual void setPuttiesCalling(int){std::cout << "SET PUTTIES CALLNG DE UNIT BIATCH" << '\n';}
+  virtual void setApocalypseHole(int){}
+
+
+
+
 };
 
 class Zedd : public Unit{                    // class heritant de Unit

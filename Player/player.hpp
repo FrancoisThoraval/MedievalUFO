@@ -14,7 +14,7 @@ private:                                                    // elle contient son
   int _energy;
   bool  _lost;
   std::string _name;
-  Unit *_ownUnit;
+  Unit **_ownUnit;
   int _sizeOwnUnit;
   bool _isPlaying;
   int _sizeOwnMax;
@@ -29,7 +29,7 @@ public:
   std::string getName()const;
   bool isMineUnit(const Unit);
   bool isMineUnit(const std::string);
-  Unit& getUnit(int);
+  Unit* getUnit(int);
   int getSizeOwnUnit()const;
 
   /** SETTER **/
@@ -39,11 +39,12 @@ public:
   void setName(std::string);
 
   /**METHODE**/
-  void pushUnit(Unit &);
+  void pushUnit(Unit *);
   void removeUnit(Unit &);
   void showUnitOwned();
   void EndOfTurn(Map*);
   void ResetMovement(Map*);
+
 
   void hasLost();
 };
