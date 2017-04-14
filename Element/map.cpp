@@ -195,6 +195,20 @@ void Map::createTile(int x, int y, sf::RenderWindow &window,sf::Texture &t){
        s.setPosition(x*32,y*32);
        window.draw(s);
        _mapTile[x][y] = s;
+     } else if(this->getNameOfElement(P) == "RobotPR"){
+       sf::Sprite s;
+       s.setTexture(t);
+       s.setTextureRect(sf::IntRect(145, 846, 32, 32));
+       s.setPosition(x*32,y*32);
+       window.draw(s);
+       _mapTile[x][y] = s;
+     } else if(this->getNameOfElement(P) == "TurtleTank"){
+       sf::Sprite s;
+       s.setTexture(t);
+       s.setTextureRect(sf::IntRect(145, 846, 32, 32));
+       s.setPosition(x*32,y*32);
+       window.draw(s);
+       _mapTile[x][y] = s;
      }
 
 }
@@ -307,7 +321,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, P
 
                     }
                     ui.drawUi(window,p1,p2);
-                    if((getNameOfElement(pos) == "blue")||(getNameOfElement(pos) == "pink")||(getNameOfElement(pos) == "green")||(getNameOfElement(pos) == "yellow")||(getNameOfElement(pos) == "red")||(getNameOfElement(pos) == "Zedd")||(getNameOfElement(pos) == "Putties") ||(getNameOfElement(pos)=="RobotPR")) {
+                    if((getNameOfElement(pos) == "blue")||(getNameOfElement(pos) == "pink")||(getNameOfElement(pos) == "green")||(getNameOfElement(pos) == "yellow")||(getNameOfElement(pos) == "red")||(getNameOfElement(pos) == "Zedd")||(getNameOfElement(pos) == "Putties") ||(getNameOfElement(pos)=="RobotPR")||(getNameOfElement(pos)=="TurtleTank")) {
                          //if (p1.isMineUnit(getElementW1(pos))) {
 
                               _unitSelected = pos;
@@ -333,6 +347,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, P
                     }
                }else{//Si une unité est déjà sélectionnée.
                     getElementW1(_unitSelected)->move(_unitSelected,pos,this,ui.getAttack()+1,p1,p2);
+                    ui.setAttack(-1);
                     drawWorld(window);
                     _unitSelected.setX(-1);
                     _unitSelected.setY(-1);
@@ -641,7 +656,39 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){
             _buttonArray[0]=b1;
             // On dessine les boutons
             window.draw(b1);
-          }
+          }break;
+          case 7 : {
+            std::cout << "now drawing ui's character 7." << '\n';
+            b1.setTexture(texture);
+            b1.setTextureRect(sf::IntRect(616,975,50,50)); //fist
+            b1.setPosition(0,600-100);
+            //
+            b2.setTexture(texture);
+            b2.setTextureRect(sf::IntRect(563,975,50,50)); //pistol
+            b2.setPosition(50,600-100);
+            //
+            b3.setTexture(texture);
+            b3.setTextureRect(sf::IntRect(296,973,50,50)); //robot
+            b3.setPosition(100,600-100);
+            // On rempli le tableau de boutons
+            _buttonArray[0]=b1;
+            _buttonArray[1]=b2;
+            _buttonArray[2]=b3;
+            // On dessine les boutons
+            window.draw(b1);
+            window.draw(b2);
+            window.draw(b3);
+          }break;
+          case 8 : {
+            std::cout << "now drawing ui's character 8." << '\n';
+            b1.setTexture(texture);
+            b1.setTextureRect(sf::IntRect(616,975,50,50)); //fist
+            b1.setPosition(0,600-100);
+            //
+            _buttonArray[0]=b1;
+            //
+            window.draw(b1);
+          }break;
      }
 
      // Drawing info for player
@@ -692,5 +739,11 @@ void Ui::setUnitClicked(std::string nameOfUnit){
      }
      if(nameOfUnit == "Putties"){
           setUnitClicked(6);
+     }
+     if(nameOfUnit == "RobotPR"){
+          setUnitClicked(7);
+     }
+     if(nameOfUnit == "TurtleTank"){
+          setUnitClicked(8);
      }
 }

@@ -30,12 +30,14 @@ public:
   bool isMineUnit(const Unit);
   bool isMineUnit(const std::string);
   Unit& getUnit(int);
+  int getSizeOwnUnit()const;
 
 
   void setWhosPlaying(bool);
   void setEnergy(int);
   void setLost(bool);
   void setName(std::string);
+
 
   void pushUnit(Unit &);
   void removeUnit(Unit &);

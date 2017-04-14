@@ -242,12 +242,12 @@ public:
 class RobotPR : public Unit {
 private:
   int _armor;
-
 public:
   RobotPR ();
   virtual ~RobotPR ();
   int getArmor()const;
   void setArmor(int);
+  void TransformationTurtle(Map*,Player&,Player&,Position);
   virtual void attack(Unit*,int,Player&,Player&,Position,Map*);
   RobotPR& operator=(const Unit& u){
     this->setName(u.getName());

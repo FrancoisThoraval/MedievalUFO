@@ -292,9 +292,12 @@ int Unit::getDefault()const{
 
 void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& p,Player &p2){
   int distance = Distance(posInit,posFinal);
+  std::cout << "POS INIT :"<<m->getNameOfElement(posInit) << '\n';
+  std::cout << "POS FINAL : "<<m->getNameOfElement(posFinal) << '\n';
   if(p.isMineUnit(*(m->getElementW1(posInit))) == true){
     if(m->getNameOfElement(posInit) != "Zedd"){
-      //if((m->getNameOfElement(posInit) != "red")||(numattack == 3)){
+      if(((m->getNameOfElement(posInit) != "red")||(m->getNameOfElement(posInit)!="blue")||(m->getNameOfElement(posInit)!="yellow")||(m->getNameOfElement(posInit)!="pink")||(m->getNameOfElement(posInit)!="green"))&&(numattack != 3)){
+        std::cout << "POS FINAL : "<<m->getNameOfElement(posFinal) << '\n';
         if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")&&(m->getNameOfElement(posFinal)!="")&&(m->getNameOfElement(posFinal)!="Lava2")){
           if(posInit != posFinal){
             if(p.isMineUnit(*(m->getElementW1(posFinal))) != true){
@@ -305,6 +308,7 @@ void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& 
               }  else if (m->getNameOfElement(posInit) == "Zedd"){
                 m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
               } else {
+                std::cout << "TEST MOVE 4" << '\n';
                 m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
               }
 
@@ -333,10 +337,12 @@ void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& 
             std::cout<<"Pas assez de point de deplacement"<<std::endl;
           }
         }
-      // } else {
-      //   m->getElementW1(posInit)->attack(NULL,numattack,p,p2,posFinal,m);
-      // }
+      } else {
+        std::cout << "TEST MOVE 1" << '\n';
+        m->getElementW1(posInit)->attack(NULL,numattack,p,p2,posFinal,m);
+      }
     } else {
+      std::cout << "TEST MOVE 2" << '\n';
       m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
     }
 
@@ -1051,6 +1057,7 @@ RobotPR::RobotPR(){
   this->setName("RobotPR");
   _primaryWeapon = new Weapon("Fist",300,1,60);
   _secondaryWeapon = new Weapon("Sword",600,3,100);
+  _thirdWeapon = new Weapon("TURTLE",0,-1,100);
   this->setMovement(5);
   this->_defaultMovement = this->getMovement();
 }
@@ -1067,36 +1074,64 @@ void RobotPR::setArmor(int armor){
   this->_armor = armor;
 }
 
-  void RobotPR::attack(Unit* u,int W ,Player& p,Player& p2,Position posFinal,Map* m){
+
+
+void RobotPR::TransformationTurtle(Map* m,Player& p,Player& p2,Position pos){
+  if(p2.getSizeOwnUnit() > 4){
+    if(m->getNameOfElement(pos)=="RobotPR"){
+      Unit *tt = new TurtleTank;
+      m->setInTab(*m->getElementW1(pos));
+      m->setElementW1(pos,tt);
+      p.pushUnit(*m->getElementW1(pos));
+    }
+
+  } else {
+    std::cout << "Pas assez de monde pour activé le robot turtle" << '\n';
+  }
+}
+
+void RobotPR::attack(Unit* u,int W ,Player& p,Player& p2,Position posFinal,Map* m){
+    std::cout << "IN FCT ROBOTPR ATTACK" << '\n';
   Position posInit = this->_pos;
   int distance = Distance(posInit,posFinal);
-  if(W ==  1){
+  if(W != -1){
+    if(W ==  1){
       if(p.getEnergy()>((this->_primaryWeapon)->getCost())){
         if(distance <= (this->_primaryWeapon)->getAttackRange()){
           u->setHealthPoints(u->getHealthPoints()-this->getPrimaryW()->getStrengh());
           p.setEnergy(p.getEnergy()-(this->_primaryWeapon)->getCost());
         } else {
-            std::cout<<"Tu n'as pas la portee necessaire"<<std::endl;
+          std::cout<<"Tu n'as pas la portee necessaire"<<std::endl;
         }
       } else {
         std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
       }
-  } else if (W == 2){
-              if(p.getEnergy()>((this->_secondaryWeapon)->getCost())){
-                if(distance <= (this->_secondaryWeapon)->getAttackRange()){
-                  u->setHealthPoints(u->getHealthPoints()-this->getSecondaryW()->getStrengh());
-                  p.setEnergy(p.getEnergy()-(this->_secondaryWeapon)->getCost());
-                } else {
-                  std::cout<<"Tu n'as pas la portee necessaire"<<std::endl;
-                }
-              } else {
-                std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
-              }
-  }
-  if(u->getHealthPoints()<= 0){
-    Unit * u = new Unit;
-    m->setElementW1(posFinal,u);
-    p2.removeUnit(*u);
+    } else if (W == 2){
+      if(p.getEnergy()>((this->_secondaryWeapon)->getCost())){
+        if(distance <= (this->_secondaryWeapon)->getAttackRange()){
+          u->setHealthPoints(u->getHealthPoints()-this->getSecondaryW()->getStrengh());
+          p.setEnergy(p.getEnergy()-(this->_secondaryWeapon)->getCost());
+        } else {
+          std::cout<<"Tu n'as pas la portee necessaire"<<std::endl;
+        }
+      } else {
+        std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
+      }
+    } else if(W == 3){
+      if(p.getEnergy() >= (this->_thirdWeapon->getCost())){
+        this->TransformationTurtle(m,p,p2,posInit);
+      }
+    }
+    if(u != NULL){
+      if(u->getHealthPoints()<= 0){
+        Unit * u = new Unit;
+        m->setElementW1(posFinal,u);
+        p2.removeUnit(*u);
+      }
+    }
+
+  } else {
+    std::cout << "aucune attaque selectionné" << '\n';
   }
 }
 
@@ -1122,7 +1157,7 @@ TurtleTank::~TurtleTank(){
   void TurtleTank::attack(Unit* u,int W ,Player& p,Player& p2,Position posFinal,Map* m){
   Position posInit = this->_pos;
   int distance = Distance (posInit,posFinal);
-    if(p.getEnergy()>((this->_primaryWeapon)->getCost())){
+    if(p.getEnergy()>=((this->_primaryWeapon)->getCost())){
       if(distance <= (this->_primaryWeapon)->getAttackRange()){
         u->setHealthPoints(u->getHealthPoints()-this->getPrimaryW()->getStrengh());
         p.setEnergy(p.getEnergy()-(this->_primaryWeapon)->getCost());

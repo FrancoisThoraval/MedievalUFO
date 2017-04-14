@@ -87,6 +87,10 @@ void Player::pushUnit(Unit &u){
     //  _sizeOwnUnit++;
 }
 
+int Player::getSizeOwnUnit()const{
+  return(this->_sizeOwnUnit);
+}
+
 void Player::removeUnit(Unit &u){
      showUnitOwned();
      int i = 0;
