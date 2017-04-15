@@ -1,7 +1,5 @@
 #include "map.hpp"
 #include "../Unit/ayayay.cpp"
-// A faire, appliquer les textures correctement
-// Verification
 
 
 /*** Methode Map ***/
