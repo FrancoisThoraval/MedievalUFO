@@ -179,77 +179,120 @@ void Unit::setSecondaryW(Weapon *wp){
 //****************************************************
 //*********** METHODE ********************************
 //****************************************************
-
-
-void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& p,Player &p2){                                                                                                                                                // Fonction qui permet le deplacement des unité
+void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& p,Player &p2){
   int distance = Distance(posInit,posFinal);
-  std::cout << "TEST DEBUT MOVE : "<<numattack << '\n';
+  std::cout << "TEST DEBUT MOVE numattack : "<<numattack << '\n';
   std::cout << "POS INIT :"<<m->getNameOfElement(posInit) << '\n';
   std::cout << "POS FINAL : "<<m->getNameOfElement(posFinal) << '\n';
-  if(p.isMineUnit(*(m->getElementW1(posInit))) == true){                                                                                                                                                                                      // je teste en premiere si l'unite qu'on veux deplacer et la notre
-    if(m->getNameOfElement(posInit) != "Zedd"){                                                                                                                                                                                               // je teste en second si l'unité que l'ont veux deplacer n'est PAS zedd car il n'as aucun point de mouvement donc il ne fais qu'attaquer
-      if((((m->getNameOfElement(posInit) != "red")||(m->getNameOfElement(posInit)!="blue")||(m->getNameOfElement(posInit)!="yellow")||(m->getNameOfElement(posInit)!="pink")||(m->getNameOfElement(posInit)!="green"))&&(numattack != 3))){     // ensuite je regarde si je n'ai pas selectionner un des powerranger avec l'attaque numero 3 car c'est une transformation si c'est le cas on attaque aulieux de se deplacer
-        //if((m->getNameOfElement(posInit) != "green") && (numattack != 2)){
-          std::cout << "POS FINAL : "<<m->getNameOfElement(posFinal) << '\n';
-          if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")&&(m->getNameOfElement(posFinal)!="")&&(m->getNameOfElement(posFinal)!="Lava2")){             // si la position ou j'ai cliqué n'est pas une unité alors c'est un decors donc on peut se deplacer SEULEMENT si
-            if(posInit != posFinal){                                                                                                                                                                                                            // la position final n'est pas sa propre case
-              if(p.isMineUnit(*(m->getElementW1(posFinal))) != true){                                                                                                                                                                           // Si on veut attaqué alors si l'unité a la position final n'est pas la notres alors on peut attaqué
-                //(m->getElementW1(posInit)).attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
-                if (m->getNameOfElement(posInit) == "Putties"){
-
-                  m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
-                }  else if (m->getNameOfElement(posInit) == "Zedd"){
-                  m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
-                } else {
-                  std::cout << "TEST MOVE 4" << '\n';
-                  m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
-                }
-
-              } else  {
-                std::cout<<"Tu ne peux pas attaquer ta propre unite"<<std::endl;
-              }
-            }
-
+  if(p.isMineUnit(*m->getElementW1(posInit)) == true){
+    if((m->getNameOfElement(posInit) != "Zedd") || (((m->getNameOfElement(posInit) != "red")||(m->getNameOfElement(posInit) != "blue")||(m->getNameOfElement(posInit) != "yellow")||(m->getNameOfElement(posInit) != "green")||(m->getNameOfElement(posInit) != "pink")) && (numattack != 3)) || ((m->getNameOfElement(posInit) != "green") && (numattack != 2))){
+      if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")&&(m->getNameOfElement(posFinal)!="")&&(m->getNameOfElement(posFinal)!="Lava2")){
+        if(posInit != posFinal){
+          if(p.isMineUnit(*m->getElementW1(posFinal)) != true){
+              m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
           } else {
-            if(distance<=this->_movement){                                                                                                                                                                                                      // si on a assez de deplacement on se deplace
-              if(distance != 0){
-                Unit *u = new Unit();
-                int mouvementdefault = m->getElementW1(posInit)->getDefault();
-                m->setElementW1(posFinal,this);                                                                                                                                                                                                 // je  crée un unité vide que je mettrais a l'ancienne position qui mettrat avec la fonction "setElementW1" vide dans le tableaux
-                m->setElementW1(posInit,u);
-                m->getElementW1(posFinal)->setMovement(m->getElementW1(posFinal)->getMovement()-(distance));
-                this->setPosition(posFinal);
-                m->getElementW1(posFinal)->setDefault(mouvementdefault);
-                //std::cout<<"Distance : "<<distance<<std::endl;
-                // std::cout<<"HP : :"<<m->getElementW1(posFinal).getHealthPoints()<<std::endl;
-                // std::cout<<"Movement :"<<this->getMovement()<<std::endl;
-              } else {
-                std::cout <<"Tu ne peux pas te deplacer sur ta case actuelle"<<std::endl;
-              }
-            } else {
-              std::cout<<"Pas assez de point de deplacement"<<std::endl;
-            }
+            std::cout << "Tu peux pas attaqué ta propre unité" << '\n';
           }
-        // } else {
-        //   std::cout << "ATTACK : "<<numattack << '\n';
-        //   std::cout << "bite" << '\n';
-        //   m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
-        // }
-
+        } else  {
+          std::cout << "C'est la meme case ou tu es" << '\n';
+        }
       } else {
-        std::cout << "TEST MOVE 1" << '\n';
-        m->getElementW1(posInit)->attack(NULL,numattack,p,p2,posFinal,m);
+        if(distance<=this->_movement){                                                                                                                                                                                                      // si on a assez de deplacement on se deplace
+          if(distance != 0){
+            Unit *u = new Unit();
+            int mouvementdefault = m->getElementW1(posInit)->getDefault();
+            m->setElementW1(posFinal,this);                                                                                                                                                                                                 // je  crée un unité vide que je mettrais a l'ancienne position qui mettrat avec la fonction "setElementW1" vide dans le tableaux
+            m->setElementW1(posInit,u);
+            m->getElementW1(posFinal)->setMovement(m->getElementW1(posFinal)->getMovement()-(distance));
+            this->setPosition(posFinal);
+            m->getElementW1(posFinal)->setDefault(mouvementdefault);
+            //std::cout<<"Distance : "<<distance<<std::endl;
+            // std::cout<<"HP : :"<<m->getElementW1(posFinal).getHealthPoints()<<std::endl;
+            // std::cout<<"Movement :"<<this->getMovement()<<std::endl;
+          } else {
+            std::cout <<"Tu ne peux pas te deplacer sur ta case actuelle"<<std::endl;
+          }
+        } else {
+          std::cout<<"Pas assez de point de deplacement"<<std::endl;
+        }
       }
     } else {
-      std::cout << "TEST MOVE 2" << '\n';
-      m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
+        m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
     }
-
-    } else {
-      std::cout<<"Cette unite ne t'appartient pas "<<std::endl;
-    }
-
+  } else {
+    std::cout << "c n'est pas ton unité" << '\n';
   }
+}
+
+// void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& p,Player &p2){                                                                                                                                                // Fonction qui permet le deplacement des unité
+//   int distance = Distance(posInit,posFinal);
+//   std::cout << "TEST DEBUT MOVE : "<<numattack << '\n';
+//   std::cout << "POS INIT :"<<m->getNameOfElement(posInit) << '\n';
+//   std::cout << "POS FINAL : "<<m->getNameOfElement(posFinal) << '\n';
+//   if(p.isMineUnit(*(m->getElementW1(posInit))) == true){                                                                                                                                                                                      // je teste en premiere si l'unite qu'on veux deplacer et la notre
+//     if(m->getNameOfElement(posInit) != "Zedd"){                                                                                                                                                                                               // je teste en second si l'unité que l'ont veux deplacer n'est PAS zedd car il n'as aucun point de mouvement donc il ne fais qu'attaquer
+//       if((((m->getNameOfElement(posInit) != "red")||(m->getNameOfElement(posInit)!="blue")||(m->getNameOfElement(posInit)!="yellow")||(m->getNameOfElement(posInit)!="pink")||(m->getNameOfElement(posInit)!="green"))&&(numattack != 3))){     // ensuite je regarde si je n'ai pas selectionner un des powerranger avec l'attaque numero 3 car c'est une transformation si c'est le cas on attaque aulieux de se deplacer
+//         //if((m->getNameOfElement(posInit) != "green") && (numattack != 2)){
+//           std::cout << "POS FINAL : "<<m->getNameOfElement(posFinal) << '\n';
+//           if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")&&(m->getNameOfElement(posFinal)!="")&&(m->getNameOfElement(posFinal)!="Lava2")){             // si la position ou j'ai cliqué n'est pas une unité alors c'est un decors donc on peut se deplacer SEULEMENT si
+//             if(posInit != posFinal){                                                                                                                                                                                                            // la position final n'est pas sa propre case
+//               if(p.isMineUnit(*(m->getElementW1(posFinal))) != true){                                                                                                                                                                           // Si on veut attaqué alors si l'unité a la position final n'est pas la notres alors on peut attaqué
+//                 //(m->getElementW1(posInit)).attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
+//                 if (m->getNameOfElement(posInit) == "Putties"){
+//
+//                   m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
+//                 }  else if (m->getNameOfElement(posInit) == "Zedd"){
+//                   m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
+//                 } else {
+//                   std::cout << "TEST MOVE 4" << '\n';
+//                   m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
+//                 }
+//
+//               } else  {
+//                 std::cout<<"Tu ne peux pas attaquer ta propre unite"<<std::endl;
+//               }
+//             }
+//
+//           } else {
+//             if(distance<=this->_movement){                                                                                                                                                                                                      // si on a assez de deplacement on se deplace
+//               if(distance != 0){
+//                 Unit *u = new Unit();
+//                 int mouvementdefault = m->getElementW1(posInit)->getDefault();
+//                 m->setElementW1(posFinal,this);                                                                                                                                                                                                 // je  crée un unité vide que je mettrais a l'ancienne position qui mettrat avec la fonction "setElementW1" vide dans le tableaux
+//                 m->setElementW1(posInit,u);
+//                 m->getElementW1(posFinal)->setMovement(m->getElementW1(posFinal)->getMovement()-(distance));
+//                 this->setPosition(posFinal);
+//                 m->getElementW1(posFinal)->setDefault(mouvementdefault);
+//                 //std::cout<<"Distance : "<<distance<<std::endl;
+//                 // std::cout<<"HP : :"<<m->getElementW1(posFinal).getHealthPoints()<<std::endl;
+//                 // std::cout<<"Movement :"<<this->getMovement()<<std::endl;
+//               } else {
+//                 std::cout <<"Tu ne peux pas te deplacer sur ta case actuelle"<<std::endl;
+//               }
+//             } else {
+//               std::cout<<"Pas assez de point de deplacement"<<std::endl;
+//             }
+//           }
+//         // } else {
+//         //   std::cout << "ATTACK : "<<numattack << '\n';
+//         //   std::cout << "bite" << '\n';
+//         //   m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
+//         // }
+//
+//       } else {
+//         std::cout << "TEST MOVE 1" << '\n';
+//         m->getElementW1(posInit)->attack(NULL,numattack,p,p2,posFinal,m);
+//       }
+//     } else {
+//       std::cout << "TEST MOVE 2" << '\n';
+//       m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
+//     }
+//
+//     } else {
+//       std::cout<<"Cette unite ne t'appartient pas "<<std::endl;
+//     }
+//
+//   }
 
 
 
