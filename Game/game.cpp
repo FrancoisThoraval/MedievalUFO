@@ -78,7 +78,7 @@ void Game::gameLoop(){                                                          
                     // Zedd zedd;
                     // PowerRanger pink("pink"), red("red"), blue("blue"), green("green"),yellow("yellow");
                     Position posPink(9,13),posRed(7,13),posBlue(8,13),posGreen(10,13),posYellow(11,13);                     //Creation des personnages du jeux
-                    Position posZedd(8,11);
+                    Position posZedd(1,1);
                     Unit *red = new PowerRanger("red");
                     Unit *blue = new PowerRanger("blue");
                     Unit *yellow = new PowerRanger("yellow");

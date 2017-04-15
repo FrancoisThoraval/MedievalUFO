@@ -730,10 +730,13 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2,Unit *u = NULL)
      window.draw(text);
      if(u!=NULL){
        text.setString("HP : "+std::to_string(u->getHealthPoints()));
-       text.setPosition(340,500);
+       text.setPosition(340,530);
        window.draw(text);
        text.setString("PM : "+std::to_string(u->getMovement()));
-       text.setPosition(340,530);
+       text.setPosition(340,560);
+       window.draw(text);
+       text.setString("Name : "+u->getName());
+       text.setPosition(340,500);
        window.draw(text);
        window.display();
      }

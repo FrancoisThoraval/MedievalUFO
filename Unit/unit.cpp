@@ -415,8 +415,9 @@ Putties::~Putties(){                                                            
     std::cout << "IN FCT PUTTIES ATTAQUE" << '\n';
 Position posInit = this->_pos;
 int distance = Distance(posInit,posFinal);                                                              // je recupere la distance entre la position de l'unité attaquante et la position à attaquer
+std::cout << "Ton arme a "<<this->_primaryWeapon->getAttackRange()<<" de portée et tu attaque a "<<distance << '\n';
   if(W == 1){                                                                                           // si c'est l'attaque numero 1
-    if(p.getEnergy()>((this->_primaryWeapon)->getCost())){                                              // alors si on a assez d'energie
+    if(p.getEnergy()>=((this->_primaryWeapon)->getCost())){                                              // alors si on a assez d'energie
       if(distance <= (this->_primaryWeapon)->getAttackRange()) {                                        // alors si on a assez de portée
         u->setHealthPoints(u->getHealthPoints()-this->getPrimaryW()->getStrengh());                     // on attaques, on enleve un nombre de point de vie egale a la force du numero de l'arme
         p.setEnergy(p.getEnergy()-(this->_primaryWeapon)->getCost());
@@ -737,10 +738,10 @@ Zedd::Zedd(){                                                                   
   _thirdWeapon = new Weapon("PuttiesCalling",0,-1,50);
   _fourthWeapon = new Weapon("ApocalypseHole",1200,0,100);
   setName("Zedd");
-  setHealthPoints(500);
+  setHealthPoints(5000);
   setPuttiesCalling(0);
-  setInvocation(0);
-  setApocalypseHole(0);
+  setInvocation(2);
+  setApocalypseHole(20);
   apoon = false;
   //std::cout<<"ARME : "<<_thirdWeapon->getName()<<std::endl;
 }
@@ -847,6 +848,7 @@ void Zedd::ThrowExtendNade(Position pos,Map *m,Player& p){                      
           //m->getElementW1(pos).setPrimaryW(wp);
           Weapon *wp = new Weapon("BIGTTACK",200,1,50);
           Unit *u = new Putties(1500,3,100,wp);
+          u->setPosition(pos);
           m->setElementW1(pos,u);
           std::cout<<"Nom arme : "<<m->getElementW1(pos)->getPrimaryW()->getName()<<std::endl;
           // m->getElementW1(pos).getPrimaryW()->setName("BIG ATTACK");
@@ -890,7 +892,10 @@ void Zedd::Invocation(Position pos, Map *m,Player& p){                          
             wp = new Weapon("Lancer de tronc",210,4,60);
           }
           Unit *u = new Putties(hp,mvmt,60,wp);
+          u->setPosition(pos);
           m->setElementW1(pos,u);
+
+
 
 
           p.pushUnit((m->getElementW1(pos)));
@@ -930,29 +935,38 @@ void Zedd::PuttiesCalling ( Position pos, Map* m,Player& p){                    
           //  Weapon *wp = new Weapon("Default",5,1,20);
           std::cout << "/* message3 */" << '\n';
             Unit *n1 = new Putties;
-            n1->setMovement(3);
-            n1->setDefault(3);
+            n1->setPosition(pos);
+            Unit *n2 = new Putties;
+            n2->setPosition(p1);
+            Unit *n3 = new Putties;
+            n3->setPosition(p2);
+            Unit *n4 = new Putties;
+            n4->setPosition(p3);
+            Unit *n5 = new Putties;
+            n5->setPosition(p4);
+            // n1->setMovement(3);
+            // n1->setDefault(3);
             m->setElementW1(pos,n1);
             // m->getElementW1(pos)->setDefault(3);
             m->getElementW1(pos)->setPosition(pos);
             p.pushUnit(m->getElementW1(pos));
             //
-            m->setElementW1(p1,n1);
+            m->setElementW1(p1,n2);
             // m->getElementW1(p1)->setDefault(3);
             m->getElementW1(p1)->setPosition(p1);
             p.pushUnit(m->getElementW1(p1));
             //
-            m->setElementW1(p2,n1);
+            m->setElementW1(p2,n3);
             // m->getElementW1(p2)->setDefault(3);
             m->getElementW1(p2)->setPosition(p2);
             p.pushUnit(m->getElementW1(p2));
             //
-            m->setElementW1(p3,n1);
+            m->setElementW1(p3,n4);
             // m->getElementW1(p3)->setDefault(3);
             m->getElementW1(p3)->setPosition(p3);
             p.pushUnit(m->getElementW1(p3));
             //
-            m->setElementW1(p4,n1);
+            m->setElementW1(p4,n5);
             // m->getElementW1(p4)->setDefault(3);
             m->getElementW1(p4)->setPosition(p4);
             p.pushUnit(m->getElementW1(p4));
