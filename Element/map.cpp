@@ -318,7 +318,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, P
 
                     }
                     ui.drawUi(window,p1,p2);
-                    if((getNameOfElement(pos) == "blue")||(getNameOfElement(pos) == "pink")||(getNameOfElement(pos) == "green")||(getNameOfElement(pos) == "yellow")||(getNameOfElement(pos) == "red")||(getNameOfElement(pos) == "Zedd")||(getNameOfElement(pos) == "Putties") ||(getNameOfElement(pos)=="RobotPR")||(getNameOfElement(pos)=="TurtleTank")) {
+                    if((getNameOfElement(pos) == "blue")||(getNameOfElement(pos) == "pink")||(getNameOfElement(pos) == "green")||(getNameOfElement(pos) == "yellow")||(getNameOfElement(pos) == "red")||(getNameOfElement(pos) == "Zedd")||(getNameOfElement(pos) == "Putties") ||(getNameOfElement(pos)=="RobotPR")||(getNameOfElement(pos)=="TurtleTank")||(getNameOfElement(pos)=="TornadoDino")) {
                          //if (p1.isMineUnit(getElementW1(pos))) {
 
                               _unitSelected = pos;
