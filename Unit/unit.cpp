@@ -598,7 +598,7 @@ void PowerRanger::TornadoDino(Map* m,Player& p,Position pos){                   
     Unit *d = new Dino;
     m->setElementW1(pos,d);
     p.pushUnit(d);
-  
+
 
   }
 }
@@ -1132,9 +1132,10 @@ void RobotPR::attack(Unit* u,int W ,Player& p,Player& p2,Position posFinal,Map* 
         std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
       }
     } else if (W == 2){
-      if(p.getEnergy()>((this->_secondaryWeapon)->getCost())){
+      if(p.getEnergy()>=((this->_secondaryWeapon)->getCost())){
         if(distance <= (this->_secondaryWeapon)->getAttackRange()){
-          u->setHealthPoints(u->getHealthPoints()-this->getSecondaryW()->getStrengh());
+          std::cout << "ATTAQUE DU SABRE MAGIQUE QUI TRANCHE TOUS MAMENE" << '\n';
+          u->setHealthPoints(u->getHealthPoints()-this->_secondaryWeapon->getStrengh());
           p.setEnergy(p.getEnergy()-(this->_secondaryWeapon)->getCost());
         } else {
           std::cout<<"Tu n'as pas la portee necessaire"<<std::endl;

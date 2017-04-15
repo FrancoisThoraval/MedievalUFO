@@ -120,7 +120,7 @@ void Game::gameLoop(){                                                          
 
                     _window.clear(sf::Color(0,0,0));
                     m.drawWorld(_window);
-                    ui.drawUi(_window,p1,p2);
+                    ui.drawUi(_window,p1,p2,NULL);
                     while (_gameState == 4) {
                          _window.display();
                          while (_window.pollEvent(currentEvent)) {
@@ -289,6 +289,7 @@ void Game::LavaDamage(Map* m,Player& p){                                        
             m->getElementW1(currentPos)->setHealthPoints(m->getElementW1(currentPos)->getHealthPoints()-1200);
             if(m->getElementW1(currentPos)->getHealthPoints()<=0){
               Unit *u = new Unit;
+              p.removeUnit(*m->getElementW1(currentPos));
               m->setElementW1(currentPos,u);
             }
           }
@@ -305,7 +306,7 @@ void Game::endTurn(Player &p1, Player &p2,Map *m, Ui *ui,Position posZedd){     
      if (p1.getWhosPlaying()) {
           p1.setWhosPlaying(false);
           p2.setWhosPlaying(true);
-          ui->drawUi(_window,p2,p1);
+          ui->drawUi(_window,p2,p1,NULL);
           std::cerr << p2.getName()<<", Your turn !" << '\n';
           // Substraction(p2);
           std::cerr<<" Player 2, Energy : "<<p2.getEnergy()<<std::endl;
@@ -317,7 +318,7 @@ void Game::endTurn(Player &p1, Player &p2,Map *m, Ui *ui,Position posZedd){     
      }else{
           p2.setWhosPlaying(false);
           p1.setWhosPlaying(true);
-          ui->drawUi(_window,p1,p2);
+          ui->drawUi(_window,p1,p2,NULL);
           std::cerr << p1.getName()<<", Your turn !" << '\n';
           std::cerr<<"Player 1, Energy : "<<p1.getEnergy()<<std::endl;
           LavaDamage(m,p1);

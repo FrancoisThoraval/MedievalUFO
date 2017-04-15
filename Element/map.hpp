@@ -107,7 +107,7 @@ private:
 public:
      Ui ();
      ~Ui ();
-     void drawUi(sf::RenderWindow &,Player &, Player &);					//Dessine l'interface et ses éléments.
+     void drawUi(sf::RenderWindow &,Player &, Player &,Unit*);					//Dessine l'interface et ses éléments.
 
      void handleClick(sf::RenderWindow &,Position pos, Map *);				//Gère les clics sur l'interface.
 

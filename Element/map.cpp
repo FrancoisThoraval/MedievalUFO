@@ -29,7 +29,8 @@ Map::Map(int sizeX, int sizeY){                                                 
     }
 }
 
-Map::~Map(){                                                                                        // destructeur map
+Map::~Map(){
+                                                          // destructeur map
      std::cerr << "deleting w1" << '\n';
      delete[] _world1;
      std::cerr << "deleting w2" << '\n';
@@ -37,7 +38,8 @@ Map::~Map(){                                                                    
      std::cerr << "deleting mapTile" << '\n';
      delete[] _mapTile;
      std::cerr << "deleting tabUnit" << '\n';
-     delete[] _tabUnit;
+     //delete[] _tabUnit;
+
 }
 
 Unit* Map::getElementW1(Position pos)const{
@@ -283,7 +285,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, P
                pos.setX(sf::Mouse::getPosition(window).x);
                pos.setY(sf::Mouse::getPosition(window).y);
                ui.handleClick(window,pos,this);
-               ui.drawUi(window,p1,p2);//Je crois que ça pose probleme comme c'est deux fois le même player (au niveau de la couleur du carré rouge ou vert)
+               ui.drawUi(window,p1,p2,NULL);//Je crois que ça pose probleme comme c'est deux fois le même player (au niveau de la couleur du carré rouge ou vert)
           }else{
                // Si on a cliqué sur la map
                while ((i < (_sizeX/TILESIZE)) && (_tileClicked == 0)) {
@@ -315,7 +317,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, P
                       }
 
                     }
-                    ui.drawUi(window,p1,p2);
+                    ui.drawUi(window,p1,p2,getElementW1(pos));
                     if((getNameOfElement(pos) == "blue")||(getNameOfElement(pos) == "pink")||(getNameOfElement(pos) == "green")||(getNameOfElement(pos) == "yellow")||(getNameOfElement(pos) == "red")||(getNameOfElement(pos) == "Zedd")||(getNameOfElement(pos) == "Putties") ||(getNameOfElement(pos)=="RobotPR")||(getNameOfElement(pos)=="TurtleTank")||(getNameOfElement(pos)=="TornadoDino")) {
                          //if (p1.isMineUnit(getElementW1(pos))) {
 
@@ -352,7 +354,10 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, P
                     _unitSelected.setX(-1);
                     _unitSelected.setY(-1);
                     ui.setUnitClicked(-1);
-                    ui.drawUi(window,p1,p2);
+                    if(_unitSelected.getX()!=-1){
+
+                      ui.drawUi(window,p1,p2,getElementW1(_unitSelected));
+                    }
                     p2.hasLost();
                     //p1.haslost();
                }
@@ -439,7 +444,7 @@ void Ui::handleClick(sf::RenderWindow &window,Position pos, Map *m){            
           }
 
 }
-void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){                                                                                    // fonction qui dessine l'espace en dessous de la map pour les attaques, ayayay et les info de point de vie et d'energie
+void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2,Unit *u = NULL){                                                                                    // fonction qui dessine l'espace en dessous de la map pour les attaques, ayayay et les info de point de vie et d'energie
      std::cout << "Loading Ui..." << '\n';
      sf::Texture texture;
      texture.loadFromFile("./Textures/LPC_Terrain/terrain.png");
@@ -723,6 +728,15 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2){              
      text.setPosition(205,500);
      text.setString("Energy : " + std::to_string(p1.getEnergy()));
      window.draw(text);
+     if(u!=NULL){
+       text.setString("HP : "+std::to_string(u->getHealthPoints()));
+       text.setPosition(340,500);
+       window.draw(text);
+       text.setString("PM : "+std::to_string(u->getMovement()));
+       text.setPosition(340,530);
+       window.draw(text);
+       window.display();
+     }
 
      //À revoir pasque je sens que ça va être problématique
 
