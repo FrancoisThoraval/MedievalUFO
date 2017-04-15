@@ -46,6 +46,7 @@ public:
   void ResetMovement(Map*);
 
 
+
   void hasLost();
 };
 

@@ -54,7 +54,10 @@ Unit::Unit(){                                                           // CONST
 
 //Destructeur
 Unit::~Unit(){                                                          // DESTRUCTEUR UNIT
-
+  delete _primaryWeapon;
+  delete _secondaryWeapon;
+  delete _thirdWeapon;
+  delete _fourthWeapon;
 }
 
 Unit::Unit(Unit& u){                                                    // CONSTRUCTEUR PAR RECOPIE UNIT
@@ -179,50 +182,128 @@ void Unit::setSecondaryW(Weapon *wp){
 //****************************************************
 //*********** METHODE ********************************
 //****************************************************
+
+
 void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& p,Player &p2){
   int distance = Distance(posInit,posFinal);
-  std::cout << "TEST DEBUT MOVE numattack : "<<numattack << '\n';
-  std::cout << "POS INIT :"<<m->getNameOfElement(posInit) << '\n';
-  std::cout << "POS FINAL : "<<m->getNameOfElement(posFinal) << '\n';
-  if(p.isMineUnit(*m->getElementW1(posInit)) == true){
-    if((m->getNameOfElement(posInit) != "Zedd") || (((m->getNameOfElement(posInit) != "red")||(m->getNameOfElement(posInit) != "blue")||(m->getNameOfElement(posInit) != "yellow")||(m->getNameOfElement(posInit) != "green")||(m->getNameOfElement(posInit) != "pink")) && (numattack != 3)) || ((m->getNameOfElement(posInit) != "green") && (numattack != 2))){
-      if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")&&(m->getNameOfElement(posFinal)!="")&&(m->getNameOfElement(posFinal)!="Lava2")){
-        if(posInit != posFinal){
-          if(p.isMineUnit(*m->getElementW1(posFinal)) != true){
-              m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
-          } else {
-            std::cout << "Tu peux pas attaqué ta propre unité" << '\n';
-          }
-        } else  {
-          std::cout << "C'est la meme case ou tu es" << '\n';
-        }
-      } else {
-        if(distance<=this->_movement){                                                                                                                                                                                                      // si on a assez de deplacement on se deplace
-          if(distance != 0){
-            Unit *u = new Unit();
-            int mouvementdefault = m->getElementW1(posInit)->getDefault();
-            m->setElementW1(posFinal,this);                                                                                                                                                                                                 // je  crée un unité vide que je mettrais a l'ancienne position qui mettrat avec la fonction "setElementW1" vide dans le tableaux
-            m->setElementW1(posInit,u);
-            m->getElementW1(posFinal)->setMovement(m->getElementW1(posFinal)->getMovement()-(distance));
-            this->setPosition(posFinal);
-            m->getElementW1(posFinal)->setDefault(mouvementdefault);
-            //std::cout<<"Distance : "<<distance<<std::endl;
-            // std::cout<<"HP : :"<<m->getElementW1(posFinal).getHealthPoints()<<std::endl;
-            // std::cout<<"Movement :"<<this->getMovement()<<std::endl;
-          } else {
-            std::cout <<"Tu ne peux pas te deplacer sur ta case actuelle"<<std::endl;
-          }
-        } else {
-          std::cout<<"Pas assez de point de deplacement"<<std::endl;
-        }
-      }
-    } else {
+  std::cout << "/* message1 */" << '\n';
+  if(m->getElementW1(posInit) != NULL) {
+    std::cout << "/* message2 */" << '\n';
+    if(p.isMineUnit(m->getNameOfElement(posInit))==true){
+      std::cout << "/* message3 */" << '\n';
+      if(m->getNameOfElement(posInit ) == "Zedd"){
         m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
+      } else {
+        if((((m->getNameOfElement(posInit) == "red")||(m->getNameOfElement(posInit) == "blue")||(m->getNameOfElement(posInit) == "yellow")||(m->getNameOfElement(posInit) == "green")||(m->getNameOfElement(posInit) == "pink")) && (numattack == 3))){
+          m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
+        } else {
+          if((m->getNameOfElement(posInit) == "green") && (numattack == 2)) {
+            m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
+          } else {
+            if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")&&(m->getNameOfElement(posFinal)!="")&&(m->getNameOfElement(posFinal)!="Lava2")){
+              if(posInit != posFinal){
+                if(p.isMineUnit(m->getNameOfElement(posFinal)) != true){
+                  m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
+                }  else {
+                  std::cout << "ce n'est pas ton unité 1" << '\n';
+                }
+              } else {
+                std::cout << "Tu ne peux pas attaqué sur ta propre case" << '\n';
+              }
+            } else {
+              if(distance<=this->_movement){                                                                                                                                                                                                      // si on a assez de deplacement on se deplace
+                if(distance != 0){
+                  Unit *u = new Unit();
+                  int mouvementdefault = m->getElementW1(posInit)->getDefault();
+                  m->setElementW1(posFinal,this);                                                                                                                                                                                                 // je  crée un unité vide que je mettrais a l'ancienne position qui mettrat avec la fonction "setElementW1" vide dans le tableaux
+                  m->setElementW1(posInit,u);
+                  m->getElementW1(posFinal)->setMovement(m->getElementW1(posFinal)->getMovement()-(distance));
+                  this->setPosition(posFinal);
+                  m->getElementW1(posFinal)->setDefault(mouvementdefault);
+                  //std::cout<<"Distance : "<<distance<<std::endl;
+                  // std::cout<<"HP : :"<<m->getElementW1(posFinal).getHealthPoints()<<std::endl;
+                  // std::cout<<"Movement :"<<this->getMovement()<<std::endl;
+                } else {
+                  std::cout <<"Tu ne peux pas te deplacer sur ta case actuelle"<<std::endl;
+                }
+              } else {
+                std::cout<<"Pas assez de point de deplacement"<<std::endl;
+              }
+            }
+          }//fin else
+        }//fin else
+      } //fin else
+    } else {
+      std::cout << "Ce n'est pas ton unité 2 " << '\n';
     }
-  } else {
-    std::cout << "c n'est pas ton unité" << '\n';
+
   }
 }
+
+// void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& p,Player &p2){
+//   int distance = Distance(posInit,posFinal);
+//   std::cout << "TEST NOM : "<<m->getNameOfElement(posInit) << '\n';
+//   std::cout << "TEST NUMATTACK :"<<numattack << '\n';
+//   if(((m->getNameOfElement(posInit) != "green") && (numattack != 2))){
+//     std::cout << "TEST CONDITION 1" << '\n';
+//   } else {
+//     std::cout << "TEST CONDITION 2" << '\n';
+//   }
+//   if((m->getNameOfElement(posInit) == "green") && (numattack == 2)) {
+//     std::cout << "TEST2 CONDITION 1" << '\n';
+//   } else {
+//     std::cout << "TEST2 CONDITION 2" << '\n';
+//   }
+//   std::cout << "TEST DEBUT MOVE numattack : "<<numattack << '\n';
+//   std::cout << "POS INIT :"<<m->getNameOfElement(posInit) << '\n';
+//   std::cout << "POS FINAL : "<<m->getNameOfElement(posFinal) << '\n';
+//   if(m->getElementW1(posInit) != NULL){
+//     std::cout << "/* message0 */" << '\n';
+//     if(p.isMineUnit(m->getNameOfElement(posInit)) == true) {
+//       std::cout << "/* message1 */" << '\n';
+//       if((m->getNameOfElement(posInit) != "Zedd") || (((m->getNameOfElement(posInit) != "red")||(m->getNameOfElement(posInit) != "blue")||(m->getNameOfElement(posInit) != "yellow")||(m->getNameOfElement(posInit) != "green")||(m->getNameOfElement(posInit) != "pink")) && (numattack != 3))){// || ((m->getNameOfElement(posInit) != "green") && (numattack != 2))){
+//         std::cout << "/* message2 */" << '\n';
+//         if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")&&(m->getNameOfElement(posFinal)!="")&&(m->getNameOfElement(posFinal)!="Lava2")){
+//           if(posInit != posFinal){
+//             if(p.isMineUnit(*m->getElementW1(posFinal)) != true){
+//               m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
+//             } else {
+//               std::cout << "Tu peux pas attaqué ta propre unité" << '\n';
+//             }
+//           } else  {
+//             std::cout << "C'est la meme case ou tu es" << '\n';
+//           }
+//         } else {
+//           if(distance<=this->_movement){                                                                                                                                                                                                      // si on a assez de deplacement on se deplace
+//             if(distance != 0){
+//               Unit *u = new Unit();
+//               int mouvementdefault = m->getElementW1(posInit)->getDefault();
+//               m->setElementW1(posFinal,this);                                                                                                                                                                                                 // je  crée un unité vide que je mettrais a l'ancienne position qui mettrat avec la fonction "setElementW1" vide dans le tableaux
+//               m->setElementW1(posInit,u);
+//               m->getElementW1(posFinal)->setMovement(m->getElementW1(posFinal)->getMovement()-(distance));
+//               this->setPosition(posFinal);
+//               m->getElementW1(posFinal)->setDefault(mouvementdefault);
+//               //std::cout<<"Distance : "<<distance<<std::endl;
+//               // std::cout<<"HP : :"<<m->getElementW1(posFinal).getHealthPoints()<<std::endl;
+//               // std::cout<<"Movement :"<<this->getMovement()<<std::endl;
+//             } else {
+//               std::cout <<"Tu ne peux pas te deplacer sur ta case actuelle"<<std::endl;
+//             }
+//           } else {
+//             std::cout<<"Pas assez de point de deplacement"<<std::endl;
+//           }
+//         }
+//       } else {
+//         std::cout << "TEST ATTAQUE DANS MOVE" << '\n';
+//         m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
+//       }
+//     } else {
+//       std::cout << "c n'est pas ton unité" << '\n';
+//     }
+//   } else {
+//     std::cout << "M->getElementW1(posInit) est NULL" << '\n';
+//   }
+// }
 
 // void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& p,Player &p2){                                                                                                                                                // Fonction qui permet le deplacement des unité
 //   int distance = Distance(posInit,posFinal);
@@ -455,9 +536,15 @@ void PowerRanger::setCapacityWeapon(bool cap){
       }
     }else if(W == 2) {
       if(p.getEnergy()>((this->_secondaryWeapon)->getCost())){
-        if(distance <= (this->_secondaryWeapon)->getAttackRange()){
-          u->setHealthPoints(u->getHealthPoints()-this->_secondaryWeapon->getStrengh());
-          p.setEnergy(p.getEnergy()-(this->_secondaryWeapon)->getCost());
+        if((distance <= (this->_secondaryWeapon)->getAttackRange()) || (this->_secondaryWeapon->getAttackRange() ==-1)){
+          if(this->getName() == "green"){
+            std::cout << "TEST AVANT TORNADODINO" << '\n';
+            this->TornadoDino(m,p,posFinal);
+            p.setEnergy(p.getEnergy()-(this->_secondaryWeapon)->getCost());
+          } else {
+            u->setHealthPoints(u->getHealthPoints()-this->_secondaryWeapon->getStrengh());
+            p.setEnergy(p.getEnergy()-(this->_secondaryWeapon)->getCost());
+          }
         } else {
           std::cout<<"Tu n'as pas la portée necessaire"<<std::endl;
         }
@@ -467,6 +554,7 @@ void PowerRanger::setCapacityWeapon(bool cap){
     } else if (W == 3){
       if(p.getEnergy()>=((this->_thirdWeapon)->getCost())){
           this->Transformation(m,p);
+          p.setEnergy(p.getEnergy()-(this->_thirdWeapon)->getCost());
       } else {
         std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
       }
@@ -505,10 +593,13 @@ void PowerRanger::setCapacityWeapon(bool cap){
 
 }
 
-void PowerRanger::TornadoDino(Map* m,Position pos){                                                                                                                                                           // Fonction qui invoque un finosaure totalement inutile dans la partie
-  if((m->getNameOfElement(pos)=="Tree")||(m->getNameOfElement(pos)=="Hill")||(m->getNameOfElement(pos)=="Water")||(m->getNameOfElement(pos)=="Lava2")||(m->getNameOfElement(pos)=="Lava1")){
+void PowerRanger::TornadoDino(Map* m,Player& p,Position pos){                                                                                                                                                           // Fonction qui invoque un finosaure totalement inutile dans la partie
+  if((m->getNameOfElement(pos)=="Tree")||(m->getNameOfElement(pos)=="Hill")||(m->getNameOfElement(pos)=="Water")||(m->getNameOfElement(pos)=="Lava2")||(m->getNameOfElement(pos)=="Lava2")){
     Unit *d = new Dino;
     m->setElementW1(pos,d);
+    p.pushUnit(d);
+  
+
   }
 }
 
@@ -556,7 +647,7 @@ void PowerRanger::Transformation(Map *m,Player&p){                              
   Position pos = this->_pos;                                                                                                                                                  // met les powerranger dans un tableaux pour ne pas les effacé
   Position currentPos;                                                                                                                                                        // met a la place un robot PR
   Unit *u = new Unit;
-
+  Position posred;
   Unit *r =  new RobotPR;
   bool hor =false;
   bool ver = false;
@@ -569,6 +660,9 @@ void PowerRanger::Transformation(Map *m,Player&p){                              
           currentPos.setX(j);
           if(m->getElementW1(currentPos)!=NULL){
             if((m->getNameOfElement(currentPos)!="Putties")&&(m->getNameOfElement(currentPos)!="Zedd")&&(m->getNameOfElement(currentPos)!="green")){
+              if(m->getNameOfElement(currentPos) == "red"){
+                posred = currentPos;
+              }
               m->setInTab(*(m->getElementW1(currentPos)));
               m->setElementW1(currentPos, u);
             }
@@ -581,6 +675,9 @@ void PowerRanger::Transformation(Map *m,Player&p){                              
           currentPos.setY(j);
           if(m->getElementW1(currentPos)!=NULL){
             if((m->getNameOfElement(currentPos)!="Putties")&&(m->getNameOfElement(currentPos)!="Zedd")&&(m->getNameOfElement(currentPos)!="green")){
+              if(m->getNameOfElement(currentPos) == "red"){
+                posred = currentPos;
+              }
               m->setInTab(*(m->getElementW1(currentPos)));
               m->setElementW1(currentPos,u);
             }
@@ -588,8 +685,13 @@ void PowerRanger::Transformation(Map *m,Player&p){                              
           }
         }
       }
-      m->setElementW1(pos,r);
-      p.pushUnit((m->getElementW1(pos)));
+      if(this->getName() == "green"){
+        m->setElementW1(posred,r);
+        p.pushUnit((m->getElementW1(posred)));
+      } else {
+        m->setElementW1(pos,r);
+        p.pushUnit((m->getElementW1(pos)));
+      }
   }
   std::cout << "FIN FCT TRANSFOR" << '\n';
 }

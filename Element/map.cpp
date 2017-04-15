@@ -341,7 +341,12 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, P
 
                     }
                }else{//Si une unité est déjà sélectionnée.
-                    getElementW1(_unitSelected)->move(_unitSelected,pos,this,ui.getAttack()+1,p1,p2);
+                 std::cout << "POS : "<<pos << '\n';
+                 std::cout << "UNITCLICK : "<<_unitSelected << '\n';
+
+
+                   getElementW1(_unitSelected)->move(_unitSelected,pos,this,ui.getAttack()+1,p1,p2);
+
                     ui.setAttack(-1);
                     drawWorld(window);
                     _unitSelected.setX(-1);
@@ -379,7 +384,7 @@ Ui::Ui(){
 }
 
 Ui::~Ui(){
-
+  delete[] _buttonArray;
 }
 
 void Ui::setState(int st){

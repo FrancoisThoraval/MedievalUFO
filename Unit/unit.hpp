@@ -177,7 +177,7 @@ public:
   /** SETTER **/
   void setColor(std::string);
   /** METHODE **/
-  void TornadoDino(Map*,Position);
+  void TornadoDino(Map*,Player&,Position);
   virtual void attack(Unit*,int,Player&,Player&,Position,Map*);
   void BeTogether(Map*,Position,bool*,bool*);
   void Transformation(Map*,Player&);

@@ -20,7 +20,7 @@ Player::Player(std::string name,bool value){
 }
 
 Player::~Player(){
-
+  delete[] _ownUnit;
 }
 
 bool Player::getWhosPlaying()const{
@@ -127,6 +127,8 @@ bool Player::isMineUnit(const std::string name){                                
   return(rep);
 }
 
+
+
 void Player::showUnitOwned(){                                                                   // fonction qui parcout le tableaux des unité possedé et qui les affiches
      for (int i = 0; i < _sizeOwnUnit; i++) {
           std::cout << "["<< _ownUnit[i]->getName() << "] -> ";
@@ -148,6 +150,7 @@ void Player::EndOfTurn(Map *m){                                                 
      this->_energy = 100;
      ResetMovement(m);
 }
+
 
 void Player::ResetMovement(Map *m){                                                           //fonction qui parcourt toute la map et qui remet a zero le mouvement des untiés
   Position currentPos;
