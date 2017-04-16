@@ -926,13 +926,21 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2,Unit *u = NULL)
        text.setString("HP : "+std::to_string(u->getHealthPoints()));
        text.setPosition(340,530);
        window.draw(text);
-       text.setString("PM : "+std::to_string(u->getMovement()));
+
+	  text.setString("PM : "+std::to_string(u->getMovement()));
        text.setPosition(340,560);
        window.draw(text);
-       text.setString("Name : "+u->getName());
+
+	  text.setString("Name : "+u->getName());
        text.setPosition(340,500);
        window.draw(text);
-       window.display();
+
+	  text.setCharacterSize(10);
+	  text.setPosition(0,575);
+	  text.setString("Damage / Range / Cost");
+	  window.draw(text);
+
+	  window.display();
      }
 
      //À revoir pasque je sens que ça va être problématique
