@@ -285,7 +285,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, P
                pos.setX(sf::Mouse::getPosition(window).x);
                pos.setY(sf::Mouse::getPosition(window).y);
                ui.handleClick(window,pos,this);
-               ui.drawUi(window,p1,p2,NULL);//Je crois que ça pose probleme comme c'est deux fois le même player (au niveau de la couleur du carré rouge ou vert)
+               ui.drawUi(window,p1,p2,m->getElementW1(pos));//Je crois que ça pose probleme comme c'est deux fois le même player (au niveau de la couleur du carré rouge ou vert)
           }else{
                // Si on a cliqué sur la map
                while ((i < (_sizeX/TILESIZE)) && (_tileClicked == 0)) {
@@ -520,11 +520,31 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2,Unit *u = NULL)
                _buttonArray[1]=b2;
                _buttonArray[2]=b3;
                _buttonArray[3]=b4;
+               //
+               if(u!=NULL){
+                 text.setString(std::to_string(u->getPrimaryW()->getStrengh()) +" "+std::to_string(u->getPrimaryW()->getAttackRange())+" "+std::to_string(u->getPrimaryW()->getCost()));
+                 text.setPosition(0,560);
+                 window.draw(text);
+                 //
+                 text.setString(std::to_string(u->getSecondaryW()->getStrengh()) +" "+std::to_string(u->getSecondaryW()->getAttackRange())+" "+std::to_string(u->getSecondaryW()->getCost()));
+                 text.setPosition(50,560);
+                 window.draw(text);
+                 //
+                 text.setString(std::to_string(u->getThirdW()->getStrengh()) +" "+std::to_string(u->getThirdW()->getAttackRange())+" "+std::to_string(u->getThirdW()->getCost()));
+                 text.setPosition(100,560);
+                 window.draw(text);
+                 //
+                 text.setString(std::to_string(u->getFourthW()->getStrengh()) +" "+std::to_string(u->getFourthW()->getAttackRange())+" "+std::to_string(u->getFourthW()->getCost()));
+                 text.setPosition(150,560);
+                 window.draw(text);
+
+               }
                // On dessine les boutons
                window.draw(b1);
                window.draw(b2);
                window.draw(b3);
                window.draw(b4);
+
           }break;
           case 1 : {
             std::cout << "now drawing ui's character 1." << '\n';
@@ -544,6 +564,24 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2,Unit *u = NULL)
             b4.setTextureRect(sf::IntRect(457,975,50,50));
             b4.setPosition(150,600-100);
             //
+            if(u != NULL){
+              text.setString(std::to_string(u->getPrimaryW()->getStrengh()) +" "+std::to_string(u->getPrimaryW()->getAttackRange())+" "+std::to_string(u->getPrimaryW()->getCost()));
+              text.setPosition(0,560);
+              window.draw(text);
+              //
+              text.setString(std::to_string(u->getSecondaryW()->getStrengh()) +" "+std::to_string(u->getSecondaryW()->getAttackRange())+" "+std::to_string(u->getSecondaryW()->getCost()));
+              text.setPosition(50,560);
+              window.draw(text);
+              //
+              text.setString(std::to_string(u->getThirdW()->getStrengh()) +" "+std::to_string(u->getThirdW()->getAttackRange())+" "+std::to_string(u->getThirdW()->getCost()));
+              text.setPosition(100,560);
+              window.draw(text);
+              //
+              text.setString(std::to_string(u->getFourthW()->getStrengh()) +" "+std::to_string(u->getFourthW()->getAttackRange())+" "+std::to_string(u->getFourthW()->getCost()));
+              text.setPosition(150,560);
+              window.draw(text);
+
+            }
             // On rempli le tableau de boutons
             _buttonArray[0]=b1;
             _buttonArray[1]=b2;
@@ -577,6 +615,24 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2,Unit *u = NULL)
             _buttonArray[1]=b2;
             _buttonArray[2]=b3;
             _buttonArray[3]=b4;
+            //
+            if(u != NULL){
+              text.setString(std::to_string(u->getPrimaryW()->getStrengh()) +" "+std::to_string(u->getPrimaryW()->getAttackRange())+" "+std::to_string(u->getPrimaryW()->getCost()));
+              text.setPosition(0,560);
+              window.draw(text);
+              //
+              text.setString(std::to_string(u->getSecondaryW()->getStrengh()) +" "+std::to_string(u->getSecondaryW()->getAttackRange())+" "+std::to_string(u->getSecondaryW()->getCost()));
+              text.setPosition(50,560);
+              window.draw(text);
+              //
+              text.setString(std::to_string(u->getThirdW()->getStrengh()) +" "+std::to_string(u->getThirdW()->getAttackRange())+" "+std::to_string(u->getThirdW()->getCost()));
+              text.setPosition(100,560);
+              window.draw(text);
+              //
+              text.setString(std::to_string(u->getFourthW()->getStrengh()) +" "+std::to_string(u->getFourthW()->getAttackRange())+" "+std::to_string(u->getFourthW()->getCost()));
+              text.setPosition(150,560);
+              window.draw(text);
+            }
             // On dessine les boutons
             window.draw(b1);
             window.draw(b2);
@@ -605,6 +661,25 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2,Unit *u = NULL)
             _buttonArray[1]=b2;
             _buttonArray[2]=b3;
             _buttonArray[3]=b4;
+            //
+            if(u != NULL){
+              text.setString(std::to_string(u->getPrimaryW()->getStrengh()) +" "+std::to_string(u->getPrimaryW()->getAttackRange())+" "+std::to_string(u->getPrimaryW()->getCost()));
+              text.setPosition(0,560);
+              window.draw(text);
+              //
+              text.setString(std::to_string(u->getSecondaryW()->getStrengh()) +" "+std::to_string(u->getSecondaryW()->getAttackRange())+" "+std::to_string(u->getSecondaryW()->getCost()));
+              text.setPosition(50,560);
+              window.draw(text);
+              //
+              text.setString(std::to_string(u->getThirdW()->getStrengh()) +" "+std::to_string(u->getThirdW()->getAttackRange())+" "+std::to_string(u->getThirdW()->getCost()));
+              text.setPosition(100,560);
+              window.draw(text);
+              //
+              text.setString(std::to_string(u->getFourthW()->getStrengh()) +" "+std::to_string(u->getFourthW()->getAttackRange())+" "+std::to_string(u->getFourthW()->getCost()));
+              text.setPosition(150,560);
+              window.draw(text);
+
+            }
             // On dessine les boutons
             window.draw(b1);
             window.draw(b2);
@@ -629,10 +704,32 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2,Unit *u = NULL)
             b4.setTextureRect(sf::IntRect(457,975,50,50));
             b4.setPosition(150,600-100);
             // On rempli le tableau de boutons
+            //
+
+            //
             _buttonArray[0]=b1;
             _buttonArray[1]=b2;
             _buttonArray[2]=b3;
             _buttonArray[3]=b4;
+            //
+            if(u != NULL){
+              text.setString(std::to_string(u->getPrimaryW()->getStrengh()) +" "+std::to_string(u->getPrimaryW()->getAttackRange())+" "+std::to_string(u->getPrimaryW()->getCost()));
+              text.setPosition(0,560);
+              window.draw(text);
+              //
+              text.setString(std::to_string(u->getSecondaryW()->getStrengh()) +" "+std::to_string(u->getSecondaryW()->getAttackRange())+" "+std::to_string(u->getSecondaryW()->getCost()));
+              text.setPosition(50,560);
+              window.draw(text);
+              //
+              text.setString(std::to_string(u->getThirdW()->getStrengh()) +" "+std::to_string(u->getThirdW()->getAttackRange())+" "+std::to_string(u->getThirdW()->getCost()));
+              text.setPosition(100,560);
+              window.draw(text);
+              //
+              text.setString(std::to_string(u->getFourthW()->getStrengh()) +" "+std::to_string(u->getFourthW()->getAttackRange())+" "+std::to_string(u->getFourthW()->getCost()));
+              text.setPosition(150,560);
+              window.draw(text);
+
+            }
             // On dessine les boutons
             window.draw(b1);
             window.draw(b2);
@@ -661,6 +758,41 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2,Unit *u = NULL)
             _buttonArray[1]=b2;
             _buttonArray[2]=b3;
             _buttonArray[3]=b4;
+            //
+            if(u != NULL){
+
+              text.setString(std::to_string(u->getPrimaryW()->getStrengh()) +" "+std::to_string(u->getPrimaryW()->getAttackRange())+" "+std::to_string(u->getPrimaryW()->getCost()));
+              text.setPosition(0,560);
+              window.draw(text);
+
+              text.setString(std::to_string(u->getActiveExpendNade()));
+              text.setPosition(0,585);
+              window.draw(text);
+              //
+              text.setString(std::to_string(u->getSecondaryW()->getStrengh()) +" "+std::to_string(u->getSecondaryW()->getAttackRange())+" "+std::to_string(u->getSecondaryW()->getCost()));
+              text.setPosition(50,560);
+              window.draw(text);
+
+              text.setString(std::to_string(u->getInvocation()));
+              text.setPosition(50,585);
+              window.draw(text);
+              //
+              text.setString(std::to_string(u->getThirdW()->getStrengh()) +" "+std::to_string(u->getThirdW()->getAttackRange())+" "+std::to_string(u->getThirdW()->getCost()));
+              text.setPosition(100,560);
+              window.draw(text);
+
+              text.setString(std::to_string(u->getPuttiesCalling()));
+              text.setPosition(100,585);
+              window.draw(text);
+              //
+              text.setString(std::to_string(u->getFourthW()->getStrengh()) +" "+std::to_string(u->getFourthW()->getAttackRange())+" "+std::to_string(u->getFourthW()->getCost()));
+              text.setPosition(150,560);
+              window.draw(text);
+
+              text.setString(std::to_string(u->getApocalypseHole()));
+              text.setPosition(150,585);
+              window.draw(text);
+            }
             // On dessine les boutons
             window.draw(b1);
             window.draw(b2);
@@ -675,6 +807,15 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2,Unit *u = NULL)
             //
             // On rempli le tableau de boutons
             _buttonArray[0]=b1;
+            //
+            if (u != NULL){
+              text.setString(std::to_string(u->getPrimaryW()->getStrengh()) +" "+std::to_string(u->getPrimaryW()->getAttackRange())+" "+std::to_string(u->getPrimaryW()->getCost()));
+              text.setPosition(0,560);
+              window.draw(text);
+
+            }
+            //
+
             // On dessine les boutons
             window.draw(b1);
           }break;
@@ -695,6 +836,21 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2,Unit *u = NULL)
             _buttonArray[0]=b1;
             _buttonArray[1]=b2;
             _buttonArray[2]=b3;
+            //
+            if(u != NULL){
+              text.setString(std::to_string(u->getPrimaryW()->getStrengh()) +" "+std::to_string(u->getPrimaryW()->getAttackRange())+" "+std::to_string(u->getPrimaryW()->getCost()));
+              text.setPosition(0,560);
+              window.draw(text);
+              //
+              text.setString(std::to_string(u->getSecondaryW()->getStrengh()) +" "+std::to_string(u->getSecondaryW()->getAttackRange())+" "+std::to_string(u->getSecondaryW()->getCost()));
+              text.setPosition(50,560);
+              window.draw(text);
+              //
+              text.setString(std::to_string(u->getThirdW()->getStrengh()) +" "+std::to_string(u->getThirdW()->getAttackRange())+" "+std::to_string(u->getThirdW()->getCost()));
+              text.setPosition(100,560);
+              window.draw(text);
+
+            }
             // On dessine les boutons
             window.draw(b1);
             window.draw(b2);
@@ -708,6 +864,13 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2,Unit *u = NULL)
             //
             _buttonArray[0]=b1;
             //
+            if(u != NULL){
+              text.setString(std::to_string(u->getPrimaryW()->getStrengh()) +" "+std::to_string(u->getPrimaryW()->getAttackRange())+" "+std::to_string(u->getPrimaryW()->getCost()));
+              text.setPosition(0,560);
+              window.draw(text);
+
+            }
+            //
             window.draw(b1);
           }break;
           case 9:{
@@ -717,6 +880,13 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2,Unit *u = NULL)
             b1.setPosition(0,600-100);
             //
             _buttonArray[0]=b1;
+            //
+            if(u != NULL){
+
+              text.setString(std::to_string(u->getPrimaryW()->getStrengh()) +" "+std::to_string(u->getPrimaryW()->getAttackRange())+" "+std::to_string(u->getPrimaryW()->getCost()));
+              text.setPosition(0,560);
+              window.draw(text);
+            }
             //
             window.draw(b1);
           }
