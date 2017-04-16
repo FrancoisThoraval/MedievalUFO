@@ -116,6 +116,30 @@ void Map::createTile(int x, int y, sf::RenderWindow &window,sf::Texture &t){    
       window.draw(s);
       _mapTile[x][y] = s;
      }
+	if (this->getNameOfElement(P) == "Octopus") {
+      sf::Sprite s;
+      s.setTexture(t);
+      s.setTextureRect(sf::IntRect(216, 803, TILESIZE, TILESIZE));
+      s.setPosition(x*TILESIZE,y*TILESIZE);
+      window.draw(s);
+      _mapTile[x][y] = s;
+     }
+	if (this->getNameOfElement(P) == "Haunted Tree") {
+      sf::Sprite s;
+      s.setTexture(t);
+      s.setTextureRect(sf::IntRect(186, 804, TILESIZE, TILESIZE));
+      s.setPosition(x*TILESIZE,y*TILESIZE);
+      window.draw(s);
+      _mapTile[x][y] = s;
+     }
+	if (this->getNameOfElement(P) == "Dragoon") {
+      sf::Sprite s;
+      s.setTexture(t);
+      s.setTextureRect(sf::IntRect(146, 806, TILESIZE, TILESIZE));
+      s.setPosition(x*TILESIZE,y*TILESIZE);
+      window.draw(s);
+      _mapTile[x][y] = s;
+     }
      if (this->getNameOfElement(P) == "red") {
           sf::Sprite s;
           s.setTexture(t);

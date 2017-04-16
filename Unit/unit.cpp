@@ -870,7 +870,6 @@ void Zedd::ThrowExtendNade(Position pos,Map *m,Player& p){                      
 }
 
 
-/**** PAS SUR DE CELLE CI *****/
 void Zedd::Invocation(Position pos, Map *m,Player& p){                                                          // utilisation de la fonction dinvocation
     if(p.getEnergy()>((this->_secondaryWeapon)->getCost())){                                                    // suivant le decors ou on invoque une creature differente
       if(this->getInvocation() == 0){                                                                           // et la met dans le tableaux d'unité du joueur
@@ -878,21 +877,26 @@ void Zedd::Invocation(Position pos, Map *m,Player& p){                          
           int hp;
           int mvmt;
           Weapon *wp;
+		std::string name;
           if(m->getElementW2(pos).getName()=="Water"){
-            hp = 250;
+		  name = "Octopus";
+		  hp = 250;
             mvmt = 1;
             wp = new Weapon("Canon a eau",150,1,50);
           } else if (m->getElementW2(pos).getName()=="Hill"){
+		  name = "Dragoon";
             hp = 300;
             mvmt = 3;
             wp = new Weapon("Lancer de terre",120,3,50);
           } else if(m->getElementW2(pos).getName()=="Tree"){
+		  name = "Haunted Tree";
             hp = 150;
             mvmt = 4;
             wp = new Weapon("Lancer de tronc",210,4,60);
           }
           Unit *u = new Putties(hp,mvmt,60,wp);
           u->setPosition(pos);
+		u->setName(name);
           m->setElementW1(pos,u);
 
 
