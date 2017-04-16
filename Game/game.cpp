@@ -44,7 +44,7 @@ void Game::gameLoop(){                                                          
      sf::Event currentEvent;
 	sf::SoundBuffer buffer;
 	sf::Sound sound;
-	buffer.loadFromFile("/home/tom/Documents/Projet_TechProg_L2/Tetris/Music&Sounds/batmanReversed.wav");
+	buffer.loadFromFile("./music/Power_Rangers_FULL_THEME_mp3cut.wav");
 	sound.setBuffer(buffer);
 	while (_window.pollEvent(currentEvent)) {
           std::cout << "isFullscreen: "<< _isFullScreen << '\n';
