@@ -42,10 +42,10 @@ bool Game::isExiting(){
 
 void Game::gameLoop(){                                                                                                      // Boucle du jeux
      sf::Event currentEvent;
-	sf::SoundBuffer buffer;
-	sf::Sound sound;
-	buffer.loadFromFile("./music/Power_Rangers_FULL_THEME_mp3cut.wav");
-	sound.setBuffer(buffer);
+	// sf::SoundBuffer buffer;
+	// sf::Sound sound;
+	// buffer.loadFromFile("./music/Power_Rangers_FULL_THEME_mp3cut.wav");
+	// sound.setBuffer(buffer);
 	while (_window.pollEvent(currentEvent)) {
           std::cout << "isFullscreen: "<< _isFullScreen << '\n';
 
@@ -57,7 +57,7 @@ void Game::gameLoop(){                                                          
                }
                case 3: {
 
-				sound.play();
+				// sound.play();
 				std::cout << "hearing something ?" << '\n';
                     showMenu();
                     break;
@@ -86,7 +86,7 @@ void Game::gameLoop(){                                                          
                     yellow->setPosition(posYellow);
                     pink->setPosition(posPink);
                     green->setPosition(posGreen);
-                    std::cout<<"POS PINK : "<<pink->getPosition()<<std::endl;
+                    //std::cout<<"POS PINK : "<<pink->getPosition()<<std::endl;
                     //  std::cout<<"DEFAULT : "<<pink.getDefault()<<std::endl;
                     m.setElementW1(posZedd,zedd);
                     m.setElementW1(posRed,red);
@@ -214,46 +214,47 @@ void Game::LavaDetector(Map* m){                                                
   Scenery *lava = new Lava;
   lava->setName("Lava1");
   for(int i =0;i<m->getSizeX();i++){
+    currentPos.setX(i);
     for(int j = 0;j< m->getSizeY();j++){
-      currentPos.setX(i);
       currentPos.setY(j);
 
-      p1 = currentPos;
-      p1.setX(currentPos.getX());
-      p1.setY(currentPos.getY()+1);
-
-      p2 = currentPos;
-      p2.setX(currentPos.getX());
-      p2.setY(currentPos.getY()-1);
-
-      p3 = currentPos;
-      p3.setX(currentPos.getX()+1);
-      p3.setY(currentPos.getY());
-
-      p4 = currentPos;
-      p4.setX(currentPos.getX()-1);
-      p4.setY(currentPos.getY());
       if((m->getElementW2(currentPos).getName()=="Lava2")){
+        p1 = currentPos;
+        p1.setX(currentPos.getX());
+        p1.setY(currentPos.getY()+1);
 
-            if((m->isOnMap(p1))) {
+        p2 = currentPos;
+        p2.setX(currentPos.getX());
+        p2.setY(currentPos.getY()-1);
+
+        p3 = currentPos;
+        p3.setX(currentPos.getX()+1);
+        p3.setY(currentPos.getY());
+
+        p4 = currentPos;
+        p4.setX(currentPos.getX()-1);
+        p4.setY(currentPos.getY());
+           //std::cout << "LAVA TROUVER : "<< i<<","<<j << '\n';
+            if((m->isOnMap(p1)) && (m->getElementW2(p1).getName() != "Lava2")) {
               m->setElementW2(p1,*lava);
               //m->getElementW2(p1).setName("Lava1");
             }
-            if(m->isOnMap(p2)) {
+            if((m->isOnMap(p2))&&(m->getElementW2(p2).getName() != "Lava2")) {
               m->setElementW2(p2,*lava);
               //m->getElementW2(p2).setName("Lava1");
             }
-            if(m->isOnMap(p3)) {
+            if((m->isOnMap(p3))&&(m->getElementW2(p3).getName() != "Lava2")){
               m->setElementW2(p3,*lava);
             //  m->getElementW2(p3).setName("Lava1");
             }
-            if(m->isOnMap(p4)) {
+            if((m->isOnMap(p4))&&(m->getElementW2(p4).getName() != "Lava2")) {
               m->setElementW2(p4,*lava);
               //m->getElementW2(p4).setName("Lava1");
             }
 
       }
     }
+    //std::cout << "tour de boucle numero : "<<i << '\n';
   }
   std::cout << "middle of lava detector" << '\n';
   lava->setName("Lava2");
@@ -282,6 +283,7 @@ void Game::LavaDamage(Map* m,Player& p){                                        
             m->getElementW1(currentPos)->setHealthPoints(m->getElementW1(currentPos)->getHealthPoints()-1200);
             if(m->getElementW1(currentPos)->getHealthPoints()<=0){
               Unit *u = new Unit;
+              //std::cout << "UNIT : "<<m->getNameOfElement(currentPos) << '\n';
               p.removeUnit(*m->getElementW1(currentPos));
               m->setElementW1(currentPos,u);
             }

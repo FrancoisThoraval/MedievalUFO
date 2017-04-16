@@ -309,7 +309,10 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, P
                pos.setX(sf::Mouse::getPosition(window).x);
                pos.setY(sf::Mouse::getPosition(window).y);
                ui.handleClick(window,pos,this);
-               ui.drawUi(window,p1,p2,getElementW1(_unitSelected));//Je crois que ça pose probleme comme c'est deux fois le même player (au niveau de la couleur du carré rouge ou vert)
+               if(getUnitSelected().getX()!= -1){
+
+                 ui.drawUi(window,p1,p2,getElementW1(_unitSelected));//Je crois que ça pose probleme comme c'est deux fois le même player (au niveau de la couleur du carré rouge ou vert)
+               }
           }else{
                // Si on a cliqué sur la map
                while ((i < (_sizeX/TILESIZE)) && (_tileClicked == 0)) {
@@ -342,7 +345,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, P
 
                     }
                     ui.drawUi(window,p1,p2,getElementW1(pos));
-                    if((getNameOfElement(pos) == "blue")||(getNameOfElement(pos) == "pink")||(getNameOfElement(pos) == "green")||(getNameOfElement(pos) == "yellow")||(getNameOfElement(pos) == "red")||(getNameOfElement(pos) == "Zedd")||(getNameOfElement(pos) == "Putties") ||(getNameOfElement(pos)=="RobotPR")||(getNameOfElement(pos)=="TurtleTank")||(getNameOfElement(pos)=="TornadoDino")) {
+                    if((getNameOfElement(pos) == "blue")||(getNameOfElement(pos) == "pink")||(getNameOfElement(pos) == "green")||(getNameOfElement(pos) == "yellow")||(getNameOfElement(pos) == "red")||(getNameOfElement(pos) == "Zedd")||(getNameOfElement(pos) == "Putties") ||(getNameOfElement(pos)=="RobotPR")||(getNameOfElement(pos)=="TurtleTank")|| (getNameOfElement(pos)=="TornadoDino") ||(getNameOfElement(pos) =="Octopus") ||(getNameOfElement(pos)=="Haunted Tree")||(getNameOfElement(pos)=="Dragoon")) {
                          //if (p1.isMineUnit(getElementW1(pos))) {
 
                               _unitSelected = pos;
@@ -466,6 +469,7 @@ void Ui::handleClick(sf::RenderWindow &window,Position pos, Map *m){            
               }
             }
           }
+          std::cout << "GROSSEBITE" << '\n';
 
 }
 void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2,Unit *u = NULL){                                                                                    // fonction qui dessine l'espace en dessous de la map pour les attaques, ayayay et les info de point de vie et d'energie
@@ -809,13 +813,15 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2,Unit *u = NULL)
               text.setPosition(100,585);
               window.draw(text);
               //
-              text.setString(std::to_string(u->getFourthW()->getStrengh()) +" "+std::to_string(u->getFourthW()->getAttackRange())+" "+std::to_string(u->getFourthW()->getCost()));
-              text.setPosition(150,560);
-              window.draw(text);
+              if(!(u->getApoon())){
+                text.setString(std::to_string(u->getFourthW()->getStrengh()) +" "+std::to_string(u->getFourthW()->getAttackRange())+" "+std::to_string(u->getFourthW()->getCost()));
+                text.setPosition(150,560);
+                window.draw(text);
 
-              text.setString(std::to_string(u->getApocalypseHole()));
-              text.setPosition(150,585);
-              window.draw(text);
+                text.setString(std::to_string(u->getApocalypseHole()));
+                text.setPosition(150,585);
+                window.draw(text);
+              }
             }
             // On dessine les boutons
             window.draw(b1);
@@ -913,7 +919,58 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2,Unit *u = NULL)
             }
             //
             window.draw(b1);
-          }
+          }break;
+          case 10:{
+            std::cout << "now drawing ui's character 8." << '\n';
+            b1.setTexture(texture);
+            b1.setTextureRect(sf::IntRect(616,975,50,50)); //fist
+            b1.setPosition(0,600-100);
+            //
+            _buttonArray[0]=b1;
+            //
+            if(u != NULL){
+
+              text.setString(std::to_string(u->getPrimaryW()->getStrengh()) +" "+std::to_string(u->getPrimaryW()->getAttackRange())+" "+std::to_string(u->getPrimaryW()->getCost()));
+              text.setPosition(0,560);
+              window.draw(text);
+            }
+            //
+            window.draw(b1);
+          }break;
+          case 11:{
+            std::cout << "now drawing ui's character 8." << '\n';
+            b1.setTexture(texture);
+            b1.setTextureRect(sf::IntRect(616,975,50,50)); //fist
+            b1.setPosition(0,600-100);
+            //
+            _buttonArray[0]=b1;
+            //
+            if(u != NULL){
+
+              text.setString(std::to_string(u->getPrimaryW()->getStrengh()) +" "+std::to_string(u->getPrimaryW()->getAttackRange())+" "+std::to_string(u->getPrimaryW()->getCost()));
+              text.setPosition(0,560);
+              window.draw(text);
+            }
+            //
+            window.draw(b1);
+          }break;
+          case 12:{
+            std::cout << "now drawing ui's character 8." << '\n';
+            b1.setTexture(texture);
+            b1.setTextureRect(sf::IntRect(616,975,50,50)); //fist
+            b1.setPosition(0,600-100);
+            //
+            _buttonArray[0]=b1;
+            //
+            if(u != NULL){
+
+              text.setString(std::to_string(u->getPrimaryW()->getStrengh()) +" "+std::to_string(u->getPrimaryW()->getAttackRange())+" "+std::to_string(u->getPrimaryW()->getCost()));
+              text.setPosition(0,560);
+              window.draw(text);
+            }
+            //
+            window.draw(b1);
+          }break;
      }
 
     // Drawing info for player
@@ -990,4 +1047,14 @@ void Ui::setUnitClicked(std::string nameOfUnit){                                
      if(nameOfUnit == "TornadoDino"){
           setUnitClicked(9);
      }
+     if(nameOfUnit == "Dragoon"){
+          setUnitClicked(10);
+     }
+     if(nameOfUnit == "Octopus"){
+          setUnitClicked(11);
+     }
+     if(nameOfUnit == "Haunted Tree"){
+          setUnitClicked(12);
+     }
+
 }

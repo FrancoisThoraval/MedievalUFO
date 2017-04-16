@@ -398,7 +398,7 @@ Putties::Putties(){                                                             
 
 
 Putties::Putties(int hp,int mvmt,int price,Weapon *wp,std::string nom){                                  // CONSTREUR PUTTIES
-  this->setName(nom);
+  this->setName("Putties");
   this->setHealthPoints(hp);
   this->setMovement(mvmt);
   this->setPrimaryW(wp);
@@ -741,7 +741,7 @@ Zedd::Zedd(){                                                                   
   setHealthPoints(5000);
   setPuttiesCalling(0);
   setInvocation(2);
-  setApocalypseHole(20);
+  setApocalypseHole(0);
   apoon = false;
   //std::cout<<"ARME : "<<_thirdWeapon->getName()<<std::endl;
 }
@@ -1003,17 +1003,12 @@ void Zedd::ApocalypseHole(Map *m,Player& p){                                    
                                                                                                             // si une unité enemies a zedd touche la lave, elle pers 1200 point de vie
   if(this->apoon == false ){
       if(p.getEnergy() >=((this->_fourthWeapon)->getCost())){
-        std::cout << "/* message */" << std::endl;
         if(this->apoon == false){
-          std::cout << "/* message2 */" << std::endl;
-          std::cout << "Position : " <<this->getPosition()<< '\n';
           Scenery *s = new Lava;
           s->setName("Lava2");
           m->setElementW2(this->getPosition(),*s);
           std::cout << "map : " <<m->getElementW2(this->getPosition()).getName()<< std::endl;
-          std::cout << "/* message3 */" << std::endl;
           p.setEnergy(p.getEnergy()-(this->_fourthWeapon)->getCost());
-          std::cout << "/* message4 */" << std::endl;
           //count++;
           this->apoon = true;
         }

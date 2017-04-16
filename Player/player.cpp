@@ -98,7 +98,7 @@ void Player::removeUnit(Unit &u){                                               
           i++;
      }
      for (int j = i; j < _sizeOwnUnit; j++) {
-          _ownUnit[i]=_ownUnit[i+1];
+          _ownUnit[j]=_ownUnit[j+1];
      }
      _sizeOwnUnit--;
      showUnitOwned();
