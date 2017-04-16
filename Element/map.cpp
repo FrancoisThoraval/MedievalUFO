@@ -309,7 +309,7 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, P
                pos.setX(sf::Mouse::getPosition(window).x);
                pos.setY(sf::Mouse::getPosition(window).y);
                ui.handleClick(window,pos,this);
-               ui.drawUi(window,p1,p2,m->getElementW1(pos));//Je crois que ça pose probleme comme c'est deux fois le même player (au niveau de la couleur du carré rouge ou vert)
+               ui.drawUi(window,p1,p2,getElementW1(_unitSelected));//Je crois que ça pose probleme comme c'est deux fois le même player (au niveau de la couleur du carré rouge ou vert)
           }else{
                // Si on a cliqué sur la map
                while ((i < (_sizeX/TILESIZE)) && (_tileClicked == 0)) {
