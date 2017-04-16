@@ -40,36 +40,29 @@ bool Game::isExiting(){
 
 
 
-
 void Game::gameLoop(){                                                                                                      // Boucle du jeux
      sf::Event currentEvent;
-     while (_window.pollEvent(currentEvent)) {
+	sf::SoundBuffer buffer;
+	sf::Sound sound;
+	buffer.loadFromFile("/home/tom/Documents/Projet_TechProg_L2/Tetris/Music&Sounds/batmanReversed.wav");
+	sound.setBuffer(buffer);
+	while (_window.pollEvent(currentEvent)) {
           std::cout << "isFullscreen: "<< _isFullScreen << '\n';
 
+		std::cout << "=============" << '\n';
           switch (_gameState) {
                case 2 : {
                     showSpashScreen();
                break;
                }
                case 3: {
+
+				sound.play();
+				std::cout << "hearing something ?" << '\n';
                     showMenu();
                     break;
                }
                case 4 : {
-                    //_window.clear();
-                    //Saisie des noms de joueurs
-
-                    // JUSQUICI
-                    /*                                        (J'ai enlever sa pour esseyer mon truc)
-                      std::cout << "=====\nPlayer 1: ";
-                      std::cin>>name;
-                      p1.setName(name);
-                      p1.setWhosPlaying(true);
-                      std::cout << "=====\nPlayer 2: ";
-                      std::cin>>name;
-                      p2.setName(name);
-                      p2.setWhosPlaying(false);
-                    */
                     //Création des éléments du jeu
                     Map m(800,500);
                     m.createWorld(_window);

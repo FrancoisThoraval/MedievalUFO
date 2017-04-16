@@ -2,6 +2,7 @@
 #define game_hpp
 // #include <SFML/Window.hpp>
 #include <SFML/Graphics/Color.hpp>
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <string>
 #include "splashScreen.hpp"
