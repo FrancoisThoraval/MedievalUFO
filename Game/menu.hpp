@@ -16,7 +16,7 @@ public:
 class Menu {
 private:
      int _menuChoice;
-     Button _btnExit, _btnPlay;
+     Button _btnExit, _btnPlay, _btnRules;
      sf::RenderWindow _window;
 public:
      int checkZone(int,int,Button);

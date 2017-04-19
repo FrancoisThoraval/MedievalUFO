@@ -175,7 +175,11 @@ void Game::gameLoop(){                                                          
                case 6 : {
                     _window.clear();
                     enterName();
-               }
+               }break;
+               case 7 : {
+                    window.clear();
+                    // METTRE L'IMAGE ICI !
+               }break;
           }
      }
 }
@@ -195,6 +199,8 @@ void Game::showMenu(){                                                          
           case 1: _gameState = 6;
                break;
           case 2: _gameState = 5;
+               break;
+          case 3: _gameState = 7;
                break;
      }
      if (_gameState == 6) {

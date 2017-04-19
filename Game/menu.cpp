@@ -18,6 +18,12 @@ void Menu::show(sf::RenderWindow &window){                                      
      _btnExit.rect.left = 579;
      _btnExit.rect.width = 200;
      _btnExit.action = 2;
+
+     _btnRules.rect.top = 10;
+     _btnRules.rect.height = 120;
+     _btnRules.rect.left =10;
+     _btnRules.rect.width = 200;
+     _btnRules.action = 3;
      window.draw(sprite);
      window.display();
 }
@@ -45,6 +51,10 @@ void Menu::handleClick(sf::RenderWindow &window){                               
                     if (_menuChoice == 0) {
                          _menuChoice = checkZone(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y, _btnExit);
                          test = false;
+                    }
+                    if(_menuChoice == 0){
+                      _menuChoice = checkZone(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y, _btnRules);
+                      test = false;
                     }
                }
           }
