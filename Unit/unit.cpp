@@ -616,8 +616,10 @@ void PowerRanger::BeTogether(Map *m,Position pos,bool* hor, bool* ver){         
     currentPos.setX(j);
     std::cout<<"posX : "<<currentPos.getX()<<std::endl;
     std::cout<<"posY : "<<currentPos.getY()<<std::endl;
-    if((m->getNameOfElement(currentPos)!="Putties")&&(m->getNameOfElement(currentPos)!="Zedd")&&(m->getNameOfElement(currentPos)!="green")){
-      i++;
+    if(m->getElementW1(currentPos) != NULL){
+      if((m->getElementW1(currentPos)->getName()!="Putties")&&(m->getElementW1(currentPos)->getName()!="Zedd")){
+        i++;
+      }
     }
   }
   currentPos.setX(pos.getX());
@@ -626,10 +628,14 @@ void PowerRanger::BeTogether(Map *m,Position pos,bool* hor, bool* ver){         
     currentPos.setY(j);
     std::cout<<"posX : "<<currentPos.getX()<<std::endl;
     std::cout<<"posY : "<<currentPos.getY()<<std::endl;
-    if((m->getNameOfElement(currentPos)!="Putties")&&(m->getNameOfElement(currentPos)!="Zedd")&&(m->getNameOfElement(currentPos)!="green")){
-      k++;
+    if(m->getElementW1(currentPos)!= NULL){
+      if((m->getElementW1(currentPos)->getName()!="Putties")&&(m->getElementW1(currentPos)->getName()!="Zedd")){
+        k++;
+      }
     }
   }
+  std::cout << "I : "<<i << std::endl;
+  std::cout << "K : "<<k << std::endl;
   if(i>=5){                                                                                                                                                                   // si c'est le cas on renvois l'axe en question
     (*hor)=true;
   } else if(k>=5){
@@ -1117,6 +1123,7 @@ void RobotPR::setArmor(int armor){
 void RobotPR::TransformationTurtle(Map* m,Player& p,Player& p2,Position pos){                               // transformation identique a la transformation du powerranger en robotpr
   if(p2.getSizeOwnUnit() > 4){
     if(m->getNameOfElement(pos)=="RobotPR"){
+      std::cout << "/* message */" << std::endl;
       Unit *tt = new TurtleTank;
       m->setInTab(*m->getElementW1(pos));
       m->setElementW1(pos,tt);
