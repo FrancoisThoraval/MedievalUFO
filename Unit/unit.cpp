@@ -1121,7 +1121,7 @@ void RobotPR::setArmor(int armor){
 
 
 void RobotPR::TransformationTurtle(Map* m,Player& p,Player& p2,Position pos){                               // transformation identique a la transformation du powerranger en robotpr
-  if(p2.getSizeOwnUnit() > 4){
+  if(p2.getSizeOwnUnit() > 15){
     if(m->getNameOfElement(pos)=="RobotPR"){
       std::cout << "/* message */" << std::endl;
       Unit *tt = new TurtleTank;

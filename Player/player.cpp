@@ -148,6 +148,7 @@ Unit* Player::getUnit(int pos){
 
 void Player::EndOfTurn(Map *m){                                                               // fonction passer son tours elle remet a zero l'energie du joueurs
      this->_energy = 100;
+     hasLost();
      ResetMovement(m);
 }
 
@@ -190,6 +191,7 @@ void Player::ResetMovement(Map *m){                                             
 
 void Player::hasLost(){                                                                       // fonction qui renvois si un joueurs a perdu ou non
      if (!getLost()) {
+       std::cout << "HAS LOST size : "<<_sizeOwnUnit << std::endl;
           if (_sizeOwnUnit == 0) {
                setLost(true);
           }

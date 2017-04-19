@@ -197,7 +197,9 @@ void Game::showMenu(){                                                          
           case 2: _gameState = 5;
                break;
      }
-     if (_gameState == 4) {
+     if (_gameState == 6) {
+           p1.setLost(false);
+           p2.setLost(false);
           std::cout << "Starting game..." << '\n';
      }else if(_gameState == 5){
           std::cout << "Closing game" << '\n';
@@ -302,6 +304,7 @@ void Game::endTurn(Player &p1, Player &p2,Map *m, Ui *ui,Position posZedd){     
           p1.setWhosPlaying(false);
           p2.setWhosPlaying(true);
           ui->drawUi(_window,p2,p1,NULL);
+
           std::cerr << p2.getName()<<", Your turn !" << '\n';
           // Substraction(p2);
           std::cerr<<" Player 2, Energy : "<<p2.getEnergy()<<std::endl;

@@ -293,6 +293,9 @@ void Map::setSizeX(int x){this->_sizeX = x;}
 void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, Player &p2,Ui& ui){                                                                          // fonction qui gere l'evenement au clic de la souris
      // sf::Event mapEvent =e;                                                                                                                                              // suivant la ou on appuis
      int i = 0;
+     std::cout << "UNITE DE P1 HANDLECLICK : " << std::endl;
+     p1.showUnitOwned();
+     std::cout << "Size : "<<p1.getSizeOwnUnit() << std::endl;
      int j =0;
      _tileClicked = 0;
      struct timeval debut,fin;                // variable temps
