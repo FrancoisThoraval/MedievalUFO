@@ -272,14 +272,14 @@ void Map::drawWorld(sf::RenderWindow &window){                                  
                createTile(i,j, window,texture);
           }
      }
-     std::cout << "test fin drawworld" << '\n';
+     //std::cout << "test fin drawworld" << '\n';
 }
 
 /****************************************/
 
 bool Map::isOnMap(Position pos){                                                                                    // fonction qui retourne si une posisiton passer en parametre est dans la map ou pas
      if(((pos.getX()<0)||(pos.getX()>_sizeX))||((pos.getY()<0)||(pos.getY()>_sizeY))) {
-          std::cerr << "You cannot access this position !" << '\n';
+          //std::cerr << "You cannot access this position !" << '\n';
           return false;
      }else
           return true;
@@ -293,9 +293,9 @@ void Map::setSizeX(int x){this->_sizeX = x;}
 void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, Player &p2,Ui& ui){                                                                          // fonction qui gere l'evenement au clic de la souris
      // sf::Event mapEvent =e;                                                                                                                                              // suivant la ou on appuis
      int i = 0;
-     std::cout << "UNITE DE P1 HANDLECLICK : " << std::endl;
-     p1.showUnitOwned();
-     std::cout << "Size : "<<p1.getSizeOwnUnit() << std::endl;
+    //  std::cout << "UNITE DE P1 HANDLECLICK : " << std::endl;
+    //  p1.showUnitOwned();
+    //  std::cout << "Size : "<<p1.getSizeOwnUnit() << std::endl;
      int j =0;
      _tileClicked = 0;
      struct timeval debut,fin;                // variable temps
@@ -342,8 +342,8 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, P
                       if (p1.isMineUnit(getNameOfElement(pos))) {
                         ui.setUnitClicked(getNameOfElement(pos));
                       }else{
-                        std::cout << "TEST zedd health points:"<<getElementW1(pos)->getHealthPoints() << '\n';
-                        std::cout << "This unit is not yours !" << '\n';
+                        //std::cout << "TEST zedd health points:"<<getElementW1(pos)->getHealthPoints() << '\n';
+                        //std::cout << "This unit is not yours !" << '\n';
                       }
 
                     }
@@ -373,8 +373,8 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, P
 
                     }
                }else{//Si une unité est déjà sélectionnée.
-                 std::cout << "POS : "<<pos << '\n';
-                 std::cout << "UNITCLICK : "<<_unitSelected << '\n';
+                 //std::cout << "POS : "<<pos << '\n';
+                 //std::cout << "UNITCLICK : "<<_unitSelected << '\n';
 
 
                    getElementW1(_unitSelected)->move(_unitSelected,pos,this,ui.getAttack()+1,p1,p2);
@@ -393,16 +393,16 @@ void Map::handleClick(sf::RenderWindow &window,sf::Event &mapEvent,Player &p1, P
                }
 
           }
-          std::cout << "_unitSelected:" << _unitSelected<< '\n';
+          //std::cout << "_unitSelected:" << _unitSelected<< '\n';
 
      }
 
 }
 
 Position Map::getUnitSelected(){                                                                                                            // retourne l'unité selecté
-     std::cout << "UnitSelected: \n"<< _unitSelected << '\n';
+     //std::cout << "UnitSelected: \n"<< _unitSelected << '\n';
      if((_unitSelected.getX()==-1)||(_unitSelected.getY()==-1)){
-        std::cout << "appuis pas sur AYAYAY comme sa toi batard" << '\n';
+
      } else {
 
        std::cout << "who is at that position: "<< getNameOfElement(_unitSelected) << '\n';
@@ -434,13 +434,13 @@ int Ui::getState()const{
 void Ui::handleClick(sf::RenderWindow &window,Position pos, Map *m){                                                          // fonction qui gere le clic de la souris sur la surface en dessous de la map de jeux, elle permet de recuperer le numero d'attaque
      bool found = false;
      int i =0;
-     std::cout << "entering ui event handler" << '\n';
+     //std::cout << "entering ui event handler" << '\n';
      // Tant qu'on a pas trouvé le sprite correspondant à pos
      while ((i < 4)&&(!found)) {
           if (_buttonArray[i].getGlobalBounds().contains(pos.getX(),pos.getY())) {
                found = true;
-               std::cout << "clicked on a button !" << '\n';
-               std::cout << "You clicked on the " << i<< " button" << '\n';
+              // std::cout << "clicked on a button !" << '\n';
+               //std::cout << "You clicked on the " << i<< " button" << '\n';
                // ****
                // Gestion des attaques
                // ****
@@ -452,9 +452,9 @@ void Ui::handleClick(sf::RenderWindow &window,Position pos, Map *m){            
      }
      if(found == false){
           _numattack = 0;
-          std::cout << "/* message test 1 */" << '\n';
+          //std::cout << "/* message test 1 */" << '\n';
           std::cout << m->getUnitSelected() << '\n';
-          std::cout << "/* message2 */" << '\n';
+          //std::cout << "/* message2 */" << '\n';
 
           if((m->getUnitSelected().getX()==-1)||(m->getUnitSelected().getY()==-1)){
 
@@ -464,7 +464,7 @@ void Ui::handleClick(sf::RenderWindow &window,Position pos, Map *m){            
                 std::cout << m->getUnitSelected() << '\n';
                 if ((m->getUnitSelected().getX()>= 0)&&(m->getUnitSelected().getY()>=0)) {
                   if (_alpha.getGlobalBounds().contains(pos.getX(),pos.getY())) {
-                    std::cout << "ayayay" << '\n';
+                    //std::cout << "ayayay" << '\n';
                     Advice_ayayay(window,m->getElementW1(m->getUnitSelected()));
                   }
                 }else
@@ -472,7 +472,7 @@ void Ui::handleClick(sf::RenderWindow &window,Position pos, Map *m){            
               }
             }
           }
-          std::cout << "GROSSEBITE" << '\n';
+
 
 }
 void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2,Unit *u = NULL){                                                                                    // fonction qui dessine l'espace en dessous de la map pour les attaques, ayayay et les info de point de vie et d'energie

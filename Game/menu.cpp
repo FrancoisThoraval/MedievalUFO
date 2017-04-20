@@ -19,7 +19,7 @@ void Menu::show(sf::RenderWindow &window){                                      
      _btnExit.rect.width = 200;
      _btnExit.action = 2;
 
-     _btnRules.rect.top = 10;
+     _btnRules.rect.top = 115;
      _btnRules.rect.height = 120;
      _btnRules.rect.left =10;
      _btnRules.rect.width = 200;
@@ -29,10 +29,10 @@ void Menu::show(sf::RenderWindow &window){                                      
 }
 
 int Menu::checkZone(int x, int y, Button b){                                                                                                        // fonction qui montre ou on a clické
-     std::cout << "testing: x="<< b.rect.left << " y= " <<b.rect.top << '\n';
+     //std::cout << "testing: x="<< b.rect.left << " y= " <<b.rect.top << '\n';
      if(b.rect.contains(x,y)) {
           // std::cout << "choice: " <<getMenuChoice() << '\n';
-          std::cout << "b is between: x="<< x<< " y= "<< y << '\n';
+          //std::cout << "b is between: x="<< x<< " y= "<< y << '\n';
           return b.action;
      }
      return 0;

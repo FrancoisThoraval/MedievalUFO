@@ -186,11 +186,11 @@ void Unit::setSecondaryW(Weapon *wp){
 
 void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& p,Player &p2){
   int distance = Distance(posInit,posFinal);
-  std::cout << "/* message1 */" << '\n';
+  //std::cout << "/* message1 */" << '\n';
   if(m->getElementW1(posInit) != NULL) {
-    std::cout << "/* message2 */" << '\n';
+    //std::cout << "/* message2 */" << '\n';
     if(p.isMineUnit(m->getNameOfElement(posInit))==true){
-      std::cout << "/* message3 */" << '\n';
+      //std::cout << "/* message3 */" << '\n';
       if(m->getNameOfElement(posInit ) == "Zedd"){
         m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
       } else {
@@ -240,151 +240,10 @@ void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& 
   }
 }
 
-// void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& p,Player &p2){
-//   int distance = Distance(posInit,posFinal);
-//   std::cout << "TEST NOM : "<<m->getNameOfElement(posInit) << '\n';
-//   std::cout << "TEST NUMATTACK :"<<numattack << '\n';
-//   if(((m->getNameOfElement(posInit) != "green") && (numattack != 2))){
-//     std::cout << "TEST CONDITION 1" << '\n';
-//   } else {
-//     std::cout << "TEST CONDITION 2" << '\n';
-//   }
-//   if((m->getNameOfElement(posInit) == "green") && (numattack == 2)) {
-//     std::cout << "TEST2 CONDITION 1" << '\n';
-//   } else {
-//     std::cout << "TEST2 CONDITION 2" << '\n';
-//   }
-//   std::cout << "TEST DEBUT MOVE numattack : "<<numattack << '\n';
-//   std::cout << "POS INIT :"<<m->getNameOfElement(posInit) << '\n';
-//   std::cout << "POS FINAL : "<<m->getNameOfElement(posFinal) << '\n';
-//   if(m->getElementW1(posInit) != NULL){
-//     std::cout << "/* message0 */" << '\n';
-//     if(p.isMineUnit(m->getNameOfElement(posInit)) == true) {
-//       std::cout << "/* message1 */" << '\n';
-//       if((m->getNameOfElement(posInit) != "Zedd") || (((m->getNameOfElement(posInit) != "red")||(m->getNameOfElement(posInit) != "blue")||(m->getNameOfElement(posInit) != "yellow")||(m->getNameOfElement(posInit) != "green")||(m->getNameOfElement(posInit) != "pink")) && (numattack != 3))){// || ((m->getNameOfElement(posInit) != "green") && (numattack != 2))){
-//         std::cout << "/* message2 */" << '\n';
-//         if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")&&(m->getNameOfElement(posFinal)!="")&&(m->getNameOfElement(posFinal)!="Lava2")){
-//           if(posInit != posFinal){
-//             if(p.isMineUnit(*m->getElementW1(posFinal)) != true){
-//               m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
-//             } else {
-//               std::cout << "Tu peux pas attaqué ta propre unité" << '\n';
-//             }
-//           } else  {
-//             std::cout << "C'est la meme case ou tu es" << '\n';
-//           }
-//         } else {
-//           if(distance<=this->_movement){                                                                                                                                                                                                      // si on a assez de deplacement on se deplace
-//             if(distance != 0){
-//               Unit *u = new Unit();
-//               int mouvementdefault = m->getElementW1(posInit)->getDefault();
-//               m->setElementW1(posFinal,this);                                                                                                                                                                                                 // je  crée un unité vide que je mettrais a l'ancienne position qui mettrat avec la fonction "setElementW1" vide dans le tableaux
-//               m->setElementW1(posInit,u);
-//               m->getElementW1(posFinal)->setMovement(m->getElementW1(posFinal)->getMovement()-(distance));
-//               this->setPosition(posFinal);
-//               m->getElementW1(posFinal)->setDefault(mouvementdefault);
-//               //std::cout<<"Distance : "<<distance<<std::endl;
-//               // std::cout<<"HP : :"<<m->getElementW1(posFinal).getHealthPoints()<<std::endl;
-//               // std::cout<<"Movement :"<<this->getMovement()<<std::endl;
-//             } else {
-//               std::cout <<"Tu ne peux pas te deplacer sur ta case actuelle"<<std::endl;
-//             }
-//           } else {
-//             std::cout<<"Pas assez de point de deplacement"<<std::endl;
-//           }
-//         }
-//       } else {
-//         std::cout << "TEST ATTAQUE DANS MOVE" << '\n';
-//         m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
-//       }
-//     } else {
-//       std::cout << "c n'est pas ton unité" << '\n';
-//     }
-//   } else {
-//     std::cout << "M->getElementW1(posInit) est NULL" << '\n';
-//   }
-// }
-
-// void Unit::move(Position posInit,Position posFinal,Map* m,int numattack,Player& p,Player &p2){                                                                                                                                                // Fonction qui permet le deplacement des unité
-//   int distance = Distance(posInit,posFinal);
-//   std::cout << "TEST DEBUT MOVE : "<<numattack << '\n';
-//   std::cout << "POS INIT :"<<m->getNameOfElement(posInit) << '\n';
-//   std::cout << "POS FINAL : "<<m->getNameOfElement(posFinal) << '\n';
-//   if(p.isMineUnit(*(m->getElementW1(posInit))) == true){                                                                                                                                                                                      // je teste en premiere si l'unite qu'on veux deplacer et la notre
-//     if(m->getNameOfElement(posInit) != "Zedd"){                                                                                                                                                                                               // je teste en second si l'unité que l'ont veux deplacer n'est PAS zedd car il n'as aucun point de mouvement donc il ne fais qu'attaquer
-//       if((((m->getNameOfElement(posInit) != "red")||(m->getNameOfElement(posInit)!="blue")||(m->getNameOfElement(posInit)!="yellow")||(m->getNameOfElement(posInit)!="pink")||(m->getNameOfElement(posInit)!="green"))&&(numattack != 3))){     // ensuite je regarde si je n'ai pas selectionner un des powerranger avec l'attaque numero 3 car c'est une transformation si c'est le cas on attaque aulieux de se deplacer
-//         //if((m->getNameOfElement(posInit) != "green") && (numattack != 2)){
-//           std::cout << "POS FINAL : "<<m->getNameOfElement(posFinal) << '\n';
-//           if((m->getNameOfElement(posFinal) != "Hill") && ( m->getNameOfElement(posFinal) != "Tree") && (m->getNameOfElement(posFinal) != "Water")&&(m->getNameOfElement(posFinal)!="")&&(m->getNameOfElement(posFinal)!="Lava2")){             // si la position ou j'ai cliqué n'est pas une unité alors c'est un decors donc on peut se deplacer SEULEMENT si
-//             if(posInit != posFinal){                                                                                                                                                                                                            // la position final n'est pas sa propre case
-//               if(p.isMineUnit(*(m->getElementW1(posFinal))) != true){                                                                                                                                                                           // Si on veut attaqué alors si l'unité a la position final n'est pas la notres alors on peut attaqué
-//                 //(m->getElementW1(posInit)).attack(m->getElementW1(posFinal),numattack,p,posFinal,m);
-//                 if (m->getNameOfElement(posInit) == "Putties"){
-//
-//                   m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
-//                 }  else if (m->getNameOfElement(posInit) == "Zedd"){
-//                   m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
-//                 } else {
-//                   std::cout << "TEST MOVE 4" << '\n';
-//                   m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
-//                 }
-//
-//               } else  {
-//                 std::cout<<"Tu ne peux pas attaquer ta propre unite"<<std::endl;
-//               }
-//             }
-//
-//           } else {
-//             if(distance<=this->_movement){                                                                                                                                                                                                      // si on a assez de deplacement on se deplace
-//               if(distance != 0){
-//                 Unit *u = new Unit();
-//                 int mouvementdefault = m->getElementW1(posInit)->getDefault();
-//                 m->setElementW1(posFinal,this);                                                                                                                                                                                                 // je  crée un unité vide que je mettrais a l'ancienne position qui mettrat avec la fonction "setElementW1" vide dans le tableaux
-//                 m->setElementW1(posInit,u);
-//                 m->getElementW1(posFinal)->setMovement(m->getElementW1(posFinal)->getMovement()-(distance));
-//                 this->setPosition(posFinal);
-//                 m->getElementW1(posFinal)->setDefault(mouvementdefault);
-//                 //std::cout<<"Distance : "<<distance<<std::endl;
-//                 // std::cout<<"HP : :"<<m->getElementW1(posFinal).getHealthPoints()<<std::endl;
-//                 // std::cout<<"Movement :"<<this->getMovement()<<std::endl;
-//               } else {
-//                 std::cout <<"Tu ne peux pas te deplacer sur ta case actuelle"<<std::endl;
-//               }
-//             } else {
-//               std::cout<<"Pas assez de point de deplacement"<<std::endl;
-//             }
-//           }
-//         // } else {
-//         //   std::cout << "ATTACK : "<<numattack << '\n';
-//         //   std::cout << "bite" << '\n';
-//         //   m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
-//         // }
-//
-//       } else {
-//         std::cout << "TEST MOVE 1" << '\n';
-//         m->getElementW1(posInit)->attack(NULL,numattack,p,p2,posFinal,m);
-//       }
-//     } else {
-//       std::cout << "TEST MOVE 2" << '\n';
-//       m->getElementW1(posInit)->attack(m->getElementW1(posFinal),numattack,p,p2,posFinal,m);
-//     }
-//
-//     } else {
-//       std::cout<<"Cette unite ne t'appartient pas "<<std::endl;
-//     }
-//
-//   }
-
-
-
-
-
-
-
 
 /****************************************/
 
-/*** Methode Fantassin ***/
+/*** Methode Putties ***/
 
 Putties::Putties(){                                                                                     // CONSTRUCTEUR PUTTIES PAR DEFAULT
 
@@ -412,10 +271,10 @@ Putties::~Putties(){                                                            
 
 
   void Putties::attack(Unit* u,int W ,Player& p,Player& p2,Position posFinal,Map* m){                   // Fonction d'attaque de l'unité Putties
-    std::cout << "IN FCT PUTTIES ATTAQUE" << '\n';
+  //  std::cout << "IN FCT PUTTIES ATTAQUE" << '\n';
 Position posInit = this->_pos;
 int distance = Distance(posInit,posFinal);                                                              // je recupere la distance entre la position de l'unité attaquante et la position à attaquer
-std::cout << "Ton arme a "<<this->_primaryWeapon->getAttackRange()<<" de portée et tu attaque a "<<distance << '\n';
+//std::cout << "Ton arme a "<<this->_primaryWeapon->getAttackRange()<<" de portée et tu attaque a "<<distance << '\n';
   if(W == 1){                                                                                           // si c'est l'attaque numero 1
     if(p.getEnergy()>=((this->_primaryWeapon)->getCost())){                                              // alors si on a assez d'energie
       if(distance <= (this->_primaryWeapon)->getAttackRange()) {                                        // alors si on a assez de portée
@@ -515,13 +374,13 @@ void PowerRanger::setCapacityWeapon(bool cap){
 /** METHODE **/
 
   void PowerRanger::attack(Unit* u,int W ,Player& p,Player& p2,Position posFinal,Map* m){                           // fonction d'attaque powerranger
-    std::cout << "IN FCT POWERRANGER ATTAQUE" << '\n';
+    //std::cout << "IN FCT POWERRANGER ATTAQUE" << '\n';
     if(u != NULL){
 
       std::cout << "HP AVANT :"<<u->getHealthPoints() << '\n';
     }
     Position posInit = this->_pos;
-    std::cout << "POS INIT : "<<posInit<<std::endl<<"Pos final :"<<posFinal << '\n';
+  //  std::cout << "POS INIT : "<<posInit<<std::endl<<"Pos final :"<<posFinal << '\n';
     int distance = Distance(posInit,posFinal);
   if(W != -1){
     if(W == 1){
@@ -539,7 +398,7 @@ void PowerRanger::setCapacityWeapon(bool cap){
       if(p.getEnergy()>((this->_secondaryWeapon)->getCost())){
         if((distance <= (this->_secondaryWeapon)->getAttackRange()) || (this->_secondaryWeapon->getAttackRange() ==-1)){
           if(this->getName() == "green"){
-            std::cout << "TEST AVANT TORNADODINO" << '\n';
+            //std::cout << "TEST AVANT TORNADODINO" << '\n';
             this->TornadoDino(m,p,posFinal);
             p.setEnergy(p.getEnergy()-(this->_secondaryWeapon)->getCost());
           } else {
@@ -607,15 +466,15 @@ void PowerRanger::TornadoDino(Map* m,Player& p,Position pos){                   
 void PowerRanger::BeTogether(Map *m,Position pos,bool* hor, bool* ver){                                                   // fonction qui regarde avec la position donnée si dans l'axe X ou l'axe Y si 5 powerranger sont aligné
   int i = 0;
   int k = 0;
-  std::cout<<"IN FCT BETOGETHER"<<std::endl;
-  std::cout<<"premiere pos p.X "<<pos.getX()<<" p.Y : "<<pos.getY()<<std::endl;
+  //std::cout<<"IN FCT BETOGETHER"<<std::endl;
+  //std::cout<<"premiere pos p.X "<<pos.getX()<<" p.Y : "<<pos.getY()<<std::endl;
   Position currentPos;
   currentPos.setY(pos.getY());
-  std::cout<<"TEST BOUCLE 1"<<std::endl;
+  //std::cout<<"TEST BOUCLE 1"<<std::endl;
   for(int j =0;j<m->getSizeX();j++){
     currentPos.setX(j);
-    std::cout<<"posX : "<<currentPos.getX()<<std::endl;
-    std::cout<<"posY : "<<currentPos.getY()<<std::endl;
+    //std::cout<<"posX : "<<currentPos.getX()<<std::endl;
+    //std::cout<<"posY : "<<currentPos.getY()<<std::endl;
     if(m->getElementW1(currentPos) != NULL){
       if((m->getElementW1(currentPos)->getName()!="Putties")&&(m->getElementW1(currentPos)->getName()!="Zedd")){
         i++;
@@ -623,19 +482,19 @@ void PowerRanger::BeTogether(Map *m,Position pos,bool* hor, bool* ver){         
     }
   }
   currentPos.setX(pos.getX());
-  std::cout<<"TEST BOUCLE 2"<<std::endl;
+  //std::cout<<"TEST BOUCLE 2"<<std::endl;
   for(int j =0;j<m->getSizeY();j++){
     currentPos.setY(j);
-    std::cout<<"posX : "<<currentPos.getX()<<std::endl;
-    std::cout<<"posY : "<<currentPos.getY()<<std::endl;
+  //  std::cout<<"posX : "<<currentPos.getX()<<std::endl;
+  //  std::cout<<"posY : "<<currentPos.getY()<<std::endl;
     if(m->getElementW1(currentPos)!= NULL){
       if((m->getElementW1(currentPos)->getName()!="Putties")&&(m->getElementW1(currentPos)->getName()!="Zedd")){
         k++;
       }
     }
   }
-  std::cout << "I : "<<i << std::endl;
-  std::cout << "K : "<<k << std::endl;
+  //std::cout << "I : "<<i << std::endl;
+//  std::cout << "K : "<<k << std::endl;
   if(i>=5){                                                                                                                                                                   // si c'est le cas on renvois l'axe en question
     (*hor)=true;
   } else if(k>=5){
@@ -644,13 +503,13 @@ void PowerRanger::BeTogether(Map *m,Position pos,bool* hor, bool* ver){         
     (*hor)=false;
     (*ver)=false;
   }
-  std::cout<<"TEST FIN BOUCLE BETOGETHER"<<std::endl;
+  //std::cout<<"TEST FIN BOUCLE BETOGETHER"<<std::endl;
 }
 
 
 
 void PowerRanger::Transformation(Map *m,Player&p){                                                                                                                            // fonction qui transporte les powerranger ( sauf le verts) dans un robotPR
-  std::cout << "DEBUT DCT TRANSFOR" << '\n';                                                                                                                                  // recherche dans l'axe retourné par "betogether"
+  //std::cout << "DEBUT DCT TRANSFOR" << '\n';                                                                                                                                  // recherche dans l'axe retourné par "betogether"
   Position pos = this->_pos;                                                                                                                                                  // met les powerranger dans un tableaux pour ne pas les effacé
   Position currentPos;                                                                                                                                                        // met a la place un robot PR
   Unit *u = new Unit;
@@ -675,7 +534,7 @@ void PowerRanger::Transformation(Map *m,Player&p){                              
             }
           }
         }
-        std::cout << "MIDDLE FCT TRANSFOR" << '\n';
+        //std::cout << "MIDDLE FCT TRANSFOR" << '\n';
       } else if ( ver == true){
         currentPos.setX(pos.getX());
         for(int j=0;j<m->getSizeY();j++){
@@ -700,7 +559,7 @@ void PowerRanger::Transformation(Map *m,Player&p){                              
         p.pushUnit((m->getElementW1(pos)));
       }
   }
-  std::cout << "FIN FCT TRANSFOR" << '\n';
+  //std::cout << "FIN FCT TRANSFOR" << '\n';
 }
 
 void PowerRanger::CheaterWeaponOn(Map *m){                                                              // fonction qui active la capacité arme cheaté
@@ -713,7 +572,7 @@ void PowerRanger::CheaterWeaponOn(Map *m){                                      
   } else {
     this->_capacityWeapon = false;
   }
-  std::cout<<"TEST FIN FCT CHEATERWEAPONON"<<std::endl;
+  //std::cout<<"TEST FIN FCT CHEATERWEAPONON"<<std::endl;
 }
 
 
@@ -767,7 +626,7 @@ int Zedd::getInvocation()const{
 }
 
 int Zedd::getPuttiesCalling()const{
-  std::cout << "TEST GET PUTTIESCALLING" << '\n';
+  //std::cout << "TEST GET PUTTIESCALLING" << '\n';
   return(this->_puttiesCalling);
 }
 
@@ -786,12 +645,12 @@ void Zedd::setActiceExpendNade(int nade){
 }
 
 void Zedd::setInvocation(int invoc){
-  std::cout << "test set invoc" << '\n';
+//  std::cout << "test set invoc" << '\n';
   this->_invocation = invoc;
 }
 
 void Zedd::setPuttiesCalling(int putties){
-  std::cout << "TEST SETPUTTINGCALLING" << '\n';
+  //std::cout << "TEST SETPUTTINGCALLING" << '\n';
   this->_puttiesCalling = putties;
 }
 
@@ -806,7 +665,7 @@ void Zedd::setApoon(bool ap){
 /** METHODE **/
 
 void Zedd::attack(Unit* u,int W ,Player& p,Player& p2,Position posFinal,Map* m){             // fonction d'attaque pour ZEDD
-  std::cout << "IN FCT ZEDD ATTAQUE" << '\n';
+  //std::cout << "IN FCT ZEDD ATTAQUE" << '\n';
   if(W != -1){
     if(W == 1){
       this->ThrowExtendNade(posFinal,m,p);
@@ -839,15 +698,15 @@ void Zedd::EnableGrenade(Map* m){                                               
 
 
 void Zedd::ThrowExtendNade(Position pos,Map *m,Player& p){                                    // utilisation de la grenade
-  std::cout << "TEST GRENADE" << '\n';                                                        // donne a l'unité plus de point de vie et d'attaque
+//  std::cout << "TEST GRENADE" << '\n';                                                        // donne a l'unité plus de point de vie et d'attaque
     this->EnableGrenade(m);
-    std::cout << "/* message */" << '\n';
+  //  std::cout << "/* message */" << '\n';
     if(p.getEnergy()>=(getPrimaryW()->getCost())){
-      std::cout << "/* message2 */" << '\n';
+    //  std::cout << "/* message2 */" << '\n';
       if(this->getActiveExpendNade()==true){
-        std::cout << "/* message3 */" << '\n';
+      //  std::cout << "/* message3 */" << '\n';
         if((m->getNameOfElement(pos))=="Putties") {
-          std::cout << "/* message4 */" << '\n';
+        //  std::cout << "/* message4 */" << '\n';
           // std::cout << "Postition : "<<pos << '\';
           // m->getElementW1(pos).setHealthPoints(1500);
           //Weapon *wp = new Weapon("Big attack",200,1,60);
@@ -856,13 +715,13 @@ void Zedd::ThrowExtendNade(Position pos,Map *m,Player& p){                      
           Unit *u = new Putties(1500,3,100,wp);
           u->setPosition(pos);
           m->setElementW1(pos,u);
-          std::cout<<"Nom arme : "<<m->getElementW1(pos)->getPrimaryW()->getName()<<std::endl;
+          //std::cout<<"Nom arme : "<<m->getElementW1(pos)->getPrimaryW()->getName()<<std::endl;
           // m->getElementW1(pos).getPrimaryW()->setName("BIG ATTACK");
           // m->getElementW1(pos).getPrimaryW()->setStrengh(200);
           p.setEnergy(p.getEnergy()-(this->_primaryWeapon)->getCost());
-          std::cout << "/* message5 */" << '\n';
-          std::cout << "HP : "<<m->getElementW1(pos)->getHealthPoints() << '\n';
-          std::cout << "/* message6 */" << '\n';
+        //  std::cout << "/* message5 */" << '\n';
+        //  std::cout << "HP : "<<m->getElementW1(pos)->getHealthPoints() << '\n';
+        //  std::cout << "/* message6 */" << '\n';
         //  std::cout << "FORCE : "<<m->getElementW1(pos).getPrimaryW()->getStrengh() << '\n';
         } else {
           std::cout <<"Mauvais personnage a boost"<<std::endl;
@@ -925,11 +784,11 @@ void Zedd::Invocation(Position pos, Map *m,Player& p){                          
 
 
 void Zedd::PuttiesCalling ( Position pos, Map* m,Player& p){                                                                                                                // fonction d'appel des putties
-  std::cout << "IN FCT PUTTIESCALLING" << std::endl;
-  std::cout << "Putties : " <<this->_puttiesCalling<< '\n';                                                                                                                      // je prends la position ou on veut les invoqué je regarde si autour de la position il n'y a rien d'autre et si c'est le cas je les invoques
-  std::cout << "name : "<<getThirdW()->getName() << '\n';
+//  std::cout << "IN FCT PUTTIESCALLING" << std::endl;
+  //std::cout << "Putties : " <<this->_puttiesCalling<< '\n';                                                                                                                      // je prends la position ou on veut les invoqué je regarde si autour de la position il n'y a rien d'autre et si c'est le cas je les invoques
+//  std::cout << "name : "<<getThirdW()->getName() << '\n';
     if(p.getEnergy()>=(getThirdW()->getCost())){
-      std::cout << "/* message */" << '\n';
+    //  std::cout << "/* message */" << '\n';
       if(this->_puttiesCalling==0){
         Position p1 = pos;
         p1.setY(pos.getY()+1);
@@ -939,11 +798,11 @@ void Zedd::PuttiesCalling ( Position pos, Map* m,Player& p){                    
         p3.setX(pos.getX()+1);
         Position p4 = pos;
         p4.setX(pos.getX()-1);
-        std::cout << "/* message2 */" << '\n';
+      //  std::cout << "/* message2 */" << '\n';
         if((m->isOnMap(pos))&&(m->isOnMap(p1))&&(m->isOnMap(p2))&&(m->isOnMap(p3))&&(m->isOnMap(p4))){
           if((m->getElementW1(pos)==NULL)&&(m->getElementW1(p1)==NULL)&&(m->getElementW1(p2)==NULL)&& (m->getElementW1(p3)==NULL)&&(m->getElementW1(p4)==NULL)){
           //  Weapon *wp = new Weapon("Default",5,1,20);
-          std::cout << "/* message3 */" << '\n';
+        //  std::cout << "/* message3 */" << '\n';
             Unit *n1 = new Putties;
             n1->setPosition(pos);
             Unit *n2 = new Putties;
@@ -981,13 +840,13 @@ void Zedd::PuttiesCalling ( Position pos, Map* m,Player& p){                    
             m->getElementW1(p4)->setPosition(p4);
             p.pushUnit(m->getElementW1(p4));
             //
-            std::cout << "/* message4 */" << '\n';
+          //  std::cout << "/* message4 */" << '\n';
             p.setEnergy(p.getEnergy()-(this->_thirdWeapon)->getCost());
             this->setPuttiesCalling(4);
             m->getElementW1(this->_pos)->setPuttiesCalling(4);
             m->getElementW1(pos)->setDefault(3);
-            std::cout << "DEFAULT POSITION GETdEFAIULT : " <<m->getElementW1(pos)->getDefault()<< std::endl;
-            std::cout << "TEST A LA FIN DE PUTTIESCALLING" << std::endl;
+            //std::cout << "DEFAULT POSITION GETdEFAIULT : " <<m->getElementW1(pos)->getDefault()<< std::endl;
+            //std::cout << "TEST A LA FIN DE PUTTIESCALLING" << std::endl;
           } else {
             std::cout<<"There's already something on this tile !"<<std::endl;
           }
@@ -1013,7 +872,7 @@ void Zedd::ApocalypseHole(Map *m,Player& p){                                    
           Scenery *s = new Lava;
           s->setName("Lava2");
           m->setElementW2(this->getPosition(),*s);
-          std::cout << "map : " <<m->getElementW2(this->getPosition()).getName()<< std::endl;
+        //  std::cout << "map : " <<m->getElementW2(this->getPosition()).getName()<< std::endl;
           p.setEnergy(p.getEnergy()-(this->_fourthWeapon)->getCost());
           //count++;
           this->apoon = true;
@@ -1022,7 +881,7 @@ void Zedd::ApocalypseHole(Map *m,Player& p){                                    
         std::cout<<"You don't have enough energy"<<std::endl;
       }
     } else {
-      std::cout << "/* message5 */" << std::endl;
+      //std::cout << "/* message5 */" << std::endl;
       Position p1 ;
       Position p2 ;
       Position p3 ;
@@ -1123,7 +982,7 @@ void RobotPR::setArmor(int armor){
 void RobotPR::TransformationTurtle(Map* m,Player& p,Player& p2,Position pos){                               // transformation identique a la transformation du powerranger en robotpr
   if(p2.getSizeOwnUnit() > 15){
     if(m->getNameOfElement(pos)=="RobotPR"){
-      std::cout << "/* message */" << std::endl;
+      //std::cout << "/* message */" << std::endl;
       Unit *tt = new TurtleTank;
       m->setInTab(*m->getElementW1(pos));
       m->setElementW1(pos,tt);
@@ -1136,7 +995,7 @@ void RobotPR::TransformationTurtle(Map* m,Player& p,Player& p2,Position pos){   
 }
 
 void RobotPR::attack(Unit* u,int W ,Player& p,Player& p2,Position posFinal,Map* m){                           // fonction attaque du robot pR
-    std::cout << "IN FCT ROBOTPR ATTACK" << '\n';
+    //std::cout << "IN FCT ROBOTPR ATTACK" << '\n';
   Position posInit = this->_pos;
   int distance = Distance(posInit,posFinal);
   if(W != -1){
@@ -1154,7 +1013,6 @@ void RobotPR::attack(Unit* u,int W ,Player& p,Player& p2,Position posFinal,Map* 
     } else if (W == 2){
       if(p.getEnergy()>=((this->_secondaryWeapon)->getCost())){
         if(distance <= (this->_secondaryWeapon)->getAttackRange()){
-          std::cout << "ATTAQUE DU SABRE MAGIQUE QUI TRANCHE TOUS MAMENE" << '\n';
           u->setHealthPoints(u->getHealthPoints()-this->_secondaryWeapon->getStrengh());
           p.setEnergy(p.getEnergy()-(this->_secondaryWeapon)->getCost());
         } else {
@@ -1220,142 +1078,3 @@ TurtleTank::~TurtleTank(){                                                      
     }
 
 }
-
-
-
-
-// void Unit::attack(Unit& u,int W,Player& p,Player &p2,Position posFinal,Map *m){
-//
-//   Position posInit = this->_pos;
-//   if(W != 0){
-//       if(this->_primaryWeapon != NULL){
-//         std::cout<<"HP AVANT ATTAQUE :"<<u.getHealthPoints()<<std::endl;
-//         int distance = Distance(posInit,posFinal);
-//         if(W == 1){
-//           std::cout<<"Tu veux attaque avec : "<<this->_primaryWeapon->getName()<<std::endl;
-//           std::cout<<"Tu as "<<this->_primaryWeapon->getAttackRange()<<" de portée et la cible est a  "<<distance<<std::endl;
-//           std::cout<<"Tu as "<<p.getEnergy()<<" et ton arme consomme "<<this->_primaryWeapon->getCost()<<std::endl;
-//           std::cout<<"TEST1"<<std::endl;
-//           std::cout<<"p.getener : "<<p.getEnergy()<<std::endl;
-//           if(p.getEnergy()>=(this->getPrimaryW())->getCost()){
-//             std::cout<<"TEST2"<<std::endl;
-//             std::cout<<"Distnce : "<<distance<<std::endl;
-//             std::cout<<"range : "<<(this->_primaryWeapon)->getAttackRange()<<std::endl;
-//             if((distance <= (this->_primaryWeapon)->getAttackRange()) || (this->_primaryWeapon->getAttackRange()==-1)){
-//               std::cout<<"TEST3"<<std::endl;
-//               if(m->getNameOfElement(posInit) != "Zedd"){
-//                 std::cout<<"TEST4"<<std::endl;
-//                 u.setHealthPoints(u.getHealthPoints()-this->_primaryWeapon->getStrengh());
-//                 std::cout<<"TEST5"<<std::endl;
-//                 p.setEnergy(p.getEnergy()-(this->_primaryWeapon)->getCost());
-//                 std::cout<<"HP APRES ATTAQUE : "<<u.getHealthPoints()<<std::endl;
-//                 if(u.getHealthPoints()<=0){
-//                   Unit *dead = new Unit;
-//                   m->setElementW1(posFinal,dead);
-//                 }
-//               } else {
-//                 std::cout<<"TEST6"<<std::endl;
-//                 Zedd z ;
-//                 //z = m->getElementW1(posInit);
-//                 z.ThrowExtendNade(posFinal,m,p);
-//               }
-//             } else {
-//               std::cout<<"Tu n'as pas la portée necessaire"<<std::endl;
-//             }
-//           } else {
-//             std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
-//           }
-//         }else if(W == 2) {
-//           std::cout<<"Tu veux attaque avec : "<<this->_secondaryWeapon->getName()<<std::endl;
-//           std::cout<<"Tu as "<<this->_secondaryWeapon->getAttackRange()<<" de portée et la cible est a  "<<distance<<std::endl;
-//           std::cout<<"Tu as "<<p.getEnergy()<<" et ton arme consomme "<<this->_secondaryWeapon->getCost()<<std::endl;
-//           if(p.getEnergy()>((this->_secondaryWeapon)->getCost())){
-//             if((distance <= (this->_secondaryWeapon)->getAttackRange()) || (this->_secondaryWeapon->getAttackRange()==-1)){
-//               if(m->getNameOfElement(posInit) != "Zedd"){
-//                 u.setHealthPoints(u.getHealthPoints()-this->_secondaryWeapon->getStrengh());
-//                 p.setEnergy(p.getEnergy()-(this->_secondaryWeapon)->getCost());
-//                 std::cout<<"HP APRES ATTAQUE : "<<u.getHealthPoints()<<std::endl;
-//
-//               } else {
-//                 Zedd z;
-//                 //z = m->getElementW1(posInit);
-//                 std::cout << "/* message */" << std::endl;
-//                 z.Invocation(posFinal,m,p);
-//               }
-//
-//             } else {
-//               std::cout<<"Tu n'as pas la portée necessaire"<<std::endl;
-//             }
-//           } else {
-//             std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
-//           }
-//         } else if (W == 3){
-//           std::cout<<"TEST 3EME ARME "<<std::endl;
-//           // std::cout<<"Tu veux attaque avec : "<<this->_thirdWeapon->getName()<<std::endl;
-//           // std::cout<<"Tu as "<<this->_thirdWeapon->getAttackRange()<<" de portée et la cible est a  "<<distance<<std::endl;
-//           // std::cout<<"Tu as "<<p.getEnergy()<<" et ton arme consomme "<<this->_thirdWeapon->getCost()<<std::endl;
-//           if(p.getEnergy()>((this->_thirdWeapon)->getCost())){
-//             if((m->getNameOfElement(posInit) != "Putties") && (m->getNameOfElement(posInit) != "Zedd")){
-//               // PowerRanger pr ;
-//               // pr = m->getElementW1(posInit);
-//               // pr.Transformation(m);
-//
-//             } else {
-//               std::cout<<"TEST ATTACK PUTTIESCALLING"<<std::endl;
-//               Zedd z;
-//               //z = m->getElementW1(posInit)
-//               z.PuttiesCalling(posFinal,m,p);
-//             }
-//           } else {
-//             std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
-//           }
-//         } else {
-//           std::cout<<"Tu veux attaque avec : "<<this->_fourthWeapon->getName()<<std::endl;
-//           std::cout<<"Tu as "<<this->_fourthWeapon->getAttackRange()<<" de portée et la cible est a  "<<distance<<std::endl;
-//           std::cout<<"Tu as "<<p.getEnergy()<<" et ton arme consomme "<<this->_fourthWeapon->getCost()<<std::endl;
-//           if(p.getEnergy()>=((this->_fourthWeapon)->getCost())){
-//             if((m->getNameOfElement(posInit) != "Putties") && (m->getNameOfElement(posInit) != "Zedd")){
-//               PowerRanger pr;
-//               //pr = (*this);
-//               pr.setPosition(this->_pos);
-//               // pr = m->getElementW1(posInit);
-//               pr.CheaterWeaponOn(m);
-//               std::cout<<"APRES FCT CHEATEDWEAPONON"<<std::endl;
-//               if( pr.getCapacityWeapon()==true){
-//                 std::cout<<"TEST GETCAPACITYWEAPON"<<std::endl;
-//                 if((distance <= (this->_fourthWeapon)->getAttackRange()) || (this->_fourthWeapon->getAttackRange()==-1)){
-//                   std::cout<<"TEST RANGE"<<std::endl;
-//                   u.setHealthPoints(u.getHealthPoints()-this->_fourthWeapon->getStrengh());
-//                   p.setEnergy(p.getEnergy()-(this->_fourthWeapon)->getCost());
-//                   std::cout<<"HP APRES ATTAQUE : "<<u.getHealthPoints()<<std::endl;
-//                   if(u.getHealthPoints()<=0){
-//                     std::cout<<"TEST DEAD"<<std::endl;
-//                     Unit *dead = new Unit;
-//                     m->setElementW1(posFinal,dead);
-//                     p2.removeUnit(u);
-//                   }
-//                 } else {
-//                   std::cout<<"Tu n'as pas la portée necessaire"<<std::endl;
-//                 }
-//               } else {
-//                 std::cout<<"Tu n'as pas la capacité disponible"<<std::endl;
-//               }
-//             } else {
-//
-//               Zedd z ;
-//               // z = m->getElementW1(posInit);
-//               z.setPosition(posInit);
-//               z.ApocalypseHole(m,p);
-//             }
-//           } else {
-//             std::cout<<"Tu n'as pas l'energie necessaire"<<std::endl;
-//           }
-//         }
-//
-//       } else {
-//         std::cout<<"L'ARME VAUT NUL"<<std::endl;
-//       }
-//   } else {
-//       std::cout<<"Tu n'as pas d'arme selectionné"<<std::endl;
-//   }
-// }

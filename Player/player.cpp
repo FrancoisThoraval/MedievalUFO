@@ -58,7 +58,7 @@ void Player::setName(std::string name){
 
 void Player::pushUnit(Unit *u){                               // fonction qui rentre dans un tableaux les unités que le joueurs possedes
     //int i = 0;                                              // c'est un tableaux dynamiques
-    std::cout << "/* message */" << std::endl;
+    //std::cout << "/* message */" << std::endl;
      if(this->_sizeOwnUnit < this->_sizeOwnMax){
        _ownUnit[_sizeOwnUnit] = u;
        this->_sizeOwnUnit++;
@@ -102,8 +102,8 @@ void Player::removeUnit(Unit &u){                                               
      }
      _sizeOwnUnit--;
      showUnitOwned();
-     std::cout << "Have i lost ?" << getLost()<< '\n';
-     std::cout << true << '\n';
+     //std::cout << "Have i lost ?" << getLost()<< '\n';
+     //std::cout << true << '\n';
 }
 
 
@@ -130,10 +130,10 @@ bool Player::isMineUnit(const std::string name){                                
 
 
 void Player::showUnitOwned(){                                                                   // fonction qui parcout le tableaux des unité possedé et qui les affiches
+  std::cout << "===========" << std::endl<<"My Unit's Array"<<std::endl;
      for (int i = 0; i < _sizeOwnUnit; i++) {
-          std::cout << "["<< _ownUnit[i]->getName() << "] -> ";
+          std::cout << " Mouvement : ["<< _ownUnit[i]->getName() << "] -> ";
           std::cout << _ownUnit[i]->getMovement() << '\n';
-          std::cout<<" : "<<_ownUnit[i]->getDefault()<<std::endl;
           std::cout << "Vie : "<<_ownUnit[i]->getHealthPoints() << '\n';
      }
 }
@@ -142,7 +142,7 @@ Unit* Player::getUnit(int pos){
   if(pos < this->_sizeOwnUnit)
     return(this->_ownUnit[pos]);
   else
-    std::cout << "Mauvaise pos" << '\n';
+  //  std::cout << "Mauvaise pos" << '\n';
     return(NULL);
 }
 
@@ -159,7 +159,7 @@ void Player::ResetMovement(Map *m){                                             
   if(isMineUnit("Zedd")){
     zed = true;
   }
-  std::cout << "DEBUT RESETMSVMT" << '\n';
+//  std::cout << "DEBUT RESETMSVMT" << '\n';
   for(int i=0;i<m->getSizeX();i++){
     for(int j=0;j<m->getSizeY();j++){
       currentPos.setX(i);
@@ -167,11 +167,11 @@ void Player::ResetMovement(Map *m){                                             
       if(m->getElementW1(currentPos)!=NULL){
       // if((m->getNameOfElement(currentPos)!="Hill")&&(m->getNameOfElement(currentPos)!="Water")&&(m->getNameOfElement(currentPos)!="Tree")&&(m->getNameOfElement(currentPos)!="")&&(m->getNameOfElement(currentPos)!="Lava2")){
         (m->getElementW1(currentPos))->setMovement((m->getElementW1(currentPos))->getDefault());
-        std::cout<<"DEFAULT : "<<m->getElementW1(currentPos)->getDefault()<<std::endl;
-        std::cout<<"MVMT : "<<m->getElementW1(currentPos)->getMovement()<<std::endl;
+        //std::cout<<"DEFAULT : "<<m->getElementW1(currentPos)->getDefault()<<std::endl;
+      //  std::cout<<"MVMT : "<<m->getElementW1(currentPos)->getMovement()<<std::endl;
         if(zed){
           if(m->getElementW1(currentPos)->getName() == "Zedd"){
-            std::cout << "puttiesccalling : "<<m->getElementW1(currentPos)->getPuttiesCalling() << '\n';
+            //std::cout << "puttiesccalling : "<<m->getElementW1(currentPos)->getPuttiesCalling() << '\n';
             if(m->getElementW1(currentPos)->getInvocation()>0 ){
               m->getElementW1(currentPos)->setInvocation(m->getElementW1(currentPos)->getInvocation() - 1);
             }
@@ -186,12 +186,12 @@ void Player::ResetMovement(Map *m){                                             
       }
     }
   }
-  std::cout << "FIN RESET MVMT" << '\n';
+  //std::cout << "FIN RESET MVMT" << '\n';
 }
 
 void Player::hasLost(){                                                                       // fonction qui renvois si un joueurs a perdu ou non
      if (!getLost()) {
-       std::cout << "HAS LOST size : "<<_sizeOwnUnit << std::endl;
+       //std::cout << "HAS LOST size : "<<_sizeOwnUnit << std::endl;
           if (_sizeOwnUnit == 0) {
                setLost(true);
           }

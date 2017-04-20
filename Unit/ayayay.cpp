@@ -25,7 +25,7 @@ void Advice_ayayay(sf::RenderWindow& _window,T type){                           
   // _window.draw(s);
 
   if(type->getName()=="Zedd"){
-    std::cout << "TEST AYAYAYAYY" << std::endl;
+    //std::cout << "TEST AYAYAYAYY" << std::endl;
     text.setString("HP : "+std::to_string(type->getHealthPoints()));
     text.setPosition(340,500);
     _window.draw(text);
@@ -36,7 +36,7 @@ void Advice_ayayay(sf::RenderWindow& _window,T type){                           
 
   } else if(type->getName()=="Putties"){
 
-    std::cout << "TEST AYAYAYAYY" << std::endl;
+    //std::cout << "TEST AYAYAYAYY" << std::endl;
     text.setString("HP :"+std::to_string(type->getHealthPoints()));
     text.setPosition(340,500);
     _window.draw(text);
@@ -46,7 +46,7 @@ void Advice_ayayay(sf::RenderWindow& _window,T type){                           
     _window.display();
     // text.setString("C'est un Putties, il lui reste : "+pu.getHealthPoints());
   }  else if (type->getName()=="RobotPR"){
-    std::cout << "TEST AYAYAYAYY" << std::endl;
+    //std::cout << "TEST AYAYAYAYY" << std::endl;
     text.setString("HP :"+std::to_string(type->getHealthPoints()));
     text.setPosition(340,500);
     _window.draw(text);
@@ -58,7 +58,7 @@ void Advice_ayayay(sf::RenderWindow& _window,T type){                           
     // rpr = type;
     // text.setString("C'est LE RobotPR, il lui reste : "+std::to_string(rpr.getHealthPoints()));
   } else if(type->getName()=="TurtleTank"){
-    std::cout << "TEST AYAYAYAYY" << std::endl;
+    //std::cout << "TEST AYAYAYAYY" << std::endl;
     text.setString("HP :"+std::to_string(type->getHealthPoints()));
     text.setPosition(340,500);
     _window.draw(text);
@@ -70,7 +70,7 @@ void Advice_ayayay(sf::RenderWindow& _window,T type){                           
     // tt = type;
     // text.setString("C'est le ROBOT TORTUE ULTIME !!, il lui reste : "+std::to_string(tt.getHealthPoints()));
   } else {
-    std::cout << "TEST AYAYAYAYY" << std::endl;
+    //std::cout << "TEST AYAYAYAYY" << std::endl;
     text.setString("HP :"+std::to_string(type->getHealthPoints()));
     text.setPosition(340,500);
     _window.draw(text);

@@ -144,7 +144,7 @@ void Game::gameLoop(){                                                          
                                              m.drawWorld(_window);
                                              _window.display();
                                         }else{
-                                             _window.create(sf::VideoMode(_xWindow,_yWindow,32),"Power Rangers - Ultimate Battle Simulator (Alpha)",sf::Style::Fullscreen);
+                                              _window.create(sf::VideoMode(_xWindow,_yWindow,32),"Power Rangers - Ultimate Battle Simulator (Alpha)",sf::Style::Fullscreen);
                                              _isFullScreen = true;
                                              m.drawWorld(_window);
                                              _window.display();
@@ -177,8 +177,23 @@ void Game::gameLoop(){                                                          
                     enterName();
                }break;
                case 7 : {
-                    window.clear();
-                    // METTRE L'IMAGE ICI !
+                    _window.clear();
+                    sf::Event event;
+                    sf::Texture image;
+                    image.loadFromFile("./Textures/Gimp/rules.png");
+                    sf::Sprite sprite(image);
+                    _window.draw(sprite);
+                    _window.display();
+                    bool continuer = true;
+                    while(continuer)
+                    while(_window.pollEvent(event)){
+                          if(event.type == sf::Event::KeyPressed)  {
+                            if(event.key.code == sf::Keyboard::Return){
+                                _gameState = 3;
+                                continuer = false;
+                            }
+                          }
+                    }
                }break;
           }
      }
@@ -193,6 +208,7 @@ void Game::showSpashScreen(){                                                   
 
 void Game::showMenu(){                                                                                            // affichage du menus
      Menu m;
+     _window.clear();
      m.show(_window);
      m.handleClick(_window);
      switch (m.getMenuChoice()) {
@@ -213,7 +229,7 @@ void Game::showMenu(){                                                          
 }
 
 void Game::LavaDetector(Map* m){                                                                                  // foction qui fais progresser l'attaque de zed "apocalypse holl"
-  std::cout << "/* message5 */" << std::endl;
+  //std::cout << "/* message5 */" << std::endl;
   Position p1 ;
   Position p2 ;
   Position p3 ;
@@ -264,7 +280,7 @@ void Game::LavaDetector(Map* m){                                                
     }
     //std::cout << "tour de boucle numero : "<<i << '\n';
   }
-  std::cout << "middle of lava detector" << '\n';
+  //std::cout << "middle of lava detector" << '\n';
   lava->setName("Lava2");
   for(int i =0;i<m->getSizeX();i++){
     for(int j = 0;j< m->getSizeY();j++){
@@ -276,7 +292,7 @@ void Game::LavaDetector(Map* m){                                                
       }
     }
   }
-  std::cout << "FIN DE LVADETECTOR" << '\n';
+  //std::cout << "FIN DE LVADETECTOR" << '\n';
 }
 
 void Game::LavaDamage(Map* m,Player& p){                                                                                    // fonction qui inflige les dommages de l'attaque apocalypse holl

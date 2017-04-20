@@ -81,7 +81,7 @@ public:
   /** SETTER **/
   virtual void setActiceExpendNade(int){}
   virtual void setInvocation(int){}
-  virtual void setPuttiesCalling(int){std::cout << "SET PUTTIES CALLNG DE UNIT BIATCH" << '\n';}
+  virtual void setPuttiesCalling(int){std::cout << "SET PUTTIES CALLNG DE UNIT" << '\n';}
   virtual void setApocalypseHole(int){}
 
 
