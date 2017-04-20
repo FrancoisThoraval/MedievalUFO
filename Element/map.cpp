@@ -37,8 +37,8 @@ Map::~Map(){
      delete[] _world2;
      std::cerr << "deleting mapTile" << '\n';
      delete[] _mapTile;
-     std::cerr << "deleting tabUnit" << '\n';
-     //delete[] _tabUnit;
+     // std::cerr << "deleting tabUnit" << '\n';
+     // delete[] _tabUnit;
 
 }
 
@@ -796,7 +796,7 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2,Unit *u = NULL)
               text.setPosition(0,560);
               window.draw(text);
 
-              text.setString(std::to_string(u->getActiveExpendNade()));
+              text.setString("wait: "+std::to_string(u->getActiveExpendNade()));
               text.setPosition(0,585);
               window.draw(text);
               //
@@ -804,7 +804,7 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2,Unit *u = NULL)
               text.setPosition(50,560);
               window.draw(text);
 
-              text.setString(std::to_string(u->getInvocation()));
+              text.setString("wait: "+std::to_string(u->getInvocation()));
               text.setPosition(50,585);
               window.draw(text);
               //
@@ -812,7 +812,7 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2,Unit *u = NULL)
               text.setPosition(100,560);
               window.draw(text);
 
-              text.setString(std::to_string(u->getPuttiesCalling()));
+              text.setString("wait: "+std::to_string(u->getPuttiesCalling()));
               text.setPosition(100,585);
               window.draw(text);
               //
@@ -821,7 +821,7 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2,Unit *u = NULL)
                 text.setPosition(150,560);
                 window.draw(text);
 
-                text.setString(std::to_string(u->getApocalypseHole()));
+                text.setString("wait: "+std::to_string(u->getApocalypseHole()));
                 text.setPosition(150,585);
                 window.draw(text);
               }
@@ -1002,9 +1002,6 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2,Unit *u = NULL)
 
 	  window.display();
      }
-
-     //À revoir pasque je sens que ça va être problématique
-
 }
 
 void Ui::setAttack(int a){

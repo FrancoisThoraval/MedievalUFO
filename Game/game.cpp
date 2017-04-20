@@ -328,7 +328,6 @@ void Game::endTurn(Player &p1, Player &p2,Map *m, Ui *ui,Position posZedd){     
           ui->drawUi(_window,p2,p1,NULL);
 
           std::cerr << p2.getName()<<", Your turn !" << '\n';
-          // Substraction(p2);
           std::cerr<<" Player 2, Energy : "<<p2.getEnergy()<<std::endl;
           LavaDetector(m);
           //std::cout << "APOOOON : "<<zed.getApoon() << '\n';
@@ -347,23 +346,6 @@ void Game::endTurn(Player &p1, Player &p2,Map *m, Ui *ui,Position posZedd){     
      }
 }
 
-
-// void Game::Substraction(Player& p){
-//   for(int i = 0;i < p.getSizeOwnUnit();i++){
-//     if(p.getUnit(i)->getName() == "Zedd"){
-//     //  std::cout << "Invoc : "<<p.getUnit(i)->getInvocation() << '\n'<<"puttiesclling : "<<p.getUnit(i)->getPuttiesCalling()<<'\n'<<"Apoc : "<<p.getUnit(i)->getApocalypseHole()<<std::endl;
-//       if(p.getUnit(i)->getInvocation()>0 ){
-//         p.getUnit(i)->setInvocation(p.getUnit(i)->getInvocation() - 1);
-//       }
-//       if(p.getUnit(i)->getPuttiesCalling() > 0){
-//         p.getUnit(i)->setPuttiesCalling(p.getUnit(i)->getPuttiesCalling() - 1);
-//       }
-//       if(p.getUnit(i)->getApocalypseHole()>0){
-//         p.getUnit(i)->setApocalypseHole(p.getUnit(i)->getApocalypseHole() - 1);
-//       }
-//     }
-//   }
-// }
 void Game::enterName(){                                                                                                     // fonction qui permet d'entree les noms des joueurs au debut du jeux
   std::string name2;
   std::cout << "=====\nPlayer 1: ";

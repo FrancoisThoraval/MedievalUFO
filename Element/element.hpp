@@ -1,9 +1,3 @@
-// map = tableaux d'elems dérivés donc map inclut les elems dérives (unit et scenery)
-// unit = elems donc unit inclut elems
-//
-
-
-
 #ifndef element_hpp
 #define element_hpp
 

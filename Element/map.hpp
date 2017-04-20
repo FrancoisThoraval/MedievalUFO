@@ -73,15 +73,15 @@ public:
   int getSizeX();													//Récupère la taille X de la map (world1 + world2).
   int getSizeY();													//Récupère la taille Y de la map (world1 + world2).
 
-  int getCompt()const;												//?????
-  Unit getTab(int)const;												//?????
 
 
   void setSizeX(int);												//Défini la taille X de la map (world1 + world2).
   void setSizeY(int);												//Défini la taille Y de la map (world1 + world2).
 
-  void setCompt(int);												//?????
-  void setInTab(Unit&);												//?????
+  int getCompt()const;												//Gestion des power ranger groupés dans le super robot
+  Unit getTab(int)const;												//
+  void setCompt(int);												//
+  void setInTab(Unit&);												//
 
   Position   getUnitSelected();										//Récupère la position de l'unité séléctionnée.
 };
@@ -110,8 +110,6 @@ public:
      void drawUi(sf::RenderWindow &,Player &, Player &,Unit*);					//Dessine l'interface et ses éléments.
 
      void handleClick(sf::RenderWindow &,Position pos, Map *);				//Gère les clics sur l'interface.
-
-     void displayInfoUnit(sf::RenderWindow &, Unit&);						//Ne sert pas il me semble
 
      void setState(int);
      int getState()const;

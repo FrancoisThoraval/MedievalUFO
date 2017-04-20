@@ -10,7 +10,9 @@ class Unit;
 class Map;
 
 class Player {                                              // CLASSE DES JOUEURS
-private:                                                    // elle contient son nom, son energy, un tableau pour ranger les unités, la taille et la taille max de ce tableaux et si le joueurs est entrain de joeur en ce moment
+private:                                                    //	Elle contient son nom, son energy, un tableau pour ranger les unités
+ 												//	la taille et la taille max de ce tableaux et si le joueurs est entrain
+												//	de jouer en ce moment
   int _energy;
   bool  _lost;
   std::string _name;
@@ -44,8 +46,6 @@ public:
   void showUnitOwned();
   void EndOfTurn(Map*);
   void ResetMovement(Map*);
-
-
 
   void hasLost();
 };
