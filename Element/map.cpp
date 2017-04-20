@@ -859,11 +859,11 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2,Unit *u = NULL)
             b1.setPosition(0,600-100);
             //
             b2.setTexture(texture);
-            b2.setTextureRect(sf::IntRect(563,975,50,50)); //pistol
+            b2.setTextureRect(sf::IntRect(240,975,50,50)); //pistol
             b2.setPosition(50,600-100);
             //
             b3.setTexture(texture);
-            b3.setTextureRect(sf::IntRect(296,973,50,50)); //robot
+            b3.setTextureRect(sf::IntRect(183,973,50,50)); //robot
             b3.setPosition(100,600-100);
             // On rempli le tableau de boutons
             _buttonArray[0]=b1;
@@ -892,7 +892,7 @@ void Ui::drawUi(sf::RenderWindow &window, Player &p1, Player &p2,Unit *u = NULL)
           case 8 : {
             std::cout << "now drawing ui's character 8." << '\n';
             b1.setTexture(texture);
-            b1.setTextureRect(sf::IntRect(616,975,50,50)); //fist
+            b1.setTextureRect(sf::IntRect(130,975,50,50)); //fist
             b1.setPosition(0,600-100);
             //
             _buttonArray[0]=b1;
